@@ -4,7 +4,7 @@
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
-      <h2 class="align-center">ACCREDITED BANKS<button class="btn btn-success btn-lg waves-effect waves-lime m-l-15 m-b-5 " id="btnAddModal"  type="button" >
+      <h2 class="align-center">BUSINESS TYPES<button class="btn btn-success btn-lg waves-effect waves-lime m-l-15 m-b-5 " id="btnAddModal"  type="button" >
         <i class="mdi-content-add pulls"></i> NEW
       </button></h2>
     </div>
@@ -33,26 +33,25 @@
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
-          <form id="myForm" class="form-horizontal" data-parsley-validate>
+          <form data-parsley-validate id="myForm" name="myForm" class="form-horizontal">
+
             <div class="modal-header">
-              <h1 id="label" class="modal-title align-center p-b-15">NEW ACCREDITED BANK<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+              <h1 id="label" class="modal-title align-center p-b-15">NEW BUSINESSTYPE TYPE<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
             </div>
             <div class="modal-body">
               <div class="form-group p-l-30">
                 <div class="form-line">
-                  <input autocomplete="off" type="text" class="form-control align-center"
-                  id="txtBankDesc" name="txtBankDesc" minlength="3" maxlength="35" data-parsley-pattern = '^[a-zA-Z0-9. ]+$' required placeholder="Ex. Security Bank" >
+                  <input data-parsley-pattern = '^[a-zA-Z0-9 ]+$' autocomplete="off" type="text" class="form-control align-center" name="txtBusiTypeDesc" id="txtBusiTypeDesc" maxlength="20" minlength="3" required placeholder="Ex. Restaurants" required>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> SAVE</span></button>
-              <input type="hidden" name="_token" value="{{csrf_token()}}">
-              <input type="hidden" id="myId" value="0">
+              <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i> <span id="lblButton">SAVE</span></button>
+              <input type="hidden" id="busiType_id" name="busiType_id" value="0">
             </div>
           </form>
-        </div>
 
+        </div>
       </div>
     </div>
     <!--MODAL-->
@@ -60,15 +59,15 @@
     <div class="card">
       <div class="header align-center">
         <h2>
-          LIST OF ACCREDITED BANKS
+          LIST OF BUSINESS TYPES
         </h2>
       </div>
       <div class="body">
         <table class="table table-hover dataTable" id="myTable">
           <thead>
             <tr>
-              <th class="align-center">Bank ID</th>
-              <th class="align-center">Bank</th>
+              <th class="align-center">Business ID</th>
+              <th class="align-center">Business Name</th>
               <th class="align-center">Status</th>
               <th class="align-center">Action</th>
             </tr>
@@ -83,9 +82,9 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/bankAjax.js")!!}
+{!!Html::script("custom/businessTypeAjax.js")!!}
 <script type="text/javascript">
-  var dataurl="{!!route('banks.getData')!!}" ;
-  var url="{!!route('banks.index')!!}" ;
+  dataurl="{{route("businesstypes.getData")}}"
+  url="{{route("businesstypes.index")}}"
 </script>
 @endsection

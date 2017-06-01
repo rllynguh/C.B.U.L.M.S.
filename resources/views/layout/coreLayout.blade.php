@@ -551,6 +551,8 @@
 {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
 {!!Html::script('js/pages/ui/notifications.js')!!}
 {!!Html::script('js/notify/notify.min.js')!!}
+{!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
+{!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
 </body>
 
 </html>
