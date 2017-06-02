@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\utilitiesModel;
-use DB;
-use Response;
 
-class utilitiesController extends Controller
+class parkSpaceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,13 +14,6 @@ class utilitiesController extends Controller
     public function index()
     {
         //
-        $result=DB::table("tblUtilities")
-        ->orderBy("dtmDateAsOf","desc")
-        ->select("tblUtilities.*")
-        ->first();
-        return view("utilities.index")
-        ->withResult($result)
-        ;
     }
 
     /**
@@ -45,17 +35,7 @@ class utilitiesController extends Controller
     public function store(Request $request)
     {
         //
-       $util=new utilitiesModel();
-       $util->dblCusa=$request->txtCUSA;
-       $util->intSecurityDeposit=$request->txtSec;
-       $util->dblVat=$request->txtVAT;
-       $util->dblEwt=$request->txtEWT;
-       $util->dblEscalation=$request->txtEsca;
-       $util->dblVettingFee=$request->txtVet;
-       $util->dtmDateAsOf=date("Y-m-d H:i:s");
-       $util->save();
-       return Response::json($util);
-   }
+    }
 
     /**
      * Display the specified resource.
