@@ -19,50 +19,50 @@ class parkAreaController extends Controller
     public function index()
     {
         //
-        return view("maintenance.parkArea.index");
+      return view("maintenance.parkArea.index");
     }
     public function data()
     {
-       $result=DB::table("tblParkArea")
-       ->join("tblFloor","tblParkArea.intFloorCode","tblFloor.intFloorCode")
-       ->join("tblBuilding","tblFloor.intBuilCode","tblBuilding.intBuilCode")
-       ->where("tblBuilding.boolIsDeleted","=",0)
-       ->select("tblBuilding.*","tblFloor.*","tblParkArea.*")
-       ->get();
-       return Datatables::of($result)
-       ->addColumn('action', function ($data) {
-        return '<button id="btnAddParkSpace" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->intParkAreaCode.'"><i class="mdi-content-add"></i></button> <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->intParkAreaCode.'"><i class="mdi-editor-border-color"></i></button>';
+     $result=DB::table("tblParkArea")
+     ->join("tblFloor","tblParkArea.intFloorCode","tblFloor.intFloorCode")
+     ->join("tblBuilding","tblFloor.intBuilCode","tblBuilding.intBuilCode")
+     ->where("tblBuilding.boolIsDeleted","=",0)
+     ->select("tblBuilding.*","tblFloor.*","tblParkArea.*")
+     ->get();
+     return Datatables::of($result)
+     ->addColumn('action', function ($data) {
+      return '<button id="btnAddParkSpace" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->intParkAreaCode.'"><i class="mdi-content-add"></i></button> <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->intParkAreaCode.'"><i class="mdi-editor-border-color"></i></button>';
     })
-       ->editColumn('boolIsActive', function ($data) {
-          $checked = '';
-          if($data->boolIsActive==1){
-            $checked = 'checked';
-        }
-        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->intParkAreaCode.'"><span class="lever switch-col-blue"></span>On</label></div>';
+     ->editColumn('boolIsActive', function ($data) {
+      $checked = '';
+      if($data->boolIsActive==1){
+        $checked = 'checked';
+      }
+      return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->intParkAreaCode.'"><span class="lever switch-col-blue"></span>On</label></div>';
     })
-       ->editColumn('dblParkAreaSize', function ($data) {
+     ->editColumn('dblParkAreaSize', function ($data) {
 
-        return "$data->dblParkAreaSize sqm";
+      return "$data->dblParkAreaSize sqm";
     })
-       ->setRowId(function ($data) {
-        return $data = 'id'.$data->intParkAreaCode;
+     ->setRowId(function ($data) {
+      return $data = 'id'.$data->intParkAreaCode;
     })
-       ->rawColumns(['boolIsActive','action'])
-       ->make(true);
+     ->rawColumns(['boolIsActive','action'])
+     ->make(true);
    }
    public function getBuilding()
    {
-       $result=DB::table("tblBuilding")
-       ->select("tblBuilding.*",DB::raw("count(`tblFloor`.`intFloorCode`), count(`tblParkArea`.`intParkAreaCode`)"))
-       ->leftjoin("tblFloor","tblBuilding.intBuilCode","tblFloor.intBuilCode")
-       ->leftjoin("tblParkArea","tblFloor.intFloorCode","tblParkArea.intFloorCode")
-       ->where("tblBuilding.boolIsActive","=",1)
-       ->where("tblBuilding.boolIsDeleted","=",0)
-       ->where("tblFloor.boolIsActive","=",1)
-       ->groupBy("tblBuilding.intBuilCode")
-       ->havingRaw("count(`tblFloor`.`intFloorCode`) > count(`tblParkArea`.`intParkAreaCode`)")
-       ->get();
-       return Response::json($result);
+     $result=DB::table("tblBuilding")
+     ->select("tblBuilding.*",DB::raw("count(`tblFloor`.`intFloorCode`), count(`tblParkArea`.`intParkAreaCode`)"))
+     ->leftjoin("tblFloor","tblBuilding.intBuilCode","tblFloor.intBuilCode")
+     ->leftjoin("tblParkArea","tblFloor.intFloorCode","tblParkArea.intFloorCode")
+     ->where("tblBuilding.boolIsActive","=",1)
+     ->where("tblBuilding.boolIsDeleted","=",0)
+     ->where("tblFloor.boolIsActive","=",1)
+     ->groupBy("tblBuilding.intBuilCode")
+     ->havingRaw("count(`tblFloor`.`intFloorCode`) > count(`tblParkArea`.`intParkAreaCode`)")
+     ->get();
+     return Response::json($result);
    }
    public function getFloor($id)
    {
@@ -78,7 +78,7 @@ class parkAreaController extends Controller
      ->havingRaw("count(`tblFloor`.`intFloorCode`) > count(`tblParkArea`.`intParkAreaCode`)")
      ->get();
      return Response::json($result);
- }
+   }
     /**
      * Show the form for creating a new resource.
      *
@@ -98,25 +98,25 @@ class parkAreaController extends Controller
     public function store(Request $request)
     {
         //
-       $parkArea=new parkAreaModel();
-       $parkArea->strParkAreaDesc="PA$request->comFloor-$request->txtPNum";
-       $parkArea->intFloorCode=$request->comFloor;
-       $parkArea->intNumOfSpace=$request->txtPNum;
-       $parkArea->dblParkAreaSize=$request->txtArea;
-       $parkArea->save();
-       return Response::json("success store");
+     $parkArea=new parkAreaModel();
+     $parkArea->strParkAreaDesc="PA$request->comFloor-$request->txtPNum";
+     $parkArea->intFloorCode=$request->comFloor;
+     $parkArea->intNumOfSpace=$request->txtPNum;
+     $parkArea->dblParkAreaSize=$request->txtArea;
+     $parkArea->save();
+     return Response::json("success store");
    }
 
    public function storeSpace(Request $request)
    {
         //
-       $parkSpace=new parkSpaceModel();
-       $parkSpace->strParkSpaceDesc=$request->txtPPNum;
-       $parkSpace->intParkAreaCode=$request->comParkArea;
-       $parkSpace->intParkSpaceNumber=$request->txtPPNum;
-       $parkSpace->dblParkSpaceSize=$request->txtPArea;;
-       $parkSpace->save();
-       return Response::json("success store");
+     $parkSpace=new parkSpaceModel();
+     $parkSpace->strParkSpaceDesc=$request->txtPPNum;
+     $parkSpace->intParkAreaCode=$request->comParkArea;
+     $parkSpace->intParkSpaceNumber=$request->txtPPNum;
+     $parkSpace->dblParkSpaceSize=$request->txtPArea;;
+     $parkSpace->save();
+     return Response::json("success store");
    }
 
     /**
@@ -147,7 +147,7 @@ class parkAreaController extends Controller
      ->select("tblBuilding.*","tblFloor.*","tblParkArea.*",DB::raw("COUNT(tblParkSpace.intParkSpaceCode) as current, COALESCE(SUM(tblParkSpace.dblParkSpaceSize),0) as size"))
      ->first();
      return Response::json($result);
- }
+   }
 
     /**
      * Update the specified resource in storage.
@@ -158,18 +158,18 @@ class parkAreaController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $parkArea=parkAreaModel::find($id);
-       $parkArea->intNumOfSpace=$request->txtPNum;
-       $parkArea->dblParkAreaSize=$request->txtArea;
-       $parkArea->save();
-       $result=DB::table("tblParkArea")
-       ->join("tblFloor","tblParkArea.intFloorCode","tblFloor.intFloorCode")
-       ->join("tblBuilding","tblFloor.intBuilCode","tblBuilding.intBuilCode")
-       ->where("tblBuilding.boolIsDeleted","=",0)
-       ->where("tblParkArea.intFloorCode",$parkArea->intParkAreaCode)
-       ->select("tblBuilding.*","tblFloor.*","tblParkArea.*")
-       ->first();
-       return Response::json($result);
+     $parkArea=parkAreaModel::find($id);
+     $parkArea->intNumOfSpace=$request->txtPNum;
+     $parkArea->dblParkAreaSize=$request->txtArea;
+     $parkArea->save();
+     $result=DB::table("tblParkArea")
+     ->join("tblFloor","tblParkArea.intFloorCode","tblFloor.intFloorCode")
+     ->join("tblBuilding","tblFloor.intBuilCode","tblBuilding.intBuilCode")
+     ->where("tblBuilding.boolIsDeleted","=",0)
+     ->where("tblParkArea.intFloorCode",$parkArea->intParkAreaCode)
+     ->select("tblBuilding.*","tblFloor.*","tblParkArea.*")
+     ->first();
+     return Response::json($result);
    }
 
     /**
@@ -185,22 +185,22 @@ class parkAreaController extends Controller
     }
     public function softdelete($id)
     {
-       $parkArea=parkAreaModel::find($id);
-       $val=1;
-       if($parkArea->boolIsActive)
-        $val=0;
+     $parkArea=parkAreaModel::find($id);
+     $val=1;
+     if($parkArea->boolIsActive)
+      $val=0;
     $parkArea->boolIsActive=$val;
     $parkArea->save();
     return Response::json("success");
-}
+  }
 
-public function getLatest($id)
-{
+  public function getLatest($id)
+  {
     $query = DB::table('tblParkArea')
     ->leftJOIN('tblParkSpace','tblParkArea.intParkAreaCode','=','tblParkSpace.intParkAreaCode')
     ->WHERE('tblParkArea.intParkAreaCode','=',$id)
     ->select('tblParkArea.intParkAreaCode',DB::raw("tblParkArea.intNumOfSpace as ceiling,COALESCE(MAX(tblParkSpace.intParkSpaceNumber),0) + 1 as number, (COALESCE(tblParkArea.dblParkAreaSize,0) - COALESCE(SUM(tblParkSpace.dblParkSpaceSize),0)) as max"))
     ->first();
     return Response::json($query);
-}
+  }
 }

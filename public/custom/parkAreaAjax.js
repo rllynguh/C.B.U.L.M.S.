@@ -1,39 +1,9 @@
 $(document).ready(function()
 {
-  function getBuilding()
-  {
-    $.get(url + '/get/building', function (data) 
-    {
-      console.log(data);
-      selected=$("#comBuilding").val();
-      $('#comBuilding').children('option').remove();
-      $.each(data,function(index,value)
-      {
-        $('#comBuilding').append($('<option>', {value:value.intBuilCode, text:value.strBuilDesc}));
-      });
-      $("#comBuilding").val(selected);
-      if( !$('#comBuilding').has('option').length > 0  && $("#btnSave").val()=="Save" ) 
-      { 
-        alert("No building available.");
-        $("#myModal").modal("hide");
-      }
-      getFloor();
-    });
-  }
-  function getFloor()
-  {
-    $.get(url + '/getFloor/' + $("#comBuilding").val(), function (data) 
-    {
-     console.log(data);
-     selected=$("#comFloor").val();
-     $('#comFloor').children('option').remove();
-     $.each(data,function(index,value)
-     {
-       $('#comFloor').append($('<option>', {value:value.intFloorCode, text:value.intFloorNum}));
-     });
-     $("#comFloor").val(selected);
-   });
-  }
+  //for house keeping
+  getBuilding();
+
+  //for datatables
   var table = $('#myTable').DataTable({
     responsive: true,
     processing: true,
@@ -49,41 +19,17 @@ $(document).ready(function()
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
-  function changeLabel()
+
+  //for showing park area edit modal 
+  $('#myList').on('click', '.open-modal',function(e)
   {
-    btn='<span id="lblButton">SAVE CHANGES</span>';
-    label=' <h1 id="label" class="modal-title align-center p-b-15">UPDATE PARK AREA<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
-    if($("#btnSave").val()=="Save")
+    $("#comBuilding").attr("disabled","disabled");
+    $("#comFloor").attr("disabled","disabled");
+    $("#btnSave").val("Edit");
+    changeLabel();  
+    var myId = $(this).val();
+    $.get(url + '/' + myId + '/edit', function (data) 
     {
-      btn='<span id="lblButton"> SAVE</span>';
-      label=' <h1 id="label" class="modal-title align-center p-b-15">NEW PARK AREA<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
-    }    
-    $('#lblButton').replaceWith(btn);
-    $('#label').replaceWith(label);
-  }
-  getBuilding();
-  $(document).on('hidden.bs.modal','#myModal', function () 
-  {
-    $("#myForm").trigger('reset');
-    $('#myForm').parsley().destroy();
-    $("#comBuilding").removeAttr("disabled");
-    $("#comFloor").removeAttr("disabled");
-  });
-  $(document).on('hidden.bs.modal','#modalParkSpace', function () 
-  {
-    $("#frmParkSpace").trigger('reset');
-    $('#frmParkSpace').parsley().destroy();
-  });
-//display modal form for task editing
-$('#myList').on('click', '.open-modal',function(e)
-{
-  $("#comBuilding").attr("disabled","disabled");
-  $("#comFloor").attr("disabled","disabled");
-  $("#btnSave").val("Edit");
-  changeLabel();  
-  var myId = $(this).val();
-  $.get(url + '/' + myId + '/edit', function (data) 
-  {
     //success data
     value=data.current;
     if(parseInt(data.current)<=1)
@@ -124,31 +70,21 @@ $('#myList').on('click', '.open-modal',function(e)
     $('#txtPNum').val(data.intNumOfSpace);
     $('#txtArea').val(data.dblParkAreaSize);
   }); 
-  $('#myModal').modal('show');
-});
-$('#btnAddModal').on('click',function(e)
-{ 
-  $('#btnSave').val('Save');
-  changeLabel();
-  getBuilding();
-  $("#txtPNum").attr("min","1");
-  $("#txtArea").attr("min","1");
-  $('#myModal').modal('show');
-});
+    $('#myModal').modal('show');
+  });
 
-$("#comBuilding").change(function(data)
-{
-  console.log("change");
-  if($("#btnSave").val()=="Save")
-    getFloor();
-});
+  //for showing park area add modal
+  $('#btnAddModal').on('click',function(e)
+  { 
+    $('#btnSave').val('Save');
+    changeLabel();
+    getBuilding();
+    $("#txtPNum").attr("min","1");
+    $("#txtArea").attr("min","1");
+    $('#myModal').modal('show');
+  });
 
-
-  //display modal form for creating new task
-
-
-
-  //create new task / update existing task
+  //for saving or updating park area record
   $('#btnSave').on('click',function(e)
   {
     if($("#myForm").parsley().isValid())
@@ -203,61 +139,34 @@ $("#comBuilding").change(function(data)
   }
 });
 
-  $('#myList').on('change', '#IsActive',function(e)
-  { 
-    $.ajaxSetup(
-    {
-      headers: 
+    //for soft deleting park area
+    $('#myList').on('change', '#IsActive',function(e)
+    { 
+      $.ajaxSetup(
       {
-        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-      }
+        headers: 
+        {
+          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+      });
+      e.preventDefault(); 
+      var id = $(this).val();
+      $.ajax(
+      {
+        url: url + '/softdelete/' + id,
+        type: "PUT",
+        success: function (data) 
+        {
+          console.log(id);
+        },
+        error: function (data) 
+        {
+          console.log('Error:', data);
+        }
+      });
     });
-    e.preventDefault(); 
-    var id = $(this).val();
-    $.ajax(
-    {
-      url: url + '/softDelete/' + id,
-      type: "POST",
-      success: function (data) 
-      {
-        console.log(id);
-      },
-      error: function (data) 
-      {
-        console.log('Error:', data);
-      }
-    });
-  });
-  function successPrompt(){
-    title="Record Successfully Updated!";
-    $.notify(title, "success");
-  }
-  function getLatest()
-  {
-    $.get(url + '/getLatest/' + $("#myId").val(), function (data) 
-    {
-      console.log(data);
-      if(parseInt(data.number) > parseInt(data.ceiling))
-      { 
-        $.notify("Number of park spaces at maximum!", "error");
-        $("#modalParkSpace").modal("hide");
-      }
-      else if(parseFloat(data.max)<=0)
-      { 
-        $.notify("Reached maxmimum space.", "error");
-        $("#modalParkSpace").modal("hide");
-      }
-      else
-      {
-        var max;
-        $("#txtPArea").val("");
-        $("#txtPPNum").val(parseInt(data.number));
-        max=parseFloat(data.max);
-        $("#txtPArea").attr("max",max);
-      }
-    });
-  }
 
+  //for showing park space add modal 
   $("#myList").on("click","#btnAddParkSpace",function(e)
   {
     $("#comParkArea").val($(this).val());
@@ -271,6 +180,7 @@ $("#comBuilding").change(function(data)
     $("#modalParkSpace").modal("show");
   });
 
+  //for saving park space record
   $('#btnSaveParkSpace').on('click',function(e)
   { 
     if($('#frmParkSpace').parsley().isValid())
@@ -305,4 +215,115 @@ $("#comBuilding").change(function(data)
                 }
               });
              }});
+
+  //for when parkArea modal gets closed
+  $(document).on('hidden.bs.modal','#myModal', function () 
+  {
+    $("#myForm").trigger('reset');
+    $('#myForm').parsley().destroy();
+    $("#comBuilding").removeAttr("disabled");
+    $("#comFloor").removeAttr("disabled");
+  });
+
+  //for when parkSpace modal gets closed
+  $(document).on('hidden.bs.modal','#modalParkSpace', function () 
+  {
+    $("#frmParkSpace").trigger('reset');
+    $('#frmParkSpace').parsley().destroy();
+  });
+
+  //for when a user changes selected building
+  $("#comBuilding").change(function(data)
+  {
+    console.log("change");
+    if($("#btnSave").val()=="Save")
+      getFloor();
+  });
+
+ //for prompting user
+ function successPrompt(){
+  title="Record Successfully Updated!";
+  $.notify(title, "success");
+}
+
+
+function changeLabel()
+{
+  btn='<span id="lblButton">SAVE CHANGES</span>';
+  label=' <h1 id="label" class="modal-title align-center p-b-15">UPDATE PARK AREA<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
+  if($("#btnSave").val()=="Save")
+  {
+    btn='<span id="lblButton"> SAVE</span>';
+    label=' <h1 id="label" class="modal-title align-center p-b-15">NEW PARK AREA<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
+  }    
+  $('#lblButton').replaceWith(btn);
+  $('#label').replaceWith(label);
+}
+
+   // for querying latest park space number
+   function getLatest()
+   {
+    $.get(url + '/getLatest/' + $("#myId").val(), function (data) 
+    {
+      console.log(data);
+      if(parseInt(data.number) > parseInt(data.ceiling))
+      { 
+        $.notify("Number of park spaces at maximum!", "error");
+        $("#modalParkSpace").modal("hide");
+      }
+      else if(parseFloat(data.max)<=0)
+      { 
+        $.notify("Reached maxmimum space.", "error");
+        $("#modalParkSpace").modal("hide");
+      }
+      else
+      {
+        var max;
+        $("#txtPArea").val("");
+        $("#txtPPNum").val(parseInt(data.number));
+        max=parseFloat(data.max);
+        $("#txtPArea").attr("max",max);
+      }
+    });
+  }
+
+  //for querying list of buildings 
+  function getBuilding()
+  {
+    $.get(url + '/get/building', function (data) 
+    {
+      console.log(data);
+      selected=$("#comBuilding").val();
+      $('#comBuilding').children('option').remove();
+      $.each(data,function(index,value)
+      {
+        $('#comBuilding').append($('<option>', {value:value.intBuilCode, text:value.strBuilDesc}));
+      });
+      $("#comBuilding").val(selected);
+      if( !$('#comBuilding').has('option').length > 0  && $("#btnSave").val()=="Save" ) 
+      { 
+        alert("No building available.");
+        $("#myModal").modal("hide");
+      }
+      getFloor();
+    });
+  }
+
+  //for querying list of floors available
+  function getFloor()
+  {
+    $.get(url + '/getFloor/' + $("#comBuilding").val(), function (data) 
+    {
+     console.log(data);
+     selected=$("#comFloor").val();
+     $('#comFloor').children('option').remove();
+     $.each(data,function(index,value)
+     {
+       $('#comFloor').append($('<option>', {value:value.intFloorCode, text:value.intFloorNum}));
+     });
+     $("#comFloor").val(selected);
+   });
+
+    //for toggle between save and edit
+  }
 });
