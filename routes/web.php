@@ -58,6 +58,20 @@ Route::post('maintenance/buildings/storefloor',['uses' => 'buildingController@st
 Route::get('maintenance/buildings/getFloor/{floor}',['uses' => 'buildingController@getFloor', 'as' => 'buildings.getfloor']);
 Route::get('custom/getCity/{id}', ['uses' => 'customController@getCity', 'as' => 'custom.getCity']);
 
+Route::resource("maintenance/floors","floorController");
+Route::get('maintenance/floors/getFloor/{id}', ['uses' => 'floorController@getFloor', 'as' => 'floors.getFloor']);
+Route::get('maintenance/floors/get/building', ['uses' => 'floorController@getBuilding', 'as' => 'floors.getBuilding']);
+Route::put('maintenance/floors/softdelete/{floor}', ['uses' => 'floorController@softDelete', 'as' => 'floors.softdelete']);
+Route::get('floor/get/data', ['uses' => 'floorController@data', 'as' => 'floors.getData']);
+Route::post('maintenance/floors/storeunit',['uses' => 'floorController@storeUnit', 'as' => 'floor.storeunit']);
+
+Route::resource("maintenance/units","unitController");
+Route::get('maintenance/units/get/data', ['uses' => 'unitController@data', 'as' => 'units.getData']);
+Route::put('maintenance/units/softdelete/{unit}', ['uses' => 'unitController@softdelete', 'as' => 'units.softdelete']);
+Route::get('maintenance/units/get/building', ['uses' => 'unitController@getBuilding', 'as' => 'units.getBuilding']);
+Route::get('maintenance/units/getFloor/{unit}', ['uses' => 'unitController@getFloor', 'as' => 'units.getFloor']);
+Route::get('maintenance/units/getLatest/{unit}', ['uses' => 'unitController@getLatest', 'as' => 'units.getLatest']);
+
 
 
 
