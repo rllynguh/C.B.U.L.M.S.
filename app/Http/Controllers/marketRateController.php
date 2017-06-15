@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Response;
-use App\marketRateModel;
+use App\market_rate;
 use Datatables;
 
 
@@ -23,17 +23,17 @@ class marketRateController extends Controller
     }
     public function data()
     {
-        $result=DB::table("tblCity")
-        ->leftJoin("tblMarketRate","tblCity.intCityCode","tblMarketRate.intCityCode")
-        ->groupBy("tblCity.intCityCode")
-        ->whereRaw("tblMarketRate.dtmDateAsOf=(SELECT MAX(dtmDateAsOf) from tblMarketRate where intCityCode=tblCity.intCityCode) or isnull(tblMarketRate.dtmDateAsOf)")
-        ->select("tblMarketRate.*","tblCity.*",DB::raw("COALESCE(tblMarketRate.dblRate,0) as rate"))
-        ->orderBy("tblCity.strCityDesc")
+        $result=DB::table("cities")
+        ->leftJoin("market_rates","cities.id","market_rates.city_id")
+        ->groupBy("cities.id")
+        ->whereRaw("market_rates.date_as_of=(SELECT MAX(date_as_of) from market_rates where city_id=cities.id) or isnull(market_rates.date_as_of)")
+        ->select("market_rates.*","cities.*",DB::raw("COALESCE(market_rates.rate,0) as rate"))
+        ->orderBy("cities.description")
         ->get();   
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-          return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->intCityCode.'"><i class="mdi-editor-border-color"></i></button>';
-      })
+            return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
+        })
         ->editColumn('rate', function ($data) {
           $rate = 'NOT SET';
           if($data->rate!="0"){
@@ -41,18 +41,18 @@ class marketRateController extends Controller
         }
         return $rate;
     })
-        ->editColumn('dtmDateAsOf', function ($data) {
+        ->editColumn('date_as_of', function ($data) {
           $date = 'N/A';
           if($data->rate!="0"){
-            $time = strtotime($data->dtmDateAsOf);
+            $time = strtotime($data->date_as_of);
             $myDate = date( 'm-d-y', $time );
             $date=$myDate;
         }
         return $date;
     })
         ->setRowId(function ($data) {
-          return $data = 'id'.$data->intCityCode;
-      })
+            return $data = 'id'.$data->id;
+        })
         ->rawColumns(['action'])
         ->make(true);
     }
@@ -75,13 +75,13 @@ class marketRateController extends Controller
      */
     public function store(Request $request)
     {
-     $marketRate=new marketRateModel();
-     $marketRate->intCityCode=$request->myId;
-     $marketRate->dtmDateAsOf=date("Y-m-d H:i:s");
-     $marketRate->dblRate=$request->txtRate;
-     $marketRate->save();
-     return Response::json("success store");
- }
+       $marketRate=new market_rate();
+       $marketRate->city_id=$request->myId;
+       $marketRate->date_as_of=date("Y-m-d H:i:s");
+       $marketRate->rate=$request->txtRate;
+       $marketRate->save();
+       return Response::json("success store");
+   }
 
     /**
      * Display the specified resource.
@@ -102,10 +102,10 @@ class marketRateController extends Controller
      */
     public function edit($id)
     {
-        $result=DB::table("tblMarketRate")
-        ->select("tblMarketRate.*",DB::raw("COALESCE(tblMarketRate.dblRate,0) as rate"))
-        ->where("tblMarketRate.intCityCode",$id)
-        ->orderBy("tblMarketRate.dtmDateAsOf","desc")
+        $result=DB::table("market_rates")
+        ->select("market_rates.*",DB::raw("COALESCE(market_rates.rate,0) as rate"))
+        ->where("market_rates.city_id",$id)
+        ->orderBy("market_rates.date_as_of","desc")
         ->first();
         return Response::json($result);
     }

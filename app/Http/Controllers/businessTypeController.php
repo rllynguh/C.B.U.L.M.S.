@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\businessTypeModel;
+use App\business_type;
 use Response;
 use Datatables;
 use DB;
@@ -17,23 +17,22 @@ class businessTypeController extends Controller
      */
     public function data()
     {
-        $result=businessTypeModel::where('boolIsDeleted',0)
-        ->orderBy('intBusiTypeCode');
+        $result=business_type::orderBy('id')->get();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->intBusiTypeCode.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->intBusiTypeCode.'"><i class="mdi-action-delete"></i></button>';
+            return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
         })
-        ->editColumn('boolIsActive', function ($data) {
+        ->editColumn('is_active', function ($data) {
           $checked = '';
-          if($data->boolIsActive==1){
+          if($data->is_active==1){
             $checked = 'checked';
         }
-        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->intBusiTypeCode.'"><span class="lever switch-col-blue"></span>On</label></div>';
+        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
     })
         ->setRowId(function ($data) {
-            return $data = 'id'.$data->intBusiTypeCode;
+            return $data = 'id'.$data->id;
         })
-        ->rawColumns(['boolIsActive','action'])
+        ->rawColumns(['is_active','action'])
         ->make(true);                                       
     }
     public function index()
@@ -62,8 +61,8 @@ class businessTypeController extends Controller
     {
         try
         {
-            $btype=new businessTypeModel;
-            $btype->strBusiTypeDesc=$request->txtBusiTypeDesc;
+            $btype=new business_type;
+            $btype->description=$request->txtBusiTypeDesc;
             $btype->save();
             return Response::json("success store");
         }
@@ -97,9 +96,9 @@ class businessTypeController extends Controller
      */
     public function edit($id)
     {
-     $businessType=businessTypeModel::find($id);
-     return Response::json($businessType);
- }
+       $businessType=business_type::find($id);
+       return Response::json($businessType);
+   }
 
     /**
      * Update the specified resource in storage.
@@ -113,8 +112,8 @@ class businessTypeController extends Controller
       try
       {
         try
-        { $businessType=businessTypeModel::find($id);
-         $businessType->strBusiTypeDesc=$request->txtBusiTypeDesc;
+        { $businessType=business_type::find($id);
+         $businessType->description=$request->txtBusiTypeDesc;
          $businessType->save();
          return Response::json("success update");
      }
@@ -134,12 +133,12 @@ catch(\Exception $e)
 
 public function softDelete($id)
 {
-    $businessType=businessTypeModel::find($id);
-    if($businessType->boolIsActive==1)
+    $businessType=business_type::find($id);
+    if($businessType->is_active==1)
         $val=0;
     else
         $val=1;
-    $businessType->boolIsActive=$val;
+    $businessType->is_active=$val;
     $businessType->save();
 }
     /**
@@ -152,7 +151,7 @@ public function softDelete($id)
     {
        try
        {
-        $result = businessTypeModel::findorfail($id);
+        $result = business_type::findorfail($id);
         try
         {
           $result->delete();

@@ -8,9 +8,9 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'intBankCode', name: 'intBankCode'},
-    {data: 'strBankDesc', name: 'strBankDesc'},
-    {data: 'boolIsActive', name: 'boolIsActive', searchable: false},
+    {data: 'id', name: 'id'},
+    {data: 'description', name: 'description'},
+    {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
@@ -40,8 +40,8 @@ $(document).ready(function()
      {
       $('#btnSave').val('Edit');
       changeLabel();
-      $('#myId').val(data.intBankCode);
-      $('#txtBankDesc').val(data.strBankDesc);
+      $('#myId').val(data.id);
+      $('#txtBankDesc').val(data.description);
       $('#myModal').modal('show');
     }
   }) 
@@ -155,10 +155,10 @@ $(document).ready(function()
         table.draw();
       }else{
         if(data[0]=="true"){
-          $.notify( data[1].strBankDesc + " is in use.", "warning");
+          $.notify( data[1].description + " is in use.", "warning");
         }else{
           table.draw();
-          $.notify(data.strBankDesc + "'s record has been deleted successfully.", "success");
+          $.notify(data.description + "'s record has been deleted successfully.", "success");
         }
       }
       $("#modalDelete").modal("hide");

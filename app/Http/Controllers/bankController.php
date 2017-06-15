@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Bankmodel;
+use App\banks;
 use Datatables;
 use Response;
 
 class bankController extends Controller
 {
+  // public function __construct()
+  // {
+  //   $this->middleware('admin');
+  //   $this->middleware('auth');
+  // }
     /**
      * Display a listing of the resource.
      *
@@ -16,22 +21,22 @@ class bankController extends Controller
      */
     public function data()
     {   
-     $result = bankModel::where('boolIsDeleted',0);
+     $result = banks::all();
      return Datatables::of($result)
      ->addColumn('action', function ($data) {
-      return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->intBankCode.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->intBankCode.'"><i class="mdi-action-delete"></i></button>';
+      return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
     })
-     ->editColumn('boolIsActive', function ($data) {
+     ->editColumn('is_active', function ($data) {
       $checked = '';
-      if($data->boolIsActive==1){
+      if($data->is_active==1){
         $checked = 'checked';
       }
-      return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->intBankCode.'"><span class="lever switch-col-blue"></span>On</label></div>';
+      return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
     })
      ->setRowId(function ($data) {
-      return $data = 'id'.$data->intBankCode;
+      return $data = 'id'.$data->id;
     })
-     ->rawColumns(['boolIsActive','action'])
+     ->rawColumns(['is_active','action'])
      ->make(true);
    }
    public function index()
@@ -61,8 +66,8 @@ class bankController extends Controller
         //
      try
      {
-      $result=new bankModel();
-      $result->strBankDesc=$request->txtBankDesc;
+      $result=new banks();
+      $result->description=$request->txtBankDesc;
       $result->save();
       return Response::json("Success Insert");
     }
@@ -97,7 +102,7 @@ class bankController extends Controller
     {
         //
      try
-     {$result=bankModel::findOrFail($id);
+     {$result=banks::findOrFail($id);
       return Response::json($result);
     }
     catch(\Exception $e)
@@ -118,8 +123,8 @@ class bankController extends Controller
         //
       try{
         try{
-          $result=bankModel::find($id);
-          $result->strBankDesc=$request->txtBankDesc;
+          $result=banks::find($id);
+          $result->description=$request->txtBankDesc;
           $result->save(); 
           return Response::json("success update");
         }catch(\Exception $e){
@@ -144,7 +149,7 @@ class bankController extends Controller
         //
      try
      {
-      $result = bankModel::findorfail($id);
+      $result = banks::findorfail($id);
       try
       {
         $result->delete();
@@ -163,12 +168,12 @@ class bankController extends Controller
   }
   public function softDelete($id)
   {
-    $result=bankModel::find($id);
-    if($result->boolIsActive==1)
+    $result=banks::find($id);
+    if($result->is_active==1)
       $val=0;
     else
       $val=1;
-    $result->boolIsActive=$val;
+    $result->is_active=$val;
     $result->save(); 
   }
 }

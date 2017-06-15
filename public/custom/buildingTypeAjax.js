@@ -9,9 +9,9 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'intBuilTypeCode', name: 'intBuilTypeCode'},
-    {data: 'strBuilTypeDesc', name: 'strBuilTypeDesc'},
-    {data: 'boolIsActive', name: 'boolIsActive', searchable: false},
+    {data: 'id', name: 'id'},
+    {data: 'description', name: 'description'},
+    {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
@@ -33,8 +33,8 @@ $('#btnAddModal').on('click',function(e)
     $.get(url + '/' + builType_id + '/edit', function (data) {
       console.log(data);
       $('#myForm').trigger("reset");
-      $('#builType_id').val(data.intBuilTypeCode);
-      $('#txtBuilTypeDesc').val(data.strBuilTypeDesc);
+      $('#builType_id').val(data.id);
+      $('#txtBuilTypeDesc').val(data.description);
       $('#myModal').modal('show');
     }) 
   });
@@ -145,10 +145,10 @@ $('#btnAddModal').on('click',function(e)
       table.draw();
     }else{
       if(data[0]=="true"){
-        $.notify(data[1].strBuilTypeDesc + " is in use.", "error");
+        $.notify(data[1].description + " is in use.", "error");
       }else{
         table.draw();
-        $.notify(data.strBuilTypeDesc + "successfully deleted!", "success");
+        $.notify(data.description + "successfully deleted!", "success");
       }
     }
     $("#modalDelete").modal("hide");

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Datatables;
 use Response;
-use App\buildingTypeModel;
+use App\building_type;
 
 class buildingTypeController extends Controller
 {
@@ -16,22 +16,22 @@ class buildingTypeController extends Controller
      */
     public function data()
     {
-        $result=buildingTypeModel::where('boolIsDeleted',0);
+        $result=building_type::all();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-          return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->intBuilTypeCode.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->intBuilTypeCode.'"><i class="mdi-action-delete"></i></button>';
-      })
-        ->editColumn('boolIsActive', function ($data) {
+            return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
+        })
+        ->editColumn('is_active', function ($data) {
           $checked = '';
-          if($data->boolIsActive==1){
+          if($data->is_active==1){
             $checked = 'checked';
         }
-        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->intBuilTypeCode.'"><span class="lever switch-col-blue"></span>On</label></div>';
+        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
     })
         ->setRowId(function ($data) {
-          return $data = 'id'.$data->intBuilTypeCode;
-      })
-        ->rawColumns(['boolIsActive','action'])
+            return $data = 'id'.$data->id;
+        })
+        ->rawColumns(['is_active','action'])
         ->make(true);
     }
 
@@ -60,10 +60,10 @@ class buildingTypeController extends Controller
     public function store(Request $request)
     {
 
-       try
-       {
-        $result=new buildingTypeModel();
-        $result->strBuilTypeDesc=$request->txtBuilTypeDesc;
+     try
+     {
+        $result=new building_type();
+        $result->description=$request->txtBuilTypeDesc;
         $result->save();
         return Response::json("success store");
     }
@@ -97,7 +97,7 @@ class buildingTypeController extends Controller
      */
     public function edit($id)
     {
-        $result=buildingTypeModel::find($id);
+        $result=building_type::find($id);
         return Response::json($result);
     }
 
@@ -114,13 +114,13 @@ class buildingTypeController extends Controller
         {  
             try
             {
-              $result=buildingTypeModel::find($id);
-              $result->strBuilTypeDesc=$request->txtBuilTypeDesc;
-              $result->save();
-              return Response::json("success update");
-          }
-          catch(\Exception $e)
-          {
+                $result=building_type::find($id);
+                $result->description=$request->txtBuilTypeDesc;
+                $result->save();
+                return Response::json("success update");
+            }
+            catch(\Exception $e)
+            {
               if($e->errorInfo[1]==1062)
                 return "This Data Already Exists";
             else
@@ -135,13 +135,13 @@ class buildingTypeController extends Controller
 
 public function softdelete($id)
 {
- $result=buildingTypeModel::find($id);
- if($result->boolIsActive==1)
-    $val=0;
-else
-    $val=1;
-$result->boolIsActive=$val;
-$result->save();
+    $result=building_type::find($id);
+    if($result->is_active==1)
+        $val=0;
+    else
+        $val=1;
+    $result->is_active=$val;
+    $result->save();
 }
     /**
      * Remove the specified resource from storage.
@@ -154,7 +154,7 @@ $result->save();
 
         try
         {
-            $result = buildingTypeModel::findorfail($id);
+            $result = building_type::findorfail($id);
             try
             {
               $result->delete();

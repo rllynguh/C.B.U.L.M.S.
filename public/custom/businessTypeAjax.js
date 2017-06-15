@@ -9,9 +9,9 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'intBusiTypeCode', name: 'intBusiTypeCode'},
-    {data: 'strBusiTypeDesc', name: 'strBusiTypeDesc'},
-    {data: 'boolIsActive', name: 'boolIsActive', searchable: false},
+    {data: 'id', name: 'id'},
+    {data: 'description', name: 'description'},
+    {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
@@ -33,8 +33,8 @@ $(document).ready(function()
             console.log(data);
             $('#btnSave').val('Edit');
             changeLabel();
-            $('#busiType_id').val(data.intBusiTypeCode);
-            $('#txtBusiTypeDesc').val(data.strBusiTypeDesc);
+            $('#busiType_id').val(data.id);
+            $('#txtBusiTypeDesc').val(data.description);
             $('#myModal').modal('show');
           }) 
   });
@@ -102,7 +102,7 @@ $(document).ready(function()
     var id = $(this).val();
     $.ajax(
     {
-      url: url + '/softDelete/' + id,
+      url: url + '/softdelete/' + id,
       type: "PUT",
       success: function (data) 
       {
@@ -141,10 +141,10 @@ $(document).ready(function()
       table.draw();
     }else{
       if(data[0]=="true"){
-        $.notify(data[1].strBusiTypeDesc + " is in use.", "delete");
+        $.notify(data[1].description + " is in use.", "delete");
       }else{
         table.draw();
-        $.notify(data.strBusiTypeDesc + " has been deleted!", "success");
+        $.notify(data.description + " has been deleted!", "success");
       }
     }
     $("#modalDelete").modal("hide");

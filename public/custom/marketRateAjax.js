@@ -8,8 +8,8 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'strCityDesc', name: 'strCityDesc'},
-    {data: 'dtmDateAsOf', name: 'dtmDateAsOf'},
+    {data: 'description', name: 'description'},
+    {data: 'date_as_of', name: 'date_as_of'},
     {data: 'rate', name: 'rate'},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
@@ -56,7 +56,7 @@ $(document).ready(function()
         success: function (data) {
           console.log(data);
           rate=data.rate;
-          date=data.dtmDateAsOf;
+          date=data.date_as_of;
           if(parseInt(data.rate)==0)
           {
             rate="not set";

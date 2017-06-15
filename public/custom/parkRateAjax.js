@@ -9,8 +9,8 @@ $(document).ready(function()
 		serverSide: true,
 		ajax: dataurl,
 		columns: [
-		{data: 'strBuilDesc', name: 'strBuilDesc'},
-		{data: 'dtmParkRateDate', name: 'dtmParkRateDate'},
+		{data: 'description', name: 'description'},
+		{data: 'date_as_of', name: 'date_as_of'},
 		{data: 'rate', name: 'rate'},
 		{data: 'action', name: 'action', orderable: false, searchable: false}
 		]
@@ -57,7 +57,7 @@ $(document).ready(function()
 				success: function (data) {
 					console.log(data);
 					rate=data.rate;
-					date=data.dtmParkRateDate;
+					date=data.date_as_of;
 					if(parseInt(data.rate)==0)
 					{
 						rate="not set";
@@ -74,7 +74,7 @@ $(document).ready(function()
 		}}
 		);
 
-	//for prompting user
+	//for proempting user
 	function successPrompt(){
 		title="Record Successfully Updated!";
 		$.notify(title, "success");

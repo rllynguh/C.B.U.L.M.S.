@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class parkRateModel extends baseModel
+class park_rate extends baseModel
 {
     //
-	protected $table="tblParkRate";
 }

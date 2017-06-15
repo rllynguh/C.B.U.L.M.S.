@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class marketRateModel extends baseModel
+class banks extends baseModel
 {
     //
-	protected $table="tblMarketRate";
+	
 }

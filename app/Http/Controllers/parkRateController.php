@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\parkRateModel;
+use App\park_rate;
 use Datatables;
 use DB;
 use Illuminate\Http\Request;
@@ -16,35 +16,38 @@ class parkRateController extends Controller
      */
     public function data()
     {
-        $result=DB::table("tblBuilding")
-        ->leftJoin("tblParkRate","tblBuilding.intBuilCode","tblParkRate.intBuilCode")
-        ->groupBy("tblBuilding.intBuilCode")
-        ->whereRaw("tblParkRate.dtmParkRateDate=(SELECT MAX(tblParkRate.dtmParkRateDate) from tblParkRate where intBuilCode=tblBuilding.intBuilCode) or isnull(tblParkRate.dtmParkRateDate)")
-        ->select("tblParkRate.*","tblBuilding.*",DB::raw("COALESCE(tblParkRate.dblParkRate,0) as rate"))
-        ->orderBy("tblBuilding.strBuilDesc")
+        $result=DB::table("buildings")
+        ->leftJoin("park_rates","buildings.id","park_rates.building_id")
+        ->groupBy("buildings.id")
+        ->whereRaw("park_rates.date_as_of=(SELECT MAX(park_rates.date_as_of) from park_rates where building_id=buildings.id) or isnull(park_rates.date_as_of)")
+        ->select("park_rates.*","buildings.*",DB::raw("COALESCE(park_rates.rate,0) as rate"))
+        ->orderBy("buildings.description")
         ->get();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->intBuilCode.'"><i class="mdi-editor-border-color"></i></button>';
+            return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
         })
         ->editColumn('rate', function ($data) {
           $rate = 'NOT SET';
           if($data->rate!="0"){
-            $rate="PHP $data->rate/sqm/month";
+            $rate="PHP $data->rate/sqm/month
+
+
+            ";
         }
         return $rate;
     })
-        ->editColumn('dtmParkRateDate', function ($data) {
+        ->editColumn('date_as_of', function ($data) {
             $date = 'N/A';
             if($data->rate!="0"){
-                $time = strtotime($data->dtmParkRateDate);
+                $time = strtotime($data->date_as_of);
                 $myDate = date( 'm-d-y', $time );
                 $date=$myDate;
             }
             return $date;
         })
         ->setRowId(function ($data) {
-            return $data = 'id'.$data->intBuilCode;
+            return $data = 'id'.$data->building_id;
         })
         ->rawColumns(['action'])
         ->make(true);
@@ -75,10 +78,10 @@ class parkRateController extends Controller
     public function store(Request $request)
     {
         //
-        $parkRate=new parkRateModel();
-        $parkRate->intBuilCode=$request->myId;
-        $parkRate->dtmParkRateDate=date("Y-m-d H:i:s");
-        $parkRate->dblParkRate=$request->txtRate;
+        $parkRate=new park_rate();
+        $parkRate->building_id=$request->myId;
+        $parkRate->date_as_of=date("Y-m-d H:i:s");
+        $parkRate->rate=$request->txtRate;
         $parkRate->save();
         return Response::json("success store");
     }
@@ -103,10 +106,10 @@ class parkRateController extends Controller
     public function edit($id)
     {
         //
-     $result=DB::table("tblParkRate")
-     ->select("tblParkRate.*",DB::raw("COALESCE(tblParkRate.dblParkRate,0) as rate"))
-     ->where("tblParkRate.intBuilCode",$id)
-     ->orderBy("tblParkRate.dtmParkRateDate","desc")
+     $result=DB::table("park_rates")
+     ->select("park_rates.*",DB::raw("COALESCE(park_rates.rate,0) as rate"))
+     ->where("park_rates.building_id",$id)
+     ->orderBy("park_rates.date_as_of","desc")
      ->first();
      return Response::json($result);
  }
