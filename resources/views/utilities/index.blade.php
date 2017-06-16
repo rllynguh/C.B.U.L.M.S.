@@ -23,7 +23,7 @@
               </h5>
               
               <div class="form-line">
-                <input autocomplete="off" min="1" max="12" required  id="txtSec" name="txtSec" type="number" class="form-control text-center " data-parsley-pattern="^[0-9]+$" data-parsley-type="number" value="{{$result->intSecurityDeposit}}" placeholder="months">
+                <input autocomplete="off" min="1" max="12" required  id="txtSec" name="txtSec" type="number" class="form-control text-center " data-parsley-pattern="^[0-9]+$" data-parsley-type="number"  placeholder="months">
               </div>
             </div>
             <div class="form-group p-l-30 p-t-30">
@@ -31,7 +31,7 @@
                 Value Added Tax(%)
               </h5>
               <div class="form-line">
-                <input autocomplete="off" required=""  id="txtVAT" name="txtVAT" class="form-control align-center" required  data-parsley-type="number" placeholder="%" value="{{$result->dblVat}}">
+                <input autocomplete="off" required=""  id="txtVAT" name="txtVAT" class="form-control align-center" required  data-parsley-type="number" placeholder="%" >
               </div>
             </div>
             <div class="form-group p-l-30 p-t-30">
@@ -39,7 +39,7 @@
                 Expanded Witholding Tax(%)
               </h5>
               <div class="form-line">
-                <input autocomplete="off" required=""  id="txtEWT" name="txtEWT" class="form-control align-center" required  data-parsley-type="number" placeholder="%" value="{{$result->dblEwt}}">
+                <input autocomplete="off" required=""  id="txtEWT" name="txtEWT" class="form-control align-center" required  data-parsley-type="number" placeholder="%" >
               </div>
             </div>
             <div class="form-group p-l-30 p-t-30">
@@ -47,22 +47,22 @@
                 Escalation Rate(%)
               </h5>
               <div class="form-line">
-               <input autocomplete="off" required=""  id="txtEsca" name="txtEsca" class="form-control align-center" required  data-parsley-type="number" placeholder="%" value="{{$result->dblEscalation}}">
-             </div>
-           </div>
-           <div class="form-group p-l-30 p-t-30">
+                <input autocomplete="off" required=""  id="txtEsca" name="txtEsca" class="form-control align-center" required  data-parsley-type="number" placeholder="%" >
+              </div>
+            </div>
+            <div class="form-group p-l-30 p-t-30">
              <h5 data-toggle="tooltip" data-placement="top" title="(amount/sqm)">
                Vetting Fee(rate/sqm)
              </h5>
              <div class="form-line">
-              <input autocomplete="off" required=""  id="txtVet" name="txtVet" class="form-control align-center" required  data-parsley-type="number" placeholder="%" value="{{$result->dblVettingFee}}">
-            </div>
-            <div class="form-group p-l-10 p-t-30">
+               <input autocomplete="off" required=""  id="txtVet" name="txtVet" class="form-control align-center" required  data-parsley-type="number" placeholder="%" >
+             </div>
+             <div class="form-group p-l-10 p-t-30">
               <h5 data-toggle="tooltip" data-placement="top" title="(amount/sqm)">
                 Common User Service Area rate(rate/sqm)
               </h5>
               <div class="form-line"> 
-                <input autocomplete="off" required=""  id="txtCUSA" name="txtCUSA" class=" form-control align-center" required  data-parsley-type="number" placeholder="%" value="{{$result->dblCusa}}">
+                <input autocomplete="off" required=""  id="txtCUSA" name="txtCUSA" class=" form-control align-center" required  data-parsley-type="number" placeholder="%" >
               </div>
             </div>
             <button type="submit" class="btn btn-lg m-t-30 bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton">Update</span></button>
@@ -77,4 +77,8 @@
 @section('scripts')
 {!!Html::script("custom/utilitiesAjax.js")!!}
 {!!Html::script("js/pages/forms/form-wizard.js")!!}
+<script type="text/javascript">
+  url="{!!route("utilities.index")!!}";
+  dataurl="{!!route("utilities.getData")!!}";
+</script>
 @endsection

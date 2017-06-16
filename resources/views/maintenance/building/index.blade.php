@@ -5,6 +5,8 @@
       var dataurl="{{route("buildings.getData")}}";
       url="{{route("buildings.index")}}";
       urlfloor="{{route("buildings.storefloor")}}";
+      urlbtype="{{route("custom.getBuildingType")}}";
+      urlprov="{{route("custom.getProvince")}}";
     </script>
     @endsection
     @section('content')
@@ -88,110 +90,101 @@
                         <div class="form-line">
                           <h5 class="card-inside-title">Building Type</h5>
                           <select required id="comBuilType" name="comBuilType" class="form-control show-tick align-center">
-                            @foreach($btype as $btype)
-                            <option
-                            value="{{$btype->intBuilTypeCode}}" class="align-center">{{$btype->strBuilTypeDesc}}
-                          </option>
-                          @endforeach
-                        </select>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 col-md-6">
+                        <div class="form-line">
+                          <h5 class="card-inside-title">Building Name</h5>
+                          <input autocomplete="off" data-parsley-pattern = '^[a-zA-Z0-9. ]+$' type="text" name="txtBuilDesc" id="txtBuilDesc" class="form-control align-center" minlength="3" maxlength="20" required>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-sm-6 col-md-6">
-                      <div class="form-line">
-                        <h5 class="card-inside-title">Building Name</h5>
-                        <input autocomplete="off" data-parsley-pattern = '^[a-zA-Z0-9. ]+$' type="text" name="txtBuilDesc" id="txtBuilDesc" class="form-control align-center" minlength="3" maxlength="20" required>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="form-group p-l-30 p-b-10">
-                    <div class="col-sm-12">
-                      <div class="form-line">
-                        <h5 class="card-inside-title">Number of Floors</h5>
-                        <input autocomplete="off" id="txtBFNum" name="txtBFNum" min="1" max="99"
-                        type="text" minlength="1" maxlength="2" class="form-control text-center" value="1"
-                        required data-parsley-pattern="^[0-9]+$" data-parsley-type="number"
-                        >
+                    <div class="form-group p-l-30 p-b-10">
+                      <div class="col-sm-12">
+                        <div class="form-line">
+                          <h5 class="card-inside-title">Number of Floors</h5>
+                          <input autocomplete="off" id="txtBFNum" name="txtBFNum" min="1" max="99"
+                          type="text" minlength="1" maxlength="2" class="form-control text-center" value="1"
+                          required data-parsley-pattern="^[0-9]+$" data-parsley-type="number"
+                          >
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="form-group p-l-30 p-b-10">
-                    <div class="col-sm-4 col-md-4">
-                      <div class="form-line">
-                        <h5 class="card-inside-title">Address No.</h5>
-                        <input data-parsley-type="digits" autocomplete="off" type="text" class="form-control align-center" name="txtSNum" id="txtSNum" maxlength="20" minlength="1" required >
+                    <div class="form-group p-l-30 p-b-10">
+                      <div class="col-sm-4 col-md-4">
+                        <div class="form-line">
+                          <h5 class="card-inside-title">Address No.</h5>
+                          <input data-parsley-type="digits" autocomplete="off" type="text" class="form-control align-center" name="txtSNum" id="txtSNum" maxlength="20" minlength="1" required >
+                        </div>
+                      </div>
+                      <div class="col-sm-4 col-md-4">
+                        <div class="form-line">
+                          <h5 class="card-inside-title">Street</h5>
+                          <input autocomplete="off" type="text" data-parsley-pattern = '^[a-zA-Z0-9. ]+$' class="form-control align-center" name="txtStreet" id="txtStreet" maxlength="20" minlength="3" required >
+                        </div>
+                      </div>
+                      <div class="col-sm-4 col-md-4">
+                        <div class="form-line">
+                          <h5 class="card-inside-title">Town / Barangay</h5>
+                          <input data-parsley-pattern = '^[a-zA-Z0-9. ]+$' autocomplete="off" type="text" class="form-control align-center" name="txtDistrict" id="txtDistrict" maxlength="20" minlength="3" required >
+                        </div>
                       </div>
                     </div>
-                    <div class="col-sm-4 col-md-4">
-                      <div class="form-line">
-                        <h5 class="card-inside-title">Street</h5>
-                        <input autocomplete="off" type="text" data-parsley-pattern = '^[a-zA-Z0-9. ]+$' class="form-control align-center" name="txtStreet" id="txtStreet" maxlength="20" minlength="3" required >
+                    <div class="form-group p-l-30">
+                      <div class="col-sm-6 col-md-6">
+                       <div class="form-line">
+                         <h5 class="card-inside-title">Province</h5>
+                         <select required name="comProvince" id="comProvince" class="form-control show-tick align-center">
+                         </select>
+                       </div>
+                     </div>
+                     <div class="form-group p-l-30">
+                       <div class="col-sm-6 col-md-6">
+                        <div class="form-line">
+                          <h5 class="card-inside-title">City</h5>
+                          <select required name="comCity" id="comCity" class="form-control show-tick align-center"></select>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-sm-4 col-md-4">
-                      <div class="form-line">
-                        <h5 class="card-inside-title">Town / Barangay</h5>
-                        <input data-parsley-pattern = '^[a-zA-Z0-9. ]+$' autocomplete="off" type="text" class="form-control align-center" name="txtDistrict" id="txtDistrict" maxlength="20" minlength="3" required >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group p-l-30">
-                    <div class="col-sm-6 col-md-6">
-                     <div class="form-line">
-                       <h5 class="card-inside-title">Province</h5>
-                       <select required name="comProvince" id="comProvince" class="form-control show-tick align-center">
-                        @foreach($province as $province)
-                        <option value="{{$province->intProvinceCode}}"class="align-center">{{$province->strProvinceDesc}}
-                        </option>
-                        @endforeach
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group p-l-30">
-                   <div class="col-sm-6 col-md-6">
-                    <div class="form-line">
-                      <h5 class="card-inside-title">City</h5>
-                      <select required name="comCity" id="comCity" class="form-control show-tick align-center"></select>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-             <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12 col-sm-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
-             <input type="hidden" id="myId" value="0">
-             <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <div class="modal-footer">
+                 <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12 col-sm-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
+                 <input type="hidden" id="myId" value="0">
+                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+               </div>
+             </form>
            </div>
-         </form>
+         </div>
        </div>
-     </div>
-   </div>
-   <!--MODAL-->
+       <!--MODAL-->
 
-   <div class="card">
-    <div class="header align-center">
-      <h2>
-        LIST OF BUILDINGS
-      </h2>
-    </div>
-    <div class="body">
-      <table class="table table-hover dataTable" id="myTable">
-        <thead>
-          <tr>
-            <th class="align-center">Building ID</th>
-            <th class="align-center">Building  Name</th>
-            <th class="align-center">Location</th>
-            <th class="align-center">Status</th>
-            <th class="align-center">Action</th>
-          </tr>
-        </thead>
-        <tbody id="myList">
-        </tbody>
-      </table>
+       <div class="card">
+        <div class="header align-center">
+          <h2>
+            LIST OF BUILDINGS
+          </h2>
+        </div>
+        <div class="body">
+          <table class="table table-hover dataTable" id="myTable">
+            <thead>
+              <tr>
+                <th class="align-center">Building ID</th>
+                <th class="align-center">Building  Name</th>
+                <th class="align-center">Location</th>
+                <th class="align-center">Status</th>
+                <th class="align-center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="myList">
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
 </div>
 @endsection

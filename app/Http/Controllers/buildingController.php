@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Controller\smartCounter;
 use Response;
 use Datatables;
-use App\addressModel;
-use App\buildingModel;
-use App\floorModel;
+use App\address;
+use App\building;
+use App\building_type;
+use App\floor;
 
 class buildingController extends Controller
 {
@@ -20,42 +20,40 @@ class buildingController extends Controller
      */
     public function data()
     {
-       $result=DB::table("tblbuilding")
-       ->select("tblAddress.*","tblCity.*", 'tblProvince.*' ,'tblbuilding.*')
-       ->join('tblAddress','tblbuilding.intAddrCode','tblAddress.intAddrCode')
-       ->join('tblCity','tblAddress.intCityCode',"tblCity.intCityCode")
-       ->join('tblProvince','tblCity.intProvinceCode',"tblProvince.intProvinceCode")
-       ->where("tblBuilding.boolIsDeleted",0)
-       ->get();
-       return Datatables::of($result)
-       ->addColumn('action', function ($data) {
-        return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->intBuilCode.'"><i class="mdi-content-add"></i></button> <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->intBuilCode.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->intBuilCode.'"><i class="mdi-action-delete"></i></button>';
+     $result=DB::table("buildings")
+     ->select("addresses.*","cities.description as city_description", 'provinces.*' ,'buildings.*')
+     ->join('addresses','buildings.address_id','addresses.id')
+     ->join('cities','addresses.city_id',"cities.id")
+     ->join('provinces','cities.province_id',"provinces.id")
+     ->get();
+     return Datatables::of($result)
+     ->addColumn('action', function ($data) {
+        return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
     })
-       ->editColumn('boolIsActive', function ($data) {
-          $checked = '';
-          if($data->boolIsActive==1){
-            $checked = 'checked';
-        }
-        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->intBuilCode.'"><span class="lever switch-col-blue"></span>On</label></div>';
+     ->editColumn('is_active', function ($data) {
+      $checked = '';
+      if($data->is_active==1){
+        $checked = 'checked';
+    }
+    return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
+})
+     ->setRowId(function ($data) {
+        return $data = 'id'.$data->id;
     })
-       ->setRowId(function ($data) {
-        return $data = 'id'.$data->intBuilCode;
-    })
-       ->rawColumns(['boolIsActive','action'])
-       ->make(true);
-   }
+     ->rawColumns(['is_active','action'])
+     ->make(true);
+ }
 
-   public function index()
-   {
+ public function index()
+ {
         //
-    $btype=Db::table('tblBuildingType')
-    ->where("boolIsActive",1)
-    ->where("boolIsDeleted",0)
-    ->select("tblBuildingType.*")
+    $btype=Db::table('building_types')
+    ->where("is_active",1)
+    ->select("building_types.*")
     ->get();
-    $province=Db::table('tblProvince')
-    ->where("boolIsActive",1)
-    ->select("tblProvince.*")
+    $province=Db::table('provinces')
+    ->where("is_active",1)
+    ->select("provinces.*")
     ->get();
     return view("maintenance.building.index")
     ->withBtype($btype)
@@ -81,53 +79,53 @@ class buildingController extends Controller
      */
     public function storefloor(Request $request)
     {
-       $floor=new floorModel();
-       $floor->intFloorNum=$request->txtFNum;
-       $floor->intBuilCode=$request->comBuilding;
-       $floor->intNumOfUnit=$request->txtUNum;
-       $floor->save();
-       return Response::json("success store");
-   }
-   public function store(Request $request)
-   {
+     $floor=new floor();
+     $floor->number=$request->txtFNum;
+     $floor->building_id=$request->comBuilding;
+     $floor->num_of_unit=$request->txtUNum;
+     $floor->save();
+     return Response::json("success store");
+ }
+ public function store(Request $request)
+ {
         //
-     $latest=DB::table("tblBuilding")
-     ->select("tblBuilding.*")
-     ->orderBy('tblbuilding.strBuilCode',"DESC")
-     ->join('tblBuildingType','tblbuilding.intBuilTypeCode','tblBuildingType.intBuilTypeCode')
-     ->join('tblAddress','tblbuilding.intAddrCode','tblAddress.intAddrCode')
-     ->where('tblBuilding.intBuilTypeCode',$request->comBuilType)
-     ->first();
-     $btype=buildingTypeModel::find($request->comBuilType);
-     $pk="BLDG".strtoupper(substr($btype->strBuilTypeDesc, 0, 3));
-     if(!is_null($latest))
-        $pk=$latest->strBuilCode;
-    $sc= new smartCounter();
-    $pk=$sc->increment($pk);
-    $address=new addressModel();
-    $address->strAddrNum=$request->txtSNum;
-    $address->strAddrStreet=$request->txtStreet;
-    $address->strAddrDistrict=$request->txtDistrict;
-    $address->intCityCode=$request->comCity;
-    $address->save();
-    try
-    {
-        $result=new buildingModel();
-        $result->strBuilCode=$pk;
-        $result->strBuilDesc=$request->txtBuilDesc;
-        $result->intBuilTypeCode=$request->comBuilType;
-        $result->intBuilNumOfFloor=$request->txtBFNum;
-        $result->intAddrCode=$address->intAddrCode;
-        $result->save();
-        return Response::json("success store");
-    }
-    catch(\Exception $e) {
-      if($e->errorInfo[1]==1062)
-        return "This Data Already Exists";
-    else if($e->errorInfo[1]==1452)
-        return "Already Deleted";
-    else
-        return var_dump($e->errorInfo[1]);
+   $latest=DB::table("buildings")
+   ->select("buildings.*")
+   ->orderBy('buildings.code',"DESC")
+   ->join('building_types','buildings.building_type_id','building_types.id')
+   ->join('addresses','buildings.address_id','addresses.id')
+   ->where('buildings.building_type_id',$request->comBuilType)
+   ->first();
+   $btype=building_type::find($request->comBuilType);
+   $pk="BLDG".strtoupper(substr($btype->description, 0, 3));
+   if(!is_null($latest))
+    $pk=$latest->code;
+$sc= new smartCounter();
+$pk=$sc->increment($pk);
+$address=new address();
+$address->number=$request->txtSNum;
+$address->street=$request->txtStreet;
+$address->district=$request->txtDistrict;
+$address->city_id=$request->comCity;
+$address->save();
+try
+{
+    $result=new building();
+    $result->code=$pk;
+    $result->description=$request->txtBuilDesc;
+    $result->building_type_id=$request->comBuilType;
+    $result->num_of_floor=$request->txtBFNum;
+    $result->address_id=$address->id;
+    $result->save();
+    return Response::json("success store");
+}
+catch(\Exception $e) {
+  if($e->errorInfo[1]==1062)
+    return "This Data Already Exists";
+else if($e->errorInfo[1]==1452)
+    return "Already Deleted";
+else
+    return var_dump($e->errorInfo[1]);
 } 
 }
 
@@ -143,11 +141,11 @@ class buildingController extends Controller
     }
     public function getFloor($id)
     {
-        $result=DB::table("tblFloor")
-        ->join("tblBuilding","tblFloor.intBuilCode","tblBuilding.intBuilCode")
-        ->orderBy("tblFloor.intFloorNum","desc")
-        ->select(DB::raw("tblBuilding.intBuilNumOfFloor as max,COALESCE(MAX(intFloorNum) + 1,1) as current, count(*) as count"))
-        ->where("tblBuilding.intBuilCode",$id)
+        $result=DB::table("floors")
+        ->join("buildings","floors.building_id","buildings.id")
+        ->orderBy("floors.number","desc")
+        ->select(DB::raw("buildings.num_of_floor as max,COALESCE(MAX(number) + 1,1) as current, count(*) as count"))
+        ->where("buildings.id",$id)
         ->first();
         return Response::json($result);
     }
@@ -160,15 +158,15 @@ class buildingController extends Controller
     public function edit($id)
     {
         //
-        $result = DB::table('tblBuilding')
-        ->select('tblAddress.*','tblCity.*','tblfloor.*','tblProvince.*','tblBuildingType.*','tblBuilding.*',DB::raw('COUNT(tblFloor.intBuilCode) as current'))
-        ->leftJoin('tblFloor','tblBuilding.intBuilCode','=','tblFloor.intBuilCode')
-        ->join('tblAddress','tblBuilding.intAddrCode','=','tblAddress.intAddrCode')
-        ->join('tblCity','tblAddress.intCityCode',"tblCity.intCityCode")
-        ->join('tblProvince','tblCity.intProvinceCode',"tblProvince.intProvinceCode")
-        ->join('tblBuildingType','tblBuilding.intBuilTypeCode','=','tblBuildingType.intBuilTypeCode')
-        ->where('tblBuilding.intBuilCode','=',$id)
-        ->groupBy('tblBuilding.intBuilCode')
+        $result = DB::table('buildings')
+        ->select('addresses.*','addresses.number as address_number','cities.*','floors.*','provinces.*','building_types.description as building_type_description','buildings.*',DB::raw('COUNT(floors.building_id) as current'))
+        ->leftJoin('floors','buildings.id','=','floors.building_id')
+        ->join('addresses','buildings.address_id','=','addresses.id')
+        ->join('cities','addresses.city_id',"cities.id")
+        ->join('provinces','cities.province_id',"provinces.id")
+        ->join('building_types','buildings.building_type_id','=','building_types.id')
+        ->where('buildings.id','=',$id)
+        ->groupBy('buildings.id')
         ->first();
         return Response::json($result);
     }
@@ -188,9 +186,9 @@ class buildingController extends Controller
         {
             try
             {
-                $result=buildingModel::find($id);
-                $result->strBuilDesc=$request->txtBuilDesc;
-                $result->intBuilNumOfFloor=$request->txtBFNum;
+                $result=building::find($id);
+                $result->description=$request->txtBuilDesc;
+                $result->num_of_floor=$request->txtBFNum;
                 $result->save();
             }catch(\Exception $e)
             {
@@ -204,11 +202,11 @@ class buildingController extends Controller
     {
      return "Deleted";
  }
- $address=addressModel::find($result->intAddrCode);
- $address->strAddrNum=$request->txtSNum;
- $address->strAddrStreet=$request->txtStreet;
- $address->strAddrDistrict=$request->txtDistrict;
- $address->intCityCode=$request->comCity;
+ $address=address::find($result->address_id);
+ $address->number=$request->txtSNum;
+ $address->street=$request->txtStreet;
+ $address->district=$request->txtDistrict;
+ $address->city_id=$request->comCity;
  $address->save();
  return Response::json("success update");
 }
@@ -221,12 +219,12 @@ class buildingController extends Controller
      */
     public function softdelete($id)
     {
-      $result=buildingModel::find($id);
-      if($result->boolIsActive==1)
+      $result=building::find($id);
+      if($result->is_active==1)
         $val=0;
     else
         $val=1;
-    $result->boolIsActive=$val;
+    $result->is_active=$val;
     $result->save();
 }
 public function destroy($id)
@@ -234,7 +232,7 @@ public function destroy($id)
         //
    try
    {
-    $result = buildingModel::findorfail($id);
+    $result = building::findorfail($id);
     try
     {
       $result->delete();

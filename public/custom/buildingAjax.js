@@ -2,7 +2,8 @@
 $(document).ready(function()
 {
   //for house keeping
-  getCity();
+  getBuildingType();
+  getProvince();
   xhrPool=[];
   var table = $('#myTable').DataTable({
     responsive: true,
@@ -10,10 +11,10 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'strBuilCode', name: 'strBuilCode'},
-    {data: 'strBuilDesc', name: 'strBuilDesc'},
-    {data: 'strCityDesc', name: 'strCityDesc'},
-    {data: 'boolIsActive', name: 'boolIsActive', searchable: false},
+    {data: 'id', name: 'id'},
+    {data: 'description', name: 'description'},
+    {data: 'city_description', name: 'city_description'},
+    {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
@@ -23,7 +24,7 @@ $(document).ready(function()
   { 
     $("#comBuilding").val($(this).val());
     $.get(url + '/' + $(this).val() + '/edit', function (data) {
-      $("#txtFBuilDesc").val(data.strBuilDesc);
+      $("#txtFBuilDesc").val(data.description);
       getLatest();
       $("#modalFloor").modal("show");  
     });
@@ -87,27 +88,27 @@ $(document).ready(function()
               value=data.current;
             $("#txtBFNum").attr("min",value);
             $("#comBuilType").attr("disabled","");
-            $('#myId').val(data.intBuilCode);
+            $('#myId').val(data.id);
             var exists = false;
             $('#comBuilType').each(function(){
-              if (this.value == data.intBuilTypeCode) {
+              if (this.value == data.building_type_id) {
                 exists = true;
                 return false;
               }
             });
             if(!exists)
             { 
-              $('#comBuilType').append($('<option>', {value: data.intBuilTypeCode, text: data.strBuilTypeDesc}));
-              $('#comBuilType').val(data.intBuilTypeCode);
+              $('#comBuilType').append($('<option>', {value: data.building_type_id, text: data.building_type_description}));
+              $('#comBuilType').val(data.building_type_id);
             }
-            $('#comBuilType').val(data.intBuilTypeCode);
-            $('#txtBuilDesc').val(data.strBuilDesc);
-            $('#txtBFNum').val(data.intBuilNumOfFloor);
-            $('#txtSNum').val(data.strAddrNum);
-            $('#txtStreet').val(data.strAddrStreet);
-            $('#txtDistrict').val(data.strAddrDistrict);
-            $('#comCity').val(data.intCityCode);
-            $('#comProvince').val(data.intProvinceCode);
+            $('#comBuilType').val(data.building_type_id);
+            $('#txtBuilDesc').val(data.description);
+            $('#txtBFNum').val(data.num_of_floor);
+            $('#txtSNum').val(data.address_number);
+            $('#txtStreet').val(data.street);
+            $('#txtDistrict').val(data.district);
+            $('#comCity').val(data.city_id);
+            $('#comProvince').val(data.province_id);
             $('#myModal').modal('show');
           }) 
   });
@@ -218,10 +219,10 @@ $(document).ready(function()
         table.draw();
       }else{
         if(data[0]=="true"){
-          $.notify(data[1].strBuilDesc + " is in use!", "boom");
+          $.notify(data[1].description + " is in use!", "boom");
         }else{
           table.draw();
-          $.notify(data.strBuilDesc + " successfully deleted.", "boom");
+          $.notify(data.description + " successfully deleted.", "boom");
         }
       }
       $("#modalDelete").modal("hide");
@@ -272,6 +273,32 @@ function changeLabel()
   $('#lblButton').replaceWith(btn);
   $('#label').replaceWith(label);
 }
+function getBuildingType()
+{
+ $.get(urlbtype, function (data) {
+  console.log(data);
+  $('#comBuilType').children('option').remove();
+  $.each(data,function(index,value)
+  {
+    $('#comBuilType').append($('<option>', {value:value.id, text:value.description}));
+  });
+});
+}
+
+
+function getProvince()
+{
+  $.get(urlprov, function (data) {
+    console.log(data);
+    $('#comProvince').children('option').remove();
+    $.each(data,function(index,value)
+    {
+      $('#comProvince').append($('<option>', {value:value.id, text:value.description}));
+    });
+    getCity();
+  });
+}
+
 
 //for querying list of city
 function getCity()
@@ -281,7 +308,7 @@ function getCity()
     $('#comCity').children('option').remove();
     $.each(data,function(index,value)
     {
-      $('#comCity').append($('<option>', {value:value.intCityCode, text:value.strCityDesc}));
+      $('#comCity').append($('<option>', {value:value.id, text:value.description}));
     });
   });
 }

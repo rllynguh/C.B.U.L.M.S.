@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class utilitiesModel extends baseModel
+class address extends baseModel
 {
     //
-	protected $table="tblUtilities";
+	protected $table="addresses";
 }

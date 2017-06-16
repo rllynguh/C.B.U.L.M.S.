@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('maintenance/buildingtypes/get/data', ['uses' => 'buildingTypeController@data', 'as' => 'buildingtypes.getData']);
 
 	Route::resource("utilities","utilitiesController");
+	Route::get('utilities/get/data', ['uses' => 'utilitiesController@data', 'as' => 'utilities.getData']);
 
 	Route::resource("maintenance/parkrates","parkRateController");
 	Route::get('maintenance/parkrates/get/data', ['uses' => 'parkRateController@data', 'as' => 'parkrates.getData']);
@@ -57,7 +58,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::put('maintenance/buildings/softdelete/{building}',['uses' => 'buildingController@softdelete', 'as' => 'buildings.softdelete']);
 	Route::post('maintenance/buildings/storefloor',['uses' => 'buildingController@storefloor', 'as' => 'buildings.storefloor']);
 	Route::get('maintenance/buildings/getFloor/{floor}',['uses' => 'buildingController@getFloor', 'as' => 'buildings.getfloor']);
-	Route::get('custom/getCity/{id}', ['uses' => 'customController@getCity', 'as' => 'custom.getCity']);
+	
 
 	Route::resource("maintenance/floors","floorController");
 	Route::get('maintenance/floors/getFloor/{id}', ['uses' => 'floorController@getFloor', 'as' => 'floors.getFloor']);
@@ -77,7 +78,10 @@ Route::group(['prefix' => 'admin/'], function () {
 
 
 
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('custom/getCity/{id}', ['uses' => 'customController@getCity', 'as' => 'custom.getCity']);
+Route::get('custom/getBuildingType', ['uses' => 'customController@getBuildingType', 'as' => 'custom.getBuildingType']);
+Route::get('custom/getProvince', ['uses' => 'customController@getProvince', 'as' => 'custom.getProvince']);
+

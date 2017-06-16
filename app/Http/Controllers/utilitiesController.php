@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\utilitiesModel;
+use App\utility;
 use DB;
 use Response;
 
@@ -14,15 +14,19 @@ class utilitiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function data()
+    {
+        //
+        $result=DB::table("utilities")
+        ->orderBy("date_as_of","desc")
+        ->select("utilities.*")
+        ->first();
+        return Response::json($result);
+    }
     public function index()
     {
         //
-        $result=DB::table("tblUtilities")
-        ->orderBy("dtmDateAsOf","desc")
-        ->select("tblUtilities.*")
-        ->first();
         return view("utilities.index")
-        ->withResult($result)
         ;
     }
 
@@ -45,17 +49,17 @@ class utilitiesController extends Controller
     public function store(Request $request)
     {
         //
-       $util=new utilitiesModel();
-       $util->dblCusa=$request->txtCUSA;
-       $util->intSecurityDeposit=$request->txtSec;
-       $util->dblVat=$request->txtVAT;
-       $util->dblEwt=$request->txtEWT;
-       $util->dblEscalation=$request->txtEsca;
-       $util->dblVettingFee=$request->txtVet;
-       $util->dtmDateAsOf=date("Y-m-d H:i:s");
-       $util->save();
-       return Response::json($util);
-   }
+        $util=new utility();
+        $util->cusa_rate=$request->txtCUSA;
+        $util->security_deposit_rate=$request->txtSec;
+        $util->vat_rate=$request->txtVAT;
+        $util->ewt_rate=$request->txtEWT;
+        $util->escalation_rate=$request->txtEsca;
+        $util->vetting_fee=$request->txtVet;
+        $util->date_as_of=date("Y-m-d H:i:s");
+        $util->save();
+        return Response::json($util);
+    }
 
     /**
      * Display the specified resource.
@@ -77,6 +81,7 @@ class utilitiesController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
