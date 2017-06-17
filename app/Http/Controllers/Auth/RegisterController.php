@@ -48,11 +48,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'fname' => 'required|string|max:255',
-            'mname' => 'required|string|max:255',
-            'lname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:tblUser,strEmail',
-            'cnum' => 'required|string|max:255|unique:tblUser,strCellNum',
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'cell_num' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             ]);
     }
@@ -66,13 +66,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'strFirstName' => $data['fname'],
-            'strMidName' => $data['mname'],
-            'strLastName'=> $data['lname'],
-            'strCellNum'=>$data['cnum'],
-            'strEmail' => $data['email'],
-            'strPassword' => bcrypt($data['password']),
-            'boolIsActive' => 1,
+            'first_name' => $data['first_name'],
+            'middle_name' => $data['middle_name'],
+            'last_name'=> $data['last_name'],
+            'cell_num'=>$data['cell_num'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'is_active' => 1,
             ]);
     }
 }

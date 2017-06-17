@@ -12,12 +12,12 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'strBuilDesc', name: 'strBuilDesc'},
-    {data: 'intFloorNum', name: 'intFloorNum'},
-    {data: 'strParkAreaDesc', name: 'strParkAreaDesc'},
-    {data: 'strParkSpaceDesc', name: 'strParkAreaDesc'},
-    {data: 'dblParkSpaceSize', name: 'dblParkSpaceSize'},
-    {data: 'boolIsActive', name: 'boolIsActive', searchable: false},
+    {data: 'building_description', name: 'description'},
+    {data: 'floor_number', name: 'floor_number'},
+    {data: 'park_area_description', name: 'park_area_description'},
+    {data: 'description', name: 'description'},
+    {data: 'size', name: 'size'},
+    {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
@@ -48,32 +48,32 @@ $(document).ready(function()
       var exists = false;
       $('#comBuilding').each(function()
       {
-        if (this.value == data.intBuilCode) {
+        if (this.value == data.building_id) {
           exists = true;
           return false;
         }});
       if(!exists)
       {
-        $('#comBuilding').append($('<option>', {value: data.intBuilCode, text: data.strBuilDesc}));
+        $('#comBuilding').append($('<option>', {value: data.building_id, text: data.building_description}));
       }
-      $('#comBuilding').val(data.intBuilCode);
+      $('#comBuilding').val(data.building_id);
       var exists = false;
       $('#comParkArea').each(function(){
-        if (this.value == data.intParkAreaCode) 
+        if (this.value == data.park_area_id) 
         {
           exists = true;
           return false;
         }});
       if(!exists)
       {
-        $('#comParkArea').append($('<option>', {value: data.intParkAreaCode, text: data.strParkAreaDesc + " (Floor# " + data.intFloorNum + ")"}));
+        $('#comParkArea').append($('<option>', {value: data.park_area_id, text: data.park_area_description + " (Floor# " + data.floor_number + ")"}));
       }
-      $('#comParkArea').val(data.intParkAreaCode);
+      $('#comParkArea').val(data.park_area_id);
       getLatest();
-      $('#myId').val(data.intParkSpaceCode);
-      $('#txtPNum').val(parseInt(data.intParkSpaceNumber));
+      $('#myId').val(data.id);
+      $('#txtPNum').val(parseInt(data.number));
       console.log(jQuery.type($('#txtPNum').val()) + $('#txtPNum').val());
-      $('#txtArea').val(parseFloat(data.dblParkSpaceSize));
+      $('#txtArea').val(parseFloat(data.size));
       $('#myModal').modal('show');
     }); 
   });
@@ -185,7 +185,7 @@ function getBuilding()
     $('#comBuilding').children('option').remove();
     $.each(data,function(index,value)
     {
-      $('#comBuilding').append($('<option>', {value:value.intBuilCode, text:value.strBuilDesc}));
+      $('#comBuilding').append($('<option>', {value:value.id, text:value.description}));
     });
     if($("#btnSave").val()=="Save")
       $("#comBuilding").val(selected);
@@ -209,7 +209,7 @@ function getParkArea()
     $('#comParkArea').children('option').remove();
     $.each(data,function(index,value)
     {
-      $('#comParkArea').append($('<option>', {value:value.intParkAreaCode, text:value.strParkAreaDesc + " (Floor# " + value.intFloorNum + ")"}));
+      $('#comParkArea').append($('<option>', {value:value.id, text:value.description + " (Floor# " + value.number + ")"}));
     });
     getLatest();
   });

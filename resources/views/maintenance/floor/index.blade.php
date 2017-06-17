@@ -4,6 +4,7 @@
     <script type="text/javascript">
      var dataurl="{{route("floors.getData")}}";
      url="{{route("floors.index")}}";
+     urlunit="{{route("units.index")}}";
    </script>
    @endsection
    @section('content')

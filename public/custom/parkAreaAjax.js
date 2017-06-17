@@ -10,12 +10,12 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'strBuilDesc', name: 'strBuilDesc'},
-    {data: 'strParkAreaDesc', name: 'strParkAreaDesc'},
-    {data: 'intFloorNum', name: 'intFloorNum'},
-    {data: 'dblParkAreaSize', name: 'dblParkAreaSize'},
-    {data: 'intNumOfSpace', name: 'intNumOfSpace'},
-    {data: 'boolIsActive', name: 'boolIsActive', searchable: false},
+    {data: 'building_description', name: 'building_description'},
+    {data: 'description', name: 'description'},
+    {data: 'number', name: 'number'},
+    {data: 'size', name: 'size'},
+    {data: 'num_of_space', name: 'num_of_space'},
+    {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
@@ -35,8 +35,8 @@ $(document).ready(function()
     if(parseInt(data.current)<=1)
       value=1;
     $("#txtPNum").attr("min",value);
-    value=data.size;
-    if(parseInt(data.size)<=1)
+    value=data.space_size;
+    if(parseInt(data.space_size)<=1)
       value=1;
     $("#txtArea").attr("min",value);
     console.log(data);
@@ -44,31 +44,31 @@ $(document).ready(function()
     var exists = false;
     $('#comBuilding').each(function()
     {
-      if (this.value == data.intBuilCode) {
+      if (this.value == data.building_id) {
         exists = true;
         return false;
       }});
     if(!exists)
     {
-      $('#comBuilding').append($('<option>', {value: data.intBuilCode, text: data.strBuilDesc}));
+      $('#comBuilding').append($('<option>', {value: data.building_id, text: data.building_description}));
     }
-    $('#comBuilding').val(data.intBuilCode);
+    $('#comBuilding').val(data.building_id);
     var exists = false;
     $('#comFloor').each(function(){
-      if (this.value == data.intFloorCode) 
+      if (this.value == data.floor_id) 
       {
         exists = true;
         return false;
       }});
     if(!exists)
     {
-      $('#comFloor').append($('<option>', {value: data.intFloorCode, text: data.intFloorNum}));
+      $('#comFloor').append($('<option>', {value: data.floor_id, text: data.number}));
     }
     console.log("setFLoor");
-    $('#comFloor').val(data.intFloorCode);
-    $('#myId').val(data.intParkAreaCode);
-    $('#txtPNum').val(data.intNumOfSpace);
-    $('#txtArea').val(data.dblParkAreaSize);
+    $('#comFloor').val(data.floor_id);
+    $('#myId').val(data.id);
+    $('#txtPNum').val(data.num_of_space);
+    $('#txtArea').val(data.size);
   }); 
     $('#myModal').modal('show');
   });
@@ -174,8 +174,8 @@ $(document).ready(function()
     getLatest();
     $.get(url + '/' + $(this).val() + '/edit', function (data) 
     {
-      $("#txtBuilDesc").val(data.strBuilDesc);
-      $("#txtParkArea").val(data.strParkAreaDesc);
+      $("#txtBuilDesc").val(data.building_description);
+      $("#txtParkArea").val(data.description);
     });
     $("#modalParkSpace").modal("show");
   });
@@ -297,7 +297,7 @@ function changeLabel()
       $('#comBuilding').children('option').remove();
       $.each(data,function(index,value)
       {
-        $('#comBuilding').append($('<option>', {value:value.intBuilCode, text:value.strBuilDesc}));
+        $('#comBuilding').append($('<option>', {value:value.id, text:value.description}));
       });
       $("#comBuilding").val(selected);
       if( !$('#comBuilding').has('option').length > 0  && $("#btnSave").val()=="Save" ) 
@@ -319,8 +319,8 @@ function changeLabel()
      $('#comFloor').children('option').remove();
      $.each(data,function(index,value)
      {
-       $('#comFloor').append($('<option>', {value:value.intFloorCode, text:value.intFloorNum}));
-     });
+      $('#comFloor').append($('<option>', {value:value.id, text:value.number}));
+    });
      $("#comFloor").val(selected);
    });
 

@@ -1,19 +1,20 @@
 $(document).ready(function()
 {
   //for datatables
+  xhrPool=[];
   var table = $('#myTable').DataTable({
     responsive: true,
     processing: true,
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'strBuilDesc', name: 'tblBuilding.strBuilDesc'},
-    {data: 'intFloorNum', name: 'tblFloor.intFloorNum'},
-    {data: 'strUnitCode', name: 'tblUnit.strUnitCode'},
-    {data: 'intUnitType', name: 'intUnitType'},
-    {data: 'intUnitNumber', name: 'tblUnit.intUnitNumber'},
-    {data: 'dblUnitArea', name: 'dblUnitArea'},
-    {data: 'boolIsActive', name: 'boolIsActive', searchable: false},
+    {data: 'description', name: 'description'},
+    {data: 'floor_number', name: 'floor_number'},
+    {data: 'unit_code', name: 'unit_code'},
+    {data: 'type', name: 'type'},
+    {data: 'unit_number', name: 'unit_number'},
+    {data: 'size', name: 'size'},
+    {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
@@ -42,31 +43,31 @@ $(document).ready(function()
     var exists = false;
     $('#comBuilding').each(function()
     {
-      if (this.value == data.intBuilCode) {
+      if (this.value == data.building_id) {
         exists = true;
         return false;
       }});
     if(!exists)
     {
-      $('#comBuilding').append($('<option>', {value: data.intBuilCode, text: data.strBuilDesc}));
+      $('#comBuilding').append($('<option>', {value: data.building_id, text: data.description}));
     }
-    $('#comBuilding').val(data.intBuilCode);
+    $('#comBuilding').val(data.building_id);
     var exists = false;
     $('#comFloor').each(function(){
-      if (this.value == data.intFloorCode) 
+      if (this.value == data.floor_id) 
       {
         exists = true;
         return false;
       }});
     if(!exists)
     {
-      $('#comFloor').append($('<option>', {value: data.intFloorCode, text: data.intFloorNum}));
+      $('#comFloor').append($('<option>', {value: data.floor_id, text: data.number}));
     }
-    $('#comFloor').val(data.intFloorCode);
-    $('#myId').val(data.intUnitCode);
-    $('#txtUNum').val(data.intUnitNumber);
-    $('#txtArea').val(data.dblUnitArea);
-    $('#comUnitType').val(data.intUnitType);
+    $('#comFloor').val(data.floor_id);
+    $('#myId').val(data.id);
+    $('#txtUNum').val(data.number);
+    $('#txtArea').val(data.size);
+    $('#comUnitType').val(data.type);
   }); 
     $('#myModal').modal('show');
   });
@@ -101,30 +102,33 @@ $(document).ready(function()
     }
     $.ajax(
     {
-      type: type,
-      url: my_url,
-      data: formData,
-      dataType: 'json',
-      success: function (data) 
+     beforeSend: function (jqXHR, settings) {
+      xhrPool.push(jqXHR);
+    },
+    type: type,
+    url: my_url,
+    data: formData,
+    dataType: 'json',
+    success: function (data) 
+    {
+      console.log(data);
+      table.draw();
+      successPrompt();
+      if($("#btnSave").val()=="Save")
       {
-        console.log(data);
-        table.draw();
-        successPrompt();
-        if($("#btnSave").val()=="Save")
-        {
-          getBuilding();
-          $("#txtArea").val("");
-        }
-        else
-        {
-          $('#myModal').modal('hide');
-        }              
-      },
-      error: function (data) 
-      {
-        console.log('Error:', data);
+        getBuilding();
+        $("#txtArea").val("");
       }
-    });
+      else
+      {
+        $('#myModal').modal('hide');
+      }              
+    },
+    error: function (data) 
+    {
+      console.log('Error:', data);
+    }
+  });
   }
 });
 
@@ -197,7 +201,7 @@ function getBuilding()
     $('#comBuilding').children('option').remove();
     $.each(data,function(index,value)
     {
-      $('#comBuilding').append($('<option>', {value:value.intBuilCode, text:value.strBuilDesc}));
+      $('#comBuilding').append($('<option>', {value:value.id, text:value.description}));
     });
     $("#comBuilding").val(selected);
     if( !$('#comBuilding').has('option').length > 0  && $("#btnSave").val()=="Save" ) 
@@ -231,7 +235,7 @@ function getFloor()
     $('#comFloor').children('option').remove();
     $.each(data,function(index,value)
     {
-      $('#comFloor').append($('<option>', {value:value.intFloorCode, text:value.intFloorNum}));
+      $('#comFloor').append($('<option>', {value:value.id, text:value.number}));
     });
     $("#comFloor").val(selected);
     getLatest();

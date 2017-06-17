@@ -10,6 +10,11 @@ use DB;
 
 class businessTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -68,14 +73,14 @@ class businessTypeController extends Controller
         }
         catch(\Exception $e)
         {
-           if($e->errorInfo[1]==1062)
-              return "This Data Already Exists";
-          else if($e->errorInfo[1]==1452)
-              return "Already Deleted";
-          else
-              return var_dump($e->errorInfo[1]);
-      }
+         if($e->errorInfo[1]==1062)
+          return "This Data Already Exists";
+      else if($e->errorInfo[1]==1452)
+          return "Already Deleted";
+      else
+          return var_dump($e->errorInfo[1]);
   }
+}
 
     /**
      * Display the specified resource.
@@ -96,9 +101,9 @@ class businessTypeController extends Controller
      */
     public function edit($id)
     {
-       $businessType=business_type::find($id);
-       return Response::json($businessType);
-   }
+     $businessType=business_type::find($id);
+     return Response::json($businessType);
+ }
 
     /**
      * Update the specified resource in storage.
@@ -113,13 +118,13 @@ class businessTypeController extends Controller
       {
         try
         { $businessType=business_type::find($id);
-         $businessType->description=$request->txtBusiTypeDesc;
-         $businessType->save();
-         return Response::json("success update");
-     }
-     catch(\Exception $e)
-     {
-         if($e->errorInfo[1]==1062)
+           $businessType->description=$request->txtBusiTypeDesc;
+           $businessType->save();
+           return Response::json("success update");
+       }
+       catch(\Exception $e)
+       {
+           if($e->errorInfo[1]==1062)
             return "This Data Already Exists";
         else
             return var_dump($e->errorInfo[1]);
@@ -149,8 +154,8 @@ public function softDelete($id)
      */
     public function destroy($id)
     {
-       try
-       {
+     try
+     {
         $result = business_type::findorfail($id);
         try
         {

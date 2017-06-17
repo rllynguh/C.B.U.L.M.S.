@@ -11,10 +11,10 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'strBuilDesc', name: 'strBuilDesc'},
-    {data: 'intFloorNum', name: 'intFloorNum'},
-    {data: 'intNumOfUnit', name: 'intNumOfUnit'},
-    {data: 'boolIsActive', name: 'boolIsActive', searchable: false},
+    {data: 'description', name: 'description'},
+    {data: 'number', name: 'number'},
+    {data: 'num_of_unit', name: 'num_of_unit'},
+    {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
     ]
   });
@@ -48,21 +48,21 @@ $(document).ready(function()
             {value=data.current;}
           var exists = false;
           $('#comBuilding').each(function(){
-            if (this.value == data.intBuilCode) {
+            if (this.value == data.building_id) {
               exists = true;
               return false;
             }
           });
           if(!exists)
           { 
-            $('#comBuilding').append($('<option>', {value: data.intBuilCode, text: data.strBuilDesc}));
-            $('#comBuilding').val(data.intBuilCode);
+            $('#comBuilding').append($('<option>', {value: data.building_id, text: data.description}));
+            $('#comBuilding').val(data.building_id);
           }
           $("#comBuilding").attr("disabled","");
-          $('#myId').val(data.intFloorCode);
-          $('#comBuilding').val(data.intBuilCode);
-          $('#txtFNum').val(data.intFloorNum);
-          $('#txtUNum').val(data.intNumOfUnit);
+          $('#myId').val(data.id);
+          $('#comBuilding').val(data.building_id);
+          $('#txtFNum').val(data.number);
+          $('#txtUNum').val(data.num_of_unit);
           $("#txtUNum").attr("min",value);
           $('#myModal').modal('show');
         }) 
@@ -149,8 +149,8 @@ $(document).ready(function()
     $("#comFloor").val($(this).val());
     getLatestUnit();
     $.get(url + '/' + $(this).val() + '/edit', function (data) {
-      $("#txtFBuilDesc").val(data.strBuilDesc);
-      $("#txtUFNum").val(data.intFloorNum);
+      $("#txtFBuilDesc").val(data.description);
+      $("#txtUFNum").val(data.number);
       console.log(data);
     });
   });
@@ -201,7 +201,7 @@ $(document).ready(function()
   //for quering latest unit number
   function getLatestUnit()
   {
-    $.get('/maintenance/units/getLatest/' + $("#comFloor").val(),function(data)
+    $.get(urlunit + '/getLatest/' + $("#comFloor").val(),function(data)
     {
       if(parseInt(data.max)<parseInt(data.number))
       {
@@ -252,7 +252,7 @@ $(document).ready(function()
       $('#comBuilding').children('option').remove();
       $.each(data,function(index,value)
       {
-        $('#comBuilding').append($('<option>', {value:value.intBuilCode, text:value.strBuilDesc}));
+        $('#comBuilding').append($('<option>', {value:value.id, text:value.description}));
       });
       $("#comBuilding").val(selected);
       if( !$('#comBuilding').has('option').length > 0  && $("#btnSave").val()=="Save" ) 

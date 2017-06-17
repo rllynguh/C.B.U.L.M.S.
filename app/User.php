@@ -7,19 +7,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    protected $table="tblUser";
     use Notifiable;
-    protected $primaryKey="intUserCode";
     protected $dates = ['dtmDeletedAt'];
     public $timestamps = false;
-    public static $storeRegister = [
-    // 'strFirstName' => 'unique_with:users, strMidName, strLastName',
-    'strMidName' => 'max:25',
-    'strLastName' => 'required|max:25',
-    'strCellNum' => 'required|max:15',
-    'strPassword' => 'required|confirmed|max:61',
-    //'strPicture' => 'image'
-    ];
+    // public static $storeRegister = [
+    // // 'strFirstName' => 'unique_with:users, strMidName, strLastName',
+    // 'strMidName' => 'max:25',
+    // 'strLastName' => 'required|max:25',
+    // 'strCellNum' => 'required|max:15',
+    // 'strPassword' => 'required|confirmed|max:61',
+    // //'strPicture' => 'image'
+    // ];
 
     /**
      * The attributes that are mass assignable.
@@ -27,8 +25,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-    'strFirstName', 'strEmail', 'strPassword', 'strMidName',
-    'strLastName', 'strCellNum', 'boolIsActive', 
+    'first_name', 'email', 'password', 'middle_name',
+    'last_name', 'cell_num', 'is_active', 
     ];
 
     /**
@@ -37,6 +35,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-    'strPassword', 'remember_token', 'boolIsActive'
+    'password', 'remember_token', 'is_active'
     ];
 }

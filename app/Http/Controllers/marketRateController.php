@@ -11,6 +11,11 @@ use Datatables;
 
 class marketRateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -75,13 +80,13 @@ class marketRateController extends Controller
      */
     public function store(Request $request)
     {
-       $marketRate=new market_rate();
-       $marketRate->city_id=$request->myId;
-       $marketRate->date_as_of=date("Y-m-d H:i:s");
-       $marketRate->rate=$request->txtRate;
-       $marketRate->save();
-       return Response::json("success store");
-   }
+     $marketRate=new market_rate();
+     $marketRate->city_id=$request->myId;
+     $marketRate->date_as_of=date("Y-m-d H:i:s");
+     $marketRate->rate=$request->txtRate;
+     $marketRate->save();
+     return Response::json("success store");
+ }
 
     /**
      * Display the specified resource.
