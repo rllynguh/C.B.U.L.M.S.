@@ -4,7 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class province extends baseModel
+class Province extends Model
 {
     //
+	public $timestamps=false;
+	
 }

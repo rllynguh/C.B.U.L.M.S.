@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class address extends baseModel
+class Address extends Model
 {
     //
 	protected $table="addresses";
+	public $timestamps=false;
+
 }

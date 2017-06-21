@@ -4,7 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class floor extends baseModel
+class Floor extends Model
 {
     //
+	public $timestamps=false;
+	
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\park_space;
+use App\ParkSpace;
 use Response;
 use Datatables;
 use DB;
@@ -77,7 +77,7 @@ class parkSpaceController extends Controller
     public function store(Request $request)
     {
         //
-        $parkSpace=new park_space();
+        $parkSpace=new ParkSpace();
         $parkSpace->description="PS".$request->txtPNum;
         $parkSpace->park_area_id=$request->comParkArea;
         $parkSpace->number=$request->txtPNum;
@@ -126,7 +126,7 @@ class parkSpaceController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $parkSpace=park_space::find($id);
+        $parkSpace=ParkSpace::find($id);
         $parkSpace->size=$request->txtArea;
         $parkSpace->save();
         return Response::json("success update");
@@ -141,7 +141,7 @@ class parkSpaceController extends Controller
 
     public function softDelete($id)
     {
-        $parkSpace=park_space::find($id);
+        $parkSpace=ParkSpace::find($id);
         $val=1;
         if($parkSpace->is_active)
             $val=0;

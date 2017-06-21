@@ -4,15 +4,15 @@
   <div class="body">
     <div class="block-header">
       <h2 class="align-center">MARKET RATES</h2>
+    </div>
   </div>
-</div>
-<div class="card">
+  <div class="card">
     dawdwa
     dawdawdaw
     dawdawdawdaw
     dawdawdawdawawd
     aw
     dawda
-</div>
+  </div>
 </div>
 @endsection

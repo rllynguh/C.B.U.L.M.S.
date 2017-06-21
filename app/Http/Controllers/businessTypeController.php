@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\business_type;
+use App\BusinessType;
 use Response;
 use Datatables;
 use DB;
@@ -22,7 +22,7 @@ class businessTypeController extends Controller
      */
     public function data()
     {
-        $result=business_type::orderBy('id')->get();
+        $result=BusinessType::orderBy('id')->get();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
             return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
@@ -66,7 +66,7 @@ class businessTypeController extends Controller
     {
         try
         {
-            $btype=new business_type;
+            $btype=new BusinessType;
             $btype->description=$request->txtBusiTypeDesc;
             $btype->save();
             return Response::json("success store");
@@ -101,7 +101,7 @@ class businessTypeController extends Controller
      */
     public function edit($id)
     {
-     $businessType=business_type::find($id);
+       $businessType=BusinessType::find($id);
      return Response::json($businessType);
  }
 
@@ -117,7 +117,7 @@ class businessTypeController extends Controller
       try
       {
         try
-        { $businessType=business_type::find($id);
+        { $businessType=BusinessType::find($id);
            $businessType->description=$request->txtBusiTypeDesc;
            $businessType->save();
            return Response::json("success update");
@@ -138,7 +138,7 @@ catch(\Exception $e)
 
 public function softDelete($id)
 {
-    $businessType=business_type::find($id);
+    $businessType=BusinessType::find($id);
     if($businessType->is_active==1)
         $val=0;
     else
@@ -156,7 +156,7 @@ public function softDelete($id)
     {
      try
      {
-        $result = business_type::findorfail($id);
+        $result = BusinessType::findorfail($id);
         try
         {
           $result->delete();

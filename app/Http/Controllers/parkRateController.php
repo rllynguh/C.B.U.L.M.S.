@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\park_rate;
+use App\ParkRate;
 use Datatables;
 use DB;
 use Illuminate\Http\Request;
 use Response;
+use Carbon\Carbon;
+use Config;
 
 class parkRateController extends Controller
 {
@@ -83,9 +85,9 @@ class parkRateController extends Controller
     public function store(Request $request)
     {
         //
-        $parkRate=new park_rate();
+        $parkRate=new ParkRate();
         $parkRate->building_id=$request->myId;
-        $parkRate->date_as_of=date("Y-m-d H:i:s");
+        $parkRate->date_as_of=Carbon::now(Config::get('app.timezone'));
         $parkRate->rate=$request->txtRate;
         $parkRate->save();
         return Response::json("success store");
@@ -111,13 +113,13 @@ class parkRateController extends Controller
     public function edit($id)
     {
         //
-     $result=DB::table("park_rates")
-     ->select("park_rates.*",DB::raw("COALESCE(park_rates.rate,0) as rate"))
-     ->where("park_rates.building_id",$id)
-     ->orderBy("park_rates.date_as_of","desc")
-     ->first();
-     return Response::json($result);
- }
+       $result=DB::table("park_rates")
+       ->select("park_rates.*",DB::raw("COALESCE(park_rates.rate,0) as rate"))
+       ->where("park_rates.building_id",$id)
+       ->orderBy("park_rates.date_as_of","desc")
+       ->first();
+       return Response::json($result);
+   }
 
     /**
      * Update the specified resource in storage.

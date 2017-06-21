@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Response;
-use App\market_rate;
+use App\MarketRate;
 use Datatables;
+use Carbon\Carbon;
+use Config;
 
 
 class marketRateController extends Controller
@@ -80,13 +82,13 @@ class marketRateController extends Controller
      */
     public function store(Request $request)
     {
-     $marketRate=new market_rate();
-     $marketRate->city_id=$request->myId;
-     $marketRate->date_as_of=date("Y-m-d H:i:s");
-     $marketRate->rate=$request->txtRate;
-     $marketRate->save();
-     return Response::json("success store");
- }
+        $marketRate=new MarketRate();
+        $marketRate->city_id=$request->myId;
+        $marketRate->date_as_of=Carbon::now(Config::get('app.timezone'));
+        $marketRate->rate=$request->txtRate;
+        $marketRate->save();
+        return Response::json("success store");
+    }
 
     /**
      * Display the specified resource.

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Response;
-use App\building_type;
+use App\BuildingType;
 use App\province;
 
 class customController extends Controller
@@ -22,7 +22,7 @@ class customController extends Controller
 	}
 	public function getBuildingType()
 	{
-		$result=building_type::where('is_active',1)->get();
+		$result=BuildingType::where('is_active',1)->get();
 		return Response::json($result);
 	}
 	public function getProvince()

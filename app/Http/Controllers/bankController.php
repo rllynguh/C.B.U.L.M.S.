@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\banks;
+use App\Bank;
 use Datatables;
 use Response;
 
@@ -21,7 +21,7 @@ class bankController extends Controller
      */
     public function data()
     {   
-     $result = banks::all();
+      $result = Bank::all();
      return Datatables::of($result)
      ->addColumn('action', function ($data) {
       return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
@@ -66,7 +66,7 @@ class bankController extends Controller
         //
      try
      {
-      $result=new banks();
+      $result=new Bank();
       $result->description=$request->txtBankDesc;
       $result->save();
       return Response::json("Success Insert");
@@ -102,7 +102,7 @@ class bankController extends Controller
     {
         //
      try
-     {$result=banks::findOrFail($id);
+     {$result=Bank::findOrFail($id);
       return Response::json($result);
     }
     catch(\Exception $e)
@@ -123,7 +123,7 @@ class bankController extends Controller
         //
       try{
         try{
-          $result=banks::find($id);
+          $result=Bank::find($id);
           $result->description=$request->txtBankDesc;
           $result->save(); 
           return Response::json("success update");
@@ -149,7 +149,7 @@ class bankController extends Controller
         //
      try
      {
-      $result = banks::findorfail($id);
+      $result = Bank::findorfail($id);
       try
       {
         $result->delete();
@@ -168,7 +168,7 @@ class bankController extends Controller
   }
   public function softDelete($id)
   {
-    $result=banks::find($id);
+    $result=Bank::find($id);
     if($result->is_active==1)
       $val=0;
     else

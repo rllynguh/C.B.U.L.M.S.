@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Datatables;
 use Response;
-use App\building_type;
+use App\BuildingType;
 
 class buildingTypeController extends Controller
 {
@@ -21,7 +21,7 @@ class buildingTypeController extends Controller
      */
     public function data()
     {
-        $result=building_type::all();
+        $result=BuildingType::all();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
             return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
@@ -67,7 +67,7 @@ class buildingTypeController extends Controller
 
      try
      {
-        $result=new building_type();
+        $result=new BuildingType();
         $result->description=$request->txtBuilTypeDesc;
         $result->save();
         return Response::json("success store");
@@ -102,7 +102,7 @@ class buildingTypeController extends Controller
      */
     public function edit($id)
     {
-        $result=building_type::find($id);
+        $result=BuildingType::find($id);
         return Response::json($result);
     }
 
@@ -119,7 +119,7 @@ class buildingTypeController extends Controller
         {  
             try
             {
-                $result=building_type::find($id);
+                $result=BuildingType::find($id);
                 $result->description=$request->txtBuilTypeDesc;
                 $result->save();
                 return Response::json("success update");
@@ -140,7 +140,7 @@ class buildingTypeController extends Controller
 
 public function softdelete($id)
 {
-    $result=building_type::find($id);
+    $result=BuildingType::find($id);
     if($result->is_active==1)
         $val=0;
     else
@@ -159,7 +159,7 @@ public function softdelete($id)
 
         try
         {
-            $result = building_type::findorfail($id);
+            $result = BuildingType::findorfail($id);
             try
             {
               $result->delete();
