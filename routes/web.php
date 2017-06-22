@@ -85,3 +85,4 @@ Route::get('custom/getCity/{id}', ['uses' => 'customController@getCity', 'as' =>
 Route::get('custom/getBuildingType', ['uses' => 'customController@getBuildingType', 'as' => 'custom.getBuildingType']);
 Route::get('custom/getProvince', ['uses' => 'customController@getProvince', 'as' => 'custom.getProvince']);
 
+Route::resource("registration","registrationController");
