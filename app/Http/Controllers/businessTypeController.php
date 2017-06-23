@@ -73,14 +73,14 @@ class businessTypeController extends Controller
         }
         catch(\Exception $e)
         {
-         if($e->errorInfo[1]==1062)
-          return "This Data Already Exists";
-      else if($e->errorInfo[1]==1452)
-          return "Already Deleted";
-      else
-          return var_dump($e->errorInfo[1]);
+           if($e->errorInfo[1]==1062)
+              return "This Data Already Exists";
+          else if($e->errorInfo[1]==1452)
+              return "Already Deleted";
+          else
+              return var_dump($e->errorInfo[1]);
+      }
   }
-}
 
     /**
      * Display the specified resource.
@@ -101,7 +101,7 @@ class businessTypeController extends Controller
      */
     public function edit($id)
     {
-       $businessType=BusinessType::find($id);
+     $businessType=BusinessType::find($id);
      return Response::json($businessType);
  }
 
@@ -118,13 +118,13 @@ class businessTypeController extends Controller
       {
         try
         { $businessType=BusinessType::find($id);
-           $businessType->description=$request->txtBusiTypeDesc;
-           $businessType->save();
-           return Response::json("success update");
-       }
-       catch(\Exception $e)
-       {
-           if($e->errorInfo[1]==1062)
+         $businessType->description=$request->txtBusiTypeDesc;
+         $businessType->save();
+         return Response::json("success update");
+     }
+     catch(\Exception $e)
+     {
+         if($e->errorInfo[1]==1062)
             return "This Data Already Exists";
         else
             return var_dump($e->errorInfo[1]);
@@ -154,8 +154,8 @@ public function softDelete($id)
      */
     public function destroy($id)
     {
-     try
-     {
+       try
+       {
         $result = BusinessType::findorfail($id);
         try
         {

@@ -84,5 +84,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('custom/getCity/{id}', ['uses' => 'customController@getCity', 'as' => 'custom.getCity']);
 Route::get('custom/getBuildingType', ['uses' => 'customController@getBuildingType', 'as' => 'custom.getBuildingType']);
 Route::get('custom/getProvince', ['uses' => 'customController@getProvince', 'as' => 'custom.getProvince']);
+Route::get('custom/getBusinessType', ['uses' => 'customController@getBusinessType', 'as' => 'custom.getBusinessType']);
+Route::get('custom/getPosition', ['uses' => 'customController@getPosition', 'as' => 'custom.getPosition']);
+
+
 
 Route::resource("registration","registrationController");
+

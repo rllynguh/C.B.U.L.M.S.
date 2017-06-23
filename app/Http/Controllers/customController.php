@@ -7,6 +7,8 @@ use DB;
 use Response;
 use App\BuildingType;
 use App\province;
+use App\BusinessType;
+use App\RepresentativePosition;
 
 class customController extends Controller
 {
@@ -22,7 +24,9 @@ class customController extends Controller
 	}
 	public function getBuildingType()
 	{
-		$result=BuildingType::where('is_active',1)->get();
+		$result=BuildingType::where('is_active',1)
+		->orderBy("description")
+		->get();
 		return Response::json($result);
 	}
 	public function getProvince()
@@ -30,5 +34,20 @@ class customController extends Controller
 		$result=province::where('is_active',1)->get();
 		return Response::json($result);
 	}
+	public function getBusinessType()
+	{
+		$result=BusinessType::where('is_active',1)
+		->orderBy("description")
+		->get();
+		return Response::json($result);
+	}
+	public function getPosition()
+	{
+		$result=RepresentativePosition::where('is_active',1)
+		->orderBy("description")
+		->get();
+		return Response::json($result);
+	}
 }
+
 
