@@ -61,7 +61,7 @@
                   <div class="col-md-12 col-sm-12">
                     <div class="form-line">
                       <h5 class="card-inside-title">Area</h5>
-                      <input required type="number" min="1" max="9999" autocomplete="off" data-parsley-type="number" id="txtArea" name="txtArea" class="form-control align-center" placeholder="sqm" step="0.01" >
+                      <input required type="number" min="1" max="9999" autocomplete="off" id="txtArea" name="txtArea" class="form-control align-center area-mask">
                     </div>
                   </div>
                 </div>
@@ -101,7 +101,7 @@
                 <div class="form-group p-l-10">
                   <div class="form-line">
                     <h5 class="card-inside-title">Number of Units</h5>
-                    <input minlength="1" maxlength="2" autocomplete="off" min="1" max="99" required  id="txtUNum" name="txtUNum" type="text" class="form-control text-center " data-parsley-pattern="^[0-9]+$" data-parsley-type="digits">
+                    <input autocomplete="off" min="1" max="99" required  id="txtUNum" name="txtUNum" type="text" class="form-control text-center max-digits-2" >
                   </div>
                 </div>
               </div>

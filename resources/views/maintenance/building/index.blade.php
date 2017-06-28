@@ -45,7 +45,7 @@
                     <div class="form-group p-l-10">
                       <div class="form-line">
                         <h5 class="card-inside-title">Number of Units</h5>
-                        <input autocomplete="off" minlength="1" maxlength="2" data-parsley-type="digits" min="1" max="99" required  id="txtUNum" name="txtUNum" type="text" class="form-control text-center " data-parsley-pattern="^[0-9]+$">
+                        <input autocomplete="off" min="1" max="99" required  id="txtUNum" name="txtUNum" type="text" class="form-control text-center max-digits-2">
                       </div>
                     </div>
                   </div>
@@ -106,8 +106,8 @@
                         <div class="form-line">
                           <h5 class="card-inside-title">Number of Floors</h5>
                           <input autocomplete="off" id="txtBFNum" name="txtBFNum" min="1" max="99"
-                          type="text" minlength="1" maxlength="2" class="form-control text-center" value="1"
-                          required data-parsley-pattern="^[0-9]+$" data-parsley-type="number"
+                          type="text" class="form-control text-center max-digits-2" value="1"
+                          required 
                           >
                         </div>
                       </div>
@@ -117,7 +117,7 @@
                       <div class="col-sm-4 col-md-4">
                         <div class="form-line">
                           <h5 class="card-inside-title">Address No.</h5>
-                          <input data-parsley-type="digits" autocomplete="off" type="text" class="form-control align-center" name="txtSNum" id="txtSNum" maxlength="20" minlength="1" required >
+                          <input autocomplete="off" type="text" class="form-control align-center max-digits-4" name="txtSNum" id="txtSNum" maxlength="4" minlength="1" required >
                         </div>
                       </div>
                       <div class="col-sm-4 col-md-4">
