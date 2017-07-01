@@ -45,7 +45,7 @@
                     <div class="form-group p-l-10">
                       <div class="form-line">
                         <h5 class="card-inside-title">Number of Units</h5>
-                        <input autocomplete="off" min="1" max="99" required  id="txtUNum" name="txtUNum" type="text" class="form-control text-center max-digits-2">
+                        <input autocomplete="off" min="1" max="99" required  id="txtUNum" name="txtUNum" type="number" class="form-control text-center max-digits-2">
                       </div>
                     </div>
                   </div>
@@ -106,7 +106,7 @@
                         <div class="form-line">
                           <h5 class="card-inside-title">Number of Floors</h5>
                           <input autocomplete="off" id="txtBFNum" name="txtBFNum" min="1" max="99"
-                          type="text" class="form-control text-center max-digits-2" value="1"
+                          type="number" class="form-control text-center max-digits-2" value="1"
                           required 
                           >
                         </div>

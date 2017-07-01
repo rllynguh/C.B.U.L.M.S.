@@ -8,14 +8,13 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'description', name: 'description'},
-    {data: 'floor_number', name: 'floor_number'},
-    {data: 'unit_code', name: 'unit_code'},
-    {data: 'type', name: 'type'},
-    {data: 'unit_number', name: 'unit_number'},
-    {data: 'size', name: 'size'},
-    {data: 'is_active', name: 'is_active', searchable: false},
-    {data: 'action', name: 'action', orderable: false, searchable: false}
+    {data: 'description', name: 'buildings.description'},
+    {data: 'floor_number', name: 'floors.number'},
+    {data: 'unit_code', name: ' units.code'},
+    {data: 'type', name: 'units.type'},
+    {data: 'size'},
+    {data: 'is_active', searchable: false},
+    {data: 'action', orderable: false, searchable: false}
     ]
   });
 

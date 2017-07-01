@@ -23,7 +23,7 @@ class unitController extends Controller
     public function data()
     {
       $result=DB::table("units")
-      ->select(['buildings.description','floors.number as floor_number','units.code as unit_code','units.type','units.number as unit_number','units.size','units.is_active','units.id'])
+      ->select(['buildings.description','floors.number as floor_number','units.code as unit_code','units.type','units.size','units.is_active','units.id'])
       ->join("floors","units.floor_id","floors.id")
       ->join("buildings","floors.building_id","buildings.id")
       ->join("building_types","buildings.building_type_id","building_types.id")
@@ -82,22 +82,34 @@ class unitController extends Controller
     public function store(Request $request)
     {
         //
-     $uNum=$request->txtUNum;    
-     $result=DB::table("floors")
-     ->where("floors.id",$request->comFloor)
-     ->join("buildings","floors.building_id","buildings.id")
-     ->select("buildings.description","floors.number")
-     ->first();
-     $pk=strtoupper(substr($result->description, 0, 3)).strtoupper($result->number)."UNIT".strtoupper($uNum) ;
-     $unit=new unit();
-     $unit->code=$pk;
-     $unit->type=$request->comUnitType;
-     $unit->size=$request->txtArea;
-     $unit->number=$uNum;
-     $unit->floor_id=$request->comFloor;
-     $unit->save();
-     return Response::json("success store");
-   }
+      try
+      {
+       $uNum=$request->txtUNum;    
+       $result=DB::table("floors")
+       ->where("floors.id",$request->comFloor)
+       ->join("buildings","floors.building_id","buildings.id")
+       ->select("buildings.description","floors.number")
+       ->first();
+       $pk=strtoupper(substr($result->description, 0, 3)).strtoupper($result->number)."UNIT".strtoupper($uNum) ;
+       $unit=new unit();
+       $unit->code=$pk;
+       $unit->type=$request->comUnitType;
+       $unit->size=$request->txtArea;
+       $unit->number=$uNum;
+       $unit->floor_id=$request->comFloor;
+       $unit->save();
+       return Response::json("success store");
+     }
+     catch(\Exception $e) {
+      if($e->errorInfo[1]==1062)
+        return "This Data Already Exists";
+      else if($e->errorInfo[1]==1452)
+        return "Already Deleted";
+      else
+        return var_dump($e->errorInfo[1]);
+      
+    }
+  }
 
     /**
      * Display the specified resource.

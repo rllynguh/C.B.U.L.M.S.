@@ -113,7 +113,6 @@
                 <th class="align-center">Floor</th>
                 <th class="align-center">Unit ID</th>
                 <th class="align-center">Unit Type</th>
-                <th class="align-center">Unit Number</th>
                 <th class="align-center">Area</th>
                 <th class="align-center">Status</th>
                 <th class="align-center">Action</th>
