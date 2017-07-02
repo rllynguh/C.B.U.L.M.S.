@@ -45,9 +45,9 @@ class unitController extends Controller
         return "$data->size sqm";
       })
       ->editColumn('type', function ($data) {
-        $value = 'raw';
+        $value = 'Raw';
         if($data->type==1){
-          $value = 'shell';
+          $value = 'Shell';
         }
         return $value;
       })

@@ -61,7 +61,7 @@
                   <div class="col-md-12 col-sm-12">
                     <div class="form-line">
                       <h5 class="card-inside-title">Area</h5>
-                      <input required type="number" min="1" max="9999" autocomplete="off" id="txtArea" name="txtArea" class="form-control align-center">
+                      <input required type="number" min="1" max="9999" autocomplete="off" data-parsley-type="number" id="txtArea" name="txtArea" class="form-control align-center" placeholder="sqm" step="0.01" >
                     </div>
                   </div>
                 </div>

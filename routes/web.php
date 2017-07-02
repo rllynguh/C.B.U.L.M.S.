@@ -73,6 +73,16 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('maintenance/units/get/building', ['uses' => 'unitController@getBuilding', 'as' => 'units.getBuilding']);
 	Route::get('maintenance/units/getFloor/{unit}', ['uses' => 'unitController@getFloor', 'as' => 'units.getFloor']);
 	Route::get('maintenance/units/getLatest/{unit}', ['uses' => 'unitController@getLatest', 'as' => 'units.getLatest']);
+
+	Route::resource("/users","userAccountsController");
+	Route::get('/users/get/data', ['uses' => 'userAccountsController@data', 'as' => 'users.getData']);
+	Route::put('/users/active/{id}', ['uses' => 'userAccountsController@isActive', 'as' => 'users.active']);
+
+
+	Route::resource("/transaction/offersheets","offerSheetController");
+	Route::get('/transaction/offersheets/get/data', ['uses' => 'offerSheetController@data', 'as' => 'offerSheets.getData']);
+
+
 });
 
 
@@ -90,4 +100,5 @@ Route::get('custom/getPosition', ['uses' => 'customController@getPosition', 'as'
 
 
 Route::resource("registration","registrationController");
+
 
