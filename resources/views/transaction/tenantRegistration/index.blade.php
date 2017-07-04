@@ -342,7 +342,7 @@
 				<div class="col-sm-3 nopadding">
 					<div class="form-group">
 						<label class="control-label">Floor #*</label>
-						<input type="text" class="form-control form-line" id="floor" name="floor[]" value="" >
+						<input type="number" class="form-control form-line" id="floor" name="floor[]" value="" >
 					</div>
 				</div>
 
@@ -361,7 +361,7 @@
 				<div class="col-sm-3 nopadding">
 					<div class="form-group">
 						<label class="control-label">Size*</label>
-						<input type="text" class="form-control form-line" id="size" name="size[]" value="" >
+						<input type="number" class="form-control form-line" id="size" name="size[]" value="" placeholder="sqm" >
 					</div>
 				</div>
 

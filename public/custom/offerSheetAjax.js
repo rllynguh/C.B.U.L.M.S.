@@ -8,9 +8,11 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'id', name: 'id'},
-    {data: 'tenant_description', name: 'tenant_description'},
-    {data: 'business_type_description', name: 'business_type_description'},
+    {data: 'regi_code'},
+    {data: 'tenant_description'},
+    {data: 'business_type_description'},
+    {data: 'regi_count'},
+    {data: 'action'},
     ]
   });
   

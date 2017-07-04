@@ -4,7 +4,7 @@
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
-      <h2 class="align-center">USER ACCOUNTS</h2>
+      <h2 class="align-center">Unsettled Tenant Registration</h2>
     </div>
     
   </div>
@@ -24,6 +24,7 @@
                 <th class="align-center">Client</th>
                 <th class="align-center">Business</th>
                 <th class="align-center">Unit requested</th>
+                <th class="align-center">Action</th>
               </tr>
             </thead>
             <tbody id="myList">
