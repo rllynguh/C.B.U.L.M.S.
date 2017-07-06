@@ -43,3 +43,23 @@
 	var url="{!!route('offersheets.index')!!}" ;
 </script>
 @endsection
+{{-- SELECT
+registration_details.id as regi,
+units.id as unit,
+floors.number as floor,
+buildings.id as building,
+registration_details.unit_type as ordered_unit_type,
+units.type as proposed_unit_type,
+registration_details.size as ordered_size,
+units.size as proposed_size,
+registration_details.floor as ordered_floor,
+floors.number as proposed_floor,
+registration_details.building_type_id as ordered_building_type,
+buildings.building_type_id as porposed_building_type 
+from registration_details
+left join units on registration_details.unit_type=units.type AND (registration_details.size between units.size - 100 AND units.size + 100)
+left join floors on units.floor_id=floors.id AND registration_details.floor=floors.number
+left join buildings on floors.building_id=buildings.id AND registration_details.building_type_id=buildings.building_type_id
+group by registration_details.id
+
+ --}}

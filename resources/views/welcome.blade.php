@@ -1,18 +1,6 @@
 @extends('layout.coreLayout')
 @section('content')
-<div class="container-fluid">
-  <div class="body">
-    <div class="block-header">
-      <h2 class="align-center">MARKET RATES</h2>
-    </div>
-  </div>
-  <div class="card">
-    dawdwa
-    dawdawdaw
-    dawdawdawdaw
-    dawdawdawdawawd
-    aw
-    dawda
-  </div>
-</div>
-@endsection
+{{--   <div class="card">
+    <image src='images/user-bg.jpg' height="500 px" width="500 px">
+    </div> --}}
+    @endsection
