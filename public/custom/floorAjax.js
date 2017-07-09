@@ -74,9 +74,6 @@ $(document).ready(function()
     if($("#myForm").parsley().isValid())
     {
       $("#btnSave").attr('disabled','disabled');
-      setTimeout(function(){
-        $("#btnSave").removeAttr('disabled');
-      }, 1000);
       $.ajaxSetup(
       {
         headers: {
@@ -261,6 +258,9 @@ $(document).ready(function()
         $("#myModal").modal("hide");
       }
       getLatest();
+      setTimeout(function(){
+        $("#btnSave").removeAttr('disabled');
+      }, 500);
     });
   }
 

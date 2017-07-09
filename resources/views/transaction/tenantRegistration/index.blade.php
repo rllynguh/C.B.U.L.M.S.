@@ -31,8 +31,7 @@
 						'class' => 'control-label'
 						]) 
 					}}
-					{{ Form::select('busitype', [
-						], null, [
+					{{ Form::select('busitype',$busitype, null, [
 						'id' => 'busitype',
 						'required' => 'required',
 						'class' => 'form-control form-line align'])
@@ -41,11 +40,11 @@
 			</div>
 			<div class="col-sm-4 nopadding">
 				<div class="form-group">
-					{{ Form::label('tena_number', 'Number*', [
+					{{ Form::label('tena_number', 'Street Number*', [
 						'class' => 'control-label'
 						]) 
 					}}
-					{{ Form::text('tena_number', null, [
+					{{ Form::number('tena_number', null, [
 						'id' => 'tena_number',
 						'class' => 'form-control form-line',
 						'maxlength' => '4',
@@ -97,8 +96,7 @@
 						'class' => 'control-label'
 						]) 
 					}}
-					{{ Form::select('tena_province', [
-						], null, [
+					{{ Form::select('tena_province', $tenaprov,null, [
 						'id' => 'tena_province',
 						'class' => 'form-control form-line'])
 					}}
@@ -172,8 +170,7 @@
 						'class' => 'control-label'
 						]) 
 					}}
-					{{ Form::select('position', [
-						], null, [
+					{{ Form::select('position', $posi, null, [
 						'id' => 'position',
 						'class' => 'form-control form-line'])
 					}}
@@ -237,11 +234,11 @@
 
 			<div class="col-sm-4 nopadding">
 				<div class="form-group">
-					{{ Form::label('repr_number', 'Number*', [
+					{{ Form::label('repr_number', 'Street Number*', [
 						'class' => 'control-label'
 						]) 
 					}}
-					{{ Form::text('repr_number', null, [
+					{{ Form::number('repr_number', null, [
 						'id' => 'repr_number',
 						'class' => 'form-control form-line',
 						'maxlength' => '4',
@@ -293,8 +290,7 @@
 						'class' => 'control-label'
 						]) 
 					}}
-					{{ Form::select('repr_province', [
-						], null, [
+					{{ Form::select('repr_province', $reprprov, null, [
 						'id' => 'repr_province',
 						'class' => 'form-control form-line'])
 					}}
@@ -342,7 +338,8 @@
 				<div class="col-sm-3 nopadding">
 					<div class="form-group">
 						<label class="control-label">Floor #*</label>
-						<input type="number" class="form-control form-line" id="floor" name="floor[]" value="" >
+						<select class="form-control form-line" id="floor" name="floor[]">
+						</select>
 					</div>
 				</div>
 
@@ -361,7 +358,8 @@
 				<div class="col-sm-3 nopadding">
 					<div class="form-group">
 						<label class="control-label">Size*</label>
-						<input type="number" class="form-control form-line" id="size" name="size[]" value="" placeholder="sqm" >
+						<select class="form-control form-line" id="size" name="size[]">
+						</select>
 					</div>
 				</div>
 
@@ -394,8 +392,9 @@
 		{!!Html::script("custom/tenantRegistrationAjax.js")!!}
 		<script type="text/javascript">
 			buil_type_url="{{route("custom.getBuildingType")}}";
-			busi_type_url="{{route("custom.getBusinessType")}}";
 			prov_url="{{route("custom.getProvince")}}";
 			posi_url="{{route("custom.getPosition")}}";
+			floor_url="{{route("custom.getFloor")}}";
+			range_url="{{route("custom.getRange")}}";
 		</script>
 		@endsection

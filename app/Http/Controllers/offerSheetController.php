@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Response;
 use DB;
 use Datatables;
+use App\RegistrationHeader;
 
 class offerSheetController extends Controller
 {
@@ -84,29 +85,51 @@ class offerSheetController extends Controller
     public function show($id)
     {
         //
-        $result=DB::table("registration_headers")
-        ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
-        ->select('registration_details.*')
+        $tenant=DB::table('registration_headers')
+        ->join('tenants','registration_headers.tenant_id','tenants.id')
+        ->select('tenants.description','registration_headers.code')
+        ->where('registration_headers.id','=',$id)
+        ->first()
+        ;
+        $result=DB::table("registration_details")
+        ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
+        ->join('tenants','registration_headers.tenant_id','tenants.id')
+        ->join('users','tenants.user_id','users.id')
+        ->leftjoin('units',function($join)
+        {
+            $join->on('registration_details.unit_type', '=', 'units.type') ->whereRaw('units.size between registration_details.size_from - 100 AND size_to + 100');
+        })
+        ->join('floors as f','units.floor_id','f.id')
+        ->join('buildings as b','f.building_id','b.id')
+        ->leftjoin('floors',function($join)
+        {
+            $join->on('units.floor_id', '=', 'floors.id') ->whereRaw('registration_details.floor=floors.number');
+        })
+        ->leftjoin('buildings',function($join)
+        {
+            $join->on('floors.building_id', '=', 'buildings.id') ->whereRaw('registration_details.building_type_id=buildings.building_type_id');
+        })
+        ->where('registration_headers.id','=',$id)
+        ->where('tenants.is_active','=',1)
+        ->where('users.is_active','=',1)
+        ->select(DB::Raw("registration_details.id as regi,
+            units.id as unit_id,
+            units.code as unit_code,
+            floors.number as floor,
+            buildings.id as building,
+            registration_details.unit_type as ordered_unit_type,
+            units.type as proposed_unit_type,
+            units.size as proposed_size,
+            registration_details.floor as ordered_floor,
+            floors.number as proposed_floor,
+            registration_details.building_type_id as ordered_building_type,
+            buildings.building_type_id as porposed_building_type "))
+        ->groupBy('registration_details.id')
         ->get();
-
-//         select registration_headers.id as regi_header,
-// registration_details.id as regi_detail,
-// registration_details.building_type_id as ordered_building_type,
-// building_types.id as proposed_building_types,
-// units.type as proposed_unit_type,
-// registration_details.unit_type as ordered_unit_type
-
-// from `registration_details` 
-// inner join `registration_headers` on `registration_details`.`registration_header_id` = `registration_headers`.`id`
-// inner join units on units.type=registration_details.unit_type
-// inner join floors on units.floor_id=floors.id
-// inner join buildings on buildings.id=floors.building_id
-// inner join building_types on building_types.id=buildings.building_type_id
-// where building_types.id=registration_details.building_type_id
-// or (floors.number=registration_details.floor or registration_details.size=units.size)
-// ;
-
-
+        return view('transaction.offerSheet.show')
+        ->withResult($result)
+        ->withTenant($tenant)
+        ;
 
     }
 
@@ -142,8 +165,8 @@ class offerSheetController extends Controller
     public function destroy($id)
     {
         //
-       try
-       {
+     try
+     {
         $result = RegistrationHeader::findorfail($id);
         try
         {

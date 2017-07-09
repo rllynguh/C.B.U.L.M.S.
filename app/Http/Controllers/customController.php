@@ -9,6 +9,8 @@ use App\BuildingType;
 use App\province;
 use App\BusinessType;
 use App\RepresentativePosition;
+use App\Floor;
+use App\SizeRange;
 
 class customController extends Controller
 {
@@ -34,19 +36,23 @@ class customController extends Controller
 		$result=province::where('is_active',1)->get();
 		return Response::json($result);
 	}
-	public function getBusinessType()
+	public function getFloor()
 	{
-		$result=BusinessType::where('is_active',1)
-		->orderBy("description")
+		$result=Floor::where('floors.is_active','=',1)
+		->groupBy('floors.number')
+		->join('units','floors.id','units.floor_id')
+		->select('floors.id','floors.number')
 		->get();
 		return Response::json($result);
 	}
-	public function getPosition()
+	public function getRange()
 	{
-		$result=RepresentativePosition::where('is_active',1)
-		->orderBy("description")
-		->get();
-		return Response::json($result);
+		$range=SizeRange::where('is_active','=',1)
+		->select(DB::Raw('id, size_from, size_to,CONCAT(size_from," - ",size_to," sqm") as name,CONCAT(size_from,"|",size_to) as value'))
+		->get()
+		;
+		return Response::json($range);
+
 	}
 }
 
