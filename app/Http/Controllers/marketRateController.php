@@ -87,7 +87,6 @@ class marketRateController extends Controller
         $marketRate->date_as_of=Carbon::now(Config::get('app.timezone'));
         $marketRate->rate=$request->txtRate;
         $marketRate->save();
-        return Response::json("success store");
     }
 
     /**

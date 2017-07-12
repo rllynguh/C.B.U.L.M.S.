@@ -1,6 +1,5 @@
 @extends('layout.coreLayout')
 @section('content')
-<meta name="_token" content="{!! csrf_token() !!}" />
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
@@ -40,8 +39,17 @@
             <div class="modal-body">
               <div class="form-group p-l-30">
                 <div class="form-line">
-                  <input autocomplete="off" type="text" class="form-control align-center"
-                  id="txtBankDesc" name="txtBankDesc" minlength="3" maxlength="35" data-parsley-pattern = '^[a-zA-Z0-9. ]+$' required placeholder="Ex. Security Bank" >
+                  {{Form::text('txtBankDesc',null,[
+                    'id'=> 'txtBankDesc',
+                    'class' => 'form-control align-center',
+                    'autocomplete' => 'off',
+                    'minlength' => '3',
+                    'maxlength' => '30',
+                    'required' => 'required',
+                    'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
+                    'placeholder' => 'Ex. Security Bank' 
+                    ])
+                  }}
                 </div>
               </div>
             </div>
@@ -67,7 +75,6 @@
         <table class="table table-hover dataTable" id="myTable">
           <thead>
             <tr>
-              <th class="align-center">Bank ID</th>
               <th class="align-center">Bank</th>
               <th class="align-center">Status</th>
               <th class="align-center">Action</th>

@@ -11,7 +11,7 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'id', name: 'id'},
+    {data: 'code', name: 'code'},
     {data: 'description', name: 'description'},
     {data: 'city_description', name: 'city_description'},
     {data: 'is_active', name: 'is_active', searchable: false},
@@ -47,14 +47,11 @@ $(document).ready(function()
       })
       e.preventDefault(); 
       var formData = $("#frmFloor").serialize(); 
-      console.log(formData);
       $.ajax({
         type: "POST",
         url: urlfloor,
         data: formData,
-        dataType: 'json',
         success: function (data) {
-          console.log(data);
           getLatest();
           $.notify("Record Successfully Stored!", "success");
           $("#txtUNum").val("");
@@ -74,14 +71,13 @@ $(document).ready(function()
   });
 
   //for showing building edit modal
-  $('#myList').on('click', '.open-modal',function()
+  $('#myList').on('click', '#btnEdit',function()
   { 
     var myId = $(this).val();
     $.get(url + '/' + myId + '/edit', function (data) {
             //success data
             $('#btnSave').val('Edit');
             changeLabel();
-            console.log(data);
             if(parseInt(data.current)==0)
               value="1";
             else
@@ -137,7 +133,6 @@ $(document).ready(function()
         type = "PUT";
         my_url += '/' + myId;
       }
-      console.log(formData);
       $.ajax({
        beforeSend: function (jqXHR, settings) {
         xhrPool.push(jqXHR);
@@ -145,9 +140,7 @@ $(document).ready(function()
       type: type,
       url: my_url,
       data: formData,
-      dataType: 'json',
       success: function (data) {
-        console.log(data);
         table.draw();
         successPrompt();
         $('#myModal').modal('hide');
@@ -184,13 +177,12 @@ $(document).ready(function()
       type: "PUT",
       success: function (data) 
       {
-       console.log(id);
-     },
-     error: function (data) 
-     {
-      console.log('Error:', data);
-    }
-  });
+      },
+      error: function (data) 
+      {
+        console.log('Error:', data);
+      }
+    });
   });
 
   //for showing delete modal
@@ -219,10 +211,10 @@ $(document).ready(function()
         table.draw();
       }else{
         if(data[0]=="true"){
-          $.notify(data[1].description + " is in use!", "boom");
+          $.notify(data[1] + " is currently in use!", "boom");
         }else{
           table.draw();
-          $.notify(data.description + " successfully deleted.", "boom");
+          $.notify(data + " has been successfully deleted.", "boom");
         }
       }
       $("#modalDelete").modal("hide");
@@ -253,7 +245,6 @@ function getLatest()
     }
     else
     {
-      console.log(data);
       $("#txtFNum").val(data.current);
     }
   });
@@ -276,7 +267,6 @@ function changeLabel()
 function getBuildingType()
 {
  $.get(urlbtype, function (data) {
-  console.log(data);
   $('#comBuilType').children('option').remove();
   $.each(data,function(index,value)
   {
@@ -289,7 +279,6 @@ function getBuildingType()
 function getProvince()
 {
   $.get(urlprov, function (data) {
-    console.log(data);
     $('#comProvince').children('option').remove();
     $.each(data,function(index,value)
     {
@@ -304,7 +293,6 @@ function getProvince()
 function getCity()
 {
   $.get('/custom/getCity/' + $("#comProvince").val(), function (data) {
-    console.log(data);
     $('#comCity').children('option').remove();
     $.each(data,function(index,value)
     {

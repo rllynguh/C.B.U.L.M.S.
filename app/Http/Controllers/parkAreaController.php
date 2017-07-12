@@ -106,7 +106,6 @@ class parkAreaController extends Controller
       $parkArea->num_of_space=$request->txtPNum;
       $parkArea->size=$request->txtArea;
       $parkArea->save();
-      return Response::json("success store");
     }
 
     public function storeSpace(Request $request)
@@ -118,7 +117,6 @@ class parkAreaController extends Controller
       $parkSpace->number=$request->txtPPNum;
       $parkSpace->size=$request->txtPArea;;
       $parkSpace->save();
-      return Response::json("success store");
     }
 
     /**

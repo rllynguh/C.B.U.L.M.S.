@@ -39,7 +39,6 @@ $(document).ready(function()
     if(parseInt(data.space_size)<=1)
       value=1;
     $("#txtArea").attr("min",value);
-    console.log(data);
     
     var exists = false;
     $('#comBuilding').each(function()
@@ -64,7 +63,6 @@ $(document).ready(function()
     {
       $('#comFloor').append($('<option>', {value: data.floor_id, text: data.number}));
     }
-    console.log("setFLoor");
     $('#comFloor').val(data.floor_id);
     $('#myId').val(data.id);
     $('#txtPNum').val(data.num_of_space);
@@ -90,7 +88,6 @@ $(document).ready(function()
     if($("#myForm").parsley().isValid())
     {
       myId=$("#myId").val();
-      console.log(myId);
       my_url=url;
       $.ajaxSetup(
       {
@@ -101,7 +98,6 @@ $(document).ready(function()
       });
       e.preventDefault(); 
       var formData = $("#myForm").serialize();
-      console.log(formData);
     type = "PUT"; //for updating existing resource
     my_url += '/' + myId;
     if($("#btnSave").val()=="Save")
@@ -114,10 +110,8 @@ $(document).ready(function()
       type: type,
       url: my_url,
       data: formData,
-      dataType: 'json',
       success: function (data) 
       {
-        console.log(data);
         table.draw();
         successPrompt();
         if($("#btnSave").val()=="Save")
@@ -157,7 +151,6 @@ $(document).ready(function()
         type: "PUT",
         success: function (data) 
         {
-          console.log(id);
         },
         error: function (data) 
         {
@@ -199,15 +192,12 @@ $(document).ready(function()
 
       var formData = $("#frmParkSpace").serialize();
                //for updating existing resource
-               console.log(formData);
                $.ajax({
                 type: "POST",
                 url: url + "/storeSpace",
                 data: formData,
-                dataType: 'json',
                 success: function (data) {
                   $.notify("The record has been successfully stored.", "success");
-                  console.log(data);
                   getLatest();
                 },
                 error: function (data) {
@@ -235,7 +225,6 @@ $(document).ready(function()
   //for when a user changes selected building
   $("#comBuilding").change(function(data)
   {
-    console.log("change");
     if($("#btnSave").val()=="Save")
       getFloor();
   });
@@ -265,7 +254,6 @@ function changeLabel()
    {
     $.get(url + '/getLatest/' + $("#myId").val(), function (data) 
     {
-      console.log(data);
       if(parseInt(data.number) > parseInt(data.ceiling))
       { 
         $.notify("Number of park spaces at maximum!", "error");
@@ -292,7 +280,6 @@ function changeLabel()
   {
     $.get(url + '/get/building', function (data) 
     {
-      console.log(data);
       selected=$("#comBuilding").val();
       $('#comBuilding').children('option').remove();
       $.each(data,function(index,value)
@@ -314,7 +301,6 @@ function changeLabel()
   {
     $.get(url + '/getFloor/' + $("#comBuilding").val(), function (data) 
     {
-     console.log(data);
      selected=$("#comFloor").val();
      $('#comFloor').children('option').remove();
      $.each(data,function(index,value)

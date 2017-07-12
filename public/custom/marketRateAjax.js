@@ -18,11 +18,9 @@ $(document).ready(function()
   //for showing edit modal
   $('#myList').on('click', '.open-modal',function()
   { 
-    console.log($(this).val());
     var myId = $(this).val();
     $.get(url + '/' + myId + '/edit', function (data) 
     {
-      console.log(data);
       $('#lblHeader').replaceWith("<p id='lblHeader'>Update</p>");
       $('#myId').val(myId);
       $('#txtRate').val(data.rate);
@@ -47,14 +45,11 @@ $(document).ready(function()
       var type="POST";
       myId=$('#myId').val();
       var formData = $('#myForm').serialize();
-      console.log(formData);
       $.ajax({
         type: type,
         url: my_url,
         data: formData,
-        dataType: 'json',
         success: function (data) {
-          console.log(data);
           rate=data.rate;
           date=data.date_as_of;
           if(parseInt(data.rate)==0)

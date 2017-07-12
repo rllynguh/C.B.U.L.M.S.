@@ -118,7 +118,7 @@ class offerSheetController extends Controller
             floors.number as floor,
             buildings.id as building,
             registration_details.unit_type as ordered_unit_type,
-            units.type as proposed_unit_type,
+            units.type as proposed_unit_type,   
             units.size as proposed_size,
             registration_details.floor as ordered_floor,
             floors.number as proposed_floor,
@@ -165,8 +165,8 @@ class offerSheetController extends Controller
     public function destroy($id)
     {
         //
-     try
-     {
+       try
+       {
         $result = RegistrationHeader::findorfail($id);
         try
         {

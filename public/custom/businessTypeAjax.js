@@ -9,7 +9,6 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'id', name: 'id'},
     {data: 'description', name: 'description'},
     {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
@@ -25,18 +24,16 @@ $(document).ready(function()
  });
 
   //for showing edit modal
-  $('#myList').on('click', '.open-modal',function()
+  $('#myList').on('click', '#btnEdit',function()
   { 
-    var busiType_id = $(this).val();
-    $.get(url + '/' + busiType_id + '/edit', function (data) {
-            //success data
-            console.log(data);
-            $('#btnSave').val('Edit');
-            changeLabel();
-            $('#busiType_id').val(data.id);
-            $('#txtBusiTypeDesc').val(data.description);
-            $('#myModal').modal('show');
-          }) 
+    var myId = $(this).val();
+    $.get(url + '/' + myId + '/edit', function (data) {
+      $('#btnSave').val('Edit');
+      changeLabel();
+      $('#myId').val(data.id);
+      $('#txtBusiTypeDesc').val(data.description);
+      $('#myModal').modal('show');
+    }) 
   });
 
   //for storing data or updating data
@@ -55,21 +52,18 @@ $(document).ready(function()
    var formData =$("#myForm").serialize();
    if($('#btnSave').val()=="Edit")
    {
-     var busiType_id = $('#busiType_id').val();
-     type = "PUT";
-     my_url += '/' + busiType_id;
-   }
-   console.log(formData);
-   $.ajax({
+    var myId = $('#myId').val();
+    type = "PUT";
+    my_url += '/' + myId;
+  }
+  $.ajax({
     beforeSend: function (jqXHR, settings) {
       xhrPool.push(jqXHR);
     },
     type: type,
     url: my_url,
     data: formData,
-    dataType: 'json',
     success: function (data) {
-     console.log(data);
      table.draw();
      successPrompt();
      $('#myModal').modal('hide');
@@ -87,7 +81,7 @@ $(document).ready(function()
     }
   }
 });
- }});
+}});
 
   //for softdeletion of records
   $('#myList').on('change', '#IsActive',function(e)
@@ -106,13 +100,12 @@ $(document).ready(function()
       type: "PUT",
       success: function (data) 
       {
-       console.log(id);
-     },
-     error: function (data) 
-     {
-      console.log('Error:', data);
-    }
-  });
+      },
+      error: function (data) 
+      {
+        console.log('Error:', data);
+      }
+    });
   });
 
   //for showing delete modal
@@ -141,10 +134,10 @@ $(document).ready(function()
       table.draw();
     }else{
       if(data[0]=="true"){
-        $.notify(data[1].description + " is in use.", "delete");
+        $.notify(data[1] + " is in use.", "delete");
       }else{
         table.draw();
-        $.notify(data.description + " has been deleted!", "success");
+        $.notify(data + " has been deleted!", "success");
       }
     }
     $("#modalDelete").modal("hide");

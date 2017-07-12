@@ -22,27 +22,27 @@ class bankController extends Controller
     public function data()
     {   
       $result = Bank::all();
-     return Datatables::of($result)
-     ->addColumn('action', function ($data) {
-      return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
-    })
-     ->editColumn('is_active', function ($data) {
-      $checked = '';
-      if($data->is_active==1){
-        $checked = 'checked';
-      }
-      return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
-    })
-     ->setRowId(function ($data) {
-      return $data = 'id'.$data->id;
-    })
-     ->rawColumns(['is_active','action'])
-     ->make(true);
-   }
-   public function index()
-   {
-    return view('maintenance.bank.index');
-  }
+      return Datatables::of($result)
+      ->addColumn('action', function ($data) {
+        return '<button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
+      })
+      ->editColumn('is_active', function ($data) {
+        $checked = '';
+        if($data->is_active==1){
+          $checked = 'checked';
+        }
+        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
+      })
+      ->setRowId(function ($data) {
+        return $data = 'id'.$data->id;
+      })
+      ->rawColumns(['is_active','action'])
+      ->make(true);
+    }
+    public function index()
+    {
+      return view('maintenance.bank.index');
+    }
 
 
     /**
@@ -69,7 +69,6 @@ class bankController extends Controller
       $result=new Bank();
       $result->description=$request->txtBankDesc;
       $result->save();
-      return Response::json("Success Insert");
     }
     catch(\Exception $e) {
       if($e->errorInfo[1]==1062)
@@ -126,7 +125,6 @@ class bankController extends Controller
           $result=Bank::find($id);
           $result->description=$request->txtBankDesc;
           $result->save(); 
-          return Response::json("success update");
         }catch(\Exception $e){
          if($e->errorInfo[1]==1062)
           return "This Data Already Exists";
@@ -153,7 +151,7 @@ class bankController extends Controller
       try
       {
         $result->delete();
-        return Response::json($result);
+        return Response::json($result->description);
       }
       catch(\Exception $e) {
         if($e->errorInfo[1]==1451)

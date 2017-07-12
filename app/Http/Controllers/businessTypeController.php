@@ -25,7 +25,7 @@ class businessTypeController extends Controller
         $result=BusinessType::orderBy('id')->get();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
+            return '<button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
         })
         ->editColumn('is_active', function ($data) {
           $checked = '';
@@ -69,18 +69,17 @@ class businessTypeController extends Controller
             $btype=new BusinessType;
             $btype->description=$request->txtBusiTypeDesc;
             $btype->save();
-            return Response::json("success store");
         }
         catch(\Exception $e)
         {
-           if($e->errorInfo[1]==1062)
-              return "This Data Already Exists";
-          else if($e->errorInfo[1]==1452)
-              return "Already Deleted";
-          else
-              return var_dump($e->errorInfo[1]);
-      }
+         if($e->errorInfo[1]==1062)
+          return "This Data Already Exists";
+      else if($e->errorInfo[1]==1452)
+          return "Already Deleted";
+      else
+          return var_dump($e->errorInfo[1]);
   }
+}
 
     /**
      * Display the specified resource.
@@ -101,9 +100,9 @@ class businessTypeController extends Controller
      */
     public function edit($id)
     {
-     $businessType=BusinessType::find($id);
-     return Response::json($businessType);
- }
+       $businessType=BusinessType::find($id);
+       return Response::json($businessType);
+   }
 
     /**
      * Update the specified resource in storage.
@@ -118,13 +117,12 @@ class businessTypeController extends Controller
       {
         try
         { $businessType=BusinessType::find($id);
-         $businessType->description=$request->txtBusiTypeDesc;
-         $businessType->save();
-         return Response::json("success update");
-     }
-     catch(\Exception $e)
-     {
-         if($e->errorInfo[1]==1062)
+           $businessType->description=$request->txtBusiTypeDesc;
+           $businessType->save();
+       }
+       catch(\Exception $e)
+       {
+           if($e->errorInfo[1]==1062)
             return "This Data Already Exists";
         else
             return var_dump($e->errorInfo[1]);
@@ -154,19 +152,19 @@ public function softDelete($id)
      */
     public function destroy($id)
     {
-       try
-       {
+     try
+     {
         $result = BusinessType::findorfail($id);
         try
         {
           $result->delete();
-          return Response::json($result);
+          return Response::json($result->description);
       }
       catch(\Exception $e) {
           if($e->errorInfo[1]==1451)
-            return Response::json(['true',$result]);
+            return Response::json(['true',$result->description]);
         else
-            return Response::json(['true',$result,$e->errorInfo[1]]);
+            return Response::json(['true',$result->description,$e->errorInfo[1]]);
     }
 } 
 catch(\Exception $e) {

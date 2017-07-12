@@ -9,7 +9,6 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
-    {data: 'id', name: 'id'},
     {data: 'description', name: 'description'},
     {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
@@ -25,15 +24,14 @@ $('#btnAddModal').on('click',function(e)
 });
 
   //for showing edit modal
-  $('#myList').on('click', '.open-modal',function()
+  $('#myList').on('click', '#btnEdit',function()
   { 
-    var builType_id = $(this).val();
+    var myId = $(this).val();
     $('#btnSave').val('Edit');
     changeLabel();
-    $.get(url + '/' + builType_id + '/edit', function (data) {
-      console.log(data);
+    $.get(url + '/' + myId + '/edit', function (data) {
       $('#myForm').trigger("reset");
-      $('#builType_id').val(data.id);
+      $('#myId').val(data.id);
       $('#txtBuilTypeDesc').val(data.description);
       $('#myModal').modal('show');
     }) 
@@ -54,16 +52,14 @@ $('#btnAddModal').on('click',function(e)
       var my_url = url;
       var type="POST";
       var formData = $("#myForm").serialize();
-      console.log(formData);
       if($('#btnSave').val()=="Edit")
       {
-        var builType_id = $('#builType_id').val();
+        var myId = $('#myId').val();
         type = "PUT";
-        my_url += '/' + builType_id;
+        my_url += '/' + myId;
       }
                  //for updating existing resource
                  
-                 console.log(formData);
                  $.ajax({
                   beforeSend: function (jqXHR, settings) {
                     xhrPool.push(jqXHR);
@@ -71,9 +67,7 @@ $('#btnAddModal').on('click',function(e)
                   type: type,
                   url: my_url,
                   data: formData,
-                  dataType: 'json',
                   success: function (data) {
-                    console.log(data);
                     table.draw();
                     successPrompt();
                     $('#myModal').modal('hide');
@@ -110,13 +104,12 @@ $('#btnAddModal').on('click',function(e)
       type: "PUT",
       success: function (data) 
       {
-       console.log(id);
-     },
-     error: function (data) 
-     {
-      console.log('Error:', data);
-    }
-  });
+      },
+      error: function (data) 
+      {
+        console.log('Error:', data);
+      }
+    });
   });
 
   //for showing delete modal
@@ -135,9 +128,9 @@ $('#btnAddModal').on('click',function(e)
    }
  })
    e.preventDefault(); 
-   var builType_id = $(this).val();
+   var myId = $(this).val();
    $.ajax({
-    url: url + '/' + builType_id,
+    url: url + '/' + myId,
     type: "delete",
     success: function (data) {
      if(data=="Deleted"){
@@ -145,10 +138,10 @@ $('#btnAddModal').on('click',function(e)
       table.draw();
     }else{
       if(data[0]=="true"){
-        $.notify(data[1].description + " is in use.", "error");
+        $.notify(data[1] + " is in use.", "error");
       }else{
         table.draw();
-        $.notify(data.description + "successfully deleted!", "success");
+        $.notify(data + "successfully deleted!", "success");
       }
     }
     $("#modalDelete").modal("hide");

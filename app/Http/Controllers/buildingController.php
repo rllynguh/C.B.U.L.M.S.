@@ -33,7 +33,7 @@ class buildingController extends Controller
      ->get();
      return Datatables::of($result)
      ->addColumn('action', function ($data) {
-      return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
+      return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
     })
      ->editColumn('is_active', function ($data) {
       $checked = '';
@@ -89,7 +89,6 @@ class buildingController extends Controller
      $floor->building_id=$request->comBuilding;
      $floor->num_of_unit=$request->txtUNum;
      $floor->save();
-     return Response::json("success store");
    }
    public function store(Request $request)
    {
@@ -122,7 +121,6 @@ class buildingController extends Controller
       $result->num_of_floor=$request->txtBFNum;
       $result->address_id=$address->id;
       $result->save();
-      return Response::json("success store");
     }
     catch(\Exception $e) {
       if($e->errorInfo[1]==1062)
@@ -213,7 +211,6 @@ class buildingController extends Controller
    $address->district=$request->txtDistrict;
    $address->city_id=$request->comCity;
    $address->save();
-   return Response::json("success update");
  }
 
     /**
@@ -241,11 +238,11 @@ class buildingController extends Controller
       try
       {
         $result->delete();
-        return Response::json($result);
+        return response::json($result->description);
       }
       catch(\Exception $e) {
         if($e->errorInfo[1]==1451)
-          return Response::json(['true',$result]);
+          return Response::json(['true',$result->description]);
         else
           return Response::json(['true',$result,$e->errorInfo[1]]);
       }

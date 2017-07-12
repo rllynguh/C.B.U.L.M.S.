@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta name="_token" content="{!! csrf_token() !!}" />
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, 
+  user-scalable=no" name="viewport">
   <title>Majent | Lease Management System</title>
   <link rel="icon" href="images/icon1.ico">
   {!!Html::style("plugins/sweetalert/sweetalert.css")!!}

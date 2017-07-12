@@ -38,7 +38,7 @@ class floorController extends Controller
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
-        return '<button id="btnAddUnit" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
+        return '<button id="btnAddUnit" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
       })
       ->editColumn('is_active', function ($data) {
         $checked = '';
@@ -99,7 +99,6 @@ class floorController extends Controller
       $floor->building_id=$request->comBuilding;
       $floor->num_of_unit=$request->txtUNum;
       $floor->save();
-      return Response::json("success store");
     }
 
     public function storeUnit (Request $request)
@@ -119,7 +118,6 @@ class floorController extends Controller
       $unit->number=$uNum;
       $unit->floor_id=$request->comFloor;
       $unit->save();
-      return Response::json("success store");
     }
 
     /**

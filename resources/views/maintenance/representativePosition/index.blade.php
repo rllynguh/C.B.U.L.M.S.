@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
-      <h2 class="align-center">BUSINESS TYPES<button class="btn btn-success btn-lg waves-effect waves-lime m-l-15 m-b-5 " id="btnAddModal"  type="button" >
+      <h2 class="align-center">REPRESENTATIVE POSITIONS<button class="btn btn-success btn-lg waves-effect waves-lime m-l-15 m-b-5 " id="btnAddModal"  type="button" >
         <i class="mdi-content-add pulls"></i> NEW
       </button></h2>
     </div>
@@ -21,7 +21,7 @@
             <p>Are you sure do you want to delete this record?</p>
           </div>
           <div class="modal-footer align-center">
-            <button id="btnDelete" type="submit" class="btn btn-lg bg-red waves-effect waves-white col-md-12 col-sm-12"><i class="mdi-action-delete"></i> DELETE</button>
+            <button id="btnDelete" class="btn btn-lg bg-red waves-effect waves-white col-md-12 col-sm-12"><i class="mdi-action-delete"></i> DELETE</button>
           </div>
         </div>
       </div>
@@ -32,38 +32,35 @@
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
-          <form data-parsley-validate id="myForm" name="myForm" class="form-horizontal">
-
+          <form id="myForm" class="form-horizontal" data-parsley-validate>
             <div class="modal-header">
-              <h1 id="label" class="modal-title align-center p-b-15">NEW BUSINESSTYPE TYPE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+              <h1 id="label" class="modal-title align-center p-b-15">NEW REPRESENTATIVE POSITION<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
             </div>
             <div class="modal-body">
               <div class="form-group p-l-30">
                 <div class="form-line">
-                 {{ Form::text('txtBusiTypeDesc',null,[
-                  'id'=> 'txtBusiTypeDesc',
-                  'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
-                  'class' => 'form-control text-center',
+                 {{Form::text('txtDesc',null,[
+                  'id'=> 'txtDesc',
+                  'class' => 'form-control align-center',
                   'autocomplete' => 'off',
-                  'minlength' => '3',
-                  'maxlength' => '20',
+                  'minlength' => '5',
+                  'maxlength' => '30',
                   'required' => 'required',
-                  'placeholder' => 'Ex. Restaurants'
+                  'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
+                  'placeholder' => 'Ex. Manager' 
                   ])
                 }}
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i> <span id="lblButton">SAVE</span></button>
-            {{ Form::hidden(null,null,[
-              'id'=> 'myId',
-              ])
-            }}
+            <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> SAVE</span></button>
+            {{Form::hidden('_token',null,['value'=> csrf_token()])}}
+            {{Form::hidden('myId',null,['id'=> 'myId'])}}
           </div>
         </form>
-
       </div>
+
     </div>
   </div>
   <!--MODAL-->
@@ -71,14 +68,14 @@
   <div class="card">
     <div class="header align-center">
       <h2>
-        LIST OF BUSINESS TYPES
+        List of Representative Postions
       </h2>
     </div>
     <div class="body">
       <table class="table table-hover dataTable" id="myTable">
         <thead>
           <tr>
-            <th class="align-center">Business Name</th>
+            <th class="align-center">Postion</th>
             <th class="align-center">Status</th>
             <th class="align-center">Action</th>
           </tr>
@@ -93,9 +90,9 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/businessTypeAjax.js")!!}
+{!!Html::script("custom/representativePositionAjax.js")!!}
 <script type="text/javascript">
-  dataurl="{{route("businesstypes.getData")}}"
-  url="{{route("businesstypes.index")}}"
+  var dataurl="{!!route('repr-positions.getData')!!}" ;
+  var url="{!!route('repr-positions.index')!!}" ;
 </script>
 @endsection

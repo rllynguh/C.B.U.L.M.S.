@@ -30,42 +30,39 @@ $(document).ready(function()
   });
 
   //for showing floor edit modal
-  $('#myList').on('click', '.open-modal',function()
+  $('#myList').on('click', '#btnEdit',function()
   { 
     $('#btnSave').val('Edit');
     changeLabel();
     var myId = $(this).val();
     getBuilding();
     $.get(url + '/' + myId + '/edit', function (data) {
-            //success data
-            console.log("Edit Data:");
-            console.log(data);
-            value="";
-            if(parseInt(data.current)<1)
-              {value="1";
-          }
-          else
-            {value=data.current;}
-          var exists = false;
-          $('#comBuilding').each(function(){
-            if (this.value == data.building_id) {
-              exists = true;
-              return false;
-            }
-          });
-          if(!exists)
-          { 
-            $('#comBuilding').append($('<option>', {value: data.building_id, text: data.description}));
-            $('#comBuilding').val(data.building_id);
-          }
-          $("#comBuilding").attr("disabled","");
-          $('#myId').val(data.id);
-          $('#comBuilding').val(data.building_id);
-          $('#txtFNum').val(data.number);
-          $('#txtUNum').val(data.num_of_unit);
-          $("#txtUNum").attr("min",value);
-          $('#myModal').modal('show');
-        }) 
+      value="";
+      if(parseInt(data.current)<1)
+        {value="1";
+    }
+    else
+      {value=data.current;}
+    var exists = false;
+    $('#comBuilding').each(function(){
+      if (this.value == data.building_id) {
+        exists = true;
+        return false;
+      }
+    });
+    if(!exists)
+    { 
+      $('#comBuilding').append($('<option>', {value: data.building_id, text: data.description}));
+      $('#comBuilding').val(data.building_id);
+    }
+    $("#comBuilding").attr("disabled","");
+    $('#myId').val(data.id);
+    $('#comBuilding').val(data.building_id);
+    $('#txtFNum').val(data.number);
+    $('#txtUNum').val(data.num_of_unit);
+    $("#txtUNum").attr("min",value);
+    $('#myModal').modal('show');
+  }) 
   });
 
   //for storing new record for floor
@@ -89,19 +86,20 @@ $(document).ready(function()
       type = "PUT";
       my_url += '/' + myId;
     }
-    console.log(formData);
     $.ajax({
       type: type,
       url: my_url,
       data: formData,
-      dataType: 'json',
       success: function (data) {
         table.draw();    
         successPrompt();
         if($("#btnSave").val()=="Save")     
          { getBuilding();      
           $('#txtVUNum').val(""); 
-          $("#txtUNum").val("");             
+          $("#txtUNum").val("");          
+          setTimeout(function(){
+            $("#btnSave").removeAttr('disabled');
+          }, 2500);   
         }         
         else
           $('#myModal').modal('hide');
@@ -129,13 +127,12 @@ $(document).ready(function()
       type: "PUT",
       success: function (data) 
       {
-       console.log(id);
-     },
-     error: function (data) 
-     {
-      console.log('Error:', data);
-    }
-  });
+      },
+      error: function (data) 
+      {
+        console.log('Error:', data);
+      }
+    });
   });
 
   //for showing unit add modal
@@ -148,7 +145,6 @@ $(document).ready(function()
     $.get(url + '/' + $(this).val() + '/edit', function (data) {
       $("#txtFBuilDesc").val(data.description);
       $("#txtUFNum").val(data.number);
-      console.log(data);
     });
   });
 
@@ -158,9 +154,6 @@ $(document).ready(function()
     if($('#frmUnit').parsley().isValid())
     {
       $("#btnSaveUnit").attr('disabled','disabled');
-      setTimeout(function(){
-        $("#btnSaveUnit").removeAttr('disabled');
-      }, 1000);
       $.ajaxSetup(
       {
         headers: {
@@ -169,17 +162,17 @@ $(document).ready(function()
       })
       e.preventDefault(); 
       var formData = $("#frmUnit").serialize();
-      console.log(formData);
       $.ajax({
         type: "POST",
         url: url + "/storeunit",
         data: formData,
-        dataType: 'json',
         success: function (data) {
-          console.log(data);
           $.notify("The record has been successfully stored!", "success");
           getLatestUnit();
           $("#txtArea").val("");
+          setTimeout(function(){
+            $("#btnSaveUnit").removeAttr('disabled');
+          }, 1000);
         },
         error: function (data) {
           console.log('Error:', data);
@@ -207,7 +200,6 @@ $(document).ready(function()
       }
       else
       {
-        console.log(data);
         $("#txtUUNum").val(data.number);
       }
     });
@@ -234,7 +226,6 @@ $(document).ready(function()
     {
       $.get(url + '/getFloor/' + $("#comBuilding").val(), function (data) 
       {
-       console.log(data);
        $("#txtFNum").val(data.current);
      });
     }
@@ -244,7 +235,6 @@ $(document).ready(function()
   function getBuilding()
   {
     $.get(url + '/get/building', function (data) {
-      console.log(data);
       selected=$("#comBuilding").val();
       $('#comBuilding').children('option').remove();
       $.each(data,function(index,value)
@@ -258,9 +248,6 @@ $(document).ready(function()
         $("#myModal").modal("hide");
       }
       getLatest();
-      setTimeout(function(){
-        $("#btnSave").removeAttr('disabled');
-      }, 500);
     });
   }
 

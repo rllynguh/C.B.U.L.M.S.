@@ -23,7 +23,7 @@ $(document).ready(function()
   });
 
   //show edit modal
-  $('#myList').on('click', '#btnEdit',function()
+  $('#myList').on('click', '.open-modal',function()
   { 
     var myId = $(this).val();
     $.get(url + '/' + myId + '/edit', function (data) 
@@ -38,7 +38,7 @@ $(document).ready(function()
       $('#btnSave').val('Edit');
       changeLabel();
       $('#myId').val(data.id);
-      $('#txtBankDesc').val(data.description);
+      $('#txtDesc').val(data.description);
       $('#myModal').modal('show');
     }
   }) 
@@ -55,7 +55,6 @@ $(document).ready(function()
           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
         }
       })
-
       e.preventDefault(); 
       var my_url = url;
       var type="POST";
@@ -73,6 +72,7 @@ $(document).ready(function()
         type: type,
         url: my_url,
         data: formData,
+        dataType: 'json',
         success: function (data) {
           table.draw();  
           successPrompt(); 
@@ -81,8 +81,8 @@ $(document).ready(function()
         error: function (data) {
           console.log('Error:', data.responseText);
           try{
-            $('#txtBankDesc').parsley().removeError('ferror', {updateClass: false});
-            $('#txtBankDesc').parsley().addError('ferror', {message: data.responseText, updateClass: false});
+            $('#txtDesc').parsley().removeError('ferror', {updateClass: false});
+            $('#txtDesc').parsley().addError('ferror', {message: data.responseText, updateClass: false});
           }catch(err){}
           finally{
             $.each(xhrPool, function(idx, jqXHR) {
@@ -146,10 +146,10 @@ $(document).ready(function()
         table.draw();
       }else{
         if(data[0]=="true"){
-          $.notify( data + " is in use.", "warning");
+          $.notify( data[1].description + " is in use.", "warning");
         }else{
           table.draw();
-          $.notify(data + "'s record has been deleted successfully.", "success");
+          $.notify(data.description + "'s record has been deleted successfully.", "success");
         }
       }
       $("#modalDelete").modal("hide");
@@ -188,7 +188,7 @@ function successPrompt(){
 //for when the modal of add and edit was closed
 $(document).on('hidden.bs.modal','#myModal', function () 
 { 
-  $('#txtBankDesc').parsley().removeError('ferror', {updateClass: false});
+  $('#txtDesc').parsley().removeError('ferror', {updateClass: false});
   $("#myForm").trigger("reset");
   $('#myForm').parsley().destroy();
 });

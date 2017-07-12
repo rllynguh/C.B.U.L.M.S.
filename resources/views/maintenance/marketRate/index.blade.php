@@ -1,6 +1,5 @@
 @extends('layout.coreLayout')
 @section('content')
-<meta name="_token" content="{!! csrf_token() !!}" />
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
@@ -16,19 +15,35 @@
           <div class="modal-content modal-col-green">
             <form id="myForm" class="form-horizontal" data-parsley-validate>
               <div class="modal-header">
-                <h1 class="modal-title align-center p-b-15">UPDATE MARKET RATE<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+                <h1 class="modal-title align-center p-b-15">UPDATE MARKET RATE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
               </div>
               <div class="modal-body">
                 <div class="form-group">
                   <div class="form-line">
-                   <input required type="number" min="400" max="2000" autocomplete="off" id="txtRate" name="txtRate" class="form-control align-center" placeholder="rate/sqm/month" step="0.01" >
-                 </div>
-               </div>
-             </div>
-             <div class="modal-footer">
+                   {{ Form::number('txtRate',null,[
+                    'id'=> 'txtRate',
+                    'autocomplete' => 'off',
+                    'min' => '400',
+                    'max' => '2000',
+                    'class' => 'form-control text-center',
+                    'required' => 'required',
+                    'placeholder' => 'rate/sqm/month',
+                    'step' => '0.01'
+                    ])
+                  }}
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
               <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i> SAVE</button>
-              <input type="hidden" name="_token" value="{{csrf_token()}}">
-              <input type="hidden" id="myId" name="myId" value="0">
+              {{ Form::hidden('_token',null,[
+                'value'=> csrf_token(),
+                ])
+              }}
+              {{ Form::hidden('myId',null,[
+                'id'=> 'myId'
+                ])
+              }}
             </div>
           </form>
         </div>

@@ -7,7 +7,6 @@
     </script>
     @endsection
     @section('content')
-    <meta name="_token" content="{!! csrf_token() !!}" />
     <div class="container-fluid">
       <div class="body">
         <div class="block-header">

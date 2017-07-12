@@ -8,7 +8,6 @@
    </script>
    @endsection
    @section('content')
-   <meta name="_token" content="{!! csrf_token() !!}" />
    <div class="container-fluid">
     <div class="body">
       <div class="block-header">
@@ -20,25 +19,37 @@
     <div class="row clearfix">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-        {{-- mofalFLoor start --}}
+        {{-- modalFLoor start --}}
         <div class="modal fade" id="modalUnit" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content modal-col-green">
               <form id="frmUnit" data-parsley-validate >
                 <div class="modal-header">
-                  <h1  class="modal-title align-center p-b-15">ADD UNIT<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+                  <h1  class="modal-title align-center p-b-15">ADD UNIT<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
                 </div>
                 <div class="modal-body">
                   <div class="form-group p-l-10">
                     <div class="form-line">
                       <h5 class="card-inside-title">Building</h5>
-                      <input readonly=""  id="txtFBuilDesc" name="txtFBuilDesc" type="text" class="form-control text-center" data-rule="quantity">
+                      {{ Form::text('txtFBuilDesc',null,[
+                        'id'=> 'txtFBuilDesc',
+                        'readonly' => '',
+                        'class' => 'form-control text-center',
+                        'required' => 'required',
+                        ])
+                      }}
                     </div>
                   </div>
                   <div class="form-group p-l-10">
                     <div class="form-line">
                       <h5 class="card-inside-title">Floor</h5>
-                      <input readonly=""  id="txtUFNum" name="txtUFNum" type="text" class="form-control text-center" data-rule="quantity">
+                      {{ Form::text('txtUFNum',null,[
+                        'id'=> 'txtUFNum',
+                        'readonly' => '',
+                        'class' => 'form-control text-center',
+                        'required' => 'required',
+                        ])
+                      }}
                     </div>
                   </div>
 
@@ -54,22 +65,40 @@
                  <div class="form-group p-l-10">
                    <div class="form-line">
                      <h5 class="card-inside-title">Unit Number</h5>
-                     <input readonly="" required="" type="text" id="txtUUNum" name="txtUUNum" class="form-control align-center" maxlength="20" required >
-                   </div>
-                 </div>
-                 <div class="form-group ">
+                     {{ Form::text('txtUUNum',null,[
+                      'id'=> 'txtUUNum',
+                      'readonly' => '',
+                      'class' => 'form-control text-center',
+                      'required' => 'required',
+                      ])
+                    }}
+                  </div>
+                </div>
+                <div class="form-group ">
                   <div class="col-md-12 col-sm-12">
                     <div class="form-line">
                       <h5 class="card-inside-title">Area</h5>
-                      <input required type="number" min="1" max="9999" autocomplete="off" data-parsley-type="number" id="txtArea" name="txtArea" class="form-control align-center" placeholder="sqm" step="0.01" >
+                      {{ Form::number('txtArea',null,[
+                        'id'=> 'txtArea',
+                        'data-parsley-type' => "number",
+                        'min' => '1',
+                        'max' => '9999',
+                        'class' => 'form-control text-center',
+                        'required' => 'required',
+                        'placeholder' => 'sqm',
+                        'step' => "0.01"
+                        ])
+                      }}
                     </div>
                   </div>
                 </div>
               </div>
               <div class="modal-footer m-t--30">
                 <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSaveUnit" ><i class="mdi-content-save"></i><span> SAVE</span></button>
-                <input type="hidden" id="comFloor" name="comFloor">
-                <input type="hidden" name="mode" value="floorUnit">
+                {{ Form::hidden('comFloor',null,[
+                  'id'=> 'comFloor',
+                  ])
+                }}
               </div>
             </form>
           </div>
@@ -82,7 +111,7 @@
           <div class="modal-content modal-col-green">
             <form id="myForm" data-parsley-validate >
               <div class="modal-header">
-                <h1 id="label" class="modal-title align-center p-b-15">NEW FLOOR<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+                <h1 id="label" class="modal-title align-center p-b-15">NEW FLOOR<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
               </div>
               <div class="modal-body">
                 <div class="form-group p-l-10">
@@ -95,20 +124,40 @@
                 <div class="form-group p-l-10">
                   <div class="form-line">
                     <h5 class="card-inside-title">Floor Number</h5>
-                    <input readonly=""  id="txtFNum" name="txtFNum" type="text" class="form-control text-center" data-rule="quantity">
+                    {{ Form::number('txtFNum',null,[
+                      'id'=> 'txtFNum',
+                      'readonly' => '',
+                      'class' => 'form-control text-center',
+                      'required' => 'required',
+                      ])
+                    }}
                   </div>
                 </div>
                 <div class="form-group p-l-10">
                   <div class="form-line">
                     <h5 class="card-inside-title">Number of Units</h5>
-                    <input autocomplete="off" min="1" max="99" required  id="txtUNum" name="txtUNum" type="number" class="form-control text-center max-digits-2" value="1" >
+                    {{ Form::number('txtUNum',1,[
+                      'id'=> 'txtUNum',
+                      'autocomplete' => 'off',
+                      'min' => '1',
+                      'max' => '99',
+                      'class' => 'form-control text-center max-digits-2',
+                      'required' => 'required',
+                      ])
+                    }}
                   </div>
                 </div>
               </div>
               <div class="modal-footer m-t--30">
                 <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
-                <input  type="hidden" name="_token" value="{{csrf_token()}}">
-                <input type="hidden" id="myId" value="0">
+                {{ Form::hidden('_token',null,[
+                  'value' => csrf_token()
+                  ])
+                }}
+                {{ Form::hidden(null,1,[
+                  'id' => 'myId'
+                  ])
+                }}
               </div>
             </form>
           </div>
@@ -126,8 +175,8 @@
           <table class="table table-hover dataTable" id="myTable">
             <thead>
               <tr>
-                <th class="align-center">Building  Name</th>
-                <th class="align-center">Floor Number</th>
+                <th class="align-center">Building</th>
+                <th class="align-center">Floor</th>
                 <th class="align-center">Number of Units</th>
                 <th class="align-center">Status</th>
                 <th class="align-center">Action</th>

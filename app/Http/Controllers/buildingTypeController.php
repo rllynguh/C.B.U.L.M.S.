@@ -24,7 +24,7 @@ class buildingTypeController extends Controller
         $result=BuildingType::all();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
+            return '<button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
         })
         ->editColumn('is_active', function ($data) {
           $checked = '';
@@ -70,7 +70,6 @@ class buildingTypeController extends Controller
         $result=new BuildingType();
         $result->description=$request->txtBuilTypeDesc;
         $result->save();
-        return Response::json("success store");
     }
     catch(\Exception $e)
     {
@@ -122,7 +121,6 @@ class buildingTypeController extends Controller
                 $result=BuildingType::find($id);
                 $result->description=$request->txtBuilTypeDesc;
                 $result->save();
-                return Response::json("success update");
             }
             catch(\Exception $e)
             {
@@ -163,13 +161,13 @@ public function softdelete($id)
             try
             {
               $result->delete();
-              return Response::json($result);
+              return Response::json($result->description);
           }
           catch(\Exception $e) {
               if($e->errorInfo[1]==1451)
-                return Response::json(['true',$result]);
+                return Response::json(['true',$result->description]);
             else
-                return Response::json(['true',$result,$e->errorInfo[1]]);
+                return Response::json(['true',$result->description,$e->errorInfo[1]]);
         }
     } 
     catch(\Exception $e) {
