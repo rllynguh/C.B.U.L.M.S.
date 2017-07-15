@@ -70,7 +70,8 @@ $(document).ready(function()
   { 
     if($("#myForm").parsley().isValid())
     {
-      $("#btnSave").attr('disabled','disabled');
+      if($("#btnSave").val()=="Save")     
+        $("#btnSave").attr('disabled','disabled');
       $.ajaxSetup(
       {
         headers: {
@@ -99,7 +100,7 @@ $(document).ready(function()
           $("#txtUNum").val("");          
           setTimeout(function(){
             $("#btnSave").removeAttr('disabled');
-          }, 2500);   
+          }, 1000);   
         }         
         else
           $('#myModal').modal('hide');

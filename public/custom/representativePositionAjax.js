@@ -149,7 +149,7 @@ $(document).ready(function()
           $.notify( data[1].description + " is in use.", "warning");
         }else{
           table.draw();
-          $.notify(data.description + "'s record has been deleted successfully.", "success");
+          $.notify(data + "'s record has been deleted successfully.", "success");
         }
       }
       $("#modalDelete").modal("hide");

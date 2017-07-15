@@ -40,6 +40,7 @@ function getFloor()
       $('#floor').append($('<option>', {value:value.id, text:value.number}));
       floor_option+=' <option id="' + value.id +'">' + value.number + '</option>';
     });
+    console.log(data);
   });
 }
 
@@ -81,6 +82,8 @@ function getReprCity()
     });
   });
 }
+
+
 
 $(document).ready(function()
 {

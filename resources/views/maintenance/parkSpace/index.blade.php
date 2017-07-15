@@ -22,44 +22,50 @@
           <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
               <div class="modal-content modal-col-green">
-                <form id="myForm" class="form-horizontal" >
-                  <div class="modal-header">
-                    <h1 id="label" class="modal-title align-center p-b-15">NEW PARKING UNIT<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+                {{ Form::open([
+                  'id' => 'myForm', 'class' => 'form-horizontal'
+                  ])
+                }}
+                <div class="modal-header">
+                  <h1 id="label" class="modal-title align-center p-b-15">NEW PARKING UNIT<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group p-l-30">
+                    <h5 class="card-inside-title">Building</h5>
+                    <select required  id="comBuilding" name="comBuilding" class="form-control show-tick align-center">
+                    </select>
                   </div>
-                  <div class="modal-body">
-                    <div class="form-group p-l-30">
-                      <h5 class="card-inside-title">Building</h5>
-                      <select required  id="comBuilding" name="comBuilding" class="form-control show-tick align-center">
-                      </select>
-                    </div>
 
-                    <div class="form-group p-l-30">
-                      <h5 class="card-inside-title">Park Area</h5>
-                      <select required  id="comParkArea" name="comParkArea" class="form-control show-tick align-center">
-                      </select>
-                    </div>
-
-                    <div class="form-group p-l-30">
-                      <div class="form-line">
-                        <h5 class="card-inside-title">Park Space Number</h5>
-                        <input required readonly="" type="number" id="txtPNum" name="txtPNum" class="form-control align-center"  >
-                      </div>
-                    </div>
-
-                    <div class="form-group p-l-30">
-                      <div class="form-line">
-                        <h5 class="card-inside-title">Size</h5>
-                        <input required type="number" min="1" max="9999" autocomplete="off" data-parsley-type="number" id="txtArea" name="txtArea" class="form-control align-center" placeholder="sqm" step="0.01" >
-                      </div>
-                    </div>
-
+                  <div class="form-group p-l-30">
+                    <h5 class="card-inside-title">Park Area</h5>
+                    <select required  id="comParkArea" name="comParkArea" class="form-control show-tick align-center">
+                    </select>
                   </div>
-                  <div class="modal-footer">
-                    <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> SAVE</span></button>
-                    <input type="hidden" id="myId" value="0">
-                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+
+                  <div class="form-group p-l-30">
+                    <div class="form-line">
+                      <h5 class="card-inside-title">Park Space Number</h5>
+                      <input required readonly="" type="number" id="txtPNum" name="txtPNum" class="form-control align-center"  >
+                    </div>
                   </div>
-                </form>
+
+                  <div class="form-group p-l-30">
+                    <div class="form-line">
+                      <h5 class="card-inside-title">Size</h5>
+                      <input required type="number" min="1" max="9999" autocomplete="off" data-parsley-type="number" id="txtArea" name="txtArea" class="form-control align-center" placeholder="sqm" step="0.01" >
+                    </div>
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> SAVE</span></button>
+                  {{ Form::hidden(null,null,[
+                    'id'=> 'myId',
+                    ])
+                  }}
+
+                </div>
+                {{Form::close()}}
               </div>
             </div>
           </div>

@@ -32,36 +32,39 @@
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
-          <form data-parsley-validate id="myForm" name="myForm" class="form-horizontal">
+          {{ Form::open([
+            'id' => 'myForm', 'class' => 'form-horizontal'
+            ])
+          }}
 
-            <div class="modal-header">
-              <h1 id="label" class="modal-title align-center p-b-15">NEW BUSINESSTYPE TYPE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
-            </div>
-            <div class="modal-body">
-              <div class="form-group p-l-30">
-                <div class="form-line">
-                 {{ Form::text('txtBusiTypeDesc',null,[
-                  'id'=> 'txtBusiTypeDesc',
-                  'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
-                  'class' => 'form-control text-center',
-                  'autocomplete' => 'off',
-                  'minlength' => '3',
-                  'maxlength' => '20',
-                  'required' => 'required',
-                  'placeholder' => 'Ex. Restaurants'
-                  ])
-                }}
-              </div>
+          <div class="modal-header">
+            <h1 id="label" class="modal-title align-center p-b-15">NEW BUSINESSTYPE TYPE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+          </div>
+          <div class="modal-body">
+            <div class="form-group p-l-30">
+              <div class="form-line">
+               {{ Form::text('txtBusiTypeDesc',null,[
+                'id'=> 'txtBusiTypeDesc',
+                'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
+                'class' => 'form-control text-center',
+                'autocomplete' => 'off',
+                'minlength' => '3',
+                'maxlength' => '20',
+                'required' => 'required',
+                'placeholder' => 'Ex. Restaurants'
+                ])
+              }}
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i> <span id="lblButton">SAVE</span></button>
-            {{ Form::hidden(null,null,[
-              'id'=> 'myId',
-              ])
-            }}
-          </div>
-        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i> <span id="lblButton">SAVE</span></button>
+          {{ Form::hidden(null,null,[
+            'id'=> 'myId',
+            ])
+          }}
+        </div>
+        {{Form::close()}}
 
       </div>
     </div>

@@ -164,12 +164,12 @@ class representativePositionController extends Controller
             try
             {
                 $result->delete();
-                return response('Delete successful');
+                return response($result->description);
             }
             catch(\Exception $e)
             {
                if($e->errorInfo[1]==1451)
-                  return Response::json(['true',$result]);
+                  return Response::json(['true',$result->description]);
               else
                   return Response::json(['true',$result,$e->errorInfo[1]]);
           }

@@ -32,59 +32,61 @@
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
-          <form id="myForm" class="form-horizontal" data-parsley-validate>
-            <div class="modal-header">
-              <h1 id="label" class="modal-title align-center p-b-15">NEW REPRESENTATIVE POSITION<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
-            </div>
-            <div class="modal-body">
-              <div class="form-group p-l-30">
-                <div class="form-line">
-                 {{Form::text('txtDesc',null,[
-                  'id'=> 'txtDesc',
-                  'class' => 'form-control align-center',
-                  'autocomplete' => 'off',
-                  'minlength' => '5',
-                  'maxlength' => '30',
-                  'required' => 'required',
-                  'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
-                  'placeholder' => 'Ex. Manager' 
-                  ])
-                }}
-              </div>
-            </div>
+         {{ Form::open([
+          'id' => 'myForm', 'class' => 'form-horizontal'
+          ])
+        }}
+        <div class="modal-header">
+          <h1 id="label" class="modal-title align-center p-b-15">NEW REPRESENTATIVE POSITION<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+        </div>
+        <div class="modal-body">
+          <div class="form-group p-l-30">
+            <div class="form-line">
+             {{Form::text('txtDesc',null,[
+              'id'=> 'txtDesc',
+              'class' => 'form-control align-center',
+              'autocomplete' => 'off',
+              'minlength' => '5',
+              'maxlength' => '30',
+              'required' => 'required',
+              'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
+              'placeholder' => 'Ex. Manager' 
+              ])
+            }}
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> SAVE</span></button>
-            {{Form::hidden('_token',null,['value'=> csrf_token()])}}
-            {{Form::hidden('myId',null,['id'=> 'myId'])}}
-          </div>
-        </form>
+        </div>
       </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> SAVE</span></button>
+        {{Form::hidden('myId',null,['id'=> 'myId'])}}
+      </div>
+      {{Form::close()}}
+    </div>
 
-    </div>
   </div>
-  <!--MODAL-->
+</div>
+<!--MODAL-->
 
-  <div class="card">
-    <div class="header align-center">
-      <h2>
-        List of Representative Postions
-      </h2>
-    </div>
-    <div class="body">
-      <table class="table table-hover dataTable" id="myTable">
-        <thead>
-          <tr>
-            <th class="align-center">Postion</th>
-            <th class="align-center">Status</th>
-            <th class="align-center">Action</th>
-          </tr>
-        </thead>
-        <tbody id="myList">
-        </tbody>
-      </table>
-    </div>
+<div class="card">
+  <div class="header align-center">
+    <h2>
+      List of Representative Postions
+    </h2>
   </div>
+  <div class="body">
+    <table class="table table-hover dataTable" id="myTable">
+      <thead>
+        <tr>
+          <th class="align-center">Postion</th>
+          <th class="align-center">Status</th>
+          <th class="align-center">Action</th>
+        </tr>
+      </thead>
+      <tbody id="myList">
+      </tbody>
+    </table>
+  </div>
+</div>
 </div>
 </div>
 </div>

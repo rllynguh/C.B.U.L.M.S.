@@ -138,6 +138,7 @@ class registrationController extends Controller
           $regi_header->tenant_id=$tenant->id;
           $regi_header->date_issued=Carbon::now(Config::get('app.timezone'));
           $regi_header->remarks=$request->header_remarks;
+          $regi_header->duration_preferred=$request->duration;
           $regi_header->save();
           for($x=0;$x<count($request->builtype); $x++)
           { 

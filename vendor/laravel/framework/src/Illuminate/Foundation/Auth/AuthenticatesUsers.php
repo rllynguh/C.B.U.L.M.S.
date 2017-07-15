@@ -61,7 +61,7 @@ trait AuthenticatesUsers
         $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
-            ]);
+        ]);
     }
 
     /**
@@ -74,7 +74,7 @@ trait AuthenticatesUsers
     {
         return $this->guard()->attempt(
             $this->credentials($request), $request->has('remember')
-            );
+        );
     }
 
     /**
@@ -99,9 +99,9 @@ trait AuthenticatesUsers
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
-        
+
         return $this->authenticated($request, $this->guard()->user())
-        ?: redirect()->intended($this->redirectPath());
+                ?: redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -131,8 +131,8 @@ trait AuthenticatesUsers
         }
 
         return redirect()->back()
-        ->withInput($request->only($this->username(), 'remember'))
-        ->withErrors($errors);
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors($errors);
     }
 
     /**
