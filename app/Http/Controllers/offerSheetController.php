@@ -165,8 +165,8 @@ class offerSheetController extends Controller
     public function destroy($id)
     {
         //
-       try
-       {
+     try
+     {
         $result = RegistrationHeader::findorfail($id);
         try
         {

@@ -36,7 +36,6 @@ $(document).ready(function()
     //success data
     $("#btnSave").val("Edit");
     changeLabel();
-    console.log(data);
     $("#comBuilding").attr("disabled","disabled");
     $("#comFloor").attr("disabled","disabled");
     var exists = false;
@@ -66,6 +65,7 @@ $(document).ready(function()
     $('#myId').val(data.id);
     $('#txtUNum').val(data.number);
     $('#txtArea').val(data.size);
+    jQuery("#img-upload").attr("src",$("#img-upload").val()+data.picture) 
     $('#comUnitType').val(data.type);
   }); 
     $('#myModal').modal('show');
@@ -76,7 +76,6 @@ $(document).ready(function()
     if($("#myForm").parsley().isValid())
     {
       myId=$("#myId").val();
-      console.log(myId);
       my_url=url;
       $("#btnSave").attr('disabled','disabled');
       setTimeout(function(){
@@ -90,8 +89,7 @@ $(document).ready(function()
         }
       });
       e.preventDefault(); 
-      var formData = $("#myForm").serialize();
-      console.log(formData);
+      var formData = new FormData($('#myForm')[0]);
     type = "PUT"; //for updating existing resource
     my_url += '/' + myId;
     if($("#btnSave").val()=="Save")
@@ -108,9 +106,10 @@ $(document).ready(function()
     url: my_url,
     data: formData,
     dataType: 'json',
+    processData: false,
+    contentType: false,
     success: function (data) 
     {
-      console.log(data);
       table.draw();
       successPrompt();
       if($("#btnSave").val()=="Save")
@@ -149,7 +148,6 @@ $(document).ready(function()
       type: "PUT",
       success: function (data) 
       {
-        console.log(data);
       },
       error: function (data) 
       {
@@ -195,7 +193,6 @@ function getBuilding()
 {
   $.get(url + '/get/building', function (data) 
   {
-    console.log(data);
     selected=$("#comBuilding").val();
     $('#comBuilding').children('option').remove();
     $.each(data,function(index,value)
@@ -229,7 +226,6 @@ function getFloor()
 {
   $.get(url + '/getFloor/' + $("#comBuilding").val(), function (data) 
   {
-    console.log(data);
     selected=$("#comFloor").val();
     $('#comFloor').children('option').remove();
     $.each(data,function(index,value)
@@ -246,8 +242,46 @@ function getLatest()
 {
   $.get(url + '/getLatest/' + $("#comFloor").val(),function(data)
   {
-    console.log(data);
     $("#txtUNum").val(data.number);
   });
 }
+
+//for upping pics
+$(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+  label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  input.trigger('fileselect', [label]);
+});
+
+$('.btn-file :file').on('fileselect', function(event, label) {
+
+  var input = $(this).parents('.input-group').find(':text'),
+  log = label;
+
+  if( input.length ) {
+    input.val(log);
+  } else {
+    if( log ) alert(log);
+  }
+
+});
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $('#img-upload').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#picture").change(function(){
+  $('#img-upload').height(100);
+  $('#img-upload').width(100);
+  readURL(this);
+});   
+//for upping pics
+
 });

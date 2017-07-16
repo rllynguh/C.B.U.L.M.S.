@@ -84,40 +84,31 @@ class unitController extends Controller
     public function store(Request $request)
     {
         //
-      try
-      {
-        $uNum=$request->txtUNum;    
-        $result=DB::table("floors")
-        ->where("floors.id",$request->comFloor)
-        ->join("buildings","floors.building_id","buildings.id")
-        ->select("buildings.description","floors.number")
-        ->first();
-        $pk=strtoupper(substr($result->description, 0, 3)).strtoupper($result->number)."UNIT".strtoupper($uNum) ;
-        $image = $request->file('picture');
+      $uNum=$request->txtUNum;    
+      $result=DB::table("floors")
+      ->where("floors.id",$request->comFloor)
+      ->join("buildings","floors.building_id","buildings.id")
+      ->select("buildings.description","floors.number")
+      ->first();
+      // return response::json($result);
+      $pk=strtoupper(substr($result->description, 0, 3)).strtoupper($result->number)."UNIT".strtoupper($uNum) ;
+      $image = $request->file('picture');
         // $imagename=$pk.'.'.$image->getClientOriginalExtension();
-        $imagename = md5("daddddddse").'.'.$image->getClientOriginalExtension();
+      $imagename = md5("daddddddse").'.'.$image->getClientOriginalExtension();
 
-        $location=public_path('images/units/'.$imagename);
-        $unit=new unit();
-        $unit->code=$pk;
-        $unit->picture->$imagename;
-        $unit->type=$request->comUnitType;
-        $unit->size=$request->txtArea;
-        $unit->number=$uNum;
-        $unit->floor_id=$request->comFloor;
-        $unit->save();
-        Image::make($image)->resize(400,400)->save($location);
-        return Response::json("success store");
-      }
-      catch(\Exception $e) {
-        if($e->errorInfo[1]==1062)
-          return "This Data Already Exists";
-        else if($e->errorInfo[1]==1452)
-          return "Already Deleted";
-        else
-          return var_dump($e->errorInfo[1]);
+      $location=public_path('images/units/'.$imagename);
+      $unit=new unit();
+      $unit->code=$pk;
+      $unit->picture=$imagename;
+      $unit->type=$request->comUnitType;
+      $unit->size=$request->txtArea;
+      $unit->number=$uNum;
+      $unit->floor_id=$request->comFloor;
+      $unit->save();
+      Image::make($image)->resize(400,400)->save($location);
+      return Response::json("success store");
+      
 
-      }
     }
 
     /**
