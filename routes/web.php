@@ -73,12 +73,15 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('floor/get/data', ['uses' => 'floorController@data', 'as' => 'floors.getData']);
 	Route::post('maintenance/floors/storeunit',['uses' => 'floorController@storeUnit', 'as' => 'floor.storeunit']);
 
+
 	Route::resource("maintenance/units","unitController");
 	Route::get('maintenance/units/get/data', ['uses' => 'unitController@data', 'as' => 'units.getData']);
 	Route::put('maintenance/units/softdelete/{unit}', ['uses' => 'unitController@softdelete', 'as' => 'units.softdelete']);
 	Route::get('maintenance/units/get/building', ['uses' => 'unitController@getBuilding', 'as' => 'units.getBuilding']);
 	Route::get('maintenance/units/getFloor/{unit}', ['uses' => 'unitController@getFloor', 'as' => 'units.getFloor']);
 	Route::get('maintenance/units/getLatest/{unit}', ['uses' => 'unitController@getLatest', 'as' => 'units.getLatest']);
+	Route::post('maintenance/units/{id}/update', ['uses' => 'unitController@updatePOST', 'as' => 'units.updatePOST']);
+
 
 	Route::resource("/users","userAccountsController");
 	Route::get('/users/get/data', ['uses' => 'userAccountsController@data', 'as' => 'users.getData']);

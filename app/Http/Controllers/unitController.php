@@ -90,11 +90,9 @@ class unitController extends Controller
       ->join("buildings","floors.building_id","buildings.id")
       ->select("buildings.description","floors.number")
       ->first();
-      // return response::json($result);
       $pk=strtoupper(substr($result->description, 0, 3)).strtoupper($result->number)."UNIT".strtoupper($uNum) ;
       $image = $request->file('picture');
-        // $imagename=$pk.'.'.$image->getClientOriginalExtension();
-      $imagename = md5("daddddddse").'.'.$image->getClientOriginalExtension();
+      $imagename = md5($pk).'.'.$image->getClientOriginalExtension();
 
       $location=public_path('images/units/'.$imagename);
       $unit=new unit();
@@ -150,13 +148,38 @@ class unitController extends Controller
     public function update(Request $request, $id)
     {
         //
-      $unit=unit::find($id);
-      $unit->type=$request->comUnitType;
-      $unit->size=$request->txtArea;
-      $unit->number=$request->txtUNum;
-      $unit->save();
-      return Response::json("succes update");
     }
+
+    public function updatePOST(Request $request, $id)
+    {
+        //
+      try
+      {
+        $query=Unit::find($id);
+        if($request->file('picture')!=null)
+        {
+          $image=$request->File('picture');
+          $imagename=md5($query->code).$image->getClientOriginalExtension();
+          $location=public_path('/images/units/'.$imagename);
+          Image::make($image)
+          ->resize(400,400)
+          ->save($location);
+        }
+        $unit=unit::find($id);
+        if($request->file('picture')!=null)
+          $unit->picture=$imagename;
+        $unit->type=$request->comUnitType;
+        $unit->size=$request->txtArea;
+        $unit->number=$request->txtUNum;
+        $unit->save();
+        return Response::json("succes update");
+      }catch(\Exception $e)
+      {
+        return Response::json($e);
+
+      }
+    }
+
 
     /**
      * Remove the specified resource from storage.

@@ -86,7 +86,7 @@
                     </span>
                     <input type="text" class="form-control" readonly>
                   </div>
-                  <img id='img-upload'/ value="{{url('images/units/')}}">
+                  <img id='img-upload' class='img-circle' height="100" width='100' value="{{url('images/units/')}}">
                 </div>
               </div>
             </div>

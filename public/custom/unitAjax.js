@@ -65,7 +65,8 @@ $(document).ready(function()
     $('#myId').val(data.id);
     $('#txtUNum').val(data.number);
     $('#txtArea').val(data.size);
-    jQuery("#img-upload").attr("src",$("#img-upload").val()+data.picture) 
+    jQuery("#img-upload").attr("src",'/images/units/'+data.picture);
+    $('#img-upload').height(100);
     $('#comUnitType').val(data.type);
   }); 
     $('#myModal').modal('show');
@@ -90,8 +91,8 @@ $(document).ready(function()
       });
       e.preventDefault(); 
       var formData = new FormData($('#myForm')[0]);
-    type = "PUT"; //for updating existing resource
-    my_url += '/' + myId;
+    type = "POST"; //for updating existing resource
+    my_url += '/' + myId + '/update';
     if($("#btnSave").val()=="Save")
     {
       type="POST";
@@ -110,6 +111,8 @@ $(document).ready(function()
     contentType: false,
     success: function (data) 
     {
+      $("#picture").val('');
+      picPreview();
       table.draw();
       successPrompt();
       if($("#btnSave").val()=="Save")
@@ -186,6 +189,13 @@ $(document).on('hidden.bs.modal','#myModal', function ()
   $("#myForm").trigger('reset');
   $("#comBuilding").removeAttr("disabled");
   $("#comFloor").removeAttr("disabled");
+});
+
+
+//for when add/edit modal gets opened
+$(document).on('show.bs.modal','#myModal', function () 
+{
+  picPreview();
 });
 
 //for querying list of buildings
@@ -278,10 +288,17 @@ function readURL(input) {
 }
 
 $("#picture").change(function(){
-  $('#img-upload').height(100);
-  $('#img-upload').width(100);
-  readURL(this);
+ picPreview();
+ readURL(this);
 });   
 //for upping pics
+
+function picPreview()
+{
+  if($('#picture').val()!='')
+    $('#img-upload').height(100);
+  else
+    $('#img-upload').height(0);
+}
 
 });
