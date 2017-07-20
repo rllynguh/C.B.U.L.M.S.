@@ -19,7 +19,7 @@ class RepresentativePositionsTableSeeder extends Seeder
         \DB::table('representative_positions')->insert(array (
             0 => 
             array (
-                'id' => 3,
+                'id' => 1,
                 'description' => 'Manager',
                 'is_active' => 1,
             ),

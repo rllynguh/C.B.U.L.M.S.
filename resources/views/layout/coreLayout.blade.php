@@ -194,6 +194,12 @@
               <span>Business Type</span>
             </a>
           </li>
+          <li>
+            <a href="{{route("repr-positions.index")}}" class="waves-yellow">
+              <i class="mdi-action-account-balance-wallet"></i>
+              <span>Representative Position</span>
+            </a>
+          </li>
         </ul>
       </li>
       <!--END OF MAINTENANCE-->
@@ -212,24 +218,10 @@
             </a>
           </li>
           <li>
-            <a href="javascript:void;" class="menu-toggle waves-yellow">
+            <a href="{{route('offersheets.index')}}" class="menu-toggle waves-yellow">
               <i class="mdi-action-thumbs-up-down"></i>
-              <span>Request Approval</span>
+              <span>Offer Sheets</span>
             </a>
-            <ul class="ml-menu">
-              <li>
-                <a href="/requestTable" class="waves-yellow">
-                  <i class="mdi-hardware-keyboard-arrow-right"></i>
-                  <span>Registration Request</span>
-                </a>
-              </li>
-              <li>
-                <a href="/moveRequestTable" class="waves-yellow">
-                  <i class="mdi-hardware-keyboard-arrow-right"></i>
-                  <span>Move In / Out Request</span>
-                </a>
-              </li>
-            </ul>
           </li>
           <li>
             <a href="/submissionTable" class="waves-yellow">
@@ -323,13 +315,18 @@
 
       <!--Utilities-->
       <li>
-        <a href="{{-- {!! route('utilities.index') !!} --}}" >
+        <a href="{!! route('utilities.index') !!}" >
           <i class="mdi-image-tune"></i>
           <span>Utilities</span>
         </a>
       </li>
       <!--END OF UTILITIES-->
-
+      <li>
+        <a href="{!! route('users.index') !!}" >
+          <i class="mdi-image-tune"></i>
+          <span>User Accounts</span>
+        </a>
+      </li>
 
       <!-- #Menu -->
     </aside>

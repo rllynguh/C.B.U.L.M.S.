@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BusinessTypesTableSeeder::class);
         $this->call(BuildingsTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $this->call(BanksTableSeeder::class);
+        $this->call(FloorsTableSeeder::class);
     }
 }

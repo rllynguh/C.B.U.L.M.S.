@@ -19,12 +19,12 @@ class BuildingsTableSeeder extends Seeder
         \DB::table('buildings')->insert(array (
             0 => 
             array (
-                'id' => 13,
+                'id' => 1,
                 'code' => 'BLDGMAL001',
                 'description' => 'Menarco',
-                'building_type_id' => 6,
+                'building_type_id' => 1,
                 'num_of_floor' => 1,
-                'address_id' => 35,
+                'address_id' => 1,
                 'is_active' => 1,
             ),
         ));

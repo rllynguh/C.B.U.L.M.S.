@@ -19,8 +19,8 @@ class BusinessTypesTableSeeder extends Seeder
         \DB::table('business_types')->insert(array (
             0 => 
             array (
-                'id' => 3,
-                'description' => 'Restaurants',
+                'id' => 1,
+                'description' => 'Food Service',
                 'is_active' => 1,
             ),
         ));

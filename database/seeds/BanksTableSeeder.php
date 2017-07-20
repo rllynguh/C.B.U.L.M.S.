@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BuildingTypesTableSeeder extends Seeder
+class BanksTableSeeder extends Seeder
 {
 
     /**
@@ -14,13 +14,13 @@ class BuildingTypesTableSeeder extends Seeder
     {
         
 
-        \DB::table('building_types')->delete();
+        \DB::table('banks')->delete();
         
-        \DB::table('building_types')->insert(array (
+        \DB::table('banks')->insert(array (
             0 => 
             array (
                 'id' => 1,
-                'description' => 'Mall',
+                'description' => 'My Bank',
                 'is_active' => 1,
             ),
         ));
