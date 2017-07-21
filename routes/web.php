@@ -90,6 +90,7 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/offersheets","offerSheetController");
 	Route::get('/transaction/offersheets/get/data', ['uses' => 'offerSheetController@data', 'as' => 'offerSheets.getData']);
+	Route::get('/transaction/offersheets/showOptions/{id}', ['uses' => 'offerSheetController@showOptions', 'as' => 'offerSheets.showOptions']);
 
 
 });

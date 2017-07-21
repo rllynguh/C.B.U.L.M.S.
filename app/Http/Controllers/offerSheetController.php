@@ -89,48 +89,38 @@ class offerSheetController extends Controller
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->select('tenants.description','registration_headers.code')
         ->where('registration_headers.id','=',$id)
-        ->first()
-        ;
-        $result=DB::table("registration_details")
+        ->first();
+        $result=DB::table('registration_details')
         ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
-        ->join('tenants','registration_headers.tenant_id','tenants.id')
-        ->join('users','tenants.user_id','users.id')
-        ->leftjoin('units',function($join)
-        {
-            $join->on('registration_details.unit_type', '=', 'units.type') ->whereRaw('units.size between registration_details.size_from - 100 AND size_to + 100');
-        })
-        ->join('floors as f','units.floor_id','f.id')
-        ->join('buildings as b','f.building_id','b.id')
-        ->leftjoin('floors',function($join)
-        {
-            $join->on('units.floor_id', '=', 'floors.id') ->whereRaw('registration_details.floor=floors.number');
-        })
-        ->leftjoin('buildings',function($join)
-        {
-            $join->on('floors.building_id', '=', 'buildings.id') ->whereRaw('registration_details.building_type_id=buildings.building_type_id');
-        })
+        ->join('building_types','building_types.id','registration_details.building_type_id')
+        ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,building_types.description'))
         ->where('registration_headers.id','=',$id)
-        ->where('tenants.is_active','=',1)
-        ->where('users.is_active','=',1)
-        ->select(DB::Raw("registration_details.id as regi,
-            units.id as unit_id,
-            units.code as unit_code,
-            floors.number as floor,
-            buildings.id as building,
-            registration_details.unit_type as ordered_unit_type,
-            units.type as proposed_unit_type,   
-            units.size as proposed_size,
-            registration_details.floor as ordered_floor,
-            floors.number as proposed_floor,
-            registration_details.building_type_id as ordered_building_type,
-            buildings.building_type_id as porposed_building_type "))
-        ->groupBy('registration_details.id')
         ->get();
         return view('transaction.offerSheet.show')
-        ->withResult($result)
         ->withTenant($tenant)
-        ;
+        ->withResult($result);
+    }
+    public function showOptions($id)
+    {
+        $result=DB::table('registration_details')
+        ->select(DB::Raw('registration_details.id as order_number, offered_unit.code as unit_offered,  registration_details.unit_type as ordered_unit, offered_unit.type as offered_unit, 
+            CONCAT(registration_details.size_from,'-',registration_details.size_to) as ordered_range,
+            offered_unit.size as offered_exact_size,
+            ordered_building_type.description as ordered_building_type,
+            offered_building_type.description as offered_building_type,
+            registration_details.floor as ordered_floor,
+            offered_floor.number as offered_floor'))
+        ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
+        ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
+        ->leftjoin('units as offered_unit','registration_details.unit_type','offered_unit.type and offered_unit.size between registration_details.size_from and registration_details.size_to')
+        ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
+        ->join('floors as offered_floor','offered_unit.floor_id','offered_floor.id')
+        ->join('buildings as offered_building','offered_floor.building_id','offered_building.id')
+        ->groupBy('registration_details.id')
+        ->orderBy('registration_details.id')
+        ->get();
 
+        dd($result);
     }
 
     /**
@@ -165,8 +155,8 @@ class offerSheetController extends Controller
     public function destroy($id)
     {
         //
-     try
-     {
+       try
+       {
         $result = RegistrationHeader::findorfail($id);
         try
         {
