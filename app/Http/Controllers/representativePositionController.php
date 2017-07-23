@@ -28,12 +28,12 @@ class representativePositionController extends Controller
         })
         ->editColumn('is_active',function($data)
         {
-           $checked = '';
-           if($data->is_active==1){
-              $checked = 'checked';
-          }
-          return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
-      })
+         $checked = '';
+         if($data->is_active==1){
+          $checked = 'checked';
+      }
+      return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
+  })
         ->setRowId(function($data)
         {
             return $data='id'.$data->id;
@@ -77,7 +77,7 @@ class representativePositionController extends Controller
         }
         catch(\Exception $e)
         {
-         if($e->errorInfo[1]==1062)
+           if($e->errorInfo[1]==1062)
             return "This Data Already Exists";
         else if($e->errorInfo[1]==1452)
             return "Already Deleted";
@@ -137,16 +137,16 @@ class representativePositionController extends Controller
             }
             catch(\Exception $e)
             {
-             if($e->errorInfo[1]==1062)
-              return "This Data Already Exists";
-          else
-              return var_dump($e->errorInfo[1]);
+               if($e->errorInfo[1]==1062)
+                  return "This Data Already Exists";
+              else
+                  return var_dump($e->errorInfo[1]);
+          }
       }
-  }
-  catch(\Exception $e)
-  {
-    return 'Deleted';
-}
+      catch(\Exception $e)
+      {
+        return 'Deleted';
+    }
 }
 
     /**
@@ -168,16 +168,16 @@ class representativePositionController extends Controller
             }
             catch(\Exception $e)
             {
-               if($e->errorInfo[1]==1451)
-                  return Response::json(['true',$result->description]);
-              else
-                  return Response::json(['true',$result,$e->errorInfo[1]]);
-          }
+             if($e->errorInfo[1]==1451)
+              return Response::json(['true',$result->description]);
+          else
+              return Response::json(['true',$result,$e->errorInfo[1]]);
       }
-      catch(\Exception $e)
-      {
-        return "Deleted";
-    }
+  }
+  catch(\Exception $e)
+  {
+    return "Deleted";
+}
 }
 
 public function softDelete($id)

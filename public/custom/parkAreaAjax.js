@@ -289,7 +289,7 @@ function changeLabel()
       $("#comBuilding").val(selected);
       if( !$('#comBuilding').has('option').length > 0  && $("#btnSave").val()=="Save" ) 
       { 
-        alert("No building available.");
+        $.notify("No building available.", "warning");
         $("#myModal").modal("hide");
       }
       getFloor();

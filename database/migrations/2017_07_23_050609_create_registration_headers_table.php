@@ -17,10 +17,13 @@ class CreateRegistrationHeadersTable extends Migration {
 			$table->integer('id', true);
 			$table->string('code', 45)->nullable();
 			$table->integer('tenant_id')->index('fk_cusomer_idx');
+			$table->integer('duration_preferred');
 			$table->date('date_issued');
 			$table->text('remarks', 65535);
-			$table->integer('is_active')->default(1);
-			$table->integer('duration_preferred');
+			$table->integer('status')->default(0)->comment('0 - unverified
+1-  accepted
+2 - rejected');
+			$table->integer('is_forfeited')->default(0)->comment('if customer forfeits his transaction');
 		});
 	}
 

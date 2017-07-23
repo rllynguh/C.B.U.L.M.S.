@@ -20,7 +20,7 @@ class BanksTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'description' => 'My Bank',
+                'description' => 'Security Bank',
                 'is_active' => 1,
             ),
         ));

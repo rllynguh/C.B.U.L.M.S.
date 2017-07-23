@@ -12,10 +12,7 @@
 		<div class="modal fade" id="modalChoose" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-col-green">
-					{{ Form::open([
-						'id' => 'myForm', 'class' => 'form-horizontal'
-						])
-					}}
+					{{  Form::open(array('route' => 'offersheets.store'))}}
 					<div class="modal-header">
 						<h1 id="label" class="modal-title align-center p-b-15">Choose from these units<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
 					</div>
@@ -25,10 +22,10 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> SAVE</span></button>
+						<button type="button" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSelect" value="add"><i class="mdi-content-save"></i><span id="lblButton"> Select</span></button>
 						<input type="hidden" id="myId" value="0">
 					</div>
-					{{Form::close()}}
+
 				</div>
 
 			</div>
@@ -77,7 +74,9 @@
 									{{$result->floor}}
 								</td>
 								<td>
-									- - -
+									<input type="text" id="regi{{$result->id}}" value="{{$result->unit_code}}" disabled="">
+									<input type="hidden" name="detail_id[]" value="{{$result->id}}">
+									<input type="hidden" name="offer_id[]" id="offer{{$result->id}}" value="{{$result->unit_id}}">
 								</td>
 								<td>
 									<button id="btnChoose" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="{{$result->id}}"><i class="mdi-content-add"></i></button>
@@ -86,6 +85,8 @@
 							@endforeach
 						</tbody>
 					</table>
+					<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave"><i class="mdi-content-save"></i><span> SAVE</span></button>
+					{{Form::close()}}
 				</div>
 			</div>
 		</div>
@@ -95,6 +96,7 @@
 @section('scripts')
 {!!Html::script("custom/offerSheetShowAjax.js")!!}
 <script type="text/javascript">
+	url='{{route('offersheets.index')}}';
 </script>
 @endsection
 {{-- select registration_details.id as order_number, offered_unit.code as unit_offered,  registration_details.unit_type as ordered_unit, offered_unit.type as offered_unit, 

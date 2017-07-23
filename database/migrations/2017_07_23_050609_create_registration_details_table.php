@@ -21,8 +21,11 @@ class CreateRegistrationDetailsTable extends Migration {
 			$table->float('size_to', 10, 0);
 			$table->boolean('unit_type');
 			$table->integer('floor');
-			$table->boolean('status')->default(1);
 			$table->text('remarks', 65535)->nullable();
+			$table->boolean('is_rejected')->default(0)->comment('0 - unverified
+1 - accepted
+2 - rejected');
+			$table->boolean('is_forfeited')->default(0);
 		});
 	}
 

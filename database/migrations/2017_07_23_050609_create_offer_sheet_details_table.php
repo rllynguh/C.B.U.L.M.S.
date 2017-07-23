@@ -18,7 +18,9 @@ class CreateOfferSheetDetailsTable extends Migration {
 			$table->integer('registration_detail_id')->index('fk_regidetial_idx');
 			$table->integer('offer_sheet_header_id')->index('fk_fofeer_idx');
 			$table->integer('unit_id')->index('unit_idfkkk_idx');
-			$table->boolean('is_accepted')->default(0);
+			$table->integer('status')->default(0)->comment('0 - unverified
+1 - accepted
+2 - rejected');
 		});
 	}
 

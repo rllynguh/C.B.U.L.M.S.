@@ -21,7 +21,7 @@ class BuildingsTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'code' => 'BLDGMAL001',
-                'description' => 'Menarco',
+                'description' => 'My Building',
                 'building_type_id' => 1,
                 'num_of_floor' => 1,
                 'address_id' => 1,

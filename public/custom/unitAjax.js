@@ -212,7 +212,10 @@ function getBuilding()
     $("#comBuilding").val(selected);
     if( !$('#comBuilding').has('option').length > 0  && $("#btnSave").val()=="Save" ) 
     { 
-      alert("No building available.")
+      $.notify('No building available.', "warning",
+      {
+        timer:1000
+      });
       $("#myModal").modal("hide");
     }
     getFloor();

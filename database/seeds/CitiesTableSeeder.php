@@ -20,7 +20,7 @@ class CitiesTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'description' => 'Mandaluyong',
+                'description' => 'Taguig',
                 'province_id' => 1,
                 'is_active' => 1,
             ),

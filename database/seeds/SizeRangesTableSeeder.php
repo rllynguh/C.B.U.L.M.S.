@@ -21,7 +21,7 @@ class SizeRangesTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'size_from' => 100,
-                'size_to' => 2000,
+                'size_to' => 200,
                 'is_active' => 1,
             ),
         ));
