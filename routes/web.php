@@ -90,6 +90,8 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/registration-acceptance","registrationAcceptanceController");
 	Route::get('/transaction/registration-acceptance/get/data', ['uses' => 'registrationAcceptanceController@data', 'as' => 'registration-acceptance.getData']);
+	Route::get('/transaction/registration-acceptance/get/showData/{id}', ['uses' => 'registrationAcceptanceController@showData', 'as' => 'registration-acceptance.showData']);
+
 
 	Route::resource("/transaction/offersheets","offerSheetController");
 	Route::get('/transaction/offersheets/get/data', ['uses' => 'offerSheetController@data', 'as' => 'offerSheets.getData']);

@@ -11,7 +11,9 @@
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<div class="card">
+				{{  Form::open(array('route' => 'registration-acceptance.store'))}}
 				<div class="header align-center">
+					<input type="hidden" value="{{$tenant->id}}" name="myId">
 					<h2>
 						{{$tenant->code}}
 						<div class="switch"><label>Accept<input name='checkboxReject' type="checkbox" id="checkboxReject" value="ad"><span class="lever switch-col-red"></span>Reject</label></div>
@@ -35,35 +37,7 @@
 							</tr>
 						</thead>
 						<tbody id="myList">
-							@foreach($result as $result)
-							<tr>
-								<td>
-									{{$result->id}}
-								</td>
-								<td>
-									{{$result->description}}
-								</td>
-								<td>
-									{{$result->size_range}}
-								</td>
-								<td>
-									@if($result->unit_type==0)
-									Raw
-									@else
-									Shell
-									@endif
-								</td>
-								<td>
-									{{$result->floor}}
-								</td>
-								<td>
-									<div class="switch"><label>Accept<input class="regi-detail" type="checkbox" id="regi-detail-id" value="{{$result->detail_id}}"><span class="lever switch-col-red"></span>Reject</label></div>
-									<input type="hidden" value="{{$result->detail_id}}" name="regi_id[]">
-									<input type="hidden" name="regi_is_active[]" id='regi{{$result->detail_id}}' value='0'>
-
-								</td>
-							</tr>
-							@endforeach
+							
 						</tbody>
 					</table>
 					<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave"><i class="mdi-content-save"></i><span> SAVE</span></button>
@@ -75,30 +49,8 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/offerSheetShowAjax.js")!!}
+{!!Html::script("custom/registrationAcceptanceShowAjax.js")!!}
 <script type="text/javascript">
-
-	$(document).ready(function()
-	{ 
-		$(this).on('change', '#IsActive',function(e)
-		{ 
-			if($(this).is(":checked")) 
-				$(".regi-detail").attr('disabled','disabled');
-			else
-				$(".regi-detail").removeAttr('disabled','disabled');
-
-		}
-		);
-		$(this).on('change', '.regi-detail',function(e)
-		{ 
-			myId=$(this).val();
-			if($(this).is(":checked")) 
-				$("#regi"+myId).val('1');
-			else
-				$("#regi"+myId).val('0');
-		}
-		);
-
-	});
+	url='{{route('registration-acceptance.index')}}/get/showData/{{$tenant->id}}';
 </script>
 @endsection

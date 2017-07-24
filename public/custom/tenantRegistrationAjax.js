@@ -26,7 +26,7 @@ function getBuildingType()
     $.each(data,function(index,value)
     {
       $('#builtype').append($('<option>', {value:value.id, text:value.description}));
-      buil_option+=' <option id="' + value.id +'">' + value.description + '</option>';
+      buil_option+=' <option value="' + value.id +'">' + value.description + '</option>';
     });
   });
 }

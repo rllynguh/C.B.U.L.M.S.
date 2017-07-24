@@ -92,7 +92,7 @@ class offerSheetController extends Controller
             $offerdetail->unit_id=$request->offer_id[$x];
             $offerdetail->save();
         }
-        dd(route(offersheets.index));
+        return redirect(route('offersheets.index'));
     }
 
     /**
@@ -111,6 +111,7 @@ class offerSheetController extends Controller
         ->first();
         $result=DB::table('registration_details')
         ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*'))
+        ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
@@ -118,11 +119,14 @@ class offerSheetController extends Controller
            $join->on('registration_details.size_from','<=','offered_unit.size');
            $join->on('registration_details.size_to','>=','offered_unit.size');
        })
+        ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
         ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
         ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
         ->groupBy('registration_details.id')
         ->orderBy('registration_details.id')
-        ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
+        ->where('registration_headers.status','1')
+        ->where('registration_headers.id',$id)
+        ->whereRaw('offer_sheet_details.status is null or 0' )
         ->get();
         return view('transaction.offerSheet.show')
         ->withTenant($tenant)
@@ -144,6 +148,7 @@ class offerSheetController extends Controller
            $join->on('registration_details.size_to','>=','offered_unit.size');
        })
         ->where('registration_details.id',$id)
+        ->where('registration_headers.status','1')
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
         ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
         ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')

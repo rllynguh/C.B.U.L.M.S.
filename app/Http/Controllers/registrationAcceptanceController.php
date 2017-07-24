@@ -76,23 +76,23 @@ class registrationAcceptanceController extends Controller
             $regi_head=RegistrationHeader::find($request->myId);
             $regi_head->status=1;
             $regi_head->save();
-          for($x=0;$x<count($request->regi_id); $x++)
-          { 
-            $regi_detail=RegistrationDetail::find($request->regi_id[$x]);
-            $regi_detail->is_rejected=$request->regi_is_active[$x];
-            $regi_detail->save();
-            $string.="/ ".$request->regi_id[$x]." => ".$request->regi_is_active[$x];
+            for($x=0;$x<count($request->regi_id); $x++)
+            { 
+                $regi_detail=RegistrationDetail::find($request->regi_id[$x]);
+                $regi_detail->is_rejected=$request->regi_is_active[$x];
+                $regi_detail->save();
+                $string.="/ ".$request->regi_id[$x]." => ".$request->regi_is_active[$x];
+            }
         }
+        else
+        {
+            $regi_head=RegistrationHeader::find($request->myId);
+            $regi_head->status=2;
+            $regi_head->save();
+            $string="rejected";
+        }
+        return redirect(route('registration-acceptance.index'));
     }
-    else
-    {
-        $regi_head=RegistrationHeader::find($request->myId);
-        $regi_head->status=2;
-        $regi_head->save();
-        $string="rejected";
-    }
-    dd($string);
-}
 
     /**
      * Display the specified resource.
@@ -100,25 +100,41 @@ class registrationAcceptanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showData($id)
     {
-        //
-       $tenant=DB::table('registration_headers')
-       ->join('tenants','registration_headers.tenant_id','tenants.id')
-       ->join('users','users.id','tenants.user_id')
-       ->select(DB::Raw('registration_headers.id,tenants.description,registration_headers.code, concat(first_name," ", last_name) as name'))
-       ->where('registration_headers.id','=',$id)
-       ->first();
        $result=DB::table('registration_details')
        ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
        ->join('building_types','building_types.id','registration_details.building_type_id')
        ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,building_types.description, registration_details.id as detail_id'))
        ->where('registration_headers.id','=',$id)
+       ->where('registration_headers.status','0')
        ->get();
-       return view('transaction.registrationAcceptance.show')
-       ->withTenant($tenant)
-       ->withResult($result);
+       return Datatables::of($result)
+       ->addColumn('action', function ($data) {
+        return "<div class='switch'><label>Accept<input class='regi-detail' type='checkbox' id='regi-detail-id' value='$data->detail_id'><span class='lever switch-col-red'></span>Reject</label></div>
+        <input type='hidden' value='$data->detail_id' name='regi_id[]'>
+        <input type='hidden' name='regi_is_active[]' id='regi$data->detail_id'value='0'>";
+    })
+       ->setRowId(function ($data) {
+          return $data = 'id'.$data->id;
+      }) 
+       ->rawColumns(['action'])
+       ->make(true)
+       ;
    }
+   public function show($id)
+   {
+        //
+      $tenant=DB::table('registration_headers')
+      ->join('tenants','registration_headers.tenant_id','tenants.id')
+      ->join('users','users.id','tenants.user_id')
+      ->where('registration_headers.status','0')
+      ->select(DB::Raw('registration_headers.id,tenants.description,registration_headers.code, concat(first_name," ", last_name) as name'))
+      ->where('registration_headers.id','=',$id)
+      ->first();
+      return view('transaction.registrationAcceptance.show')
+      ->withTenant($tenant);
+  }
 
     /**
      * Show the form for editing the specified resource.
