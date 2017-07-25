@@ -17,9 +17,11 @@ class CreateRegistrationHeadersTable extends Migration {
 			$table->integer('id', true);
 			$table->string('code', 45)->nullable();
 			$table->integer('tenant_id')->index('fk_cusomer_idx');
+			$table->integer('user_id')->nullable()->index('user_signed_idx');
 			$table->integer('duration_preferred');
 			$table->date('date_issued');
-			$table->text('remarks', 65535);
+			$table->text('tenant_remarks', 65535)->nullable();
+			$table->text('admin_remarks', 65535)->nullable();
 			$table->integer('status')->default(0)->comment('0 - unverified
 1-  accepted
 2 - rejected');

@@ -17,6 +17,10 @@
 					<h2>
 						{{$tenant->code}}
 						<div class="switch"><label>Accept<input name='checkboxReject' type="checkbox" id="checkboxReject" value="ad"><span class="lever switch-col-red"></span>Reject</label></div>
+						<div class="form-group">
+							<label class="control-label">Remarks*</label>
+							<textarea class="form-control form-line" name="header_remarks" value=""></textarea>
+						</div>
 					</h2>
 				</div>
 

@@ -32,8 +32,8 @@ class UsersTableSeeder extends Seeder
                 'last_log_at' => '2017-07-23 06:49:16',
                 'remember_token' => 'mFFB0cH8gNzMpe9Te5GVfGcYfZthYbJc76OCLbKgjqGCq83IZv9FkfxMvLyt',
                 'deleted_at' => NULL,
-            ),
-        ));
+                ),
+            ));
         
         
     }

@@ -16,8 +16,9 @@ $(document).ready(function()
     {data: 'action'},
     ]
   });
-  $(this).on('change', '#IsActive',function(e)
+  $(this).on('change', '#checkboxReject',function(e)
   { 
+
     if($(this).is(":checked")) 
       $(".regi-detail").attr('disabled','disabled');
     else
@@ -25,6 +26,17 @@ $(document).ready(function()
 
   }
   );
+  $(this).on('change', '.regi-detail',function(e)
+  { 
+    value=false;
+    if ($('.regi-detail:checked').length == $('.regi-detail').length) {
+       //do something
+       value=true;
+     }
+     $('#checkboxReject').prop('checked', value);
+
+   }
+   );
   $(this).on('change', '.regi-detail',function(e)
   { 
     myId=$(this).val();

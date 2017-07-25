@@ -137,7 +137,7 @@ class registrationController extends Controller
           $regi_header->code=$regi_header_pk;
           $regi_header->tenant_id=$tenant->id;
           $regi_header->date_issued=Carbon::now(Config::get('app.timezone'));
-          $regi_header->remarks=$request->header_remarks;
+          $regi_header->tenant_remarks=$request->header_remarks;
           $regi_header->duration_preferred=$request->duration;
           $regi_header->save();
           for($x=0;$x<count($request->builtype); $x++)
@@ -150,7 +150,7 @@ class registrationController extends Controller
             $regi_detail->size_from=$result[0];
             $regi_detail->size_to=$result[1];
             $regi_detail->floor=$request->floor[$x];
-            $regi_detail->remarks=$request->remarks[$x];
+            $regi_detail->tenant_remarks=$request->remarks[$x];
             $regi_detail->save();
           }
           Image::make($image)->resize(400,400)->save($location);

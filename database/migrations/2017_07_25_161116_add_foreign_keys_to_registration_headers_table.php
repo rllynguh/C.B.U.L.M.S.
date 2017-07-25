@@ -15,6 +15,7 @@ class AddForeignKeysToRegistrationHeadersTable extends Migration {
 		Schema::table('registration_headers', function(Blueprint $table)
 		{
 			$table->foreign('tenant_id', 'fk_customer')->references('id')->on('tenants')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('user_id', 'user_signed')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -29,6 +30,7 @@ class AddForeignKeysToRegistrationHeadersTable extends Migration {
 		Schema::table('registration_headers', function(Blueprint $table)
 		{
 			$table->dropForeign('fk_customer');
+			$table->dropForeign('user_signed');
 		});
 	}
 

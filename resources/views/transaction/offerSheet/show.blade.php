@@ -8,11 +8,11 @@
 		</div>
 		
 	</div>
+	{{  Form::open(array('route' => 'offersheets.store'))}}
 	<div class="row clearfix">
 		<div class="modal fade" id="modalChoose" tabindex="-1" role="dialog">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content modal-col-green">
-					{{  Form::open(array('route' => 'offersheets.store'))}}
 					<div class="modal-header">
 						<h1 id="label" class="modal-title align-center p-b-15">Choose from these units<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
 					</div>
@@ -52,67 +52,21 @@
 							</tr>
 						</thead>
 						<tbody id="myList">
-							@foreach($result as $result)
-							<tr>
-								<td>
-									{{$result->id}}
-								</td>
-								<td>
-									{{$result->description}}
-								</td>
-								<td>
-									{{$result->size_range}}
-								</td>
-								<td>
-									@if($result->unit_type==0)
-									Raw
-									@else
-									Shell
-									@endif
-								</td>
-								<td>
-									{{$result->floor}}
-								</td>
-								<td>
-									<input type="text" id="regi{{$result->id}}" value="{{$result->unit_code}}" disabled="">
-									<input type="hidden" name="detail_id[]" value="{{$result->id}}">
-									<input type="hidden" name="offer_id[]" id="offer{{$result->id}}" value="{{$result->unit_id}}">
-								</td>
-								<td>
-									<button id="btnChoose" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="{{$result->id}}"><i class="mdi-content-add"></i></button>
-								</td>
-							</tr>
-							@endforeach
+
 						</tbody>
 					</table>
 					<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave"><i class="mdi-content-save"></i><span> SAVE</span></button>
-					{{Form::close()}}
 				</div>
 			</div>
 		</div>
 	</div>
+	{{Form::close()}}
 </div>
 @endsection
 @section('scripts')
 {!!Html::script("custom/offerSheetShowAjax.js")!!}
 <script type="text/javascript">
 	url='{{route('offersheets.index')}}';
+	dataurl='{{route('offersheets.index')}}/get/showData/{{$tenant->id}}';
 </script>
 @endsection
-{{-- select registration_details.id as order_number, offered_unit.code as unit_offered,  registration_details.unit_type as ordered_unit, offered_unit.type as offered_unit, 
-CONCAT(registration_details.size_from,'-',registration_details.size_to) as ordered_range,
-offered_unit.size as offered_exact_size,
-ordered_building_type.description as ordered_building_type,
-offered_building_type.description as offered_building_type,
-registration_details.floor as ordered_floor,
-offered_floor.number as offered_floor
- from registration_details
-left join registration_headers on registration_details.registration_header_id=registration_headers.id
-left join building_types as ordered_building_type on registration_details.building_type_id=ordered_building_type.id
-left join units as offered_unit on registration_details.unit_type=offered_unit.type and offered_unit.size between registration_details.size_from and registration_details.size_to
-left join floors as ordered_floor on registration_details.floor=ordered_floor.number
-inner join floors as offered_floor on offered_unit.floor_id=offered_floor.id
-inner join buildings as offered_building on offered_floor.building_id=offered_building.id
-inner join building_types as offered_building_type on offered_building.building_type_id=offered_building_type.id
-group by registration_details.id
-order by registration_details.id --}}

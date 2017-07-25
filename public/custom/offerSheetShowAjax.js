@@ -1,6 +1,21 @@
 
 $(document).ready(function()
-{ 
+{
+	var table = $('#myTable').DataTable({
+		responsive: true,
+		processing: true,
+		serverSide: true,
+		ajax: dataurl,
+		columns: [
+		{data: 'id'},
+		{data: 'description'},
+		{data: 'size_range'},
+		{data: 'unit_type'},
+		{data: 'floor'},
+		{data: 'unit_select'},
+		{data: 'choose'}
+		]
+	}); 
 	myId="";
 	$(this).on('click', '#btnChoose',function(e)
 	{
@@ -11,20 +26,18 @@ $(document).ready(function()
 			options="";
 			$("#modalChoose").modal("show");
 			$.each( data, function( index, value ){
+				mode='warning';
 				if(value.offered_exact_size>=value.size_from && value.offered_exact_size<=value.size_to)
 					mode='success';
-				else
-					mode='warning';
 				size="Size : <small class='label label-" + mode + "'>"+ value.offered_exact_size +" sqm</small>";
-
-				options+="<input type='radio' name='unit_option' value='"+ value.unit_id +"'><input disabled type='text' value='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'> " + size +"<br>";
+				options+="<input class='myRadio' type='radio' name='unit_option' value='"+ value.unit_id +"'><input disabled type='text' value='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'> " + size +"<br>";
 			});
 			$("#divOptions").append(options);
 		});
 	});
-	$(this).on('click', '#btnSelect',function(e)
+	$(this).on('click', '.myRadio',function(e)
 	{
-		value=$("input[name='unit_option']:checked").val();
+		value=$(this).val();
 		name=$('#unit'+value).val();
 		$('#offer'+myId).val(value);
 		$('#regi'+myId).val(name);

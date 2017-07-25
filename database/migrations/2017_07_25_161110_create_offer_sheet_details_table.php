@@ -21,6 +21,7 @@ class CreateOfferSheetDetailsTable extends Migration {
 			$table->integer('status')->default(0)->comment('0 - unverified
 1 - accepted
 2 - rejected');
+			$table->text('tenant_remarks', 65535)->nullable();
 		});
 	}
 

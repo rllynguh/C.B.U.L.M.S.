@@ -11,6 +11,7 @@ use App\OfferSheetDetail;
 use App\OfferSheetHeader;
 use Carbon\Carbon;
 use Config;
+use Auth;
 
 
 class offerSheetController extends Controller
@@ -82,6 +83,7 @@ class offerSheetController extends Controller
         //
         $offerheader=new OfferSheetHeader;
         $offerheader->code="imbento101";
+        $offerheader->user_id=Auth::user()->id;
         $offerheader->date_issued=Carbon::now(Config::get('app.timezone'));
         $offerheader->save();
         for($x=0;$x<count($request->detail_id);$x++)
@@ -106,6 +108,17 @@ class offerSheetController extends Controller
         //
         $tenant=DB::table('registration_headers')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
+        ->select('tenants.description','registration_headers.code','registration_headers.id')
+        ->where('registration_headers.id','=',$id)
+        ->first();
+        return view('transaction.offerSheet.show')
+        ->withTenant($tenant);
+    }
+    public function showData($id)
+    {
+        //
+        $tenant=DB::table('registration_headers')
+        ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->select('tenants.description','registration_headers.code')
         ->where('registration_headers.id','=',$id)
         ->first();
@@ -115,10 +128,10 @@ class offerSheetController extends Controller
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-           $join->on('registration_details.size_from','<=','offered_unit.size');
-           $join->on('registration_details.size_to','>=','offered_unit.size');
-       })
+         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+         $join->on('registration_details.size_from','<=','offered_unit.size');
+         $join->on('registration_details.size_to','>=','offered_unit.size');
+     })
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
         ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
         ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
@@ -128,9 +141,26 @@ class offerSheetController extends Controller
         ->where('registration_headers.id',$id)
         ->whereRaw('offer_sheet_details.status is null or 0' )
         ->get();
-        return view('transaction.offerSheet.show')
-        ->withTenant($tenant)
-        ->withResult($result);
+        return Datatables::of($result)
+        ->addColumn('unit_select', function ($data) {
+            return "<input type='text' id='regi$data->id' value='$data->unit_code' disabled=''><input type='hidden' name='detail_id[]' value='$data->id'>
+            <input type='hidden' name='offer_id[]' id='offer$data->id' value='$data->unit_id'>";
+        })
+        ->addColumn('choose', function ($data) {
+            return "<button id='btnChoose' type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float' value='$data->id'><i class='mdi-content-add'></i></button>";
+        })
+        ->editColumn('unit_type', function ($data) {
+            $value='Raw';
+            if($data->unit_type==1)
+                $value='Shell';
+            return $value; 
+        })
+        ->setRowId(function ($data) {
+          return $data = 'id'.$data->id;
+      }) 
+        ->rawColumns(['unit_select','choose'])
+        ->make(true)
+        ;
     }
     public function showOptions($id)
     {
@@ -143,10 +173,10 @@ class offerSheetController extends Controller
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-           $join->on('registration_details.size_from','<=','offered_unit.size');
-           $join->on('registration_details.size_to','>=','offered_unit.size');
-       })
+         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+         $join->on('registration_details.size_from','<=','offered_unit.size');
+         $join->on('registration_details.size_to','>=','offered_unit.size');
+     })
         ->where('registration_details.id',$id)
         ->where('registration_headers.status','1')
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
@@ -159,55 +189,36 @@ class offerSheetController extends Controller
         return response::json($result);
     }
 
-    /**
+/**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+public function edit($id)
+{
         //
-    }
+}
 
-    /**
+/**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+public function update(Request $request, $id)
+{
         //
-    }
+}
 
-    /**
+/**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-       try
-       {
-        $result = RegistrationHeader::findorfail($id);
-        try
-        {
-            $result->is_active=0;
-            return Response::json($result);
-        }
-        catch(\Exception $e) {
-            if($e->errorInfo[1]==1451)
-              return Response::json(['true',$result]);
-          else
-              return Response::json(['true',$result,$e->errorInfo[1]]);
-      }
-  } 
-  catch(\Exception $e) {
-      return "Deleted";
-  }
+public function destroy($id)
+{
 }
 }

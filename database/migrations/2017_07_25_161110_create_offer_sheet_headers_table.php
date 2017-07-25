@@ -16,6 +16,8 @@ class CreateOfferSheetHeadersTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('code', 45);
+			$table->integer('user_id')->index('user_generate_idx');
+			$table->text('tenant_remarks', 65535)->nullable();
 			$table->date('date_issued');
 			$table->integer('status')->default(0);
 		});
