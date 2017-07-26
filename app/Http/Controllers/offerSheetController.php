@@ -42,6 +42,8 @@ class offerSheetController extends Controller
         ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
         ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
         ->where('registration_headers.status','1')
+        ->where('registration_details.is_rejected','0')
+        ->where('registration_details.is_forfeited','0')
         ->whereRaw('offer_sheet_details.status is null or 0' )
         ->groupBy('registration_headers.id')
         ->get();
@@ -81,8 +83,17 @@ class offerSheetController extends Controller
     public function store(Request $request)
     {
         //
+        $query=DB::table("offer_sheet_headers")
+        ->select("code")
+        ->orderBy("id","desc")
+        ->first();
+        $pk="Offer Sheet ";
+        if(!is_null($query))
+            $pk=$query->code;
+        $sc= new smartCounter();
+        $pk=$sc->increment($pk);  
         $offerheader=new OfferSheetHeader;
-        $offerheader->code="imbento101";
+        $offerheader->code=$pk;
         $offerheader->user_id=Auth::user()->id;
         $offerheader->date_issued=Carbon::now(Config::get('app.timezone'));
         $offerheader->save();
@@ -128,11 +139,13 @@ class offerSheetController extends Controller
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-         $join->on('registration_details.size_from','<=','offered_unit.size');
-         $join->on('registration_details.size_to','>=','offered_unit.size');
-     })
+           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+           $join->on('registration_details.size_from','<=','offered_unit.size');
+           $join->on('registration_details.size_to','>=','offered_unit.size');
+       })
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
+        ->where('registration_details.is_rejected','0')
+        ->where('registration_details.is_forfeited','0')
         ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
         ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
         ->groupBy('registration_details.id')
@@ -173,10 +186,10 @@ class offerSheetController extends Controller
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-         $join->on('registration_details.size_from','<=','offered_unit.size');
-         $join->on('registration_details.size_to','>=','offered_unit.size');
-     })
+           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+           $join->on('registration_details.size_from','<=','offered_unit.size');
+           $join->on('registration_details.size_to','>=','offered_unit.size');
+       })
         ->where('registration_details.id',$id)
         ->where('registration_headers.status','1')
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
