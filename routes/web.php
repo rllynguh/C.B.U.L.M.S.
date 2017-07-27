@@ -99,11 +99,20 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('/transaction/offersheets/get/showData/{id}', ['uses' => 'offerSheetController@showData', 'as' => 'offerSheets.showData']);
 
 
+	Route::resource("/transaction/contract-create","contractCreationController");
+	Route::get('/transaction/contract-create/get/data', ['uses' => 'contractCreationController@data', 'as' => 'contract-create.getData']);
+
 });
+
+
+
+
+
 Route::group(['prefix' => 'tenant/'], function () {
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
 	Route::get('/transaction/offerSheetApproval/get/data', ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
 	Route::post('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
+
 });
 
 

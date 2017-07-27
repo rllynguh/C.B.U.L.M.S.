@@ -74,7 +74,6 @@ class offerSheetApprovalController extends Controller
     public function store(Request $request)
     {
         //
-      $string='';
            //
       if(is_null($request->checkboxReject))// if the transaction was accepted
       {
@@ -83,13 +82,13 @@ class offerSheetApprovalController extends Controller
         $offer_head->tenant_remarks=$request->header_remarks;
         $offer_head->save();
         for($x=0;$x<count($request->offer_id); $x++)
-          { $string.=" ".$request->offer_id[$x].' '.$request->offer_is_active[$x]."/";
-        $offer_detail=OfferSheetDetail::find($request->offer_id[$x]);
-        $offer_detail->status=$request->offer_is_active[$x];
-        $offer_detail->tenant_remarks=$request->offer_remarks[$x];
-        $offer_detail->save();
+        { 
+          $offer_detail=OfferSheetDetail::find($request->offer_id[$x]);
+          $offer_detail->status=$request->offer_is_active[$x];
+          $offer_detail->tenant_remarks=$request->offer_remarks[$x];
+          $offer_detail->save();
+        }
       }
-    }
       else //if the transaction was rejected
       {
         $offer_head=OfferSheetHeader::find($request->myId);
@@ -97,7 +96,6 @@ class offerSheetApprovalController extends Controller
         $offer_head->tenant_remarks=$request->header_remarks;
         $offer_head->save();
       }
-      dd($string);
       return redirect(route('offerSheetApproval.index'));
     }
 
@@ -140,7 +138,7 @@ class offerSheetApprovalController extends Controller
      ->addColumn('action', function ($data) {
       return "<div class='switch'><label>Accept<input class='offer-detail' type='checkbox' id='offer-detail-id' value='$data->offer_id'><span class='lever switch-col-red'></span>Reject</label></div>
       <input type='hidden' value='$data->offer_id' name='offer_id[]'>
-      <input type='hidden' name='offer_is_active[]' id='offer$data->offer_id'value='0'><div class='form-group'><label class='control-label'>Remarks*</label><textarea class='form-control form-line'name='offer_remarks[]'></textarea></div>";
+      <input type='hidden' name='offer_is_active[]' id='offer$data->offer_id'value='1'><div class='form-group'><label class='control-label'>Remarks*</label><textarea class='form-control form-line'name='offer_remarks[]'></textarea></div>";
     })
      ->editColumn('unit_type', function ($data) {
       $value="Raw";

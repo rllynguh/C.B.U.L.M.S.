@@ -5,7 +5,7 @@
 	<div class="body">
 		<div class="block-header">
 		</div>
-		
+
 	</div>
 	<div class="row clearfix">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -40,7 +40,7 @@
 							</tr>
 						</thead>
 						<tbody id="myList">
-							
+
 						</tbody>
 					</table>
 					<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave"><i class="mdi-content-save"></i><span> SAVE</span></button>
