@@ -14,7 +14,7 @@ class AddForeignKeysToContractHeadersTable extends Migration {
 	{
 		Schema::table('contract_headers', function(Blueprint $table)
 		{
-			$table->foreign('offer_sheet_id', 'fk_cont_os')->references('id')->on('offer_sheet_headers')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('registration_header_id', 'regi_contractt')->references('id')->on('registration_headers')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -28,7 +28,7 @@ class AddForeignKeysToContractHeadersTable extends Migration {
 	{
 		Schema::table('contract_headers', function(Blueprint $table)
 		{
-			$table->dropForeign('fk_cont_os');
+			$table->dropForeign('regi_contractt');
 		});
 	}
 
