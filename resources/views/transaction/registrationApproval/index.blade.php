@@ -4,7 +4,6 @@
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
-      <h2 class="align-center">Unsettled Tenant Registration</h2>
     </div>
     
   </div>
@@ -13,7 +12,7 @@
       <div class="card">
         <div class="header align-center">
           <h2>
-            LIST OF UNSETTLED REGISTRATION 
+            LIST OF PENDING REGISTRATION 
           </h2>
         </div>
         <div class="body">
@@ -37,9 +36,9 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/registrationAcceptanceAjax.js")!!}
+{!!Html::script("custom/registrationApprovalAjax.js")!!}
 <script type="text/javascript">
-  var dataurl="{!!route('registration-acceptance.getData')!!}" ;
-  var url="{!!route('registration-acceptance.index')!!}" ;
+  var dataurl="{!!route('registrationApproval.getData')!!}" ;
+  var url="{!!route('registrationApproval.index')!!}" ;
 </script>
 @endsection

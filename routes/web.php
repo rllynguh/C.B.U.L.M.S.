@@ -88,9 +88,9 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::put('/users/active/{id}', ['uses' => 'userAccountsController@isActive', 'as' => 'users.active']);
 
 
-	Route::resource("/transaction/registration-acceptance","registrationAcceptanceController");
-	Route::get('/transaction/registration-acceptance/get/data', ['uses' => 'registrationAcceptanceController@data', 'as' => 'registration-acceptance.getData']);
-	Route::get('/transaction/registration-acceptance/get/showData/{id}', ['uses' => 'registrationAcceptanceController@showData', 'as' => 'registration-acceptance.showData']);
+	Route::resource("/transaction/registrationApproval","registrationApprovalController");
+	Route::get('/transaction/registrationApproval/get/data', ['uses' => 'registrationApprovalController@data', 'as' => 'registrationApproval.getData']);
+	Route::get('/transaction/registrationApproval/get/showData/{id}', ['uses' => 'registrationApprovalController@showData', 'as' => 'registrationApproval.showData']);
 
 
 	Route::resource("/transaction/offersheets","offerSheetController");
