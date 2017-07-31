@@ -16,6 +16,7 @@ class CreateContractContentsTable extends Migration {
 		{
 			$table->integer('id')->primary();
 			$table->text('description', 65535);
+			$table->string('is_active', 45)->default('1');
 		});
 	}
 

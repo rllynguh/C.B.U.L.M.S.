@@ -373,8 +373,8 @@
 										<div class="input-group">
 											<label class="control-label">Unit Type*</label>
 											<select class="form-control form-line" id="utype" name="utype[]">
-												<option id="0">Raw</option>
-												<option id="1">Shell</option>
+												<option value="0">Raw</option>
+												<option value="1">Shell</option>
 											</select>
 										</div>
 									</div>

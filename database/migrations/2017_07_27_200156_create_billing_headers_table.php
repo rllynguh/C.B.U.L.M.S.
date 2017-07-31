@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateContractHeadersTable extends Migration {
+class CreateBillingHeadersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,13 @@ class CreateContractHeadersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('contract_headers', function(Blueprint $table)
+		Schema::create('billing_headers', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('code', 45)->unique('code_UNIQUE');
-			$table->integer('offer_sheet_id')->index('fk_cont_os_idx');
-			$table->date('end_of_contract');
+			$table->integer('contract_header_id')->index('fk_bill_contract_idx');
+			$table->integer('user_id')->index('fk_user_bill_idx');
+			$table->string('code', 45);
 			$table->date('date_issued');
-			$table->date('date_of_billing');
 			$table->integer('status')->default(0);
 		});
 	}
@@ -32,7 +31,7 @@ class CreateContractHeadersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('contract_headers');
+		Schema::drop('billing_headers');
 	}
 
 }
