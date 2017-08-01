@@ -17,29 +17,6 @@ $(document).ready(function()
     {data: 'action'},
     ]
   });
-  $(this).on('change', '#checkboxReject',function(e)
-  { 
-
-    if($(this).is(":checked")) 
-      $(".regi-detail").attr('disabled','disabled');
-    else
-      $(".regi-detail").removeAttr('disabled','disabled');
-
-  }
-  );
-  $(this).on('change', '.regi-detail',function(e)
-  { 
-    value=false;
-    if ($('.regi-detail:checked').length == $('.regi-detail').length) {
-       //do something
-       value=true;
-     }
-     $('#checkboxReject').prop('checked', value);
-
-   }
-   );
-
-
   $(this).on('click', '.btnChoose',function(e)
   { 
     myId=$(this).val();

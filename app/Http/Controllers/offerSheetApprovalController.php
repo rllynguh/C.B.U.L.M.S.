@@ -75,7 +75,7 @@ class offerSheetApprovalController extends Controller
     {
         //
            //
-      if(is_null($request->checkboxReject))// if the transaction was accepted
+      if($request->header_is_active==1)// if the transaction was accepted
       {
         $offer_head=OfferSheetHeader::find($request->myId);
         $offer_head->status=1;
@@ -110,7 +110,7 @@ class offerSheetApprovalController extends Controller
         //
      $result=DB::table('offer_sheet_headers')
      ->join('users','offer_sheet_headers.user_id','users.id')
-     ->select(DB::Raw('offer_sheet_headers.code, offer_sheet_headers.id, CONCAT(users.first_name," ",users.last_name) as name'))
+     ->select(DB::Raw('offer_sheet_headers.tenant_remarks,offer_sheet_headers.code, offer_sheet_headers.id, CONCAT(users.first_name," ",users.last_name) as name'))
      ->first();
      return view('transaction.offerSheetApproval.show')
      ->withResult($result);
@@ -136,9 +136,9 @@ class offerSheetApprovalController extends Controller
      ->get();
      return Datatables::of($result)
      ->addColumn('action', function ($data) {
-      return "<div class='switch'><label>Accept<input class='offer-detail' type='checkbox' id='offer-detail-id' value='$data->offer_id'><span class='lever switch-col-red'></span>Reject</label></div>
+      return " <button type='button' id='btnChoose' class='btn bg-blue btn-circle waves-effect waves-circle waves-float btnChoose' value='$data->offer_id'><i class='mdi-action-visibility'></i></button>
       <input type='hidden' value='$data->offer_id' name='offer_id[]'>
-      <input type='hidden' name='offer_is_active[]' id='offer$data->offer_id'value='1'><div class='form-group'><label class='control-label'>Remarks*</label><textarea class='form-control form-line'name='offer_remarks[]'></textarea></div>";
+      <input type='hidden' name='offer_is_active[]' id='offer$data->offer_id'value='0'><input id='remarks$data->offer_id' type='hidden' name='offer_remarks[]'>";
     })
      ->editColumn('unit_type', function ($data) {
       $value="Raw";
@@ -188,6 +188,24 @@ class offerSheetApprovalController extends Controller
 public function edit($id)
 {
         //
+ $result=DB::table('offer_sheet_headers')
+ ->leftjoin('offer_sheet_details','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id'
+  )
+ ->join('registration_details','offer_sheet_details.registration_detail_id','registration_details.id')
+ ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+ ->join('users','registration_headers.user_id','users.id')
+ ->join('units','offer_sheet_details.unit_id','units.id')
+ ->join('floors','units.floor_id','floors.id')
+ ->join('buildings','floors.building_id','buildings.id')
+ ->join('building_types','buildings.building_type_id','building_types.id')
+ ->where('registration_headers.status','1')
+ ->where('registration_details.is_rejected','0')
+ ->where('offer_sheet_details.id',$id)
+ ->select(DB::Raw('registration_details.admin_remarks as detail_remarks,offer_sheet_details.id as offer_id, building_types.id as building_type_id, building_types.description as building_type,units.code as unit_code, units.size as unit_size,registration_details.size_from, registration_details.size_to, units.type as unit_type,registration_details.unit_type as ordered_unit_type,floors.number as floor'))
+ ->groupBy('registration_details.id')
+ ->where('offer_sheet_headers.status','0')
+ ->first();
+ return response::json($result);
 }
 
 /**

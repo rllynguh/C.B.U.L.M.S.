@@ -160,7 +160,7 @@ class registrationController extends Controller
         catch(\Exception $e)
         {
          DB::rollBack();
-         return dd($result);
+         return dd($e);
        }
 
 

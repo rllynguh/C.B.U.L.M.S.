@@ -75,7 +75,7 @@ class registrationApprovalController extends Controller
     public function store(Request $request)
     {
         //
-      if(is_null($request->header_is_active==0))// if the transaction was accepted
+      if($request->header_is_active==1)// if the transaction was accepted
       {
         $regi_head=RegistrationHeader::find($request->myId);
         $regi_head->status=1;
