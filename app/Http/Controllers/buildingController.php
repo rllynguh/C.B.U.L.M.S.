@@ -33,7 +33,9 @@ class buildingController extends Controller
      ->get();
      return Datatables::of($result)
      ->addColumn('action', function ($data) {
-      return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
+      return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>
+      <button id="btnPrice" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value= "'.$data->id.'"><i class="mdi-action-visibility"></i></button>
+      ';
     })
      ->editColumn('is_active', function ($data) {
       $checked = '';
@@ -90,47 +92,60 @@ class buildingController extends Controller
      $floor->num_of_unit=$request->txtUNum;
      $floor->save();
    }
-   public function store(Request $request)
+   public function storePrice(Request $request)
    {
-        //
-     $latest=DB::table("buildings")
-     ->select("buildings.*")
-     ->orderBy('buildings.code',"DESC")
-     ->join('building_types','buildings.building_type_id','building_types.id')
-     ->join('addresses','buildings.address_id','addresses.id')
-     ->where('buildings.building_type_id',$request->comBuilType)
-     ->first();
-     $btype=BuildingType::find($request->comBuilType);
-     $pk="BLDG".strtoupper(substr($btype->description, 0, 3));
-     if(!is_null($latest))
-      $pk=$latest->code;
-    $sc= new smartCounter();
-    $pk=$sc->increment($pk);
-    $address=new address();
-    $address->number=$request->txtSNum;
-    $address->street=$request->txtStreet;
-    $address->district=$request->txtDistrict;
-    $address->city_id=$request->comCity;
-    $address->save();
-    try
-    {
-      $result=new building();
-      $result->code=$pk;
-      $result->description=$request->txtBuilDesc;
-      $result->building_type_id=$request->comBuilType;
-      $result->num_of_floor=$request->txtBFNum;
-      $result->address_id=$address->id;
-      $result->save();
-    }
-    catch(\Exception $e) {
-      if($e->errorInfo[1]==1062)
-        return "This Data Already Exists";
-      else if($e->errorInfo[1]==1452)
-        return "Already Deleted";
-      else
-        return var_dump($e->errorInfo[1]);
-    } 
+    $string="";
+    $result=DB::table('buildings')
+    ->Select(DB::Raw("Max(floors.number)"))
+    ->join('floors','buildings.id','floors.building_id')
+    ->join('units','floors.id','units.floor_id')
+    ->where('floors.is_active','1')
+    ->where('buildings.is_active','1')
+    ->where('units.is_active','1')
+    ->first();
+    return response::json($result);
   }
+  public function store(Request $request)
+  {
+        //
+   $latest=DB::table("buildings")
+   ->select("buildings.*")
+   ->orderBy('buildings.code',"DESC")
+   ->join('building_types','buildings.building_type_id','building_types.id')
+   ->join('addresses','buildings.address_id','addresses.id')
+   ->where('buildings.building_type_id',$request->comBuilType)
+   ->first();
+   $btype=BuildingType::find($request->comBuilType);
+   $pk="BLDG".strtoupper(substr($btype->description, 0, 3));
+   if(!is_null($latest))
+    $pk=$latest->code;
+  $sc= new smartCounter();
+  $pk=$sc->increment($pk);
+  $address=new address();
+  $address->number=$request->txtSNum;
+  $address->street=$request->txtStreet;
+  $address->district=$request->txtDistrict;
+  $address->city_id=$request->comCity;
+  $address->save();
+  try
+  {
+    $result=new building();
+    $result->code=$pk;
+    $result->description=$request->txtBuilDesc;
+    $result->building_type_id=$request->comBuilType;
+    $result->num_of_floor=$request->txtBFNum;
+    $result->address_id=$address->id;
+    $result->save();
+  }
+  catch(\Exception $e) {
+    if($e->errorInfo[1]==1062)
+      return "This Data Already Exists";
+    else if($e->errorInfo[1]==1452)
+      return "Already Deleted";
+    else
+      return var_dump($e->errorInfo[1]);
+  } 
+}
 
     /**
      * Display the specified resource.

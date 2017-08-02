@@ -24,6 +24,18 @@ class customController extends Controller
 		->get();
 		return Response::json($result);
 	}
+	public function getMarketRate($id)
+	{
+		$result=DB::table("cities")
+		->leftJoin("market_rates","cities.id","market_rates.city_id")
+		->join('addresses','cities.id','addresses.city_id')
+		->join('buildings','addresses.id','buildings.address_id')
+		->where('buildings.id',$id)
+		->whereRaw("market_rates.date_as_of=(SELECT MAX(date_as_of) from market_rates where city_id=cities.id)")
+		->select(DB::raw("COALESCE(market_rates.rate,0) as rate"))
+		->first(); 
+		return Response::json($result->rate);
+	}
 	public function getBuildingType()
 	{
 		$result=BuildingType::where('is_active',1)

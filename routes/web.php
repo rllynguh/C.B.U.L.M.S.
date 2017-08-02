@@ -64,6 +64,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::put('maintenance/buildings/softdelete/{building}',['uses' => 'buildingController@softdelete', 'as' => 'buildings.softdelete']);
 	Route::post('maintenance/buildings/storefloor',['uses' => 'buildingController@storefloor', 'as' => 'buildings.storefloor']);
 	Route::get('maintenance/buildings/getFloor/{floor}',['uses' => 'buildingController@getFloor', 'as' => 'buildings.getfloor']);
+	Route::post('maintenance/buildings/storePrice', ['uses' => 'buildingController@storePrice', 'as' => 'buildings.storePrice']);
 	
 
 	Route::resource("maintenance/floors","floorController");
@@ -127,6 +128,7 @@ Route::get('custom/getProvince', ['uses' => 'customController@getProvince', 'as'
 Route::get('custom/getPosition', ['uses' => 'customController@getPosition', 'as' => 'custom.getPosition']);
 Route::get('custom/getFloor', ['uses' => 'customController@getFloor', 'as' => 'custom.getFloor']);
 Route::get('custom/getRange', ['uses' => 'customController@getRange', 'as' => 'custom.getRange']);
+Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRate', 'as' => 'custom.getMarketRate']);
 
 
 

@@ -162,11 +162,13 @@ $(document).ready(function()
         }
       })
       e.preventDefault(); 
-      var formData = $("#frmUnit").serialize();
+      var formData = new FormData($('#frmUnit')[0]);
       $.ajax({
         type: "POST",
         url: url + "/storeunit",
         data: formData,
+        processData: false,
+        contentType: false,
         success: function (data) {
           $.notify("The record has been successfully stored!", "success");
           getLatestUnit();

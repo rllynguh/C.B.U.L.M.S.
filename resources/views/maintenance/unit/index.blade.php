@@ -81,7 +81,7 @@
                   <div class="input-group">
                     <span class="input-group-btn">
                       <span class="btn btn-default btn-file">
-                        Browse…  <input type="file" id="picture" name="picture">
+                        Browse…  <input required="" type="file" id="picture" name="picture">
                       </span>
                     </span>
                     <input type="text" class="form-control" readonly>
