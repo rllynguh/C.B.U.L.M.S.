@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::put('maintenance/floors/softdelete/{floor}', ['uses' => 'floorController@softDelete', 'as' => 'floors.softdelete']);
 	Route::get('floor/get/data', ['uses' => 'floorController@data', 'as' => 'floors.getData']);
 	Route::post('maintenance/floors/storeunit',['uses' => 'floorController@storeUnit', 'as' => 'floor.storeunit']);
+	Route::post('maintenance/floors/storePrice', ['uses' => 'floorController@storePrice', 'as' => 'floors.storePrice']);
 
 
 	Route::resource("maintenance/units","unitController");

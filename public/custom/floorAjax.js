@@ -1,6 +1,12 @@
 
 $(document).ready(function()
 {
+  $.ajaxSetup(
+  {
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+    }
+  })
   //for house keeping
   getBuilding();
 
@@ -72,12 +78,6 @@ $(document).ready(function()
     {
       if($("#btnSave").val()=="Save")     
         $("#btnSave").attr('disabled','disabled');
-      $.ajaxSetup(
-      {
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      })
       e.preventDefault(); 
       var my_url = url;
       var formData = $("#myForm").serialize();
@@ -114,12 +114,6 @@ $(document).ready(function()
   //for floor softdelete
   $('#myList').on('change', '#IsActive',function(e)
   { 
-    $.ajaxSetup(
-    {
-      headers: {
-       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-     }
-   })
     e.preventDefault(); 
     var id = $(this).val();
     $.ajax(
@@ -155,12 +149,6 @@ $(document).ready(function()
     if($('#frmUnit').parsley().isValid())
     {
       $("#btnSaveUnit").attr('disabled','disabled');
-      $.ajaxSetup(
-      {
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      })
       e.preventDefault(); 
       var formData = new FormData($('#frmUnit')[0]);
       $.ajax({
@@ -272,6 +260,52 @@ $(document).ready(function()
     getLatest();
   });
 
+
+  $(this).on('click', '#btnPrice',function()
+  {
+    $("#floor_id").val($(this).val());
+    $.get(url + '/' + $(this).val() + '/edit', function (data) {
+      output="Building: " + data.description +
+      "<Br>Floor: " + data.number + 
+      "<br>Number of units: " + data.num_of_unit +
+      "<br>Average price of units: " + data.avg_price
+      ;
+      $('#info').append(output);
+      $("#modalPrice").modal("show");
+    });
+  });
+
+
+  $(this).on('hidden.bs.modal','#modalPrice', function () {
+   $("#info").empty();
+   $("#txtPrice").val('');
+ });
+
+  $('#btnSavePrice').on('click',function(e)
+  { 
+    if($('#frmPrice').parsley().isValid())
+    {
+      $("#btnSaveFloor").attr('disabled','disabled');
+      setTimeout(function(){
+        $("#btnSaveFloor").removeAttr('disabled');
+      }, 1000);
+      e.preventDefault(); 
+      var formData = $("#frmPrice").serialize(); 
+      $.ajax({
+        type: "POST",
+        url: urlprice,
+        data: formData,
+        success: function (data) {
+          console.log(data);
+          $.notify("Successfully updated unit prices.", "success");
+          $("#modalPrice").modal('hide');
+        },
+        error: function (data) {
+          console.log('Error:', data);
+        }
+      });
+    }
+  });
 
 });
 

@@ -53,7 +53,7 @@
                     {{ Form::number('txtBasePrice',null,[
                       'id'=> 'txtBasePrice',
                       'class' => 'form-control text-center',
-                      'disabled' => '',
+                      'readonly' => '',
                       'data-rule' => 'quantity',
                       'autocomplete' => 'off',
                       'min' => '1',
@@ -80,6 +80,7 @@
                         'id'=> 'txtPriceChange',
                         'class' => 'form-control text-center',
                         'autocomplete' => 'off',
+                        'max' => '3',
                         'required' => 'required',
                         ])
                       }}

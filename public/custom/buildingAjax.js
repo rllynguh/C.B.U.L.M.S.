@@ -304,7 +304,7 @@ $(document).on('hidden.bs.modal','#modalAddFloor', function () {
   $("#frmFloor").trigger('reset');
 });
 
-rate=0;
+rate=0; //global variable para d na paquery query
 $(this).on('click', '#btnPrice',function(e)
 { 
   $("#building_id").val($(this).val());
@@ -322,12 +322,12 @@ $(this).on('change', '#comBasePrice',function(e)
   console.log($(this).val());
   if($(this).val()==0)
   {
-    $("#txtBasePrice").attr('disabled','disabled');
+    $("#txtBasePrice").attr('readonly','');
     $("#txtBasePrice").val(rate);
   }
   else
   {
-    $("#txtBasePrice").removeAttr('disabled');
+    $("#txtBasePrice").removeAttr('readonly');
     $("#txtBasePrice").val('');
   }
 });
@@ -350,7 +350,7 @@ $('#btnSavePrice').on('click',function(e)
 { 
   if($('#frmPrice').parsley().isValid())
   {
-    $("#btnPrice").attr('disabled','disabled');
+    $("#btnSaveFloor").attr('disabled','disabled');
     setTimeout(function(){
       $("#btnSaveFloor").removeAttr('disabled');
     }, 1000);
@@ -361,13 +361,19 @@ $('#btnSavePrice').on('click',function(e)
       url: urlprice,
       data: formData,
       success: function (data) {
-        console.log(data);
+        $.notify("Successfully updated unit prices.", "success");
+        $("#modalPrice").modal('hide');
       },
       error: function (data) {
         console.log('Error:', data);
       }
     });
   }
+});
+$(this).on('hidden.bs.modal','#modalPrice', function () {
+  $('#txtPriceChange').val('');
+  $('#comPriceChange').val('0');
+  $('#comBasePrice').val('0');
 });
 });
 

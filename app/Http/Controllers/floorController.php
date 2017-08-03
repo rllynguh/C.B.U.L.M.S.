@@ -10,6 +10,8 @@ use Datatables;
 use Response;
 use Image;
 use Config;
+use Carbon\Carbon;
+use App\UnitPrice;
 
 
 class floorController extends Controller
@@ -29,7 +31,6 @@ class floorController extends Controller
         //
       return view("maintenance.floor.index");
     }
-
     public function data()
     {
       $result=DB::table("floors")
@@ -40,7 +41,9 @@ class floorController extends Controller
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
-        return '<button id="btnAddUnit" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
+        return '<button id="btnAddUnit" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>
+        <button id="btnPrice" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value= "'.$data->id.'"><i class="mdi-action-visibility"></i></button>
+        ';
       })
       ->editColumn('is_active', function ($data) {
         $checked = '';
@@ -127,6 +130,24 @@ class floorController extends Controller
      Image::make($image)->resize(400,400)->save($location);
    }
 
+   public function storePrice (Request $request)
+   {
+    $units=DB::table('floors')
+    ->select('units.id')
+    ->join('units','floors.id','units.floor_id')
+    ->where('floors.is_active',1)
+    ->where('units.is_active',1)
+    ->where('floors.id',$request->floor_id)
+    ->get();
+    foreach ($units as $unit) {
+      $unit_price=new UnitPrice();
+      $unit_price->unit_id=$unit->id;
+      $unit_price->date_as_of=Carbon::now(Config::get('app.timezone'));
+      $unit_price->price=$request->txtPrice;
+      $unit_price->save();
+    }
+    return response::json($request->floor_id);
+  }
     /**
      * Display the specified resource.
      *
@@ -148,8 +169,10 @@ class floorController extends Controller
     {
         //
       $result = DB::table('floors')
-      ->select('units.*','buildings.*','floors.*',DB::raw('COUNT(units.id) as current'))
+      ->select('unit_prices.date_as_of','unit_prices.price','units.*','buildings.*','floors.*',DB::raw('COUNT(units.id) as current,AVG(unit_prices.price) as avg_price'))
       ->leftJoin('units','floors.id','=','units.floor_id')
+      ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+      ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
       ->join('buildings','floors.building_id','=','buildings.id')
       ->where('floors.id','=',$id)
       ->groupBy('floors.id')
