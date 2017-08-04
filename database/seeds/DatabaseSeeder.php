@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitPricesTableSeeder::class);
         $this->call(ParkAreasTableSeeder::class);
         $this->call(ParkSpacesTableSeeder::class);
+        $this->call(MarketRatesTableSeeder::class);
     }
 }

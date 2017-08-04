@@ -248,7 +248,7 @@
             </a>
             <ul class="ml-menu">
               <li>
-                <a href="/contractCreate" class="waves-yellow">
+                <a href="{{route("contract-create.index")}}" class="waves-yellow">
                   <i class="mdi-hardware-keyboard-arrow-right"></i>
                   <span>New Contract</span>
                 </a>
