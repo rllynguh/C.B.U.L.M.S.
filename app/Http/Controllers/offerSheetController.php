@@ -45,7 +45,9 @@ class offerSheetController extends Controller
         ->where('registration_details.is_rejected','0')
         ->where('registration_details.is_forfeited','0')
         ->whereRaw('offer_sheet_details.status is null or 0' )
+        // ->whereRaw('offer_sheet_details.status !=1 or null' )
         ->groupBy('registration_headers.id')
+        // ->havingRaw('count(registration_details.id) > count(case when offer_sheet_details.status != 1 then 1 else null end)')
         ->get();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
@@ -134,7 +136,7 @@ class offerSheetController extends Controller
         ->where('registration_headers.id','=',$id)
         ->first();
         $result=DB::table('registration_details')
-        ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*'))
+        ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,unit_prices.price'))
         ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
@@ -143,6 +145,8 @@ class offerSheetController extends Controller
            $join->on('registration_details.size_from','<=','offered_unit.size');
            $join->on('registration_details.size_to','>=','offered_unit.size');
        })
+        ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
+        ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
         ->where('registration_details.is_rejected','0')
         ->where('registration_details.is_forfeited','0')
@@ -153,6 +157,7 @@ class offerSheetController extends Controller
         ->where('registration_headers.status','1')
         ->where('registration_headers.id',$id)
         ->whereRaw('offer_sheet_details.status is null or 0' )
+        // ->whereRaw('offer_sheet_details.status !=1 or null' )
         ->get();
         return Datatables::of($result)
         ->addColumn('unit_select', function ($data) {
@@ -168,6 +173,9 @@ class offerSheetController extends Controller
                 $value='Shell';
             return $value; 
         })
+        ->editColumn('price', function ($data) {
+            return "P $data->price"; 
+        })
         ->setRowId(function ($data) {
           return $data = 'id'.$data->id;
       }) 
@@ -182,7 +190,7 @@ class offerSheetController extends Controller
             registration_details.size_from,registration_details.size_to,
             offered_unit.size as offered_exact_size,
             ordered_building_type.description as ordered_building_type,
-            registration_details.floor as ordered_floor'))
+            registration_details.floor as ordered_floor,unit_prices.price'))
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
@@ -190,6 +198,8 @@ class offerSheetController extends Controller
            $join->on('registration_details.size_from','<=','offered_unit.size');
            $join->on('registration_details.size_to','>=','offered_unit.size');
        })
+        ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
+        ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
         ->where('registration_details.id',$id)
         ->where('registration_headers.status','1')
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')

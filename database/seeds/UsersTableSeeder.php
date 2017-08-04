@@ -24,16 +24,16 @@ class UsersTableSeeder extends Seeder
                 'first_name' => 'Christopher',
                 'middle_name' => 'Ramos',
                 'last_name' => 'Atienza',
-                'email' => 'myemail@yahoo.com',
-                'password' => '$2y$10$8UTTwaHw7SKOff1dA1W/nusQKV7R.l9pAuaKwoi2UlgU.jcY4WjeW',
-                'cell_num' => '12',
+                'email' => 'admin@yahoo.com',
+                'password' => '$2y$10$7rOSKruyYujSXhyvpE6O3.T84j0uxSnfmDfRLmJBfVp9zeHJs5xom',
+                'cell_num' => '12121212121',
                 'picture' => NULL,
                 'is_active' => 1,
-                'last_log_at' => '2017-07-23 06:49:16',
-                'remember_token' => 'mFFB0cH8gNzMpe9Te5GVfGcYfZthYbJc76OCLbKgjqGCq83IZv9FkfxMvLyt',
+                'last_log_at' => '2017-08-04 20:30:02',
+                'remember_token' => NULL,
                 'deleted_at' => NULL,
-                ),
-            ));
+            ),
+        ));
         
         
     }

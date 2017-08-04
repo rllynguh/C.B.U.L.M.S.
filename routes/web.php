@@ -98,7 +98,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/offersheets","offerSheetController");
 	Route::get('/transaction/offersheets/get/data', ['uses' => 'offerSheetController@data', 'as' => 'offerSheets.getData']);
 	Route::get('/transaction/offersheets/showOptions/{id}', ['uses' => 'offerSheetController@showOptions', 'as' => 'offerSheets.showOptions']);
-	Route::get('/transaction/offersheets/get/showData/{id}', ['uses' => 'offerSheetController@showData', 'as' => 'offerSheets.showData']);
+	Route::post('/transaction/offersheets/get/showData/{id}', ['uses' => 'offerSheetController@showData', 'as' => 'offerSheets.showData']);
 
 
 	Route::resource("/transaction/contract-create","contractCreationController");
@@ -115,6 +115,11 @@ Route::group(['prefix' => 'tenant/'], function () {
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
 	Route::get('/transaction/offerSheetApproval/get/data', ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
 	Route::post('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
+
+
+	Route::resource("/transaction/registrationForfeit","registrationForfeitController");
+	Route::get('/transaction/registrationForfeit/get/data', ['uses' => 'registrationForfeitController@data', 'as' => 'registrationForfeit.getData']);
+
 
 });
 

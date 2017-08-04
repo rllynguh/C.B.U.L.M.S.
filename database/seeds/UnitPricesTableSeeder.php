@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class BanksTableSeeder extends Seeder
+class UnitPricesTableSeeder extends Seeder
 {
 
     /**
@@ -14,14 +14,14 @@ class BanksTableSeeder extends Seeder
     {
         
 
-        \DB::table('banks')->delete();
+        \DB::table('unit_prices')->delete();
         
-        \DB::table('banks')->insert(array (
+        \DB::table('unit_prices')->insert(array (
             0 => 
             array (
-                'id' => 1,
-                'description' => 'My Bank',
-                'is_active' => 1,
+                'unit_id' => 1,
+                'date_as_of' => '2017-08-04 20:40:51',
+                'price' => 100,
             ),
         ));
         

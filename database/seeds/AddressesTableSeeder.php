@@ -20,9 +20,9 @@ class AddressesTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'number' => '123',
-                'street' => 'MyStreet',
-                'district' => 'Malunggay',
+                'number' => '12',
+                'street' => 'Sesame',
+                'district' => 'Ginebra',
                 'city_id' => 1,
             ),
         ));

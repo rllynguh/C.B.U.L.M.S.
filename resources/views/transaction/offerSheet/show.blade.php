@@ -47,6 +47,7 @@
 								<th class="align-center">Preferred Unit Type</th>
 								<th class="align-center">Preferred Floor</th>
 								<th class="align-center">Unit Offer</th>
+								<th class="align-center">Unit Rate</th>
 								<th class="align-center">Action</th>
 
 							</tr>
