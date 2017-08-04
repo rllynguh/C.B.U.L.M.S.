@@ -15,7 +15,7 @@ Route::get('/', function () {
 	return view('welcome');
 });
 Route::get('test', function () {
-	return view('maintenance/building/test');
+	return view('maintenance/test');
 });
 
 Route::group(['prefix' => 'admin/'], function () {
