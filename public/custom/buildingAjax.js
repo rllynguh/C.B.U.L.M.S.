@@ -1,6 +1,12 @@
 
 $(document).ready(function()
 {
+  $.ajaxSetup(
+  {
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+    }
+  })
   //for house keeping
   getBuildingType();
   getProvince();
@@ -39,12 +45,6 @@ $(document).ready(function()
       setTimeout(function(){
         $("#btnSaveFloor").removeAttr('disabled');
       }, 1000);
-      $.ajaxSetup(
-      {
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      })
       e.preventDefault(); 
       var formData = $("#frmFloor").serialize(); 
       $.ajax({
@@ -118,12 +118,6 @@ $(document).ready(function()
       setTimeout(function(){
         $("#btnSave").removeAttr('disabled');
       }, 1000);
-      $.ajaxSetup(
-      {
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      })
       var my_url = url;
       var type="POST";
       var formData = $("#myForm").serialize();
@@ -163,12 +157,6 @@ $(document).ready(function()
   //for soft delete
   $('#myList').on('change', '#IsActive',function(e)
   { 
-    $.ajaxSetup(
-    {
-      headers: {
-       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-     }
-   })
     e.preventDefault(); 
     var id = $(this).val();
     $.ajax(
@@ -195,11 +183,6 @@ $(document).ready(function()
   //for deleting record
   $('#btnDelete').on('click',function(e)
   {
-   $.ajaxSetup({
-    headers: {
-     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-   }
- })
    e.preventDefault(); 
    var builType_id = $(this).val();
    $.ajax({
@@ -319,6 +302,78 @@ $(document).on('hidden.bs.modal','#myModal', function () {
 $(document).on('hidden.bs.modal','#modalAddFloor', function () {
   $('#frmFloor').parsley().destroy();
   $("#frmFloor").trigger('reset');
+});
+
+rate=0; //global variable para d na paquery query
+$(this).on('click', '#btnPrice',function(e)
+{ 
+  $("#building_id").val($(this).val());
+  $.get('/custom/getMarketRate/' + $(this).val(), function (data) 
+  {
+    rate=data;
+    $("#txtBasePrice").val(rate);
+    $("#modalPrice").modal("show");
+  });
+});
+
+
+$(this).on('change', '#comBasePrice',function(e)
+{
+  console.log($(this).val());
+  if($(this).val()==0)
+  {
+    $("#txtBasePrice").attr('readonly','');
+    $("#txtBasePrice").val(rate);
+  }
+  else
+  {
+    $("#txtBasePrice").removeAttr('readonly');
+    $("#txtBasePrice").val('');
+  }
+});
+
+$(this).on('change', '#comPriceChange',function(e)
+{
+  console.log($(this).val());
+  if($(this).val()==0)
+  {
+    $("#txtPriceChange").attr('max','3');
+  }
+  else
+  {
+    $("#txtPriceChange").attr('max','4000');
+  }
+});
+
+
+$('#btnSavePrice').on('click',function(e)
+{ 
+  if($('#frmPrice').parsley().isValid())
+  {
+    $("#btnSaveFloor").attr('disabled','disabled');
+    setTimeout(function(){
+      $("#btnSaveFloor").removeAttr('disabled');
+    }, 1000);
+    e.preventDefault(); 
+    var formData = $("#frmPrice").serialize(); 
+    $.ajax({
+      type: "POST",
+      url: urlprice,
+      data: formData,
+      success: function (data) {
+        $.notify("Successfully updated unit prices.", "success");
+        $("#modalPrice").modal('hide');
+      },
+      error: function (data) {
+        console.log('Error:', data);
+      }
+    });
+  }
+});
+$(this).on('hidden.bs.modal','#modalPrice', function () {
+  $('#txtPriceChange').val('');
+  $('#comPriceChange').val('0');
+  $('#comBasePrice').val('0');
 });
 });
 

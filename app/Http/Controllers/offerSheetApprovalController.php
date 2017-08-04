@@ -31,7 +31,7 @@ class offerSheetApprovalController extends Controller
       ->where('registration_headers.status','1')
       ->join('users','registration_headers.user_id','users.id')
       ->where('offer_sheet_headers.status','0')
-      ->select(DB::Raw('registration_headers.id, registration_headers.code as regi_code,offer_sheet_headers.code as offer_code,CONCAT(users.first_name," ",users.last_name) as name,offer_sheet_headers.date_issued as date, COUNT(offer_sheet_details.id) as regi_count'))
+      ->select(DB::Raw('offer_sheet_headers.id, registration_headers.code as regi_code,offer_sheet_headers.code as offer_code,CONCAT(users.first_name," ",users.last_name) as name,offer_sheet_headers.date_issued as date, COUNT(offer_sheet_details.id) as regi_count'))
       ->groupBy('registration_headers.id')
       ->get();
       return Datatables::of($result)
@@ -109,6 +109,7 @@ class offerSheetApprovalController extends Controller
     {
         //
      $result=DB::table('offer_sheet_headers')
+     ->where('offer_sheet_headers.id',$id)
      ->join('users','offer_sheet_headers.user_id','users.id')
      ->select(DB::Raw('offer_sheet_headers.tenant_remarks,offer_sheet_headers.code, offer_sheet_headers.id, CONCAT(users.first_name," ",users.last_name) as name'))
      ->first();
@@ -176,7 +177,6 @@ class offerSheetApprovalController extends Controller
     })
      ->rawColumns(['action','building_type','unit_type','unit_size','floor'])
      ->make(true);
-
    }
 
 /**
