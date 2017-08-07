@@ -14,9 +14,7 @@
 Route::get('/', function () {
 	return view('welcome');
 });
-Route::get('test', function () {
-	return view('maintenance/test');
-});
+Route::resource('test','maintenanceBuildingController');
 
 Route::group(['prefix' => 'admin/'], function () {
 	Route::resource('maintenance/banks','bankController');
