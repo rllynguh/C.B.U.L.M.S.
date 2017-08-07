@@ -119,6 +119,7 @@ Route::group(['prefix' => 'tenant/'], function () {
 
 	Route::resource("/transaction/registrationForfeit","registrationForfeitController");
 	Route::get('/transaction/registrationForfeit/get/data', ['uses' => 'registrationForfeitController@data', 'as' => 'registrationForfeit.getData']);
+	Route::get('/transaction/registrationForfeit/get/showData/{id}', ['uses' => 'registrationForfeitController@showData', 'as' => 'registrationForfeit.showData']);
 
 
 });
