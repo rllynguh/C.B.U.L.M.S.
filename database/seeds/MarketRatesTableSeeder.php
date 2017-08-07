@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AddressesTableSeeder extends Seeder
+class MarketRatesTableSeeder extends Seeder
 {
 
     /**
@@ -14,16 +14,14 @@ class AddressesTableSeeder extends Seeder
     {
         
 
-        \DB::table('addresses')->delete();
+        \DB::table('market_rates')->delete();
         
-        \DB::table('addresses')->insert(array (
+        \DB::table('market_rates')->insert(array (
             0 => 
             array (
-                'id' => 1,
-                'number' => '12',
-                'street' => 'Sesame',
-                'district' => 'Ginebra',
                 'city_id' => 1,
+                'rate' => 1000,
+                'date_as_of' => '2017-08-10 00:00:00',
             ),
         ));
         

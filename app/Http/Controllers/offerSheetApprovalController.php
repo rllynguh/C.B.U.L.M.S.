@@ -8,6 +8,7 @@ use App\OfferSheetDetail;
 use DB;
 use Response;
 use Datatables;
+use Auth;
 class offerSheetApprovalController extends Controller
 {
  public function __construct()
@@ -27,7 +28,11 @@ class offerSheetApprovalController extends Controller
         )
       ->join('registration_details','offer_sheet_details.registration_detail_id','registration_details.id')
       ->where('registration_details.is_rejected','0')
+      ->where('registration_headers.is_forfeited','0')
       ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+      ->join('tenants','registration_headers.tenant_id','tenants.id')
+      ->join('users as user_tenant','tenants.user_id','user_tenant.id')
+      ->where('user_tenant.id','=',Auth::user()->id)
       ->where('registration_headers.status','1')
       ->join('users','registration_headers.user_id','users.id')
       ->where('offer_sheet_headers.status','0')
@@ -124,14 +129,18 @@ class offerSheetApprovalController extends Controller
      ->join('registration_details','offer_sheet_details.registration_detail_id','registration_details.id')
      ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
      ->join('users','registration_headers.user_id','users.id')
+     // ->where('users.id',Auth::user()->id)
      ->join('units','offer_sheet_details.unit_id','units.id')
+     ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+     ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
      ->join('floors','units.floor_id','floors.id')
      ->join('buildings','floors.building_id','buildings.id')
      ->join('building_types','buildings.building_type_id','building_types.id')
      ->where('registration_headers.status','1')
+     ->where('registration_headers.is_forfeited','0')
      ->where('registration_details.is_rejected','0')
      ->where('offer_sheet_headers.id',$id)
-     ->select(DB::Raw('registration_details.id as regi_id,offer_sheet_details.id as offer_id, building_types.id as building_type_id,registration_details.building_type_id as ordered_building_type, building_types.description as building_type,units.code as unit_code, units.size as unit_size,registration_details.size_from, registration_details.size_to, units.type as unit_type,registration_details.unit_type as ordered_unit_type,floors.number as floor,registration_details.floor as ordered_floor'))
+     ->select(DB::Raw('registration_details.id as regi_id,offer_sheet_details.id as offer_id, building_types.id as building_type_id,registration_details.building_type_id as ordered_building_type, building_types.description as building_type,units.code as unit_code, units.size as unit_size,registration_details.size_from, registration_details.size_to, units.type as unit_type,registration_details.unit_type as ordered_unit_type,floors.number as floor,registration_details.floor as ordered_floor,unit_prices.price'))
      ->groupBy('registration_details.id')
      ->where('offer_sheet_headers.status','0')
      ->get();
@@ -139,7 +148,10 @@ class offerSheetApprovalController extends Controller
      ->addColumn('action', function ($data) {
       return " <button type='button' id='btnChoose' class='btn bg-blue btn-circle waves-effect waves-circle waves-float btnChoose' value='$data->offer_id'><i class='mdi-action-visibility'></i></button>
       <input type='hidden' value='$data->offer_id' name='offer_id[]'>
-      <input type='hidden' name='offer_is_active[]' id='offer$data->offer_id'value='0'><input id='remarks$data->offer_id' type='hidden' name='offer_remarks[]'>";
+      <input type='hidden' name='offer_is_active[]' id='offer$data->offer_id'value='1'><input id='remarks$data->offer_id' type='hidden' name='offer_remarks[]'>";
+    })
+     ->editColumn('price', function ($data) {
+      return "P $data->price";
     })
      ->editColumn('unit_type', function ($data) {
       $value="Raw";

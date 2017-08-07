@@ -1,11 +1,20 @@
 
 $(document).ready(function()
 {
+	$.ajaxSetup(
+	{
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+		}
+	})
 	var table = $('#myTable').DataTable({
 		responsive: true,
 		processing: true,
 		serverSide: true,
-		ajax: dataurl,
+		ajax: {
+			url: dataurl,
+			type: "POST"
+		},
 		columns: [
 		{data: 'id'},
 		{data: 'description'},
@@ -13,6 +22,7 @@ $(document).ready(function()
 		{data: 'unit_type'},
 		{data: 'floor'},
 		{data: 'unit_select'},
+		{data: 'price'},
 		{data: 'choose'}
 		]
 	}); 
@@ -30,7 +40,8 @@ $(document).ready(function()
 				if(value.offered_exact_size>=value.size_from && value.offered_exact_size<=value.size_to)
 					mode='success';
 				size="Size : <small class='label label-" + mode + "'>"+ value.offered_exact_size +" sqm</small>";
-				options+="<input class='myRadio' type='radio' name='unit_option' value='"+ value.unit_id +"'><input disabled type='text' value='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'> " + size +"<br>";
+				price="Prize: <small class='label label-success'>P "+ value.price +"</small>";
+				options+="<input class='myRadio' type='radio' name='unit_option' value='"+ value.unit_id +"'><input disabled type='text' value='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'> " + size + price + "<br>";
 			});
 			$("#divOptions").append(options);
 		});

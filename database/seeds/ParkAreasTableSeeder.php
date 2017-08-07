@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class UnitsTableSeeder extends Seeder
+class ParkAreasTableSeeder extends Seeder
 {
 
     /**
@@ -14,19 +14,17 @@ class UnitsTableSeeder extends Seeder
     {
         
 
-        \DB::table('units')->delete();
+        \DB::table('park_areas')->delete();
         
-        \DB::table('units')->insert(array (
+        \DB::table('park_areas')->insert(array (
             0 => 
             array (
                 'id' => 1,
-                'code' => 'BUI1UNIT1',
-                'type' => 1,
-                'size' => 120,
+                'description' => 'PA1-12',
                 'floor_id' => 1,
-                'number' => 1,
+                'num_of_space' => 12,
+                'size' => 1200,
                 'is_active' => 1,
-                'picture' => '0b04bcef6e15790faed2031eae936acc.png',
             ),
         ));
         

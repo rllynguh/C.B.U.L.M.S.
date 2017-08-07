@@ -212,15 +212,27 @@
         </a>
         <ul class="ml-menu">
           <li>
-            <a href="{{-- {!! route('registration.index') !!} --}}" class="waves-yellow">
+            <a href="{{ route('registration.index')}}" class="waves-yellow">
               <i class="mdi-action-assignment-ind"></i>
               <span>Registration</span>
             </a>
           </li>
           <li>
-            <a href="{{route('offersheets.index')}}" class="menu-toggle waves-yellow">
+            <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
+              <i class="mdi-action-assignment-ind"></i>
+              <span>Registration Approval</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{route('offersheets.index')}}" class="waves-yellow">
               <i class="mdi-action-thumbs-up-down"></i>
               <span>Offer Sheets</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{route('offerSheetApproval.index')}}" class=" waves-yellow">
+              <i class="mdi-action-thumbs-up-down"></i>
+              <span>Offer Sheets Approval</span>
             </a>
           </li>
           <li>
@@ -236,7 +248,7 @@
             </a>
             <ul class="ml-menu">
               <li>
-                <a href="/contractCreate" class="waves-yellow">
+                <a href="{{route("contract-create.index")}}" class="waves-yellow">
                   <i class="mdi-hardware-keyboard-arrow-right"></i>
                   <span>New Contract</span>
                 </a>
