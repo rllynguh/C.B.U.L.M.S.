@@ -176,6 +176,65 @@ $(document).ready(function()
     title="Record Successfully Stored!";
   $.notify(title, "success");
 }
+
+
+myId="";
+$(this).on('click', '#btnAddRequirement',function(e)
+{
+  myId=$(this).val();
+  $("#idReq").val(myId);
+  req="";
+  $.get(url + '/showRequirements/' + myId, function (data) 
+  {
+    console.log(data);
+    $("#modalRequirement").modal("show");
+    $.each( data, function( index, value ){
+      req+="<input id='checkboxReq' name='checkboxReq[]' value='" + 
+      value.id +"'' type='checkbox'>" + value.description;
+    });
+    $("#divReq").append(req);
+  });
+});
+$(this).on('click','#btnSaveReq', function (e) 
+{
+ if($('#frmRequirement').parsley().isValid())
+ {
+  e.preventDefault(); 
+  var my_url = urlreq;
+  var type="POST";
+  var formData = $('#frmRequirement').serialize();
+  $.ajax({
+    beforeSend: function (jqXHR, settings) {
+      xhrPool.push(jqXHR);
+    },
+    type: type,
+    url: my_url,
+    data: formData,
+    success: function (data) {
+      table.draw();  
+      successPrompt(); 
+      console.log(data);
+      $('#modalRequirement').modal('hide');
+    },
+    error: function (data) {
+      console.log('Error:', data.responseText);
+      try{
+        $('#txtDesc').parsley().removeError('ferror', {updateClass: false});
+        $('#txtDesc').parsley().addError('ferror', {message: data.responseText, updateClass: false});
+      }catch(err){}
+      finally{
+        $.each(xhrPool, function(idx, jqXHR) {
+          jqXHR.abort();
+        });
+      }
+    }
+  });
+}
+});
+$(document).on('hidden.bs.modal','#modalRequirement', function () 
+{ 
+  $('#divReq').empty();
+});
 });
 
 

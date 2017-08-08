@@ -195,6 +195,12 @@
             </a>
           </li>
           <li>
+            <a href="{{route("requirements.index")}}" class="waves-yellow">
+              <i class="mdi-social-group"></i>
+              <span>Requirements</span>
+            </a>
+          </li>
+          <li>
             <a href="{{route("repr-positions.index")}}" class="waves-yellow">
               <i class="mdi-action-account-balance-wallet"></i>
               <span>Representative Position</span>

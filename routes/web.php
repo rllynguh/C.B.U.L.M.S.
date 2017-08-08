@@ -30,6 +30,14 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource('maintenance/businesstypes','businessTypeController');
 	Route::put('maintenance/businesstypes/softdelete/{businessType}',['uses' => 'businessTypeController@softDelete', 'as' => 'businesstypes.softdelete']);
 	Route::get('maintenance/businesstypes/get/data', ['uses' => 'businessTypeController@data', 'as' => 'businesstypes.getData']);
+	Route::get('/maintenance/businesstypes/showRequirements/{id}', ['uses' => 'businessTypeController@showRequirements', 'as' => 'businesstypes.showRequirements']);
+	Route::post('maintenance/businesstypes/storeRequirements', ['uses' => 'businessTypeController@storeRequirements', 'as' => 'businesstypes.storeRequirements']);
+
+
+
+	Route::resource('maintenance/requirements','requirementController');
+	Route::put('maintenance/requirements/softdelete/{id}',['uses' => 'requirementController@softDelete', 'as' => 'requirements.softdelete']);
+	Route::get('maintenance/requirements/get/data', ['uses' => 'requirementController@data', 'as' => 'requirements.getData']);
 
 	Route::resource('maintenance/buildingtypes','buildingTypeController');
 	Route::put('maintenance/buildingtypes/softdelete/{buildingType}',['uses' => 'buildingTypeController@softDelete', 'as' => 'buildingtypes.softdelete']);

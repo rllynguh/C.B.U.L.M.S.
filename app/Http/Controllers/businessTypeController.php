@@ -7,6 +7,7 @@ use App\BusinessType;
 use Response;
 use Datatables;
 use DB;
+use App\BusinessTypeRequirement;
 
 class businessTypeController extends Controller
 {
@@ -25,7 +26,9 @@ class businessTypeController extends Controller
         $result=BusinessType::orderBy('id')->get();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
+            return '<button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>
+            <button id="btnAddRequirement" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button>
+            <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
         })
         ->editColumn('is_active', function ($data) {
           $checked = '';
@@ -72,13 +75,32 @@ class businessTypeController extends Controller
         }
         catch(\Exception $e)
         {
-         if($e->errorInfo[1]==1062)
-          return "This Data Already Exists";
-      else if($e->errorInfo[1]==1452)
-          return "Already Deleted";
-      else
-          return var_dump($e->errorInfo[1]);
+           if($e->errorInfo[1]==1062)
+              return "This Data Already Exists";
+          else if($e->errorInfo[1]==1452)
+              return "Already Deleted";
+          else
+              return var_dump($e->errorInfo[1]);
+      }
   }
+
+  public function storeRequirements(Request $request)
+  {
+    // try
+    // {
+       for($x=0;$x<count($request->checkboxReq);$x++)
+       {
+        $busi_req=new BusinessTypeRequirement();
+        $busi_req->business_type_id=$request->idReq;
+        $busi_req->requirement_id=$request->checkboxReq[$x];
+        $busi_req->save();
+    }
+    return response::json($string);
+// }
+// catch(\Exception $e)
+// {
+//     return $e;
+// }
 }
 
     /**
@@ -100,9 +122,9 @@ class businessTypeController extends Controller
      */
     public function edit($id)
     {
-       $businessType=BusinessType::find($id);
-       return Response::json($businessType);
-   }
+     $businessType=BusinessType::find($id);
+     return Response::json($businessType);
+ }
 
     /**
      * Update the specified resource in storage.
@@ -117,12 +139,12 @@ class businessTypeController extends Controller
       {
         try
         { $businessType=BusinessType::find($id);
-           $businessType->description=$request->txtBusiTypeDesc;
-           $businessType->save();
-       }
-       catch(\Exception $e)
-       {
-           if($e->errorInfo[1]==1062)
+         $businessType->description=$request->txtBusiTypeDesc;
+         $businessType->save();
+     }
+     catch(\Exception $e)
+     {
+         if($e->errorInfo[1]==1062)
             return "This Data Already Exists";
         else
             return var_dump($e->errorInfo[1]);
@@ -152,8 +174,8 @@ public function softDelete($id)
      */
     public function destroy($id)
     {
-     try
-     {
+       try
+       {
         $result = BusinessType::findorfail($id);
         try
         {
@@ -170,5 +192,14 @@ public function softDelete($id)
 catch(\Exception $e) {
     return "Deleted";
 }
+}
+public function showRequirements($id)
+{
+    $result=DB::table('requirements')
+    ->select('requirements.id','requirements.description')
+    ->whereRaw("requirements.id not in (select requirements.id from requirements inner join business_type_requirements 
+        on requirements.id=business_type_requirements.requirement_id and  business_type_requirements.business_type_id = $id)")
+    ->get();
+    return response::json($result);
 }
 }
