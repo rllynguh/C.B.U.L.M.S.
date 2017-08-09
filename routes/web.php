@@ -110,6 +110,10 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::post('/transaction/offersheets/get/showData/{id}', ['uses' => 'offerSheetController@showData', 'as' => 'offerSheets.showData']);
 
 
+	Route::resource("/transaction/requirementAssigning","requirementAssigningController");
+	Route::get('/transaction/requirementAssigning/get/data', ['uses' => 'requirementAssigningController@data', 'as' => 'requirementAssigning.getData']);
+
+
 	Route::resource("/transaction/contract-create","contractCreationController");
 	Route::get('/transaction/contract-create/get/data', ['uses' => 'contractCreationController@data', 'as' => 'contract-create.getData']);
 	Route::get('/transaction/contract-create/get/createData/{id}', ['uses' => 'contractCreationController@createData', 'as' => 'contract-create.createData']);
