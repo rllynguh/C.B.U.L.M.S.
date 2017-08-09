@@ -32,7 +32,8 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('maintenance/businesstypes/get/data', ['uses' => 'businessTypeController@data', 'as' => 'businesstypes.getData']);
 	Route::get('/maintenance/businesstypes/showRequirements/{id}', ['uses' => 'businessTypeController@showRequirements', 'as' => 'businesstypes.showRequirements']);
 	Route::post('maintenance/businesstypes/storeRequirements', ['uses' => 'businessTypeController@storeRequirements', 'as' => 'businesstypes.storeRequirements']);
-
+	Route::get('/maintenance/businesstypes/showCurrentRequirements/{id}', ['uses' => 'businessTypeController@showCurrentRequirements', 'as' => 'businesstypes.showCurrentRequirements']);
+	Route::put('maintenance/businesstypes/update/Requirements', ['uses' => 'businessTypeController@updateRequirements', 'as' => 'businesstypes.updateRequirements']);
 
 
 	Route::resource('maintenance/requirements','requirementController');

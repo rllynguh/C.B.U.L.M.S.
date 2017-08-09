@@ -28,6 +28,7 @@ class businessTypeController extends Controller
         ->addColumn('action', function ($data) {
             return '<button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>
             <button id="btnAddRequirement" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button>
+            <button id="btnEditRequirement" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>
             <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>';
         })
         ->editColumn('is_active', function ($data) {
@@ -35,7 +36,7 @@ class businessTypeController extends Controller
           if($data->is_active==1){
             $checked = 'checked';
         }
-        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
+        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" name="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
     })
         ->setRowId(function ($data) {
             return $data = 'id'.$data->id;
@@ -86,21 +87,33 @@ class businessTypeController extends Controller
 
   public function storeRequirements(Request $request)
   {
-    // try
-    // {
-       for($x=0;$x<count($request->checkboxReq);$x++)
-       {
-        $busi_req=new BusinessTypeRequirement();
-        $busi_req->business_type_id=$request->idReq;
-        $busi_req->requirement_id=$request->checkboxReq[$x];
-        $busi_req->save();
+   for($x=0;$x<count($request->checkboxReq);$x++)
+   {
+    $busi_req=new BusinessTypeRequirement();
+    $busi_req->business_type_id=$request->idReq;
+    $busi_req->requirement_id=$request->checkboxReq[$x];
+    $busi_req->save();
+}
+}
+public function updateRequirements(Request $request)
+{
+ $result=DB::table('requirements')
+ ->select('business_type_requirements.id')
+ ->join('business_type_requirements','requirements.id','business_type_requirements.requirement_id')
+ ->where('requirements.is_active',1)
+ ->where('business_type_requirements.business_type_id',$request->idReq)
+ ->get();
+ $string="";
+ if(count($request->checkboxReq)==0)
+    $request->checkboxReq=[];
+foreach ($result as $requirement) {
+    if(!in_array($requirement->id, $request->checkboxReq))
+    {
+        $busi_req=BusinessTypeRequirement::find($requirement->id);
+        $busi_req->delete();
     }
-    return response::json($string);
-// }
-// catch(\Exception $e)
-// {
-//     return $e;
-// }
+}
+return response::json($string);
 }
 
     /**
@@ -156,10 +169,10 @@ catch(\Exception $e)
 }        
 }
 
-public function softDelete($id)
+public function softDelete(Request $request,$id)
 {
     $businessType=BusinessType::find($id);
-    if($businessType->is_active==1)
+    if($request->checked==0)
         $val=0;
     else
         $val=1;
@@ -198,7 +211,18 @@ public function showRequirements($id)
     $result=DB::table('requirements')
     ->select('requirements.id','requirements.description')
     ->whereRaw("requirements.id not in (select requirements.id from requirements inner join business_type_requirements 
-        on requirements.id=business_type_requirements.requirement_id and  business_type_requirements.business_type_id = $id)")
+        on requirements.id=business_type_requirements.requirement_id and  business_type_requirements.business_type_id = $id where requirements.is_active=1)")
+    ->where('requirements.is_active',1)
+    ->get();
+    return response::json($result);
+}
+public function showCurrentRequirements($id)
+{
+    $result=DB::table('requirements')
+    ->select('business_type_requirements.id','requirements.description')
+    ->join('business_type_requirements','requirements.id','business_type_requirements.requirement_id')
+    ->where('requirements.is_active',1)
+    ->where('business_type_requirements.business_type_id',$id)
     ->get();
     return response::json($result);
 }
