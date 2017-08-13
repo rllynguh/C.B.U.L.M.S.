@@ -112,6 +112,10 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/requirementAssigning","requirementAssigningController");
 	Route::get('/transaction/requirementAssigning/get/data', ['uses' => 'requirementAssigningController@data', 'as' => 'requirementAssigning.getData']);
+	Route::get('/transaction/requirementAssigning/showRequirements/{id}', ['uses' => 'requirementAssigningController@showRequirements', 'as' => 'requirementAssigning.showRequirements']);
+	Route::get('/transaction/requirementAssigning/showCurrentRequirements/{id}', ['uses' => 'requirementAssigningController@showCurrentRequirements', 'as' => 'requirementAssigning.showCurrentRequirements']);
+	Route::post('transaction/requirementAssigning/storeRequirements', ['uses' => 'requirementAssigningController@storeRequirements', 'as' => 'requirementAssigning.storeRequirements']);
+	Route::put('transaction/requirementAssigning/update/Requirements', ['uses' => 'requirementAssigningController@updateRequirements', 'as' => 'requirementAssigning.updateRequirements']);
 
 
 	Route::resource("/transaction/contract-create","contractCreationController");
@@ -133,6 +137,10 @@ Route::group(['prefix' => 'tenant/'], function () {
 	Route::resource("/transaction/registrationForfeit","registrationForfeitController");
 	Route::get('/transaction/registrationForfeit/get/data', ['uses' => 'registrationForfeitController@data', 'as' => 'registrationForfeit.getData']);
 	Route::get('/transaction/registrationForfeit/get/showData/{id}', ['uses' => 'registrationForfeitController@showData', 'as' => 'registrationForfeit.showData']);
+
+
+	Route::resource("/transaction/requirementSubmission","requirementSubmissionController");
+	Route::get('/transaction/requirementSubmission/get/data', ['uses' => 'requirementSubmissionController@data', 'as' => 'requirementSubmission.getData']);
 
 
 });

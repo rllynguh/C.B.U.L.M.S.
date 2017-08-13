@@ -8,8 +8,7 @@ $(document).ready(function()
     ajax: dataurl,
     columns: [
     {data: 'code'},
-    {data: 'tenant'},
-    {data: 'business'},
+    {data: 'name'},
     {data: 'unit_count'},
     {data: 'action'}
     ]

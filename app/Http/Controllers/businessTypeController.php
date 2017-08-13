@@ -76,19 +76,19 @@ class businessTypeController extends Controller
         }
         catch(\Exception $e)
         {
-           if($e->errorInfo[1]==1062)
-              return "This Data Already Exists";
-          else if($e->errorInfo[1]==1452)
-              return "Already Deleted";
-          else
-              return var_dump($e->errorInfo[1]);
-      }
+         if($e->errorInfo[1]==1062)
+          return "This Data Already Exists";
+      else if($e->errorInfo[1]==1452)
+          return "Already Deleted";
+      else
+          return var_dump($e->errorInfo[1]);
   }
+}
 
-  public function storeRequirements(Request $request)
-  {
-   for($x=0;$x<count($request->checkboxReq);$x++)
-   {
+public function storeRequirements(Request $request)
+{
+ for($x=0;$x<count($request->checkboxReq);$x++)
+ {
     $busi_req=new BusinessTypeRequirement();
     $busi_req->business_type_id=$request->idReq;
     $busi_req->requirement_id=$request->checkboxReq[$x];
@@ -97,14 +97,14 @@ class businessTypeController extends Controller
 }
 public function updateRequirements(Request $request)
 {
- $result=DB::table('requirements')
- ->select('business_type_requirements.id')
- ->join('business_type_requirements','requirements.id','business_type_requirements.requirement_id')
- ->where('requirements.is_active',1)
- ->where('business_type_requirements.business_type_id',$request->idReq)
- ->get();
- $string="";
- if(count($request->checkboxReq)==0)
+   $result=DB::table('requirements')
+   ->select('business_type_requirements.id')
+   ->join('business_type_requirements','requirements.id','business_type_requirements.requirement_id')
+   ->where('requirements.is_active',1)
+   ->where('business_type_requirements.business_type_id',$request->idReq)
+   ->get();
+   $string="";
+   if(count($request->checkboxReq)==0)
     $request->checkboxReq=[];
 foreach ($result as $requirement) {
     if(!in_array($requirement->id, $request->checkboxReq))
@@ -135,9 +135,9 @@ return response::json($string);
      */
     public function edit($id)
     {
-     $businessType=BusinessType::find($id);
-     return Response::json($businessType);
- }
+       $businessType=BusinessType::find($id);
+       return Response::json($businessType);
+   }
 
     /**
      * Update the specified resource in storage.
@@ -152,12 +152,12 @@ return response::json($string);
       {
         try
         { $businessType=BusinessType::find($id);
-         $businessType->description=$request->txtBusiTypeDesc;
-         $businessType->save();
-     }
-     catch(\Exception $e)
-     {
-         if($e->errorInfo[1]==1062)
+           $businessType->description=$request->txtBusiTypeDesc;
+           $businessType->save();
+       }
+       catch(\Exception $e)
+       {
+           if($e->errorInfo[1]==1062)
             return "This Data Already Exists";
         else
             return var_dump($e->errorInfo[1]);
@@ -187,8 +187,8 @@ public function softDelete(Request $request,$id)
      */
     public function destroy($id)
     {
-       try
-       {
+     try
+     {
         $result = BusinessType::findorfail($id);
         try
         {

@@ -415,14 +415,15 @@
 											'maxlength' => '2',
 											'required' => 'required',
 											'autocomplete' => 'off',
-											'data-parsley-type' => 'number'
+											'data-parsley-type' => 'number',
+											'required' => ''
 											]) 
 										}}
 									</div>
 								</div>
 								<div class="col-sm-12 nopadding">
 									<div class="form-group">
-										<textarea class="form-control form-line" id="header_remarks" name="header_remarks" value="" placeholder="Remarks"></textarea>
+										<textarea required="" class="form-control form-line" id="header_remarks" name="header_remarks" value="" placeholder="Remarks"></textarea>
 									</div>
 								</div>
 							</div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Response;
 use Datatables;
+use App\RegistrationRequirement;
 
 class requirementAssigningController extends Controller
 {
@@ -43,7 +44,8 @@ class requirementAssigningController extends Controller
         ;   
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return "<a href=".route('contract-create.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>";
+            return '<button id="btnAddRequirement" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button>
+            <button id="btnEditRequirement" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
         })
         ->setRowId(function ($data) {
             return $data = 'id'.$data->id;
@@ -52,6 +54,7 @@ class requirementAssigningController extends Controller
         ->make(true)
         ;
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -117,5 +120,67 @@ class requirementAssigningController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showRequirements($id)
+    {
+        $requirements=DB::table('requirements')
+        ->where('requirements.is_active',1)
+        ->whereRaw("requirements.id not in (Select requirement_id from registration_requirements where registration_header_id=$id)")
+        ->select('requirements.id','requirements.description')
+        ->get();
+        return response::json($requirements);
+
+    }
+
+    public function showCurrentRequirements($id)
+    {
+        $requirements=DB::table('registration_requirements')
+        ->join('requirements','registration_requirements.requirement_id','requirements.id')
+        ->leftjoin('business_type_requirements','registration_requirements.requirement_id','business_type_requirements.requirement_id')
+        ->select('registration_requirements.id','requirements.description','business_type_requirements.id as busi_type_id')
+        ->where('registration_requirements.registration_header_id',$id)
+        ->get();
+        return response::json($requirements);
+    }
+    public function storeRequirements(Request $request)
+    {
+        if(!is_null($request->checkboxReq))
+        { 
+            foreach($request->checkboxReq as $requirement)
+            {
+                $registration_requirement=new RegistrationRequirement();
+                $registration_requirement->registration_header_id=$request->idReg;
+                $registration_requirement->requirement_id=$requirement;
+                $registration_requirement->save();
+            }
+            return response::json('yes');
+        }
+    }
+    public function updateRequirements(Request $request)
+    {
+        $busi_type=DB::table('business_types')
+        ->select('business_types.id')
+        ->join('tenants','business_types.id','tenants.business_type_id')
+        ->join('registration_headers','tenants.id','registration_headers.tenant_id')
+        ->where('registration_headers.id',$request->idReg)
+        ->first();
+        $requirements=DB::table('registration_requirements')
+        ->select('registration_requirements.id')
+        ->where('registration_header_id',$request->idReg)
+        ->join('requirements','registration_requirements.requirement_id','requirements.id')
+        ->where('requirements.is_active',1)
+        ->whereRaw("requirements.id not in (Select requirement_id from business_type_requirements where business_type_id=$busi_type->id)")
+        ->get();
+        if(count($request->checkboxReq)==0)
+            $request->checkboxReq=[];
+        foreach ($requirements as $requirement) {
+            # code...
+            if(!in_array($requirement->id,$request->checkboxReq))
+            {
+                $registration_requirement=RegistrationRequirement::find($requirement->id);
+                $registration_requirement->delete();
+            }
+        }
     }
 }
