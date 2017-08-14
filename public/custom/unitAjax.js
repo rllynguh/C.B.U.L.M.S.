@@ -1,18 +1,28 @@
 $(document).ready(function()
 {
   //for datatables
+  $.ajaxSetup(
+  {
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+    }
+  })
   xhrPool=[];
   var table = $('#myTable').DataTable({
     responsive: true,
     processing: true,
     serverSide: true,
-    ajax: dataurl,
+    ajax: {
+      url: dataurl,
+      type: "POST"
+    },
     columns: [
     {data: 'description', name: 'buildings.description'},
     {data: 'floor_number', name: 'floors.number'},
     {data: 'unit_code', name: ' units.code'},
     {data: 'type', name: 'units.type'},
     {data: 'size'},
+    {data: 'price'},
     {data: 'is_active', searchable: false},
     {data: 'action', orderable: false, searchable: false}
     ]
@@ -68,6 +78,7 @@ $(document).ready(function()
     jQuery("#img-upload").attr("src",'/images/units/'+data.picture);
     $('#img-upload').height(100);
     $('#comUnitType').val(data.type);
+    $('#txtPrice').val(data.price);
   }); 
     $('#myModal').modal('show');
   });

@@ -149,6 +149,25 @@
               </div>
             </div>
           </div>
+          <div class="form-group p-l-30 p-b-10">
+            <div class="col-md-12 col-sm-12">
+              <div class="form-line">
+                <h5 class="card-inside-title">Rate/Sqm</h5>
+                {{ Form::number('txtPrice',null,[
+                  'id'=> 'txtPrice',
+                  'required' => 'required',
+                  'min' => '1000',
+                  'max' => '99999',
+                  'data-parsley-type' => 'number',
+                  'autocomplete' => 'off',
+                  'placeholder' => 'sqm',
+                  'step' => '0.01',
+                  'class' => 'form-control text-center',
+                  ])
+                }}
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i> <span id="lblButton"> SAVE</span></button>
@@ -179,6 +198,7 @@
             <th class="align-center">Unit ID</th>
             <th class="align-center">Unit Type</th>
             <th class="align-center">Area</th>
+            <th class="align-center">Rate</th>
             <th class="align-center">Status</th>
             <th class="align-center">Action</th>
           </tr>

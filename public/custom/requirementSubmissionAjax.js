@@ -1,6 +1,12 @@
 $(document).ready(function()
 { 
   xhrPool=[];
+  $.ajaxSetup(
+  {
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+    }
+  });
   var table = $('#myTable').DataTable({
     responsive: true,
     processing: true,
@@ -10,128 +16,119 @@ $(document).ready(function()
     {data: 'code'},
     {data: 'name'},
     {data: 'unit_count'},
+    {data: 'pending_items'},
     {data: 'action'}
     ]
   });
-
-
-  myId="";
-  $(this).on('click', '#btnAddRequirement',function(e)
+  $(this).on('click', '#btnShowRequirements',function()
   {
-    $(this).attr('disabled','');
-    setTimeout(function(){
-      $("#btnAddRequirement").removeAttr('disabled');
-    }, 500);   
-    $("#btnSaveReq").val('add');
-    $('#labelReq').text('Add Requirement(s)');
-    $('#buttonReq').text('Add');
-    myId=$(this).val();
-    $("#idReg").val(myId);
-    req="";
-    $.get(url + '/showRequirements/' + myId, function (data) 
+    showUrl=$(this).val();
+    $(this).attr('disabled','disabled');
+    $.get(showUrl, function (data) 
     {
+      setTimeout(function(){
+        $("#btnShowRequirements").removeAttr('disabled');
+      }, 1000);
       if(Object.keys(data).length>0)
       {
-        $("#modalRequirement").modal("show");
+        content="";
+        $("#modalShowRequirements").modal("show");
         $.each( data, function( index, value ){
-          req+="<input id='checkboxReq' name='checkboxReq[]' value='" + 
-          value.id +"'' type='checkbox'>" + value.description + "<br>";
-        });
-        $("#divReq").append(req);
-      }
-      else
-      {
-        $.notify("No available requirement", "error");
-      }
-    });
-  });
-  $(this).on('click', '#btnEditRequirement',function(e)
-  {
-    $(this).attr('disabled','');
-    setTimeout(function(){
-      $("#btnEditRequirement").removeAttr('disabled');
-    }, 1000);   
-    $("#btnSaveReq").val('edit');
-    $('#labelReq').text('Edit Requirement(s)');
-    $('#buttonReq').text('Save Changes');
-    myId=$(this).val();
-    $("#idReg").val(myId);
-    req="";
-    $.get(url + '/showCurrentRequirements/' + myId, function (data) 
-    {
-      console.log(data);
-      if(Object.keys(data).length>0)
-      {
-        $("#modalRequirement").modal("show");
-        $.each( data, function( index, value ){
-          if(value.busi_type_id==null)
-            mode=" ";
+          if(value.is_fulfilled==1)
+            status="<small class='label label-success'>Fulfilled</small>"
           else
-            mode="disabled ";
-          req+="<input id='checkboxReq' name='checkboxReq[]' " + mode + " value='" +  
-          value.id +"' type='checkbox' checked>" + value.description + "<br>";
+            status="<small class='label label-warning'>Pending</small>"
+          content+=" " + value.description + " " + status + "<br>";
         });
-        $("#divReq").append(req);
+        $('#divRequirements').append(content);
       }
       else
+       $.notify("No Requirements Assigned", "error");
+   });
+  });
+
+
+  $(document).on('hidden.bs.modal','#modalShowRequirements', function () {
+    $("#divRequirements").empty();
+  });
+
+
+  $(this).on('click', '#btnShowPendingRequirements',function()
+  {
+    $('#regi_id').val($(this).val());
+    showUrl=url +"/showPendingReqirements/" + $(this).val();
+    $(this).attr('disabled','disabled');
+    $.get(showUrl, function (data) 
+    {
+      setTimeout(function(){
+        $("#btnShowPendingRequirements").removeAttr('disabled');
+      }, 1000);
+      if(Object.keys(data).length>0)
       {
-        $.notify("You haven't added any requirements.", "error");
+        content="";
+        $("#modalShowPendingRequirements").modal("show");
+        ctr=0;
+        $.each( data, function( index, value ){
+          content=value.description + "<BR>" +
+          "<input type='file' required='' name='pdf" + ctr +"'> <BR>" + 
+          "<input type='hidden' name='requirements[]' value='" + value.id  + "'>";
+          ctr++;
+        });
+        $('#divPendingRequirements').append(content);
       }
-    });
+      else
+       $.notify("No Requirements Assigned", "error");
+   });
   });
-  $(this).on('click','#btnSaveReq', function (e) 
+
+
+  $(document).on('hidden.bs.modal','#modalShowPendingRequirements', function () {
+    $("#divPendingRequirements").empty();
+  });
+
+
+
+  $('#btnSaveRequirements').on('click',function(e)
   {
-   if($('#frmRequirement').parsley().isValid())
-   {
-    e.preventDefault(); 
-    if($(this).val()=='add')
+    if($('#frmSubmitRequirements').parsley().isValid())
     {
-      var my_url = urlstorereq;
+
+      e.preventDefault(); 
+      var my_url = url;
       var type="POST";
-    }
-    else if($(this).val()=='edit')
-    {
-      var my_url = urlupdatereq;
-      var type="PUT";
-    }
-    formData = $('#frmRequirement').serialize();
-    $.ajax({
-      beforeSend: function (jqXHR, settings) {
-        xhrPool.push(jqXHR);
-      },
-      type: type,
-      url: my_url,
-      data: formData,
-      success: function (data) {
-        table.draw();  
-        console.log(data);
-        successPrompt(); 
-        $('#modalRequirement').modal('hide');
-      },
-      error: function (data) {
-        console.log('Error:', data.responseText);
-        try{
-          $('#txtDesc').parsley().removeError('ferror', {updateClass: false});
-          $('#txtDesc').parsley().addError('ferror', {message: data.responseText, updateClass: false});
-        }catch(err){}
-        finally{
-          $.each(xhrPool, function(idx, jqXHR) {
-            jqXHR.abort();
-          });
+      var formData = new FormData($('#frmSubmitRequirements')[0]);
+      console.log(formData);
+      $.ajax({
+        beforeSend: function (jqXHR, settings) {
+          xhrPool.push(jqXHR);
+        },
+        type: type,
+        url: my_url,
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+          console.log(data);
+          table.draw();  
+          successPrompt(); 
+          $('#modalShowPendingRequirements').modal('hide');
+        },
+        error: function (data) {
+          console.log('Error:', data.responseText);
         }
-      }
-    });
-  }
-});
-  $(document).on('hidden.bs.modal','#modalRequirement', function () 
-  {
-    $('#divReq').empty();
-  });
+      });
+    }}
+    );
+
 
   function successPrompt(){
-    title="Requirement Successfully Updated!";
-    if($("#btnSaveReq").val()=="Save")
-      title="Requirement Successfully Added!";
-    $.notify(title, "success");
+    title="Record Successfully Updated!";
+    if($("#btnSave").val()=="Save")
+      title="Record Successfully Stored!";
+    $.notify(title, "success",
+    {
+      timer:1000
+    });
   }
+
 });

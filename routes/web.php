@@ -86,7 +86,7 @@ Route::group(['prefix' => 'admin/'], function () {
 
 
 	Route::resource("maintenance/units","unitController");
-	Route::get('maintenance/units/get/data', ['uses' => 'unitController@data', 'as' => 'units.getData']);
+	Route::post('maintenance/units/get/data', ['uses' => 'unitController@data', 'as' => 'units.getData']);
 	Route::put('maintenance/units/softdelete/{unit}', ['uses' => 'unitController@softdelete', 'as' => 'units.softdelete']);
 	Route::get('maintenance/units/get/building', ['uses' => 'unitController@getBuilding', 'as' => 'units.getBuilding']);
 	Route::get('maintenance/units/getFloor/{unit}', ['uses' => 'unitController@getFloor', 'as' => 'units.getFloor']);
@@ -141,8 +141,8 @@ Route::group(['prefix' => 'tenant/'], function () {
 
 	Route::resource("/transaction/requirementSubmission","requirementSubmissionController");
 	Route::get('/transaction/requirementSubmission/get/data', ['uses' => 'requirementSubmissionController@data', 'as' => 'requirementSubmission.getData']);
-
-
+	Route::get('/transaction/requirementSubmission/showReqirements/{id}', ['uses' => 'requirementSubmissionController@showRequirements', 'as' => 'requirementSubmission.showRequirements']);
+	Route::get('/transaction/requirementSubmission/showPendingReqirements/{id}', ['uses' => 'requirementSubmissionController@showPendingRequirements', 'as' => 'requirementSubmission.showPendingRequirements']);
 });
 
 

@@ -17,7 +17,7 @@ class CreateRegistrationRequirementsTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('registration_header_id')->index('regi_req_idx');
 			$table->integer('requirement_id')->index('req_regi_idx');
-			$table->string('description', 60)->nullable();
+			$table->string('pdf', 60)->nullable();
 			$table->boolean('is_fulfilled')->default(0);
 			$table->date('date_fulfilled')->nullable();
 		});
