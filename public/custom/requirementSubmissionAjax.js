@@ -68,9 +68,10 @@ $(document).ready(function()
         content="";
         $("#modalShowPendingRequirements").modal("show");
         ctr=0;
+        console.log(data);
         $.each( data, function( index, value ){
-          content=value.description + "<BR>" +
-          "<input type='file' required='' name='pdf" + ctr +"'> <BR>" + 
+          content+=value.description + " " +
+          "<input type='file' required='' name='pdf" + ctr +"'>" + 
           "<input type='hidden' name='requirements[]' value='" + value.id  + "'>";
           ctr++;
         });

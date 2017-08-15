@@ -20,6 +20,7 @@ class CreateRegistrationRequirementsTable extends Migration {
 			$table->string('pdf', 60)->nullable();
 			$table->boolean('is_fulfilled')->default(0);
 			$table->date('date_fulfilled')->nullable();
+			$table->text('admin_remarks', 65535)->nullable();
 		});
 	}
 

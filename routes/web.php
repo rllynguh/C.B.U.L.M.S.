@@ -118,6 +118,12 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::put('transaction/requirementAssigning/update/Requirements', ['uses' => 'requirementAssigningController@updateRequirements', 'as' => 'requirementAssigning.updateRequirements']);
 
 
+
+	Route::resource("/transaction/requirementValidation","requirementValidationController");
+	Route::get('/transaction/requirementValidation/get/data', ['uses' => 'requirementValidationController@data', 'as' => 'requirementValidation.getData']);	
+
+
+
 	Route::resource("/transaction/contract-create","contractCreationController");
 	Route::get('/transaction/contract-create/get/data', ['uses' => 'contractCreationController@data', 'as' => 'contract-create.getData']);
 	Route::get('/transaction/contract-create/get/createData/{id}', ['uses' => 'contractCreationController@createData', 'as' => 'contract-create.createData']);

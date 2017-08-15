@@ -139,6 +139,24 @@
               </div>
             </div>
           </div>
+          <div class="form-group ">
+            <div class="col-md-12 col-sm-12">
+              <div class="form-line">
+                <h5 class="card-inside-title">Price</h5>
+                {{ Form::number('txtPrice',null,[
+                  'id'=> 'txtPrice',
+                  'data-parsley-type' => "number",
+                  'min' => '1000',
+                  'max' => '99999',
+                  'class' => 'form-control text-center',
+                  'required' => 'required',
+                  'placeholder' => 'P 100',
+                  'step' => "0.01"
+                  ])
+                }}
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer m-t--30">
           <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSaveUnit" ><i class="mdi-content-save"></i><span> SAVE</span></button>
