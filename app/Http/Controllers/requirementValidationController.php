@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Response;
 use Datatables;
+use App\RegistrationRequirement;
 
 class requirementValidationController extends Controller
 {
@@ -24,7 +25,7 @@ class requirementValidationController extends Controller
     public function data()
     {
         $result=DB::table('registration_headers')
-        ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,business_types.description as business,count(registration_requirements.is_fulfilled) as req_total,count(case when registration_requirements.is_fulfilled = 1 then 1 else null end) as fulfilled'))
+        ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,business_types.description as business,count(registration_requirements.status) as req_total,count(case when registration_requirements.status = 1 then 1 else null end) as fulfilled'))
         ->join('registration_requirements','registration_headers.id','registration_requirements.registration_header_id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
@@ -40,8 +41,7 @@ class requirementValidationController extends Controller
         ;   
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button id="btnAddRequirement" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button>
-            <button id="btnEditRequirement" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
+            return '<button id="btnShowPendingRequirements" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.route('requirementValidation.showPendingRequirements',$data->id).'"><i class="mdi-content-add"></i></button>';
         })
         ->addColumn('progress', function ($data) {
             $percentage=($data->fulfilled/$data->req_total)*100;
@@ -78,6 +78,11 @@ public function create()
 public function store(Request $request)
 {
         //
+    $registration_requirement=RegistrationRequirement::find($request->myId);
+    $registration_requirement->status=$request->decision;
+    $registration_requirement->admin_remarks=$request->modal_remarks;
+    $registration_requirement->save();
+    return redirect(route('requirementValidation.index'));
 }
 
 /**
@@ -89,6 +94,21 @@ public function store(Request $request)
 public function show($id)
 {
         //
+    $registration_requirement=DB::table('registration_requirements')
+    ->join('requirements','registration_requirements.requirement_id','requirements.id')
+    ->join('registration_headers','registration_requirements.registration_header_id','registration_headers.id')
+    ->join('tenants','registration_headers.tenant_id','tenants.id')
+    ->where('requirements.is_active',1)
+    ->where('registration_requirements.id',$id)
+    ->select(DB::Raw('pdf,requirements.description as requirement,tenants.description as tenant,registration_headers.code'))
+    ->first()
+    ;
+    $pdf="docs/$registration_requirement->pdf";
+    return view('transaction.requirementValidation.show')
+    ->withPdf($pdf)
+    ->withId($id)
+    ->withRequirement($registration_requirement)
+    ;
 }
 
 /**
@@ -123,5 +143,19 @@ public function update(Request $request, $id)
 public function destroy($id)
 {
         //
+}
+
+public function showPendingRequirements($id)
+{
+        //
+    $requirements=DB::table('requirements')
+    ->join('registration_requirements','requirements.id','registration_requirements.requirement_id')
+    ->where('requirements.is_active',1)
+    ->select('registration_requirements.id','requirements.description')
+    ->where('registration_requirements.registration_header_id',$id)
+    ->where('registration_requirements.status','!=',1)
+    ->get();
+
+    return response::json($requirements);
 }
 }

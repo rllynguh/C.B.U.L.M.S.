@@ -11,14 +11,6 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
      {{-- modal requirement starts here --}}
      <div class="modal fade" id="modalRequirement" tabindex="-1" role="dialog">
-       {{ Form::open([
-        'id' => 'frmRequirement', 'class' => 'form-horizontal'
-        ])
-      }}
-      {{ Form::hidden('idReg',null,[
-        'id'=> 'idReg',
-        ])
-      }}
       <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
           <div class="modal-header">
@@ -26,15 +18,10 @@
           </div>
           <div class="modal-body">
             <div id='divReq'>
-
             </div>
-          </div>
-          <div class="modal-footer">
-            <button value='add' type="button" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSaveReq" value="add"><i class="mdi-content-save"></i><span id="buttonReq"> Add</span></button>
           </div>
         </div>
       </div>
-      {{Form::close()}}
     </div>
     {{-- modal requirement ends here --}}
     <div class="card">

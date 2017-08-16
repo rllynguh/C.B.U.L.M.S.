@@ -120,9 +120,8 @@ Route::group(['prefix' => 'admin/'], function () {
 
 
 	Route::resource("/transaction/requirementValidation","requirementValidationController");
-	Route::get('/transaction/requirementValidation/get/data', ['uses' => 'requirementValidationController@data', 'as' => 'requirementValidation.getData']);	
-
-
+	Route::get('/transaction/requirementValidation/get/data', ['uses' => 'requirementValidationController@data', 'as' => 'requirementValidation.getData']);
+	Route::get('/transaction/requirementValidation/showPendingReqirements/{id}', ['uses' => 'requirementValidationController@showPendingRequirements', 'as' => 'requirementValidation.showPendingRequirements']);	
 
 	Route::resource("/transaction/contract-create","contractCreationController");
 	Route::get('/transaction/contract-create/get/data', ['uses' => 'contractCreationController@data', 'as' => 'contract-create.getData']);

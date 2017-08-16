@@ -34,7 +34,7 @@ $(document).ready(function()
         content="";
         $("#modalShowRequirements").modal("show");
         $.each( data, function( index, value ){
-          if(value.is_fulfilled==1)
+          if(value.status==1)
             status="<small class='label label-success'>Fulfilled</small>"
           else
             status="<small class='label label-warning'>Pending</small>"

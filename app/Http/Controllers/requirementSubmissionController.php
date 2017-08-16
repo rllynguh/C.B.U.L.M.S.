@@ -30,7 +30,7 @@ class requirementSubmissionController extends Controller
     public function data()
     {
         $result=DB::table('registration_headers')
-        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(registration_details.id) as unit_count,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.is_fulfilled = 0 then 1 else null end) as pending_items'))
+        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(registration_details.id) as unit_count,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 then 1 else null end) as pending_items'))
         ->join('users as lessor_user','registration_headers.user_id','lessor_user.id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('users as tenant_user','tenants.user_id','tenant_user.id')
@@ -94,9 +94,9 @@ class requirementSubmissionController extends Controller
                 RegistrationRequirement::find($request->requirements[$x]);
                 $registration_requirements->pdf = $pdfname;
                 $registration_requirements->save();
-                return response::json('success');
             }
         }
+        return response::json('success');
 
     }
 
@@ -150,7 +150,7 @@ class requirementSubmissionController extends Controller
         //
         $requirements=DB::table('requirements')
         ->join('registration_requirements','requirements.id','registration_requirements.requirement_id')
-        ->select('requirements.description','registration_requirements.is_fulfilled')
+        ->select('requirements.description','registration_requirements.status')
         ->where('requirements.is_active',1)
         ->where('registration_requirements.registration_header_id',$id)
         ->get();
@@ -162,9 +162,9 @@ class requirementSubmissionController extends Controller
         //
         $requirements=DB::table('requirements')
         ->join('registration_requirements','requirements.id','registration_requirements.requirement_id')
-        ->select('registration_requirements.id','requirements.description','registration_requirements.is_fulfilled')
+        ->select('registration_requirements.id','requirements.description','registration_requirements.status')
         ->where('requirements.is_active',1)
-        ->where('registration_requirements.is_fulfilled',0)
+        ->where('registration_requirements.status','!=',1)
         ->where('registration_requirements.registration_header_id',$id)
         ->get();
         return response::json($requirements);
