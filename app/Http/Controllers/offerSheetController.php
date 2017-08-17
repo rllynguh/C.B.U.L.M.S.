@@ -141,10 +141,10 @@ class offerSheetController extends Controller
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-           $join->on('registration_details.size_from','<=','offered_unit.size');
-           $join->on('registration_details.size_to','>=','offered_unit.size');
-       })
+         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+         $join->on('registration_details.size_from','<=','offered_unit.size');
+         $join->on('registration_details.size_to','>=','offered_unit.size');
+     })
         ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
@@ -194,10 +194,10 @@ class offerSheetController extends Controller
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-           $join->on('registration_details.size_from','<=','offered_unit.size');
-           $join->on('registration_details.size_to','>=','offered_unit.size');
-       })
+         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+         $join->on('registration_details.size_from','<=','offered_unit.size');
+         $join->on('registration_details.size_to','>=','offered_unit.size');
+     })
         ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
         ->where('registration_details.id',$id)

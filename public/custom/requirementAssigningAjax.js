@@ -19,10 +19,10 @@ $(document).ready(function()
   myId="";
   $(this).on('click', '#btnAddRequirement',function(e)
   {
-    $(this).attr('disabled','');
-    setTimeout(function(){
-      $("#btnAddRequirement").removeAttr('disabled');
-    }, 500);   
+    // $(this).attr('disabled','');
+    // setTimeout(function(){
+    //   $(".btn").removeAttr('disabled');
+    // }, 500);   
     $("#btnSaveReq").val('add');
     $('#labelReq').text('Add Requirement(s)');
     $('#buttonReq').text('Add');
@@ -48,10 +48,10 @@ $(document).ready(function()
   });
   $(this).on('click', '#btnEditRequirement',function(e)
   {
-    $(this).attr('disabled','');
-    setTimeout(function(){
-      $("#btnEditRequirement").removeAttr('disabled');
-    }, 1000);   
+    // $(this).attr('disabled','');
+    // setTimeout(function(){
+    //   $("#btnEditRequirement").removeAttr('disabled');
+    // }, 1000);   
     $("#btnSaveReq").val('edit');
     $('#labelReq').text('Edit Requirement(s)');
     $('#buttonReq').text('Save Changes');

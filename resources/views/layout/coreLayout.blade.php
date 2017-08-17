@@ -254,7 +254,7 @@
             </a>
           </li>
           <li>
-            <a href="/submissionTable" class="waves-yellow">
+            <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
               <i class="mdi-content-inbox"></i>
               <span>Submission of Requirements</span>
             </a>
