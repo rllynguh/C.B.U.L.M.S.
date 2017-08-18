@@ -191,8 +191,8 @@ $(this).on('click', '#btnAddRequirement',function(e)
     $("#btnAddRequirement").removeAttr('disabled');
   }, 500);   
   $("#btnSaveReq").val('add');
-  $('#labelReq').text('Add Requirement(s)');
-  $('#buttonReq').text('Add');
+  $('#labelReq').text('ADD REQUIREMENT/S');
+  $('#buttonReq').text(' ADD');
   myId=$(this).val();
   $("#idReq").val(myId);
   req="";
@@ -220,8 +220,8 @@ $(this).on('click', '#btnEditRequirement',function(e)
     $("#btnEditRequirement").removeAttr('disabled');
   }, 1000);   
   $("#btnSaveReq").val('edit');
-  $('#labelReq').text('Edit Requirement(s)');
-  $('#buttonReq').text('Save Changes');
+  $('#labelReq').text('EDIT REQUIREMENT/S');
+  $('#buttonReq').text(' SAVE CHANGES');
   myId=$(this).val();
   $("#idReq").val(myId);
   req="";
