@@ -152,7 +152,7 @@ $(document).ready(function()
   //for changing output for buttons of edit and add
   function changeLabel()
   {
-   btn='<span id="lblButton">SAVE Changes</span>';
+   btn='<span id="lblButton"> SAVE CHANGES</span>';
    label=' <h1 id="label" class="modal-title align-center p-b-15">UPDATE REQUIREMENT<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
    if($("#btnSave").val()=="Save")
    {

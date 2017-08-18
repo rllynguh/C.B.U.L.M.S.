@@ -25,7 +25,7 @@
 
 
           <div class="modal-body">
-            <div class="form-group">
+            <div class="form-group p-l-30">
               <div class="form-line">
                {{ Form::number('txtRate',null,[
                 'id'=> 'txtRate',

@@ -21,7 +21,7 @@
               <h1 class="modal-title align-center p-b-15">UPDATE MARKET RATE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
             </div>
             <div class="modal-body">
-              <div class="form-group">
+              <div class="form-group p-l-30">
                 <div class="form-line">
                  {{ Form::number('txtRate',null,[
                   'id'=> 'txtRate',

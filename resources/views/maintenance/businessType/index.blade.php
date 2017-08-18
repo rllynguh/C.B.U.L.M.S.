@@ -23,7 +23,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
           <div class="modal-header">
-            <h1  class="modal-title align-center p-b-15"><span id='labelReq'>Add Requirements</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+            <h1  class="modal-title align-center p-b-15"><span id='labelReq'>ADD REQUIREMENTS</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
           </div>
           <div class="modal-body">
             <div id='divReq'>
@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button value='add' type="button" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSaveReq" value="add"><i class="mdi-content-save"></i><span id="buttonReq"> Add</span></button>
+            <button value='add' type="button" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSaveReq" value="add"><i class="mdi-content-save"></i><span id="buttonReq"> ADD</span></button>
           </div>
         </div>
       </div>
