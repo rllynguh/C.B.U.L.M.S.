@@ -15,6 +15,7 @@ class CreateUtilitiesTable extends Migration {
 		Schema::create('utilities', function(Blueprint $table)
 		{
 			$table->float('cusa_rate', 10, 0)->unsigned()->default(80);
+			$table->float('reservation_fee', 10, 0)->default(1);
 			$table->integer('security_deposit_rate')->unsigned()->default(3)->comment('number of months for security deposit');
 			$table->float('vat_rate', 10, 0)->unsigned()->default(12);
 			$table->float('ewt_rate', 10, 0)->unsigned()->default(1);

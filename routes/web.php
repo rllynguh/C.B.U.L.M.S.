@@ -127,6 +127,10 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('/transaction/contract-create/get/data', ['uses' => 'contractCreationController@data', 'as' => 'contract-create.getData']);
 	Route::get('/transaction/contract-create/get/createData/{id}', ['uses' => 'contractCreationController@createData', 'as' => 'contract-create.createData']);
 
+
+	Route::resource("/transaction/reservationFeeCollection","reservationFeeCollectionController");
+	Route::get('/transaction/reservationFeeCollection/get/data', ['uses' => 'reservationFeeCollectionController@data', 'as' => 'reservationFeeCollection.getData']);
+
 });
 
 

@@ -36,7 +36,7 @@ class requirementValidationController extends Controller
         ->where('registration_details.is_forfeited','0')
         ->where('registration_details.is_rejected','0')
         ->groupby('registration_headers.id')
-        ->havingRaw('count(registration_details.id) =count(case when offer_sheet_details.status = 1 then 1 else null end)')
+        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow case when offer_sheet_details.status = 1 then 1 else null end)')
         ->get()
         ;   
         return Datatables::of($result)
