@@ -15,6 +15,7 @@ class AddForeignKeysToBillingDetailsTable extends Migration {
 		Schema::table('billing_details', function(Blueprint $table)
 		{
 			$table->foreign('billing_header_id', 'fk_bill_bill')->references('id')->on('billing_headers')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('billing_item_id', 'fk_bill_item')->references('id')->on('billing_items')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -29,6 +30,7 @@ class AddForeignKeysToBillingDetailsTable extends Migration {
 		Schema::table('billing_details', function(Blueprint $table)
 		{
 			$table->dropForeign('fk_bill_bill');
+			$table->dropForeign('fk_bill_item');
 		});
 	}
 

@@ -21,6 +21,7 @@ class CreateUtilitiesTable extends Migration {
 			$table->float('ewt_rate', 10, 0)->unsigned()->default(1);
 			$table->float('escalation_rate', 10, 0)->unsigned()->default(1);
 			$table->float('vetting_fee', 10, 0)->unsigned()->default(100);
+			$table->float('fit_out_deposit', 10, 0)->default(1);
 			$table->dateTime('date_as_of');
 		});
 	}

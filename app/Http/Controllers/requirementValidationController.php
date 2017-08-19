@@ -29,14 +29,19 @@ class requirementValidationController extends Controller
         ->join('registration_requirements','registration_headers.id','registration_requirements.registration_header_id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
-        ->leftjoin('registration_details','registration_headers.id','registration_details.registration_header_id')
-        ->leftjoin('offer_sheet_details',
+        ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
+        ->join('offer_sheet_details',
             'registration_details.id',
             'offer_sheet_details.registration_detail_id')
+        ->join('offer_sheet_headers',
+            'offer_sheet_details.offer_sheet_header_id',
+            'offer_sheet_headers.id')
         ->where('registration_details.is_forfeited','0')
         ->where('registration_details.is_rejected','0')
+        ->where('offer_sheet_details.status','1')
+        ->where('offer_sheet_headers.status','1')
         ->groupby('registration_headers.id')
-        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow case when offer_sheet_details.status = 1 then 1 else null end)')
+        // ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow case when offer_sheet_details.status = 1 then 1 else null end)')
         ->get()
         ;   
         return Datatables::of($result)

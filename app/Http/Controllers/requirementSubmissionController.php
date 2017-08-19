@@ -30,23 +30,28 @@ class requirementSubmissionController extends Controller
     public function data()
     {
         $result=DB::table('registration_headers')
-        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(Distinctrow registration_details.id) as unit_count ,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 then 1 else null end) as pending_items'))
+        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(Distinctrow registration_details.id) as unit_count ,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 then 1 else null end) as pending_items,count(distinctrow Case when registration_requirements.status = 1 then 1 else null end ) as fulfiilled, count(distinctrow Case when registration_requirements.status != 1 then 1 else null end ) as unfulfillesd'))
         ->join('users as lessor_user','registration_headers.user_id','lessor_user.id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('users as tenant_user','tenants.user_id','tenant_user.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
         ->join('registration_requirements','registration_headers.id','registration_requirements.registration_header_id')
         ->join('requirements','registration_requirements.requirement_id','requirements.id')
-        ->leftjoin('registration_details','registration_headers.id','registration_details.registration_header_id')
-        ->leftjoin('offer_sheet_details',
+        ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
+        ->join('offer_sheet_details',
             'registration_details.id',
             'offer_sheet_details.registration_detail_id')
+        ->join('offer_sheet_headers',
+            'offer_sheet_details.offer_sheet_header_id',
+            'offer_sheet_headers.id')
         ->where('requirements.is_active',1)
         ->where('tenant_user.id',Auth::user()->id)
         ->where('registration_details.is_forfeited','0')
         ->where('registration_details.is_rejected','0')
+        ->where('offer_sheet_details.status','1')
+        ->where('offer_sheet_headers.status','1')
         ->groupby('registration_headers.id')
-        ->havingRaw('count(Distinctrow registration_details.id) =count(Distinctrow case when offer_sheet_details.status = 1 then 1 else null end)')
+        // ->havingRaw('count(Distinctrow registration_details.id) =count(Distinctrow case when offer_sheet_details.status = 1 then 1 else null end) and count(distinctrow registration_requirements.status) > count(distinctrow Case when registration_requirements.status =1 then 1 else null end )')
         ->get()
         ;   
         return Datatables::of($result)
