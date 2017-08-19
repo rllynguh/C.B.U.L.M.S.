@@ -34,7 +34,7 @@ class offerSheetController extends Controller
             'registration_headers.code as regi_code,'.
             'tenants.description as tenant_description,'.
             'business_types.description as business_type_description,'.  
-            'count(distinctrow registration_details.id) as regi_count,offer_sheet_details.status as detail_status,offer_sheet_headers.status as header_status,offer_sheet_details.registration_detail_id'
+            'count(distinctrow registration_details.id) as regi_count,offer_sheet_details.status as detail_status,offer_sheet_headers.status as header_status,offer_sheet_details.registration_detail_id,offer_sheet_headers.id as offer_id'
             ))
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
@@ -42,7 +42,7 @@ class offerSheetController extends Controller
         ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
         ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
         ->leftJoin('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
-        // ->havingRaw('(offer_sheet_details.status=(SELECT status from offer_sheet_details where id=(select max(id) from offer_sheet_details where registration_detail_id=offer_sheet_details.registration_detail_id) limit 1) and offer_sheet_details.status=2) or (offer_sheet_headers.status=(Select status from offer_sheet_headers where id =(Select offer_sheet_header_id from offer_sheet_details where id=(Select Max(id) from offer_sheet_details where registration_detail_id=offer_sheet_details.registration_detail_id) limit 1)limit 1)and offer_sheet_headers.status=2) or registration_details is null')
+        ->havingRaw('(offer_sheet_details.status=(SELECT status from offer_sheet_details where id=(select max(id) from offer_sheet_details where registration_detail_id=offer_sheet_details.registration_detail_id) limit 1) and offer_sheet_details.status=2) or (offer_sheet_headers.status=(Select status from offer_sheet_headers where id =(Select offer_sheet_header_id from offer_sheet_details where id=(select max(id) from offer_sheet_details where registration_detail_id=offer_sheet_details.registration_detail_id) limit 1)limit 1)and offer_sheet_headers.status=2) or offer_sheet_headers.id is null')
         ->where('registration_headers.status','1')
         ->where('registration_details.is_rejected','0')
         ->where('registration_details.is_forfeited','0')
@@ -146,7 +146,7 @@ class offerSheetController extends Controller
      })
         ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
-        ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
+        ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id inner join offer_sheet_headers on offer_sheet_details.offer_sheet_header_id=offer_sheet_headers.id where offer_sheet_details.status != 2 and offer_sheet_headers.status != 2)')
         ->where('registration_details.is_rejected','0')
         ->where('registration_details.is_forfeited','0')
         ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')

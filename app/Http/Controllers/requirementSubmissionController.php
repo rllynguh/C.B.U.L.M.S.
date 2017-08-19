@@ -51,7 +51,7 @@ class requirementSubmissionController extends Controller
         ->where('offer_sheet_details.status','1')
         ->where('offer_sheet_headers.status','1')
         ->groupby('registration_headers.id')
-        // ->havingRaw('count(Distinctrow registration_details.id) =count(Distinctrow case when offer_sheet_details.status = 1 then 1 else null end) and count(distinctrow registration_requirements.status) > count(distinctrow Case when registration_requirements.status =1 then 1 else null end )')
+        ->havingRaw('count(Distinctrow registration_details.id) =count(Distinctrow case when offer_sheet_details.status = 1 then 1 else null end) and count(distinctrow registration_requirements.status) > count(distinctrow Case when registration_requirements.status =1 then 1 else null end )')
         ->get()
         ;   
         return Datatables::of($result)
