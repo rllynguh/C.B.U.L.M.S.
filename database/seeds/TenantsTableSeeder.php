@@ -19,12 +19,12 @@ class TenantsTableSeeder extends Seeder
         \DB::table('tenants')->insert(array (
             0 => 
             array (
-                'id' => 1,
+                'id' => 11,
                 'code' => 'Tenant001',
-                'description' => 'Jose\'s Bakery',
+                'description' => 'Company ni Andres',
                 'business_type_id' => 1,
-                'user_id' => 1,
-                'address_id' => 1,
+                'user_id' => 2,
+                'address_id' => 34,
                 'is_active' => 1,
             ),
         ));

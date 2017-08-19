@@ -41,12 +41,12 @@ class registrationForfeitController extends Controller
         ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('users','tenants.user_id','users.id')
+        ->where('users.id',Auth::user()->id)
         ->leftjoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
         ->leftjoin('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
         ->whereRaw('offer_sheet_headers.status is null or offer_sheet_headers.status = 0')
         ->where('registration_headers.status','!=',2)
         ->where('registration_headers.is_forfeited',0)
-        ->where('users.id',Auth::user()->id)
         ->groupBy('registration_headers.id')
         ->get();
         return Datatables::of($result)
@@ -112,6 +112,8 @@ class registrationForfeitController extends Controller
         ->join('building_types','building_types.id','registration_details.building_type_id')
         ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.*,building_types.description, registration_details.id as detail_id'))
         ->where('registration_headers.id','=',$id)
+        ->where('registration_details.is_forfeited','=',0)
+        ->where('registration_headers.status','!=',2)
         ->get();
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
@@ -157,6 +159,8 @@ class registrationForfeitController extends Controller
        ->join('building_types','building_types.id','registration_details.building_type_id')
        ->select(DB::Raw('registration_headers.tenant_remarks as header_remarks,CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.floor,registration_details.unit_type,building_types.description, registration_details.id as detail_id,registration_details.tenant_remarks as detail_remarks'))
        ->where('registration_details.id','=',$id)
+       ->where('registration_details.is_forfeited','=',0)
+       ->where('registration_headers.status','!=',2)
        ->first();
        return response::json($result);
    }

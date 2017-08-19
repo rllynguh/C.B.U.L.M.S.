@@ -22,7 +22,7 @@ class OfferSheetDetailsTableSeeder extends Seeder
                 'id' => 1,
                 'registration_detail_id' => 1,
                 'offer_sheet_header_id' => 1,
-                'unit_id' => 46,
+                'unit_id' => 1,
                 'status' => 1,
                 'tenant_remarks' => NULL,
             ),

@@ -109,16 +109,21 @@ class floorController extends Controller
     public function storeUnit (Request $request)
     {
         //
-     $uNum=$request->txtUUNum;        
+     $uNum=$request->txtUUNum; 
+
      $result=DB::table("floors")
      ->where("floors.id",$request->comFloor)
      ->join("buildings","floors.building_id","buildings.id")
      ->select("buildings.description","floors.number")
      ->first();
+
      $pk=strtoupper(substr($result->description, 0, 3)).strtoupper($result->number)."UNIT".strtoupper($uNum) ;
+
      $image = $request->file('picture');
      $imagename = md5($pk).'.'.$image->getClientOriginalExtension();
      $location=public_path('images/units/'.$imagename);
+     Image::make($image)->resize(400,400)->save($location);
+
      $unit=new unit();
      $unit->code=$pk;
      $unit->type=$request->comUnitType;
@@ -127,7 +132,13 @@ class floorController extends Controller
      $unit->picture=$imagename;
      $unit->floor_id=$request->comFloor;
      $unit->save();
-     Image::make($image)->resize(400,400)->save($location);
+
+     $unit_price=new UnitPrice();
+     $unit_price->unit_id=$unit->id;
+     $unit_price->date_as_of=Carbon::now(Config::get('app.timezone')); 
+     $unit_price->price=$request->txtPrice;
+     $unit_price->save();
+
    }
 
    public function storePrice (Request $request)

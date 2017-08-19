@@ -23,7 +23,7 @@ class OfferSheetHeadersTableSeeder extends Seeder
                 'code' => 'Offer Sheet 001',
                 'user_id' => 1,
                 'tenant_remarks' => NULL,
-                'date_issued' => '2017-07-27',
+                'date_issued' => '2017-08-14',
                 'status' => 1,
             ),
         ));

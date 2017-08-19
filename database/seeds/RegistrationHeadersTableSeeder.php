@@ -19,13 +19,13 @@ class RegistrationHeadersTableSeeder extends Seeder
         \DB::table('registration_headers')->insert(array (
             0 => 
             array (
-                'id' => 1,
+                'id' => 10,
                 'code' => 'Registration001',
-                'tenant_id' => 14,
+                'tenant_id' => 11,
                 'user_id' => 1,
-                'duration_preferred' => 1,
-                'date_issued' => '2017-07-27',
-                'tenant_remarks' => 'myRemarks',
+                'duration_preferred' => 2,
+                'date_issued' => '2017-08-14',
+                'tenant_remarks' => '1',
                 'admin_remarks' => NULL,
                 'status' => 1,
                 'is_forfeited' => 0,

@@ -86,18 +86,23 @@ $(document).ready(function()
   //for softdeletion of records
   $('#myList').on('change', '#IsActive',function(e)
   { 
+    if($("#IsActive").is(':checked'))
+      value=1;
+    else
+      value=0;
     $.ajaxSetup(
     {
       headers: {
        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
      }
    })
-    e.preventDefault(); 
+    e.preventDefault();
     var id = $(this).val();
     $.ajax(
     {
       url: url + '/softdelete/' + id,
       type: "PUT",
+      data: {checked : value},
       success: function (data) 
       {
       },
@@ -176,6 +181,114 @@ $(document).ready(function()
     title="Record Successfully Stored!";
   $.notify(title, "success");
 }
+
+
+myId="";
+$(this).on('click', '#btnAddRequirement',function(e)
+{
+  $(this).attr('disabled','');
+  setTimeout(function(){
+    $("#btnAddRequirement").removeAttr('disabled');
+  }, 500);   
+  $("#btnSaveReq").val('add');
+  $('#labelReq').text('Add Requirement(s)');
+  $('#buttonReq').text('Add');
+  myId=$(this).val();
+  $("#idReq").val(myId);
+  req="";
+  $.get(url + '/showRequirements/' + myId, function (data) 
+  {
+    if(Object.keys(data).length>0)
+    {
+      $("#modalRequirement").modal("show");
+      $.each( data, function( index, value ){
+        req+="<input id='checkboxReq' name='checkboxReq[]' value='" + 
+        value.id +"'' type='checkbox'>" + value.description + "<br>";
+      });
+      $("#divReq").append(req);
+    }
+    else
+    {
+      $.notify("No available requirement", "error");
+    }
+  });
+});
+$(this).on('click', '#btnEditRequirement',function(e)
+{
+  $(this).attr('disabled','');
+  setTimeout(function(){
+    $("#btnEditRequirement").removeAttr('disabled');
+  }, 1000);   
+  $("#btnSaveReq").val('edit');
+  $('#labelReq').text('Edit Requirement(s)');
+  $('#buttonReq').text('Save Changes');
+  myId=$(this).val();
+  $("#idReq").val(myId);
+  req="";
+  $.get(url + '/showCurrentRequirements/' + myId, function (data) 
+  {
+    if(Object.keys(data).length>0)
+    {
+      $("#modalRequirement").modal("show");
+      $.each( data, function( index, value ){
+        req+="<input id='checkboxReq' name='checkboxReq[]' value='" + 
+        value.id +"'' type='checkbox' checked>" + value.description + "<br>";
+      });
+      $("#divReq").append(req);
+    }
+    else
+    {
+      $.notify("You haven't added any requirements.", "error");
+    }
+  });
+});
+$(this).on('click','#btnSaveReq', function (e) 
+{
+ if($('#frmRequirement').parsley().isValid())
+ {
+  e.preventDefault(); 
+  if($(this).val()=='add')
+  {
+    var my_url = urlstorereq;
+    var type="POST";
+  }
+  else if($(this).val()=='edit')
+  {
+    var my_url = urlupdatereq;
+    var type="PUT";
+  }
+  formData = $('#frmRequirement').serialize();
+  $.ajax({
+    beforeSend: function (jqXHR, settings) {
+      xhrPool.push(jqXHR);
+    },
+    type: type,
+    url: my_url,
+    data: formData,
+    success: function (data) {
+      table.draw();  
+      successPrompt(); 
+      $('#modalRequirement').modal('hide');
+    },
+    error: function (data) {
+      console.log('Error:', data.responseText);
+      try{
+        $('#txtDesc').parsley().removeError('ferror', {updateClass: false});
+        $('#txtDesc').parsley().addError('ferror', {message: data.responseText, updateClass: false});
+      }catch(err){}
+      finally{
+        $.each(xhrPool, function(idx, jqXHR) {
+          jqXHR.abort();
+        });
+      }
+    }
+  });
+}
+});
+$(document).on('hidden.bs.modal','#modalRequirement', function () 
+{
+  $('#divReq').empty();
+});
 });
 
 
