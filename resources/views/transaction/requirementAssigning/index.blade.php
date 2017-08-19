@@ -4,8 +4,8 @@
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
+      <h2 class="align-center">REQUIREMENT ASSIGNING</h2>
     </div>
-    
   </div>
   <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
