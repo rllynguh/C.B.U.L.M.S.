@@ -30,7 +30,7 @@ class requirementSubmissionController extends Controller
     public function data()
     {
         $result=DB::table('registration_headers')
-        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(Distinctrow registration_details.id) as unit_count ,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 then 1 else null end) as pending_items,count(distinctrow Case when registration_requirements.status = 1 then 1 else null end ) as fulfiilled, count(distinctrow Case when registration_requirements.status != 1 then 1 else null end ) as unfulfillesd'))
+        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(Distinctrow registration_details.id) as unit_count ,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 then 1 else null end) as pending_items,count(distinctrow Case when registration_requirements.status = 1 then 1 else null end ) as fulfiilled, count(distinctrow Case when registration_requirements.status != 1 then 1 else null end ) as unfulfillesd,offer_sheet_details.status'))
         ->join('users as lessor_user','registration_headers.user_id','lessor_user.id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('users as tenant_user','tenants.user_id','tenant_user.id')
@@ -51,7 +51,7 @@ class requirementSubmissionController extends Controller
         ->where('offer_sheet_details.status','1')
         ->where('offer_sheet_headers.status','1')
         ->groupby('registration_headers.id')
-        ->havingRaw('count(Distinctrow registration_details.id) =count(Distinctrow case when offer_sheet_details.status = 1 then 1 else null end) and count(distinctrow registration_requirements.status) > count(distinctrow Case when registration_requirements.status =1 then 1 else null end )')
+        ->havingRaw('count(Distinctrow registration_details.id) =count(Distinctrow offer_sheet_details.id) and count(registration_requirements.id) > count(  Case when registration_requirements.status =1 then 1 else null end ) and offer_sheet_details.status = 1')
         ->get()
         ;   
         return Datatables::of($result)

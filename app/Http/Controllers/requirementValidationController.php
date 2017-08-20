@@ -25,7 +25,7 @@ class requirementValidationController extends Controller
     public function data()
     {
         $result=DB::table('registration_headers')
-        ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,business_types.description as business,count(registration_requirements.status) as req_total,count(case when registration_requirements.status = 1 then 1 else null end) as fulfilled'))
+        ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,count(registration_requirements.status) as req_total,count(case when registration_requirements.status = 1 then 1 else null end) as fulfilled,count(Case when registration_requirements.pdf is not null then 1 else null end ) as submitted'))
         ->join('registration_requirements','registration_headers.id','registration_requirements.registration_header_id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
@@ -41,7 +41,7 @@ class requirementValidationController extends Controller
         ->where('offer_sheet_details.status','1')
         ->where('offer_sheet_headers.status','1')
         ->groupby('registration_headers.id')
-        // ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow case when offer_sheet_details.status = 1 then 1 else null end)')
+        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id) and count( registration_requirements.id)>count( Case when registration_requirements.status =1 then 1 else null end )')
         ->get()
         ;   
         return Datatables::of($result)
@@ -52,10 +52,10 @@ class requirementValidationController extends Controller
             $percentage=($data->fulfilled/$data->req_total)*100;
             return "  <div class='progress'>
             <div class='progress-bar progress-bar-warning progress-bar-striped active' role='progressbar' aria-valuenow='$data->fulfilled' aria-valuemin='0' aria-valuemax='100' style='width: $percentage%;'>
-               $data->fulfilled / $data->req_total
-           </div>
-       </div>";
-   })
+             $data->fulfilled / $data->req_total
+         </div>
+     </div>";
+ })
         ->setRowId(function ($data) {
             return $data = 'id'.$data->id;
         }) 
@@ -159,6 +159,7 @@ public function showPendingRequirements($id)
     ->select('registration_requirements.id','requirements.description')
     ->where('registration_requirements.registration_header_id',$id)
     ->where('registration_requirements.status','!=',1)
+    ->where('registration_requirements.pdf','!=',null)
     ->get();
 
     return response::json($requirements);
