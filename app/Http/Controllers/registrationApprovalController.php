@@ -42,7 +42,11 @@ class registrationApprovalController extends Controller
       ->join('users','tenants.user_id','users.id')
       ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
       ->where('registration_headers.status','0')
+      ->where('registration_headers.is_forfeited','0')
+      ->where('registration_details.is_forfeited','0')
+      ->where('registration_details.is_rejected','0')
       ->groupBy('registration_headers.id')
+      ->orderBy('registration_headers.id')
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
@@ -115,6 +119,8 @@ class registrationApprovalController extends Controller
      ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.*,building_types.description, registration_details.id as detail_id'))
      ->where('registration_headers.id','=',$id)
      ->where('registration_headers.status','0')
+     ->where('registration_headers.is_forfeited','0')
+     ->where('registration_details.is_forfeited','=',0)
      ->get();
      return Datatables::of($result)
      ->addColumn('action', function ($data) {
@@ -141,8 +147,9 @@ class registrationApprovalController extends Controller
     $tenant=DB::table('registration_headers')
     ->join('tenants','registration_headers.tenant_id','tenants.id')
     ->join('users','users.id','tenants.user_id')
-    ->where('registration_headers.status','0')
     ->select(DB::Raw('registration_headers.tenant_remarks,registration_headers.id,tenants.description,registration_headers.code, concat(first_name," ", last_name) as name'))
+    ->where('registration_headers.status','0')
+    ->where('registration_headers.is_forfeited','0')
     ->where('registration_headers.id','=',$id)
     ->first();
     return view('transaction.registrationApproval.show')
@@ -164,6 +171,8 @@ class registrationApprovalController extends Controller
       ->select(DB::Raw('registration_headers.tenant_remarks as header_remarks,CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.floor,registration_details.unit_type,building_types.description, registration_details.id as detail_id,registration_details.tenant_remarks as detail_remarks'))
       ->where('registration_details.id','=',$id)
       ->where('registration_headers.status','0')
+      ->where('registration_headers.is_forfeited','0')
+      ->where('registration_details.is_forfeited','0')
       ->first();
       return response::json($result);
     }

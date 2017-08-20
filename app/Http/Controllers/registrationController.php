@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use App\Province;
 use App\BusinessType;
 use App\RepresentativePosition;
+use App\RegistrationRequirement;
 class registrationController extends Controller
 {
     /**
@@ -58,6 +59,13 @@ class registrationController extends Controller
       public function create()
       {
         //
+        $requirements=DB::table('business_type_requirements')
+        ->select('requirements.id')
+        ->join('requirements','business_type_requirements.requirement_id','requirements.id')
+        ->where('requirements.is_active',1)
+        ->where('business_type_requirements.business_type_id',1)
+        ->first();
+        dd($requirements->id);
       }
 
       /**
@@ -68,6 +76,7 @@ class registrationController extends Controller
      */
       public function store(Request $request)
       {
+
         DB::begintransaction();
         try
         {
@@ -152,6 +161,19 @@ class registrationController extends Controller
             $regi_detail->floor=$request->floor[$x];
             $regi_detail->tenant_remarks=$request->remarks[$x];
             $regi_detail->save();
+          }
+          $requirements=DB::table('business_type_requirements')
+          ->select('requirements.id')
+          ->join('requirements','business_type_requirements.requirement_id','requirements.id')
+          ->where('requirements.is_active',1)
+          ->where('business_type_requirements.business_type_id',$request->busitype)
+          ->get();
+          foreach ($requirements as $requirement) {
+          # code...
+            $regi_require=new RegistrationRequirement();
+            $regi_require->registration_header_id=$regi_header->id;
+            $regi_require->requirement_id=$requirement->id;
+            $regi_require->save();
           }
           Image::make($image)->resize(400,400)->save($location);
           DB::commit();

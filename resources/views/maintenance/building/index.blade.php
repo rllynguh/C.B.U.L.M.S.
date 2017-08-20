@@ -34,23 +34,31 @@
                 ])
               }}
               <div class="modal-header">
-                <h1  class="modal-title align-center p-b-15">Pricing<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+                <h1  class="modal-title align-center p-b-15">PRICING<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
               </div>
               <div class="modal-body">
-                <div class="col-sm-6 col-md-6">
-                  <div class="form-line">
-                    <h5 class="card-inside-title">Base Unit Price(Top most floor)</h5>
-                    <select required id="comBasePrice" class="form-control show-tick align-center">
+
+                <!--Prcing type-->
+                <div class="form-group p-l-30 p-b-10">
+                  <div class= "col-sm-6 col-md-6">
+                    <div class= "form-line">
+                      <h5 class="card-inside-title">Pricing Type</h5>
+                      <select required id="comBasePrice" class="form-control show-tick align-center">
                       <option value="0">
                         Market Rate
                       </option>
                       <option value="1">
-                        Set
+                        Fixed
                       </option>
                     </select>
+                    </div>
                   </div>
-                  <div class="form-line">
-                    {{ Form::number('txtBasePrice',null,[
+
+                  <!--Price-->
+                  <div class= "col-sm-6 col-md-6">
+                    <div class= "form-line">
+                      <h5 class="card-inside-title">Price</h5>
+                      {{ Form::number('txtBasePrice',null,[
                       'id'=> 'txtBasePrice',
                       'class' => 'form-control text-center',
                       'readonly' => '',
@@ -60,33 +68,43 @@
                       'max' => '4000',
                       'required' => 'required',
                       ])
-                    }}
+                      }}
+                    </div>
                   </div>
                 </div>
 
-                <div class="col-sm-6 col-md-6">
-                  <div class="form-line">
-                    <h5 class="card-inside-title">Price Increased per floor</h5>
-                    <select required id="comPriceChange" name="comPriceChange" class="form-control show-tick align-center">
-                      <option value="0">
-                        Percentage
-                      </option>
-                      <option value="1">
-                        Fixed Price
-                      </option>
+                <!--Price Increase Type-->
+                <div class="form-group p-l-30 p-b-30">
+                  <div class= "col-sm-6 col-md-6">
+                    <div class= "form-line">
+                      <h5 class="card-inside-title">Price Increased Type</h5>
+                      <select required id="comPriceChange" name="comPriceChange" class="form-control show-tick align-center">
+                        <option value="0">
+                          Percentage
+                        </option>
+                        <option value="1">
+                          Fixed
+                        </option>
                     </select>
-                    <div class="form-line">
-                      {{ Form::number('txtPriceChange',null,[
+                    </div>
+                  </div>
+
+                  <!--Fixed or Percentage-->
+                  <div class= "col-sm-6 col-md-6">
+                    <div class= "form-line">
+                    <h5 class="card-inside-title">Percentage / Fixed</h5>
+                        {{ Form::number('txtPriceChange',null,[
                         'id'=> 'txtPriceChange',
                         'class' => 'form-control text-center',
                         'autocomplete' => 'off',
                         'max' => '3',
                         'required' => 'required',
                         ])
-                      }}
+                        }}
                     </div>
                   </div>
                 </div>
+                
               </div>
               <div class="modal-footer m-t--30">
                 <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSavePrice" ><i class="mdi-content-save"></i><span> SAVE</span></button>
@@ -109,7 +127,7 @@
               <h1  class="modal-title align-center p-b-15">ADD FLOOR<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
             </div>
             <div class="modal-body">
-              <div class="form-group p-l-10">
+              <div class="form-group p-l-30">
                 <div class="form-line">
                   <h5 class="card-inside-title">Building</h5>
                   {{ Form::text('txtFBuilDesc',null,[
@@ -121,7 +139,7 @@
                   }}
                 </div>
               </div>
-              <div class="form-group p-l-10">
+              <div class="form-group p-l-30">
                 <div class="form-line">
                   <h5 class="card-inside-title">Floor Number</h5>
                   {{ Form::text('txtFNum',null,[
@@ -133,7 +151,7 @@
                   }}
                 </div>
               </div>
-              <div class="form-group p-l-10">
+              <div class="form-group p-l-30">
                 <div class="form-line">
                   <h5 class="card-inside-title">Number of Units</h5>
                   {{ Form::number('txtUNum',null,[
@@ -149,7 +167,7 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer m-t--30">
+            <div class="modal-footer">
               <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSaveFloor" ><i class="mdi-content-save"></i><span> SAVE</span></button>
               {{ Form::hidden('comBuilding',null,[
                 'id' => 'comBuilding'

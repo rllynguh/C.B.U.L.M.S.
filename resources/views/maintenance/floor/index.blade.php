@@ -23,70 +23,81 @@
         <div class="modal fade" id="modalPrice" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content modal-col-green">
-             {{ Form::open([
-              'id' => 'frmPrice', 'class' => 'form-horizontal'
-              ])
-            }}
-            {{ Form::hidden('floor_id',null,[
-              'id' => 'floor_id'
-              ])
-            }}
-            <div class="modal-header">
-              <h1  class="modal-title align-center p-b-15">Pricing<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
-            </div>
-            <div class="modal-body">
-              <div id='info'>
-
+                {{ Form::open([
+                'id' => 'frmPrice', 'class' => 'form-horizontal'
+                ])
+                }}
+                {{ Form::hidden('floor_id',null,[
+                  'id' => 'floor_id'
+                  ])
+                }}
+              <div class="modal-header">
+                <h1  class="modal-title align-center p-b-15">PRICING<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
               </div>
-              <div class="col-sm-12 col-md-12">
-                <div class="form-line">
-                  <h5 class="card-inside-title">Set price for all the units on this floor to:</h5>
-                  <div class="form-line">
-                    {{ Form::number('txtPrice',null,[
-                      'id'=> 'txtPrice',
-                      'class' => 'form-control text-center',
-                      'autocomplete' => 'off',
-                      'required' => 'required',
-                      ])
-                    }}
+
+              <div class="modal-body">
+                <div id='info'>
+
+                </div>
+                <div class="col-sm-12 col-md-12">
+                  <div class="form-group p-l-30">
+                    <h5 class="card-inside-title">Set price for all the units on this floor to:</h5>
+                    <div class="form-line m-b-30">
+                      {{ Form::number('txtPrice',null,[
+                        'id'=> 'txtPrice',
+                        'class' => 'form-control text-center',
+                        'autocomplete' => 'off',
+                        'required' => 'required',
+                        ])
+                      }}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="modal-footer m-t--30">
-              <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSavePrice" ><i class="mdi-content-save"></i><span> SAVE</span></button>
-            </div>
-            {{Form::close()}}
+            
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSavePrice" ><i class="mdi-content-save"></i><span> SAVE</span></button>
+              </div>
+              {{Form::close()}}
           </div>
         </div>
       </div>
+
       {{-- modalPrice end :(  --}}
       {{-- modalFLoor start --}}
+
       <div class="modal fade" id="modalUnit" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content modal-col-green">
             {{ Form::open([
               'id' => 'frmUnit', 'class' => 'form-horizontal',
               'enctype' => 'multipart/form-data'
               ])
             }}
+
             <div class="modal-header">
               <h1  class="modal-title align-center p-b-15">ADD UNIT<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
             </div>
+
             <div class="modal-body">
-              <div class="form-group p-l-10">
+              <!--Upload Picture-->
+              <div class="form-group p-l-30">
+                <h5 class="card-inside-title">Upload Picture</h5>
+                <input required="" type="file" id="picture" name="picture">
+
                 <div class="form-line">
-                 Browse…  <input required="" type="file" id="picture" name="picture">
-                 <h5 class="card-inside-title">Building</h5>
-                 {{ Form::text('txtFBuilDesc',null,[
-                  'id'=> 'txtFBuilDesc',
-                  'readonly' => '',
-                  'class' => 'form-control text-center',
-                  'required' => 'required',
-                  ])
-                }}
-              </div>
-            </div>
+                  <h5 class="card-inside-title">Building</h5>
+                  {{ Form::text('txtFBuilDesc',null,[
+                    'id'=> 'txtFBuilDesc',
+                    'readonly' => '',
+                    'class' => 'form-control text-center',
+                    'required' => 'required',
+                    ])
+                    }}
+                </div>
+
+            </div> <!--modal body-->
+            
             <div class="form-group p-l-10">
               <div class="form-line">
                 <h5 class="card-inside-title">Floor</h5>
@@ -139,6 +150,24 @@
               </div>
             </div>
           </div>
+          <div class="form-group ">
+            <div class="col-md-12 col-sm-12">
+              <div class="form-line">
+                <h5 class="card-inside-title">Price</h5>
+                {{ Form::number('txtPrice',null,[
+                  'id'=> 'txtPrice',
+                  'data-parsley-type' => "number",
+                  'min' => '1000',
+                  'max' => '99999',
+                  'class' => 'form-control text-center',
+                  'required' => 'required',
+                  'placeholder' => 'P 100',
+                  'step' => "0.01"
+                  ])
+                }}
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer m-t--30">
           <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSaveUnit" ><i class="mdi-content-save"></i><span> SAVE</span></button>
@@ -164,14 +193,14 @@
           <h1 id="label" class="modal-title align-center p-b-15">NEW FLOOR<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
         </div>
         <div class="modal-body">
-          <div class="form-group p-l-10">
+          <div class="form-group p-l-30 p-b-10">
             <div class="form-line">
               <h5 class="card-inside-title">Building Name</h5>
               <select required id="comBuilding" name="comBuilding" class="form-control show-tick align-center">
               </select>
             </div>
           </div>
-          <div class="form-group p-l-10">
+          <div class="form-group p-l-30 p-b-10">
             <div class="form-line">
               <h5 class="card-inside-title">Floor Number</h5>
               {{ Form::number('txtFNum',null,[
@@ -183,7 +212,7 @@
               }}
             </div>
           </div>
-          <div class="form-group p-l-10">
+          <div class="form-group p-l-30">
             <div class="form-line">
               <h5 class="card-inside-title">Number of Units</h5>
               {{ Form::number('txtUNum',1,[
@@ -198,7 +227,7 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer m-t--30">
+        <div class="modal-footer">
           <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
           {{ Form::hidden(null,1,[
             'id' => 'myId'

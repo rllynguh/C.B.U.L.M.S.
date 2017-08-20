@@ -10,8 +10,36 @@
   </div>
   <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-     <!--Delete MODAL-->
-     <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
+      {{-- modal requirement starts here --}}
+      <div class="modal fade" id="modalRequirement" tabindex="-1" role="dialog">
+       {{ Form::open([
+        'id' => 'frmRequirement', 'class' => 'form-horizontal'
+        ])
+      }}
+      {{ Form::hidden('idReq',null,[
+        'id'=> 'idReq',
+        ])
+      }}
+      <div class="modal-dialog" role="document">
+        <div class="modal-content modal-col-green">
+          <div class="modal-header">
+            <h1  class="modal-title align-center p-b-15"><span id='labelReq'>ADD REQUIREMENTS</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+          </div>
+          <div class="modal-body">
+            <div id='divReq'>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button value='add' type="button" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSaveReq" value="add"><i class="mdi-content-save"></i><span id="buttonReq"> ADD</span></button>
+          </div>
+        </div>
+      </div>
+      {{Form::close()}}
+    </div>
+    {{-- modal requirement ends here --}}
+    <!--Delete MODAL-->
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-md" role="document">
         <div class="modal-content modal-col-green">
           <div class="modal-header-delete">
@@ -100,5 +128,7 @@
 <script type="text/javascript">
   dataurl="{{route("businesstypes.getData")}}"
   url="{{route("businesstypes.index")}}"
+  urlstorereq="{{route("businesstypes.storeRequirements")}}";
+  urlupdatereq="{{route("businesstypes.updateRequirements")}}";
 </script>
 @endsection

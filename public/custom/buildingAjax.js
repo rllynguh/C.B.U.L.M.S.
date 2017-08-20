@@ -237,7 +237,7 @@ function getLatest()
 //for toggle between edit and add
 function changeLabel()
 {
-  btn='<span id="lblButton">SAVE CHANGES</span>';
+  btn='<span id="lblButton"> SAVE CHANGES</span>';
   label=' <h1 id="label" class="modal-title align-center p-b-15">UPDATE BUILDING<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
   if($("#btnSave").val()=="Save")
   {
