@@ -247,17 +247,34 @@
               <span>Offer Sheets Approval</span>
             </a>
           </li>
+
           <li>
-            <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
-              <i class="mdi-action-thumbs-up-down"></i>
-              <span>Requirement Assigning</span>
+            <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+              <i class="mdi-communication-business"></i>
+              <span>Requirements</span>
             </a>
-          </li>
-          <li>
-            <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-              <i class="mdi-content-inbox"></i>
-              <span>Submission of Requirements</span>
-            </a>
+            <ul class="ml-menu">
+              <li>
+                <li>
+                  <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
+                    <i class="mdi-action-thumbs-up-down"></i>
+                    <span>Requirement Assigning</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
+                    <i class="mdi-content-inbox"></i>
+                    <span>Submission of Requirements</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
+                    <i class="mdi-content-inbox"></i>
+                    <span>Requirement Validation</span>
+                  </a>
+                </li>
+              </li>
+            </ul>
           </li>
           <li>
             <a href="javascript:void(0);" class="menu-toggle waves-yellow">
