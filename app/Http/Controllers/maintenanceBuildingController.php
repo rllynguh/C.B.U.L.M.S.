@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Building;
 class maintenanceBuildingController extends Controller
 {
+     public function manageItemAjax()
+    {
+        return view('maintenance.test');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +18,8 @@ class maintenanceBuildingController extends Controller
      */
     public function index()
     {
-        return view('maintenance.test');
+        $items = Building::latest()->paginate(5);
+        return response()->json($items);
     }
 
     /**
@@ -34,7 +40,8 @@ class maintenanceBuildingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $create = Building::create($request->all());
+        return response()->json($create);
     }
 
     /**
@@ -68,7 +75,8 @@ class maintenanceBuildingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $edit = Building::find($id)->update($request->all());
+        return response()->json($edit);
     }
 
     /**
@@ -79,6 +87,7 @@ class maintenanceBuildingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Building::find($id)->delete();
+        return response()->json(['done']);
     }
 }

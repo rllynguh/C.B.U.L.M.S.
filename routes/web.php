@@ -14,6 +14,7 @@
 Route::get('/', function () {
 	return view('welcome');
 });
+Route::get('test-manage', 'maintenanceBuildingController@manageItemAjax');
 Route::resource('test','maintenanceBuildingController');
 
 Route::group(['prefix' => 'admin/'], function () {
