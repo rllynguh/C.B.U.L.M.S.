@@ -31,15 +31,19 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group p-l-30">
-                    <h5 class="card-inside-title">Building</h5>
-                    <select required  id="comBuilding" name="comBuilding" class="form-control show-tick align-center">
-                    </select>
+                    <div class="form-line">
+                      <h5 class="card-inside-title">Building</h5>
+                      <select required  id="comBuilding" name="comBuilding" class="form-control show-tick align-center">
+                      </select>
+                    </div>
                   </div>
 
                   <div class="form-group p-l-30">
-                    <h5 class="card-inside-title">Park Area</h5>
-                    <select required  id="comParkArea" name="comParkArea" class="form-control show-tick align-center">
-                    </select>
+                    <div class="form-line">
+                      <h5 class="card-inside-title">Park Area</h5>
+                      <select required  id="comParkArea" name="comParkArea" class="form-control show-tick align-center">
+                      </select>
+                    </div>
                   </div>
 
                   <div class="form-group p-l-30">

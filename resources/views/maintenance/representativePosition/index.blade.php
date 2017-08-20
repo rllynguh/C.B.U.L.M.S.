@@ -70,7 +70,7 @@
 <div class="card">
   <div class="header align-center">
     <h2>
-      List of Representative Postions
+      LIST OF REPRESENTATIVE POSITIONS
     </h2>
   </div>
   <div class="body">

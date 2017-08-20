@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
-      <h2 class="align-center">Requirements<button class="btn btn-success btn-lg waves-effect waves-lime m-l-15 m-b-5 " id="btnAddModal"  type="button" >
+      <h2 class="align-center">REQUIREMENTS<button class="btn btn-success btn-lg waves-effect waves-lime m-l-15 m-b-5 " id="btnAddModal"  type="button" >
         <i class="mdi-content-add pulls"></i> NEW
       </button></h2>
     </div>
@@ -38,7 +38,7 @@
               ])
             }}
             <div class="modal-header">
-              <h1 id="label" class="modal-title align-center p-b-15">New Requirement<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+              <h1 id="label" class="modal-title align-center p-b-15">NEW REQUIREMENT<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
             </div>
             <div class="modal-body">
               <div class="form-group p-l-30">

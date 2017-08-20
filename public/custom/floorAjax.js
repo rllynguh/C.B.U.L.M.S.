@@ -199,7 +199,7 @@ $(document).ready(function()
   //for toggling between add and edit
   function changeLabel()
   {
-    btn='<span id="lblButton">SAVE CHANGES</span>';
+    btn='<span id="lblButton"> SAVE CHANGES</span>';
     label=' <h1 id="label" class="modal-title align-center p-b-15">UPDATE FLOOR<a href="javascript:void(0);" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
     if($("#btnSave").val()=="Save")
     {

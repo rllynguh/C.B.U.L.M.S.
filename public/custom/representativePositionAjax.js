@@ -163,12 +163,12 @@ $(document).ready(function()
   //for changing output for buttons of edit and add
   function changeLabel()
   {
-   btn='<span id="lblButton">SAVE Changes</span>';
-   label=' <h1 id="label" class="modal-title align-center p-b-15">UPDATE Representative Position<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
+   btn='<span id="lblButton"> SAVE CHANGES</span>';
+   label=' <h1 id="label" class="modal-title align-center p-b-15">UPDATE REPRESENTATIVE POSITION<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
    if($("#btnSave").val()=="Save")
    {
     btn='<span id="lblButton"> SAVE</span>';
-    label=' <h1 id="label" class="modal-title align-center p-b-15">NEW Representative Position<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
+    label=' <h1 id="label" class="modal-title align-center p-b-15">NEW REPRESENTATIVE POSITION<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>';
   }    
   $('#lblButton').replaceWith(btn);
   $('#label').replaceWith(label);
