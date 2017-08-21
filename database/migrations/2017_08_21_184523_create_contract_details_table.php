@@ -14,8 +14,11 @@ class CreateContractDetailsTable extends Migration {
 	{
 		Schema::create('contract_details', function(Blueprint $table)
 		{
-			$table->integer('contract_header_id')->index('fk_cont_headcont');
-			$table->integer('contract_content_id')->index('fk_contcont_idx');
+			$table->integer('id', true);
+			$table->integer('current_contract_id')->index('fk_cont_headcont_idx');
+			$table->integer('unit_id')->index('unit_fk_contracc_idx');
+			$table->float('price', 10, 0);
+			$table->boolean('status')->default(0);
 		});
 	}
 

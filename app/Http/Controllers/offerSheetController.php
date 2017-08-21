@@ -135,15 +135,15 @@ class offerSheetController extends Controller
         ->where('registration_headers.id','=',$id)
         ->first();
         $result=DB::table('registration_details')
-        ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,unit_prices.price'))
+        ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,(price * size) as rate'))
         ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-         $join->on('registration_details.size_from','<=','offered_unit.size');
-         $join->on('registration_details.size_to','>=','offered_unit.size');
-     })
+           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+           $join->on('registration_details.size_from','<=','offered_unit.size');
+           $join->on('registration_details.size_to','>=','offered_unit.size');
+       })
         ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
         ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id inner join offer_sheet_headers on offer_sheet_details.offer_sheet_header_id=offer_sheet_headers.id where offer_sheet_details.status != 2 and offer_sheet_headers.status != 2)')
@@ -170,8 +170,8 @@ class offerSheetController extends Controller
                 $value='Shell';
             return $value; 
         })
-        ->editColumn('price', function ($data) {
-            return "P $data->price"; 
+        ->editColumn('rate', function ($data) {
+            return "P $data->rate"; 
         })
         ->setRowId(function ($data) {
           return $data = 'id'.$data->id;
@@ -187,14 +187,14 @@ class offerSheetController extends Controller
             registration_details.size_from,registration_details.size_to,
             offered_unit.size as offered_exact_size,
             ordered_building_type.description as ordered_building_type,
-            registration_details.floor as ordered_floor,unit_prices.price'))
+            registration_details.floor as ordered_floor,price*size as rate'))
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-         $join->on('registration_details.size_from','<=','offered_unit.size');
-         $join->on('registration_details.size_to','>=','offered_unit.size');
-     })
+           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+           $join->on('registration_details.size_from','<=','offered_unit.size');
+           $join->on('registration_details.size_to','>=','offered_unit.size');
+       })
         ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
         ->where('registration_details.id',$id)

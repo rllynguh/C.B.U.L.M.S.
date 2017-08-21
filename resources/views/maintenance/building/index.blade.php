@@ -44,13 +44,13 @@
                     <div class= "form-line">
                       <h5 class="card-inside-title">Pricing Type</h5>
                       <select required id="comBasePrice" class="form-control show-tick align-center">
-                      <option value="0">
-                        Market Rate
-                      </option>
-                      <option value="1">
-                        Fixed
-                      </option>
-                    </select>
+                        <option value="0">
+                          Market Rate
+                        </option>
+                        <option value="1">
+                          Fixed
+                        </option>
+                      </select>
                     </div>
                   </div>
 
@@ -59,15 +59,15 @@
                     <div class= "form-line">
                       <h5 class="card-inside-title">Price</h5>
                       {{ Form::number('txtBasePrice',null,[
-                      'id'=> 'txtBasePrice',
-                      'class' => 'form-control text-center',
-                      'readonly' => '',
-                      'data-rule' => 'quantity',
-                      'autocomplete' => 'off',
-                      'min' => '1',
-                      'max' => '4000',
-                      'required' => 'required',
-                      ])
+                        'id'=> 'txtBasePrice',
+                        'class' => 'form-control text-center',
+                        'readonly' => '',
+                        'data-rule' => 'quantity',
+                        'autocomplete' => 'off',
+                        'min' => '100',
+                        'max' => '1000',
+                        'required' => 'required',
+                        ])
                       }}
                     </div>
                   </div>
@@ -85,22 +85,22 @@
                         <option value="1">
                           Fixed
                         </option>
-                    </select>
+                      </select>
                     </div>
                   </div>
 
                   <!--Fixed or Percentage-->
                   <div class= "col-sm-6 col-md-6">
                     <div class= "form-line">
-                    <h5 class="card-inside-title">Percentage / Fixed</h5>
-                        {{ Form::number('txtPriceChange',null,[
+                      <h5 class="card-inside-title">Percentage / Fixed</h5>
+                      {{ Form::number('txtPriceChange',null,[
                         'id'=> 'txtPriceChange',
                         'class' => 'form-control text-center',
                         'autocomplete' => 'off',
                         'max' => '3',
                         'required' => 'required',
                         ])
-                        }}
+                      }}
                     </div>
                   </div>
                 </div>

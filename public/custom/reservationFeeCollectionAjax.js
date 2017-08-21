@@ -26,9 +26,13 @@ $(document).ready(function()
 
   $(this).on('click', '#btnReserve',function(e)
   { 
+   id=$(this).val();
+   $.get(url + '/' + id, function (data) {
+    $('#divRes').append("Reservation fee( "+ data.month +"month(s) base rent): ₱ " +data.fee);
+    $("#myId").val(id);
     $('#modalReserve').modal('show');
-    $("#myId").val($(this).val());
   });
+ });
 
 
   $('#btnSave').on('click',function(e)
@@ -67,7 +71,12 @@ $(document).ready(function()
     {
       timer:1000
     });
-
   }
+
+
+  $(document).on('hidden.bs.modal','#modalReserve', function () 
+  { 
+    $("#divRes").empty();
+  });
 
 });

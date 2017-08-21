@@ -16,8 +16,7 @@ class CreateCurrentContractsTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('contract_header')->index('contract_header_curretn_idx');
-			$table->string('code', 45);
-			$table->integer('user_id')->index('user_id_idx');
+			$table->integer('user_id')->index('user_id_idx')->comment('admin_id');
 			$table->date('date_issued');
 			$table->date('date_of_billing');
 			$table->date('end_of_contract');

@@ -93,6 +93,28 @@ class reservationFeeCollectionController extends Controller
     public function show($id)
     {
         //
+        $reservation=DB::table('utilities')
+        ->select('reservation_fee as fee')
+        ->whereRaw("date_as_of=(SELECT MAX(date_as_of) from utilities) or isnull(date_as_of)")
+        ->first();
+        $regi_detail=DB::table('registration_details')
+        ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+        ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+        ->join('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
+        ->join('units','offer_sheet_details.unit_id','units.id')
+        ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+        ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
+        ->select(DB::raw("(SUM(price * size)*$reservation->fee) as fee,$reservation->fee as month"))
+        ->where('registration_headers.id',$id)
+        ->where('offer_sheet_headers.status',1)
+        ->where('offer_sheet_details.status',1)
+        ->where('registration_details.is_rejected',0)
+        ->where('registration_details.is_forfeited',0)
+        ->where('registration_headers.status',1)
+        ->where('registration_headers.is_forfeited',0)
+        ->where('registration_headers.id',$id)
+        ->first();
+        return response::json($regi_detail);
     }
 
     /**

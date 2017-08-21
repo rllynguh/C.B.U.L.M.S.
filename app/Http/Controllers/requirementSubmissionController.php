@@ -30,7 +30,7 @@ class requirementSubmissionController extends Controller
     public function data()
     {
         $result=DB::table('registration_headers')
-        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(Distinctrow registration_details.id) as unit_count ,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 then 1 else null end) as pending_items,count(distinctrow Case when registration_requirements.status = 1 then 1 else null end ) as fulfiilled, count(distinctrow Case when registration_requirements.status != 1 then 1 else null end ) as unfulfillesd,offer_sheet_details.status'))
+        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(Distinctrow registration_details.id) as unit_count ,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 and distinct registration_requirements.id  then 1 else null end) as pending_items,count(distinctrow Case when registration_requirements.status = 1 then 1 else null end ) as fulfiilled, count(distinctrow Case when registration_requirements.status != 1 then 1 else null end ) as unfulfillesd,offer_sheet_details.status'))
         ->join('users as lessor_user','registration_headers.user_id','lessor_user.id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('users as tenant_user','tenants.user_id','tenant_user.id')

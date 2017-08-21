@@ -25,8 +25,8 @@
             <h1  class="modal-title align-center p-b-15"><span id='labelReq'>Reservation</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
           </div>
           <div class="modal-body">
+            Reserve all units from this transaction?
             <div id='divRes'>
-              Reserve all units from this transaction?
             </div>
           </div>
           <div class="modal-footer">

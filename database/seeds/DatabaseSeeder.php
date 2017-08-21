@@ -31,12 +31,9 @@ class DatabaseSeeder extends Seeder
         $this->call(MarketRatesTableSeeder::class);
         $this->call(RequirementsTableSeeder::class);
         $this->call(BusinessTypeRequirementsTableSeeder::class);
+        $this->call(TenantsTableSeeder::class);
         $this->call(RegistrationHeadersTableSeeder::class);
         $this->call(RegistrationDetailsTableSeeder::class);
-        $this->call(OfferSheetHeadersTableSeeder::class);
-        $this->call(OfferSheetDetailsTableSeeder::class);
-        $this->call(TenantsTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        $this->call(RegistrationRequirementsTableSeeder::class);
     }
 }

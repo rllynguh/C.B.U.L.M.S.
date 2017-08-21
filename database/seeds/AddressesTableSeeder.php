@@ -41,6 +41,22 @@ class AddressesTableSeeder extends Seeder
                 'district' => '23',
                 'city_id' => 1,
             ),
+            3 => 
+            array (
+                'id' => 35,
+                'number' => '12',
+                'street' => 'San Antonio',
+                'district' => 'Masaya',
+                'city_id' => 1,
+            ),
+            4 => 
+            array (
+                'id' => 36,
+                'number' => '23',
+                'street' => 'San Andres',
+                'district' => 'Maligaya',
+                'city_id' => 1,
+            ),
         ));
         
         

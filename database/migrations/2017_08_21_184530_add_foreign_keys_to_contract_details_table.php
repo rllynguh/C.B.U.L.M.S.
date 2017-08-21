@@ -14,8 +14,8 @@ class AddForeignKeysToContractDetailsTable extends Migration {
 	{
 		Schema::table('contract_details', function(Blueprint $table)
 		{
-			$table->foreign('contract_content_id', 'fk_cont_cont')->references('id')->on('contract_contents')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-			$table->foreign('contract_header_id', 'fk_cont_headcont')->references('id')->on('contract_headers')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('current_contract_id', 'fk_cont_headcont')->references('id')->on('current_contracts')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('unit_id', 'unit_fk_contracc')->references('id')->on('units')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -29,8 +29,8 @@ class AddForeignKeysToContractDetailsTable extends Migration {
 	{
 		Schema::table('contract_details', function(Blueprint $table)
 		{
-			$table->dropForeign('fk_cont_cont');
 			$table->dropForeign('fk_cont_headcont');
+			$table->dropForeign('unit_fk_contracc');
 		});
 	}
 

@@ -16,6 +16,7 @@ class CreateContractHeadersTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('registration_header_id')->index('regi_contractt_idx');
+			$table->char('code', 45);
 			$table->float('escalation_rate', 10, 0);
 			$table->integer('status')->default(0);
 		});

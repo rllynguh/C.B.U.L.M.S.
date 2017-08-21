@@ -14,7 +14,7 @@ class CreateContractContentsTable extends Migration {
 	{
 		Schema::create('contract_contents', function(Blueprint $table)
 		{
-			$table->integer('id')->primary();
+			$table->integer('id', true);
 			$table->text('description', 65535);
 			$table->string('is_active', 45)->default('1');
 		});

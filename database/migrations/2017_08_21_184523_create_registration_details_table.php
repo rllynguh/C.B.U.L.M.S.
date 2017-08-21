@@ -27,6 +27,7 @@ class CreateRegistrationDetailsTable extends Migration {
 1 - accepted
 2 - rejected');
 			$table->boolean('is_forfeited')->default(0);
+			$table->boolean('is_reserved')->default(0);
 		});
 	}
 
