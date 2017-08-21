@@ -180,7 +180,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        AdamWathan\BootForms\BootFormsServiceProvider::class,
+        Orchestra\Html\HtmlServiceProvider::class,
         ],
 
     /*
@@ -232,7 +233,10 @@ return [
     'Validator' => Illuminate\Support\Facades\Validator::class,
     'View' => Illuminate\Support\Facades\View::class,
     'Image' => Intervention\Image\Facades\Image::class,
-
+    'BootForm' => AdamWathan\BootForms\Facades\BootForm::class,
+    'OForm' => Orchestra\Support\Facades\Form::class,
+    'OHTML' => Orchestra\Support\Facades\HTML::class,
+    'Table' => Orchestra\Support\Facades\Table::class,
     ],
 
     ];

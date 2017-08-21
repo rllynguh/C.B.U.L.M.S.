@@ -45,7 +45,7 @@
             url: url,
             data: {page:page}
         }).done(function(data){
-            manageRow(data.data);
+            manageRow(data[0].data);
         });
     }
 
@@ -54,7 +54,7 @@
         var rows = '';
         $.each( data, function( key, value ) {
             rows = rows + '<tr>';
-            rows = rows + '<td>'+'test'+'</td>';
+            rows = rows + '<td>'+value.code+'</td>';
             rows = rows + '<td>'+value.description+'</td>';
             rows = rows + '<td data-id="'+value.id+'">';
                     rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';

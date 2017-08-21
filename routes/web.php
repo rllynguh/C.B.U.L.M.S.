@@ -14,9 +14,12 @@
 Route::get('/', function () {
 	return view('welcome');
 });
-Route::get('test-manage', 'maintenanceBuildingController@manageItemAjax');
 Route::resource('test','maintenanceBuildingController');
-
+Route::group(['prefix' => 'tenant/'],function(){
+	Route::get('/', function () {
+		return view('tenant.index');
+	});
+});
 Route::group(['prefix' => 'admin/'], function () {
 	Route::resource('maintenance/banks','bankController');
 	Route::get('maintenance/banks/get/data', ['uses' => 'bankController@data', 'as' => 'banks.getData']);
