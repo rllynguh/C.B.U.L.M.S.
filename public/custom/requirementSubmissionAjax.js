@@ -123,9 +123,7 @@ $(document).ready(function()
 
 
   function successPrompt(){
-    title="Record Successfully Updated!";
-    if($("#btnSave").val()=="Save")
-      title="Record Successfully Stored!";
+    title="File(s) Successfully Uploaded.";
     $.notify(title, "success",
     {
       timer:1000

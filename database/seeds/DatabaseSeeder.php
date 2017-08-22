@@ -29,11 +29,15 @@ class DatabaseSeeder extends Seeder
         $this->call(ParkAreasTableSeeder::class);
         $this->call(ParkSpacesTableSeeder::class);
         $this->call(MarketRatesTableSeeder::class);
-        $this->call(RequirementsTableSeeder::class);
         $this->call(BusinessTypeRequirementsTableSeeder::class);
         $this->call(TenantsTableSeeder::class);
         $this->call(RegistrationHeadersTableSeeder::class);
         $this->call(RegistrationDetailsTableSeeder::class);
+        $this->call(RegistrationRequirementsTableSeeder::class);
+        $this->call(UtilitiesTableSeeder::class);
+        $this->call(RequirementsTableSeeder::class);
+        $this->call(RepresentativesTableSeeder::class);
+        $this->call(ContentsTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

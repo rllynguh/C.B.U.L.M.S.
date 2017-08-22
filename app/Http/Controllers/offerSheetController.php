@@ -140,13 +140,16 @@ class offerSheetController extends Controller
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-           $join->on('registration_details.size_from','<=','offered_unit.size');
-           $join->on('registration_details.size_to','>=','offered_unit.size');
-       })
+         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+         $join->on('registration_details.size_from','<=','offered_unit.size');
+         $join->on('registration_details.size_to','>=','offered_unit.size');
+     })
         ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
-        ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id inner join offer_sheet_headers on offer_sheet_details.offer_sheet_header_id=offer_sheet_headers.id where offer_sheet_details.status != 2 and offer_sheet_headers.status != 2)')
+        ->whereRaw('offered_unit.id not in (Select unit_id from registration_details inner join offer_sheet_details on registration_details.id=offer_sheet_details.registration_detail_id 
+            inner join units on offer_sheet_details.unit_id=units.id
+            where units.is_active=1 and
+            is_reserved=1)')
         ->where('registration_details.is_rejected','0')
         ->where('registration_details.is_forfeited','0')
         ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
@@ -191,15 +194,18 @@ class offerSheetController extends Controller
         ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
         ->leftJoin('units as offered_unit', function($join)
         {
-           $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-           $join->on('registration_details.size_from','<=','offered_unit.size');
-           $join->on('registration_details.size_to','>=','offered_unit.size');
-       })
+         $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+         $join->on('registration_details.size_from','<=','offered_unit.size');
+         $join->on('registration_details.size_to','>=','offered_unit.size');
+     })
         ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
         ->where('registration_details.id',$id)
         ->where('registration_headers.status','1')
-        ->whereRaw('offered_unit.id not in (Select units.id from units inner join offer_sheet_details on offer_sheet_details.unit_id=units.id where offer_sheet_details.status != 2)')
+        ->whereRaw('offered_unit.id not in (Select unit_id from registration_details inner join offer_sheet_details on registration_details.id=offer_sheet_details.registration_detail_id 
+            inner join units on offer_sheet_details.unit_id=units.id
+            where units.is_active=1 and
+            is_reserved=1)')
         ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
         ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
         ->orderBy('registration_details.id')

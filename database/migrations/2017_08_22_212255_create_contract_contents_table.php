@@ -15,8 +15,8 @@ class CreateContractContentsTable extends Migration {
 		Schema::create('contract_contents', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->text('description', 65535);
-			$table->string('is_active', 45)->default('1');
+			$table->integer('contract_header_id')->index('contractontentheader_idx');
+			$table->integer('content_id')->index('contractcontentcont_idx');
 		});
 	}
 

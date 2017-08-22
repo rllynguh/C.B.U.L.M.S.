@@ -29,12 +29,14 @@ class reservationFeeCollectionController extends Controller
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
         ->leftjoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-        ->select(DB::raw('registration_headers.id,registration_headers.code as regi_code,tenants.description as tenant_description,business_types.description as business_type_description,count(registration_details.id) as regi_count'))
+        ->select(DB::raw('registration_headers.id,registration_headers.code as regi_code,tenants.description as tenant_description,business_types.description as business_type_description,count(distinctrow registration_details.id) as regi_count,count(case when offer_sheet_details.status = 1 then 1 else null end)'))
         ->where('registration_headers.is_forfeited','0')
         ->where('registration_headers.status','1')
         ->where('registration_details.is_reserved',0)
+        ->where('registration_details.is_forfeited',0)
+        ->where('registration_details.is_rejected',0)
         ->groupby('registration_headers.id')
-        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow case when offer_sheet_details.status = 1 then 1 else null end)')
+        ->havingRaw('count(distinctrow registration_details.id) =count(case when offer_sheet_details.status = 1 then 1 else null end)')
         ->get();
 
         return Datatables::of($registration_headers)
@@ -77,12 +79,14 @@ class reservationFeeCollectionController extends Controller
         foreach ($regi_details as $regi_detail)
         {
             $regi_detail_update=RegistrationDetail::find($regi_detail->id);
-            $regi_detail_update->is_reserved=1;
-            $regi_detail_update->save();
-        }
-        return response::json('yas');
+            if(($regi_detail_update->is_rejected==0) && ($regi_detail_update->is_forfeited==0))
+             { $regi_detail_update->is_reserved=1;
+                 $regi_detail_update->save();
+             }
+         }
+         return response::json('yas');
 
-    }
+     }
 
     /**
      * Display the specified resource.
