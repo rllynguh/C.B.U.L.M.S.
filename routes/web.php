@@ -9,11 +9,16 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+$buildings = DB::table('buildings as b')
+        ->join('building_types as btype', 'btype.id', '=','b.building_type_id')
+        ->select('b.id','b.description','b.num_of_floor','b.code','btype.description as type')->get();
+        return view('maintenance.test',compact('buildings'));
 */
 
 Route::get('/', function () {
 	return view('welcome');
 });
+Route::get('test-manage','maintenanceBuildingController@manageItemAjax');
 Route::resource('test','maintenanceBuildingController');
 Route::group(['prefix' => 'tenant/'],function(){
 	Route::get('/', function () {

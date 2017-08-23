@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Region XI - Davao Region | About</title>
+    <title>Tenant Portal | About</title>
     <link rel="stylesheet" href="../css/design.css">
     <link href="../lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template specific stylesheets-->
@@ -30,18 +30,17 @@
         <div class="loader">Loading...</div>
       </div> -->
       <nav class="navbar navbar-custom navbar-transparent navbar-fixed-top one-page" role="navigation">
-        <div class="container">
+        <div class="container-fluid">
           <div class="navbar-header">
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">RegionXI</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="index.html">Majent Tenant Portal</a>
           </div>
           <div class="collapse navbar-collapse" id="custom-collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="{!! url('/'); !!}">Home</a></li>
-              <li><a class="section-scroll" href="#services">Discover Davao</a></li>
-              <li><a class="section-scroll" href="{!! url('/gallery'); !!}">Gallery</a></li>
-              <li><a class="section-scroll" href="#alt-features">News and Events</a></li>
-              <li><a class="section-scroll" href="#alt-features">About</a></li>
-              <li><a class="section-scroll" href="{!! url('/forums'); !!}">Forum</a></li>
+              <li><a class="section-scroll" href="#">Home</a></li>
+              <li><a class="section-scroll" href="#">Profiles</a></li>
+              <li><a class="section-scroll" href="#">Documents</a></li>
+              <li><a class="section-scroll" href="#">Statement of Account</a></li>
+              <li><a class="section-scroll" href="#">Notifications</a></li>
               
             </ul>
           </div>

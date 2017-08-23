@@ -6,7 +6,7 @@
     manageData();
     $.ajaxSetup({
         headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             }
     });
     /* manage data list */
@@ -53,9 +53,15 @@
     function manageRow(data) {
         var rows = '';
         $.each( data, function( key, value ) {
+            var status = 'inactive';
+            if(key.status = 1){
+                status = 'active';
+            }
             rows = rows + '<tr>';
             rows = rows + '<td>'+value.code+'</td>';
-            rows = rows + '<td>'+value.description+'</td>';
+            rows = rows + '<td>'+value.building_name+'</td>';
+            rows = rows + '<td>'+value.city_name+'</td>';
+            rows = rows + '<td>'+status+'</td>';
             rows = rows + '<td data-id="'+value.id+'">';
                     rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
                     rows = rows + '<button class="btn btn-danger remove-item">Delete</button>';

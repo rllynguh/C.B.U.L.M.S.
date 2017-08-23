@@ -1,13 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Building;
-use App\Floor;
 use DB;
 class maintenanceBuildingController extends Controller
 {
+     public function manageItemAjax()
+    {
+        return view('maintenance.test');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,12 +16,16 @@ class maintenanceBuildingController extends Controller
      */
     public function index()
     {
-        $buildings = DB::table('buildings as b')
-        ->join('building_types as btype', 'btype.id', '=','b.id')
-        ->select('b.id','b.description','b.num_of_floor','b.code','btype.description as location','b.is_active')->get();
-        return view('maintenance.test',compact('buildings'));
+        $result=DB::table("buildings")
+        ->select("addresses.*","cities.description as city_description", 'provinces.*' ,'buildings.*')
+        ->join('addresses','buildings.address_id','addresses.id')
+        ->join('cities','addresses.city_id',"cities.id")
+        ->join('provinces','cities.province_id',"provinces.id")
+        ->select('cities.description as city_name','buildings.code as code','buildings.description as building_name','buildings.is_active as status')
+        ->paginate(5);
+        //$items = Building::latest()->paginate(5);
+        return response()->json($result);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -30,7 +35,6 @@ class maintenanceBuildingController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -39,9 +43,9 @@ class maintenanceBuildingController extends Controller
      */
     public function store(Request $request)
     {
-  
+        $create = Building::create($request->all());
+        return response()->json($create);
     }
-
     /**
      * Display the specified resource.
      *
@@ -52,7 +56,6 @@ class maintenanceBuildingController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -63,7 +66,6 @@ class maintenanceBuildingController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -73,9 +75,9 @@ class maintenanceBuildingController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $edit = Building::find($id)->update($request->all());
+        return response()->json($edit);
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -84,6 +86,18 @@ class maintenanceBuildingController extends Controller
      */
     public function destroy($id)
     {
-
+        $result = building::findorfail($id);
+        try
+            {
+                $result->delete();
+                return response()->json(['done']);
+            }
+            catch(\Exception $e) {
+                if($e->errorInfo[1]==1451)
+                    return Response::json(['true',$result->description]);
+                else
+                    return Response::json(['true',$result,$e->errorInfo[1]]);
+            }
+        return response()->json(['done']);
     }
 }
