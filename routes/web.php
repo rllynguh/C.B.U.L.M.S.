@@ -22,6 +22,11 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::put('maintenance/banks/softdelete/{bank}', ['uses' => 'bankController@softdelete', 'as' => 'banks.softDelete']);
 
 
+	Route::resource('maintenance/content','contentController');
+	Route::get('maintenance/content/get/data', ['uses' => 'contentController@data', 'as' => 'content.getData']);
+	Route::put('maintenance/content/softdelete/{bank}', ['uses' => 'contentController@softdelete', 'as' => 'content.softDelete']);
+
+
 	Route::resource('maintenance/repr-positions','representativePositionController');
 	Route::get('maintenance/repr-positions/get/data', ['uses' => 'representativePositionController@data', 'as' => 'repr-positions.getData']);
 	Route::put('maintenance/repr-positions/softdelete/{id}', ['uses' => 'representativePositionController@softdelete', 'as' => 'repr-positions.softDelete']);

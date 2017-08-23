@@ -41,7 +41,7 @@
 				{{ Form::hidden('vetting_fee',$vettingfee,[
 					])
 				}}
-				{{ Form::hidden('fit_out_deposit',$fitout,[
+				{{ Form::hidden('fit_out',$fitout,[
 					])
 				}}
 				<h3>Tenant Information</h3>
@@ -178,7 +178,7 @@
 								</tr>
 								<tr>
 									<td>
-										Security Deposit({{$utilities->security_deposit_rate}} month(s) base Rent)
+										Security Deposit({{$utilities->security_deposit_rate}} month(s) base Rent - Reservation Fee if any)
 									</td>
 									<td>
 										₱ {{$securitydeposit}}
@@ -194,7 +194,7 @@
 								</tr>
 								<tr>
 									<td>
-										Vetting Fee ({{$utilities->vetting_fee}} * area)
+										Vetting Fee ({{$utilities->vetting_fee}} * area exclusive of vat)
 									</td>
 									<td>
 										₱ {{$vettingfee}}
@@ -237,7 +237,7 @@
 							])
 						}}
 						Billing Date
-						<input name="biilingDate" type="date">
+						<input name="billingDate" type="date">
 					</fieldset>
 					{{Form::close()}}
 
