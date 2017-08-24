@@ -3,6 +3,9 @@
     var current_page = 1;
     var total_page = 0;
     var is_ajax_fire = 0;
+    var load = 'buildings';
+    var link = [];
+    var _url;
     manageData();
     $.ajaxSetup({
         headers: {
@@ -11,9 +14,17 @@
     });
     /* manage data list */
     function manageData() {
+        if(load === 'buildings'){
+            _url = url;
+        }else if(load === 'floors'){
+            _url = url + "/" + link[0] + "/floors";
+            console.log(_url);
+            $("thead").html('<th class="align-center">Floor #</th><th class="align-center">Number of Units</th><th class="align-center">Status</th><th class="align-center">Action</th>');
+
+        }
         $.ajax({
             dataType: 'json',
-            url: url,
+            url: _url,
             data: {page:page}
         }).done(function(data){
 
@@ -34,7 +45,7 @@
             manageRow(data.data);
             is_ajax_fire = 1;
         });
-    }
+    };
 
     
 
@@ -42,7 +53,7 @@
     function getPageData() {
         $.ajax({
             dataType: 'json',
-            url: url,
+            url: _url,
             data: {page:page}
         }).done(function(data){
             manageRow(data[0].data);
@@ -53,25 +64,41 @@
     function manageRow(data) {
         var rows = '';
         $.each( data, function( key, value ) {
-            var status = 'inactive';
-            if(key.status = 1){
-                status = 'active';
+            if(load === 'buildings'){
+                var status = 'inactive';
+                if(key.status = 1){
+                    status = 'active';
+                }
+                rows = rows + '<tr>';
+                rows = rows + '<td>'+value.code+'</td>';
+                rows = rows + '<td> <a class = "buildingLink" href="#" data-id = "' + value.id + '">' 
+                +value.building_name+'</a></td>';
+                rows = rows + '<td>'+value.city_name+'</td>';
+                rows = rows + '<td>'+status+'</td>';
+                rows = rows + '<td data-id="'+value.id+'">';
+                        rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
+                        rows = rows + '<button class="btn btn-danger remove-item">Delete</button>';
+                        rows = rows + '</td>';
+                rows = rows + '</tr>';
+            }else if(load === 'floors'){
+                var status = 'inactive';
+                if(key.status = 1){
+                    status = 'active';
+                }
+                rows = rows + '<tr>';
+                rows = rows + '<td>'+value.number+'</td>';
+                rows = rows + '<td>'+value.num_of_unit+'</td>';
+                rows = rows + '<td>'+status+'</td>';
+                rows = rows + '<td data-id="'+value.id+'">';
+                rows = rows + '<button data-toggle="modal" data-target="#show-item" class="btn btn-primary show-item">Show units</button> ';
+                rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
+                rows = rows + '<button class="btn btn-danger remove-item">Delete</button>';
+                rows = rows + '</td>';
+                rows = rows + '</tr>';
             }
-            rows = rows + '<tr>';
-            rows = rows + '<td>'+value.code+'</td>';
-            rows = rows + '<td>'+value.building_name+'</td>';
-            rows = rows + '<td>'+value.city_name+'</td>';
-            rows = rows + '<td>'+status+'</td>';
-            rows = rows + '<td data-id="'+value.id+'">';
-                    rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
-                    rows = rows + '<button class="btn btn-danger remove-item">Delete</button>';
-                    rows = rows + '</td>';
-            rows = rows + '</tr>';
         });
-
         $("tbody").html(rows);
-    }
-
+    };
     /* Create new Item */
     $(".crud-submit").click(function(e){
         e.preventDefault();
@@ -91,7 +118,14 @@
         });
 
     });
-
+    /* Click building */
+    $("body").on("click",".buildingLink",function(){
+        load = "floors";
+        link[0] = $(this).attr("data-id")
+        console.log(link[0] + "," +load );
+        manageData();
+        //toastr.success('Item Created Successfully.', 'Success Alert', {timeOut: 5000});
+    });
     /* Remove Item */
     $("body").on("click",".remove-item",function(){
         var id = $(this).parent("td").data('id');

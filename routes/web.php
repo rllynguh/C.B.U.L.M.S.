@@ -19,6 +19,7 @@ Route::get('/', function () {
 	return view('welcome');
 });
 Route::get('test-manage','maintenanceBuildingController@manageItemAjax');
+Route::get('test/{id}/floors',['uses' => 'maintenanceBuildingController@getFloors', 'as' =>'test.getFloors']);
 Route::resource('test','maintenanceBuildingController');
 Route::group(['prefix' => 'tenant/'],function(){
 	Route::get('/', function () {

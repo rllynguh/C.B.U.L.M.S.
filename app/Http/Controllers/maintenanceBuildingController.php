@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Building;
+use App\Floor;
 use DB;
 class maintenanceBuildingController extends Controller
 {
@@ -21,9 +22,17 @@ class maintenanceBuildingController extends Controller
         ->join('addresses','buildings.address_id','addresses.id')
         ->join('cities','addresses.city_id',"cities.id")
         ->join('provinces','cities.province_id',"provinces.id")
-        ->select('cities.description as city_name','buildings.code as code','buildings.description as building_name','buildings.is_active as status')
+        ->select('cities.description as city_name','buildings.code as code','buildings.description as building_name','buildings.is_active as status',
+            'buildings.id as id')
         ->paginate(5);
         //$items = Building::latest()->paginate(5);
+        return response()->json($result);
+    }
+    public function getFloors($id){
+        $result=DB::table("floors")
+        ->where("building_id",$id)
+        ->paginate(5);
+        //$result = DB::table("floors")
         return response()->json($result);
     }
     /**

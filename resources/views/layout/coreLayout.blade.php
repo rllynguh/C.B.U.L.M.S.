@@ -363,7 +363,6 @@
 
     <!-- #END# Left Sidebar -->
   </section>
-
   <section class="content">
     @yield('content')
   </section>
