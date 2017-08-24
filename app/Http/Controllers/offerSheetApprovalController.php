@@ -140,7 +140,7 @@ class offerSheetApprovalController extends Controller
      ->where('registration_headers.is_forfeited','0')
      ->where('registration_details.is_rejected','0')
      ->where('offer_sheet_headers.id',$id)
-     ->select(DB::Raw('registration_details.id as regi_id,offer_sheet_details.id as offer_id, building_types.id as building_type_id,registration_details.building_type_id as ordered_building_type, building_types.description as building_type,units.code as unit_code, units.size as unit_size,registration_details.size_from, registration_details.size_to, units.type as unit_type,registration_details.unit_type as ordered_unit_type,floors.number as floor,registration_details.floor as ordered_floor,price * size as rate'))
+     ->select(DB::Raw('registration_details.id as regi_id,offer_sheet_details.id as offer_id, building_types.id as building_type_id,registration_details.building_type_id as ordered_building_type, building_types.description as building_type,units.code as unit_code, units.size as unit_size,registration_details.size_from, registration_details.size_to, units.type as unit_type,registration_details.unit_type as ordered_unit_type,floors.number as floor,registration_details.floor as ordered_floor,CONCAT("₱ ",price * size) as rate'))
      ->groupBy('registration_details.id')
      ->where('offer_sheet_headers.status','0')
      ->get();
@@ -149,9 +149,6 @@ class offerSheetApprovalController extends Controller
       return " <button type='button' id='btnChoose' class='btn bg-blue btn-circle waves-effect waves-circle waves-float btnChoose' value='$data->offer_id'><i class='mdi-action-visibility'></i></button>
       <input type='hidden' value='$data->offer_id' name='offer_id[]'>
       <input type='hidden' name='offer_is_active[]' id='offer$data->offer_id'value='1'><input id='remarks$data->offer_id' type='hidden' name='offer_remarks[]'>";
-    })
-     ->editColumn('rate', function ($data) {
-      return "P $data->rate";
     })
      ->editColumn('unit_type', function ($data) {
       $value="Raw";

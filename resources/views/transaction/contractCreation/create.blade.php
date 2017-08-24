@@ -236,6 +236,8 @@
 							'required' => 'required',
 							])
 						}}
+						Contract starting date
+						<input name="startDate" type="date">
 						Billing Date
 						<input name="billingDate" type="date">
 					</fieldset>

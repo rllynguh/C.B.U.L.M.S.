@@ -157,6 +157,9 @@ Route::group(['prefix' => 'tenant/'], function () {
 	Route::get('/transaction/requirementSubmission/get/data', ['uses' => 'requirementSubmissionController@data', 'as' => 'requirementSubmission.getData']);
 	Route::get('/transaction/requirementSubmission/showReqirements/{id}', ['uses' => 'requirementSubmissionController@showRequirements', 'as' => 'requirementSubmission.showRequirements']);
 	Route::get('/transaction/requirementSubmission/showPendingReqirements/{id}', ['uses' => 'requirementSubmissionController@showPendingRequirements', 'as' => 'requirementSubmission.showPendingRequirements']);
+
+	Route::resource("/transaction/contract","contractViewController");
+	Route::get('/transaction/contract/get/data', ['uses' => 'contractViewController@data', 'as' => 'contract.getData']);
 });
 
 

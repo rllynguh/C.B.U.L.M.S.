@@ -37,6 +37,7 @@ class reservationFeeCollectionController extends Controller
         ->where('registration_details.is_rejected',0)
         ->groupby('registration_headers.id')
         ->havingRaw('count(distinctrow registration_details.id) =count(case when offer_sheet_details.status = 1 then 1 else null end)')
+        ->whereRaw('registration_headers.id not in (Select registration_header_id from contract_headers)') //not yet signing a contract
         ->get();
 
         return Datatables::of($registration_headers)
@@ -97,6 +98,11 @@ class reservationFeeCollectionController extends Controller
     public function show($id)
     {
         //
+        $utilities=DB::table('utilities')
+        ->whereRaw('date_as_of=(Select Max(date_as_of) from utilities)')
+        ->select('utilities.*')
+        ->first();
+
         $reservation=DB::table('utilities')
         ->select('reservation_fee as fee')
         ->whereRaw("date_as_of=(SELECT MAX(date_as_of) from utilities) or isnull(date_as_of)")
@@ -118,7 +124,14 @@ class reservationFeeCollectionController extends Controller
         ->where('registration_headers.is_forfeited',0)
         ->where('registration_headers.id',$id)
         ->first();
-        return response::json($regi_detail);
+
+        $total=$regi_detail->fee;
+        $vat=$total*($utilities->vat_rate/100);
+        $subtotal=$vat+$total;
+        $ewt=$total*($utilities->ewt_rate/100);
+        $final=$subtotal-$ewt;
+
+        return response::json($final);
     }
 
     /**

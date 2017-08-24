@@ -28,7 +28,7 @@ $(document).ready(function()
   { 
    id=$(this).val();
    $.get(url + '/' + id, function (data) {
-    $('#divRes').append("Reservation fee( "+ data.month +"month(s) base rent): ₱ " +data.fee);
+    $('#divRes').append("Reservation fee: ₱ " +data);
     $("#myId").val(id);
     $('#modalReserve').modal('show');
   });

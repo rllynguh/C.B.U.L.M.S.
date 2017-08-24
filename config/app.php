@@ -168,7 +168,7 @@ return [
         Orangehill\Iseed\IseedServiceProvider::class,
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -235,6 +235,7 @@ return [
     'Validator' => Illuminate\Support\Facades\Validator::class,
     'View' => Illuminate\Support\Facades\View::class,
     'Image' => Intervention\Image\Facades\Image::class,
+    'PDF' => Barryvdh\DomPDF\Facade::class,
     
 
     ],

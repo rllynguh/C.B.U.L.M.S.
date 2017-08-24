@@ -135,7 +135,7 @@ class offerSheetController extends Controller
       ->where('registration_headers.id','=',$id)
       ->first();
       $result=DB::table('registration_details')
-      ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,(price * size) as rate'))
+      ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,Concat("₱ ",price*size) as rate'))
       ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
       ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
       ->leftJoin('units as offered_unit', function($join)
@@ -173,9 +173,6 @@ class offerSheetController extends Controller
           $value='Shell';
         return $value; 
       })
-      ->editColumn('rate', function ($data) {
-        return "P $data->rate"; 
-      })
       ->setRowId(function ($data) {
         return $data = 'id'.$data->id;
       }) 
@@ -190,7 +187,7 @@ class offerSheetController extends Controller
         registration_details.size_from,registration_details.size_to,
         offered_unit.size as offered_exact_size,
         ordered_building_type.description as ordered_building_type,
-        registration_details.floor as ordered_floor,price*size as rate'))
+        registration_details.floor as ordered_floor,Concat("₱ ",price*size) as rate'))
       ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
       ->leftJoin('units as offered_unit', function($join)
       {

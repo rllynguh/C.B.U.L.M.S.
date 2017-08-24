@@ -37,6 +37,7 @@ class requirementAssigningController extends Controller
             'registration_details.id',
             'offer_sheet_details.registration_detail_id')
         ->leftjoin('registration_requirements','registration_headers.id','registration_requirements.registration_header_id')
+        ->where('pdf','=',null)
         ->where('registration_details.is_forfeited','0')
         ->where('registration_details.is_rejected','0')
         ->groupby('registration_headers.id')
