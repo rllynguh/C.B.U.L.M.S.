@@ -9,15 +9,27 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+$buildings = DB::table('buildings as b')
+        ->join('building_types as btype', 'btype.id', '=','b.building_type_id')
+        ->select('b.id','b.description','b.num_of_floor','b.code','btype.description as type')->get();
+        return view('maintenance.test',compact('buildings'));
 */
 
 Route::get('/', function () {
 	return view('welcome');
 });
-Route::get('test', function () {
-	return view('maintenance/test');
+Route::get('/404',function(){
+	return view('utilities.error');
 });
-
+Route::get('test-manage','maintenanceBuildingController@manageItemAjax');
+Route::get('test/floors/{id}',['uses' => 'maintenanceBuildingController@getFloors', 'as' =>'test.getFloors']);
+Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits', 'as' =>'test.getUnits']);
+Route::resource('test','maintenanceBuildingController');
+Route::group(['prefix' => 'tenant/'],function(){
+	Route::get('/', function () {
+		return view('tenant.index');
+	});
+});
 Route::group(['prefix' => 'admin/'], function () {
 	Route::resource('maintenance/banks','bankController');
 	Route::get('maintenance/banks/get/data', ['uses' => 'bankController@data', 'as' => 'banks.getData']);

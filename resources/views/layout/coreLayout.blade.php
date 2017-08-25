@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta name="_token" content="{!! csrf_token() !!}" />
+  <meta name="_token" content="{{ csrf_token() }}" />
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, 
   user-scalable=no" name="viewport">
   <title>Majent | Lease Management System</title>
@@ -380,7 +380,6 @@
 
     <!-- #END# Left Sidebar -->
   </section>
-
   <section class="content">
     @yield('content')
   </section>
@@ -408,7 +407,7 @@
   {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
   {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-
+  
 </body>
 
 </html>
