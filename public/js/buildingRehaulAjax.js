@@ -143,6 +143,8 @@
         });
 
     });
+
+    /* Show Units */
     $("body").on("click",".show-units",function(){
         load = "units";
         link[1] = $(this).attr("data-id")
@@ -151,13 +153,12 @@
     });
 
 
-    /* Click building */
+    /* Show floors */
     $("body").on("click",".show-floors",function(){
         load = "floors";
         link[0] = $(this).attr("data-id")
         console.log(link[0] + "," +load );
         manageData();
-        //toastr.success('Item Created Successfully.', 'Success Alert', {timeOut: 5000});
     });
     /* Remove Item */
     $("body").on("click",".remove-item",function(){
@@ -190,7 +191,6 @@
         var form_action = $("#edit-item").find("form").attr("action");
         var title = $("#edit-item").find("input[name='title']").val();
         var description = $("#edit-item").find("textarea[name='description']").val();
-
         $.ajax({
             dataType: 'json',
             type:'PUT',

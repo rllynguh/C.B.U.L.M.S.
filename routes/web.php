@@ -18,6 +18,9 @@ $buildings = DB::table('buildings as b')
 Route::get('/', function () {
 	return view('welcome');
 });
+Route::get('/404',function(){
+	return view('utilities.error');
+});
 Route::get('test-manage','maintenanceBuildingController@manageItemAjax');
 Route::get('test/floors/{id}',['uses' => 'maintenanceBuildingController@getFloors', 'as' =>'test.getFloors']);
 Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits', 'as' =>'test.getUnits']);
