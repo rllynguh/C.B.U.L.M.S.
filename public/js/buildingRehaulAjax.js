@@ -17,10 +17,13 @@
         if(load === 'buildings'){
             _url = url;
         }else if(load === 'floors'){
-            _url = url + "/" + link[0] + "/floors";
+            _url = url + "/floors/" + link[0];
             console.log(_url);
             $("thead").html('<th class="align-center">Floor #</th><th class="align-center">Number of Units</th><th class="align-center">Status</th><th class="align-center">Action</th>');
-
+        }else if(load === 'units'){
+            _url = url + '/units/' + link[1];
+            console.log(_url);
+            $("thead").html('<th class="align-center">Unit ID</th><th class="align-center">Unit Type</th><th class="align-center">Area</th><th class="align-center">Rate</th><th class="align-center">Status</th><th class="align-center">Action</th>'); 
         }
         $.ajax({
             dataType: 'json',
@@ -71,14 +74,16 @@
                 }
                 rows = rows + '<tr>';
                 rows = rows + '<td>'+value.code+'</td>';
-                rows = rows + '<td> <a class = "buildingLink" href="#" data-id = "' + value.id + '">' 
-                +value.building_name+'</a></td>';
+                rows = rows + '<td>' + value.building_name + '</td>';
+                //rows = rows + '<td> <a class = "buildingLink" href="#" data-id = "' + value.id + '">' 
+                //+value.building_name+'</a></td>';
                 rows = rows + '<td>'+value.city_name+'</td>';
                 rows = rows + '<td>'+status+'</td>';
                 rows = rows + '<td data-id="'+value.id+'">';
-                        rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
-                        rows = rows + '<button class="btn btn-danger remove-item">Delete</button>';
-                        rows = rows + '</td>';
+                rows = rows + '<button data-target="#show-units" class="btn btn-primary show-floors" data-id = "' + value.id  +'">Show floors</button> ';
+                rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
+                rows = rows + '<button class="btn btn-danger remove-item">Delete</button>';
+                rows = rows + '</td>';
                 rows = rows + '</tr>';
             }else if(load === 'floors'){
                 var status = 'inactive';
@@ -90,7 +95,27 @@
                 rows = rows + '<td>'+value.num_of_unit+'</td>';
                 rows = rows + '<td>'+status+'</td>';
                 rows = rows + '<td data-id="'+value.id+'">';
-                rows = rows + '<button data-toggle="modal" data-target="#show-item" class="btn btn-primary show-item">Show units</button> ';
+                rows = rows + '<button data-target="#show-units" class="btn btn-primary show-units" data-id = "' + value.id  +'">Show units</button> ';
+                rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
+                rows = rows + '<button class="btn btn-danger remove-item">Delete</button>';
+                rows = rows + '</td>';
+                rows = rows + '</tr>';
+            }else if(load === 'units'){
+                var status = 'inactive';
+                if(key.status = 1){
+                    status = 'active';
+                }
+                var type = 'Raw'
+                if(value.type = 1){
+                    type = 'Shell';
+                }
+                rows = rows + '<tr>';
+                rows = rows + '<td>'+value.unit_code+'</td>';
+                rows = rows + '<td>'+type+'</td>';
+                rows = rows + '<td>'+value.size+'</td>';
+                rows = rows + '<td>'+value.price+'</td>';
+                rows = rows + '<td>'+status+'</td>';
+                rows = rows + '<td data-id="'+value.id+'">';
                 rows = rows + '<button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button> ';
                 rows = rows + '<button class="btn btn-danger remove-item">Delete</button>';
                 rows = rows + '</td>';
@@ -118,8 +143,16 @@
         });
 
     });
+    $("body").on("click",".show-units",function(){
+        load = "units";
+        link[1] = $(this).attr("data-id")
+        console.log(link[1] + "," +load );
+        manageData();
+    });
+
+
     /* Click building */
-    $("body").on("click",".buildingLink",function(){
+    $("body").on("click",".show-floors",function(){
         load = "floors";
         link[0] = $(this).attr("data-id")
         console.log(link[0] + "," +load );

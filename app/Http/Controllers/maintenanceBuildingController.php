@@ -35,6 +35,18 @@ class maintenanceBuildingController extends Controller
         //$result = DB::table("floors")
         return response()->json($result);
     }
+    public function getUnits($id){
+        $result=DB::table("units")
+      ->select(DB::Raw('Coalesce(price,1) as price,buildings.description,floors.number as floor_number,units.code as unit_code,units.type,units.size,units.is_active,units.id'))
+      ->join("floors","units.floor_id","floors.id")
+      ->join("buildings","floors.building_id","buildings.id")
+      ->join("building_types","buildings.building_type_id","building_types.id")
+      ->leftJoin('unit_prices','units.id','unit_prices.unit_id')
+      ->whereRaw("unit_prices.date_as_of=(SELECT MAX(unit_prices.date_as_of) from unit_prices where unit_id=units.id) or isnull(unit_prices.date_as_of)")
+      ->where("buildings.is_active",1)
+      ->paginate(5);
+        return response()->json($result);
+    }
     /**
      * Show the form for creating a new resource.
      *
