@@ -8,6 +8,7 @@ use Datatables;
 use DB;
 use Auth;
 use PDF;
+use App\CurrentContract;
 
 class contractViewController extends Controller
 {
@@ -20,10 +21,10 @@ class contractViewController extends Controller
     {
         //
 
-     return view('transaction.contractView.index');
- }
- public function data()
- {
+       return view('transaction.contractView.index');
+   }
+   public function data()
+   {
     $contracts=DB::table('current_contracts')
     ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
     ->join('registration_headers','contract_headers.registration_header_id','registration_headers.id')
@@ -34,6 +35,7 @@ class contractViewController extends Controller
     ->select(DB::raw('current_contracts.id,current_contracts.date_issued, contract_headers.code,CONCAT(admin.first_name," ",admin.last_name) as full_name,count(distinctrow contract_details.id) as unit_count'))
     ->where('tenant.id',Auth::user()->id)
     ->whereRaw('current_contracts.date_issued=(Select Max(date_issued) from current_contracts where contract_header_id=contract_headers.id)')
+    ->where('current_contracts.status',0)
     ->groupBy('current_contracts.id')
     ->get();
     return Datatables::of($contracts)
@@ -66,6 +68,14 @@ public function create()
 public function store(Request $request)
 {
         //
+    $id=$request->myId;
+    if(!is_null($request->aggree))
+    {
+        $current_contract=CurrentContract::find($id);
+        $current_contract->status=1;
+        $current_contract->save();
+    }
+    return redirect(route('contract.index'));
 }
 
 /**
@@ -77,25 +87,15 @@ public function store(Request $request)
 public function show($id)
 {
         //
-    $contract=db::table('current_contracts')
-    ->join('users','current_contracts.user_id','users.id')
+    $current_contract=DB::table('current_contracts')
+    ->select(DB::raw('current_contracts.id,pdf,code,CONCAT(first_name," " ,last_name) as lessor,date_issued'))
+    ->join('users','user_id','users.id')
     ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
     ->where('current_contracts.id',$id)
-    ->select(DB::raw('date_issued,start_of_contract,end_of_contract, Concat(first_name," ",last_name) as full_name,code'))
-    ->first();
-    $units=db::table('units')
-    ->join('contract_details','units.id','contract_details.unit_id')
-    ->where('current_contract_id',$id)
-    ->select(DB::raw('code,price * size as price'))
-    ->get();
-    $billing_details=DB::table('billing_details')
-    ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
-    ->where('billing_headers.current_contract_id',$id)
-    ->select('description','price')
-    ->get()
+    ->first()
     ;
-    $pdf = PDF::loadView('transaction.contractView.show',compact('contract', 'units','billing_details'));
-    return $pdf->stream();
+    return view('transaction.contractView.show')
+    ->withCurrentcontract($current_contract);
 }
 
 /**

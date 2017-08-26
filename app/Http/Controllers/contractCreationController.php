@@ -15,6 +15,7 @@ use App\BillingHeader;
 use Auth;
 use Carbon\Carbon;
 use Config;
+use PDF;
 
 class contractCreationController extends Controller
 {
@@ -27,9 +28,9 @@ class contractCreationController extends Controller
     {
       $this->middleware('admin');
       $this->middleware('auth');
-    }
-    public function data()
-    {
+  }
+  public function data()
+  {
       $result=DB::table('registration_headers')
       ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,business_types.description as business,count(distinct registration_details.id) as unit_count'))
       ->join('tenants','registration_headers.tenant_id','tenants.id')
@@ -50,19 +51,19 @@ class contractCreationController extends Controller
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
         return "<a href=".route('contract-create.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>";
-      })
+    })
       ->setRowId(function ($data) {
         return $data = 'id'.$data->id;
-      }) 
+    }) 
       ->rawColumns(['action'])
       ->make(true)
       ;
-    }
-    public function index()
-    {
+  }
+  public function index()
+  {
         //
       return view('transaction.contractCreation.index');
-    }
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -134,116 +135,151 @@ class contractCreationController extends Controller
           $contract_detail->unit_id=$unit->id;
           $contract_detail->price=$unit->price;
           $contract_detail->save();
-        }
+      }
 
-        $latest=DB::table("billing_headers")
-        ->select("billing_headers.*")
-        ->orderBy('code',"DESC")
-        ->first();
-        $code="BILL";
-        if(!is_null($latest))
+      $latest=DB::table("billing_headers")
+      ->select("billing_headers.*")
+      ->orderBy('code',"DESC")
+      ->first();
+      $code="BILL";
+      if(!is_null($latest))
           $code=$latest->code;
-        $sc= new smartCounter();
-        $code=$sc->increment($code);
+      $sc= new smartCounter();
+      $code=$sc->increment($code);
 
 
-        $billing_header=new BillingHeader();
-        $billing_header->user_id=Auth::user()->id;
-        $billing_header->code=$code;
-        $billing_header->current_contract_id=$current_contract->id;
-        $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
-        $billing_header->save();
+      $billing_header=new BillingHeader();
+      $billing_header->user_id=Auth::user()->id;
+      $billing_header->code=$code;
+      $billing_header->current_contract_id=$current_contract->id;
+      $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
+      $billing_header->save();
 
 
-        $rent=DB::table('billing_items')
-        ->select('id')
-        ->where('description','Rent')
-        ->first()->id
-        ;
-        $billing_detail=new BillingDetail();
-        $billing_detail->billing_header_id=$billing_header->id;
-        $billing_detail->billing_item_id=$rent;
-        $billing_detail->description="The net rent value.";
-        $billing_detail->price=$request->net_rent;
-        $billing_detail->save();
+      $rent=DB::table('billing_items')
+      ->select('id')
+      ->where('description','Rent')
+      ->first()->id
+      ;
+      $billing_detail=new BillingDetail();
+      $billing_detail->billing_header_id=$billing_header->id;
+      $billing_detail->billing_item_id=$rent;
+      $billing_detail->description="The net rent value.";
+      $billing_detail->price=$request->net_rent;
+      $billing_detail->save();
 
-        $advance_rent=DB::table('billing_items')
-        ->select('id')
-        ->where('description','Advance Rent')
-        ->first()->id
-        ;
-        $billing_detail=new BillingDetail();
-        $billing_detail->billing_header_id=$billing_header->id;
-        $billing_detail->billing_item_id=$advance_rent;
-        $billing_detail->description="The advance rent payment. Worth $utilities->advance_rent_rate month(s).";
-        $billing_detail->price=$request->advance_rent;
-        $billing_detail->save();
+      $advance_rent=DB::table('billing_items')
+      ->select('id')
+      ->where('description','Advance Rent')
+      ->first()->id
+      ;
+      $billing_detail=new BillingDetail();
+      $billing_detail->billing_header_id=$billing_header->id;
+      $billing_detail->billing_item_id=$advance_rent;
+      $billing_detail->description="The advance rent payment. Worth $utilities->advance_rent_rate month(s).";
+      $billing_detail->price=$request->advance_rent;
+      $billing_detail->save();
 
-        $cusa=DB::table('billing_items')
-        ->select('id')
-        ->where('description','CUSA Fee')
-        ->first()->id
-        ;
-        $billing_detail=new BillingDetail();
-        $billing_detail->billing_header_id=$billing_header->id;
-        $billing_detail->billing_item_id=$cusa;
-        $billing_detail->description="$utilities->cusa_rate /sqm, plus VAT less 2% withholding tax, per month";
-        $billing_detail->price=$request->cusa;
-        $billing_detail->save();
+      $cusa=DB::table('billing_items')
+      ->select('id')
+      ->where('description','CUSA Fee')
+      ->first()->id
+      ;
+      $billing_detail=new BillingDetail();
+      $billing_detail->billing_header_id=$billing_header->id;
+      $billing_detail->billing_item_id=$cusa;
+      $billing_detail->description="$utilities->cusa_rate /sqm, plus VAT less 2% withholding tax, per month";
+      $billing_detail->price=$request->cusa;
+      $billing_detail->save();
 
-        $security_deposit=DB::table('billing_items')
-        ->select('id')
-        ->where('description','Security Deposit')
-        ->first()->id
-        ;
-        $billing_detail=new BillingDetail();
-        $billing_detail->billing_header_id=$billing_header->id;
-        $billing_detail->billing_item_id=$security_deposit;
-        $billing_detail->description="The security deposit. Worth $utilities->security_deposit_rate month(s) Base Rent.";
-        $billing_detail->price=$request->security_deposit;
-        $billing_detail->save();
+      $security_deposit=DB::table('billing_items')
+      ->select('id')
+      ->where('description','Security Deposit')
+      ->first()->id
+      ;
+      $billing_detail=new BillingDetail();
+      $billing_detail->billing_header_id=$billing_header->id;
+      $billing_detail->billing_item_id=$security_deposit;
+      $billing_detail->description="The security deposit. Worth $utilities->security_deposit_rate month(s) Base Rent.";
+      $billing_detail->price=$request->security_deposit;
+      $billing_detail->save();
 
-        $vetting_fee=DB::table('billing_items')
-        ->select('id')
-        ->where('description','Vetting Fee')
-        ->first()->id
-        ;
-        $billing_detail=new BillingDetail();
-        $billing_detail->billing_header_id=$billing_header->id;
-        $billing_detail->billing_item_id=$vetting_fee;
-        $billing_detail->description="$utilities->vetting_fee / sqm exclusive of vat";
-        $billing_detail->price=$request->vetting_fee;
-        $billing_detail->save();
+      $vetting_fee=DB::table('billing_items')
+      ->select('id')
+      ->where('description','Vetting Fee')
+      ->first()->id
+      ;
+      $billing_detail=new BillingDetail();
+      $billing_detail->billing_header_id=$billing_header->id;
+      $billing_detail->billing_item_id=$vetting_fee;
+      $billing_detail->description="$utilities->vetting_fee / sqm exclusive of vat";
+      $billing_detail->price=$request->vetting_fee;
+      $billing_detail->save();
 
-        $fit_out=DB::table('billing_items')
-        ->select('id')
-        ->where('description','Fit-out Deposit')
-        ->first()->id
-        ;
-        $billing_detail=new BillingDetail();
-        $billing_detail->billing_header_id=$billing_header->id;
-        $billing_detail->billing_item_id=$fit_out;
-        $billing_detail->description="Fit out Deposit. $utilities->fit_out_deposit month(s) rent";
-        $billing_detail->price=$request->fit_out;
-        $billing_detail->save();
+      $fit_out=DB::table('billing_items')
+      ->select('id')
+      ->where('description','Fit-out Deposit')
+      ->first()->id
+      ;
+      $billing_detail=new BillingDetail();
+      $billing_detail->billing_header_id=$billing_header->id;
+      $billing_detail->billing_item_id=$fit_out;
+      $billing_detail->description="Fit out Deposit. $utilities->fit_out_deposit month(s) rent";
+      $billing_detail->price=$request->fit_out;
+      $billing_detail->save();
 
 
-        foreach ($request->contents as $content) {
+      foreach ($request->contents as $content) {
           $contract_content=new ContractContent();
           $contract_content->contract_header_id=$contract_header->id;
           $contract_content->content_id=$content;
           $contract_content->save();
-        }
-        DB::commit();
-        return redirect(route('contract-create.index'));
       }
-      catch(\Exception $e)
-      {
-       DB::rollBack();
-       dd($e);
-     }
 
-   }
+      $contract=db::table('current_contracts')
+      ->join('users','current_contracts.user_id','users.id')
+      ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
+      ->where('current_contracts.id',$current_contract->id)
+      ->select(DB::raw('date_issued,start_of_contract,end_of_contract, Concat(first_name," ",last_name) as full_name,code'))
+      ->first();
+
+      $units=db::table('units')
+      ->join('contract_details','units.id','contract_details.unit_id')
+      ->where('current_contract_id',$current_contract->id)
+      ->select(DB::raw('code,CONCAT("₱",price * size) as price'))
+      ->get();
+
+      $billing_details=DB::table('billing_details')
+      ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
+      ->where('billing_headers.current_contract_id',$current_contract->id)
+      ->select(DB::RAW('description,CONCAT("₱ ",price) as price'))
+      ->get()
+      ;
+      $contents=DB::table('contents')
+      ->join('contract_contents','contents.id','contract_contents.content_id')
+      ->join('current_contracts','contract_contents.contract_header_id','current_contracts.id')
+      ->select('description')
+      ->where('current_contracts.id',$current_contract->id)
+      ->get();
+
+      $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents'));
+      $date_issued=date_format($current_contract->date_issued,"Y-m-d");
+      $pdfName="$contract_header->code($date_issued).pdf";
+      $location=public_path("docs/$pdfName");
+      $pdf->save($location);
+      $current_contract->pdf=$pdfName;
+      $current_contract->save();
+
+      DB::commit();
+      return redirect(route('contract-create.index'));
+  }
+  catch(\Exception $e)
+  {
+   DB::rollBack();
+   dd($e);
+}
+
+}
     /**
      * Display the specified resource.
      *
@@ -282,17 +318,17 @@ class contractCreationController extends Controller
      return Datatables::of($units)
      ->editColumn('rate', function ($data) {
       return "$data->rate sqm";
-    })
+  })
      ->setRowId(function ($data) {
       return $data = 'id'.$data->id;
-    }) 
+  }) 
      ->rawColumns(['rate'])
      ->make(true)
      ;
 
-   }
-   public function show($id)
-   {
+ }
+ public function show($id)
+ {
         //
      $utilities=DB::table('utilities')
      ->whereRaw('date_as_of=(Select Max(date_as_of) from utilities)')
@@ -342,7 +378,7 @@ class contractCreationController extends Controller
      $advance_rent=$utilities->advance_rent_rate*$final;
      if($subquery->is_reserved==1)
       $security_deposit=($utilities->security_deposit_rate*$total) - ($final* $utilities->reservation_fee);
-    else
+  else
       $security_deposit=$utilities->security_deposit_rate*$total;
      $cusa_size=100; //tentative cusa size
      $cusa=($utilities->cusa_rate * $cusa_size) - ($utilities->cusa_rate * $cusa_size* 0.02); //tentative 2 %
@@ -367,7 +403,7 @@ class contractCreationController extends Controller
      ->withId($id)
      ;
 
-   }
+ }
 
    /**
      * Show the form for editing the specified resource.
@@ -402,6 +438,6 @@ class contractCreationController extends Controller
    {
         //
    }
- }
+}
    // isang record lang ang pinapakita sa contract create show
    // dapat 1 ung default value ng status ng details sa offersheet approval

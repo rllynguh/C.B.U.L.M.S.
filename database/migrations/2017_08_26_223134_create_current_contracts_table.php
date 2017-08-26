@@ -21,6 +21,8 @@ class CreateCurrentContractsTable extends Migration {
 			$table->date('date_of_billing');
 			$table->date('end_of_contract');
 			$table->date('start_of_contract');
+			$table->string('pdf', 60);
+			$table->boolean('status')->default(0);
 		});
 	}
 

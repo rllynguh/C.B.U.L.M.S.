@@ -136,6 +136,11 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/reservationFeeCollection","reservationFeeCollectionController");
 	Route::get('/transaction/reservationFeeCollection/get/data', ['uses' => 'reservationFeeCollectionController@data', 'as' => 'reservationFeeCollection.getData']);
 
+	Route::resource("/transaction/move-in","moveInController");
+	Route::get('/transaction/move-in/get/data', ['uses' => 'moveInController@data', 'as' => 'move-in.getData']);
+
+	Route::resource("/transaction/collection","collectionController");
+	Route::get('/transaction/move-collection/get/data', ['uses' => 'collectionController@data', 'as' => 'collection.getData']);
 });
 
 
