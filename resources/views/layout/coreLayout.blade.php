@@ -247,18 +247,9 @@
               <span>Offer Sheets Approval</span>
             </a>
           </li>
-<<<<<<< HEAD
-=======
           <li>
             <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
-              <i class="mdi-communication-business"></i>
-              <span>Reservation Fee Collection</span>
-            </a>
-          </li>
->>>>>>> 9ab5ca6cb2d32add0e49ca01d33f01c036356c7b
-          <li>
-            <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
-              <i class="mdi-communication-business"></i>
+              <i class="mdi-maps-local-atm"></i>
               <span>Reservation Fee Collection</span>
             </a>
           </li>
@@ -333,8 +324,8 @@
           </li>
           <li>
             <a href="{{route('move-in.index')}}" class="waves-yellow">
-              <i class="mdi-action-payment"></i>
-              <span>Move in</span>
+              <i class="mdi-action-exit-to-app"></i>
+              <span>Move In</span>
             </a>
           </li>
           <li>
