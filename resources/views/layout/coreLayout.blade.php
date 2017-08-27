@@ -61,13 +61,12 @@
     <aside id="leftsidebar" class="sidebar">
       <div class="user-info">
         <div class="image p-l-80">
-
           <img src="{{-- {{ asset('images/'.Auth::user()->picture) }} --}}{{asset('images/user.png')}} " class="user-image" height="60" width="60" alt="User Image">
         </div>
-        <div class="info-container">
+        <div class="info-container m-t--10">
           <div class="name align-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Christopher Atienza{{-- {{Auth::user()->first_name }} {{Auth::user()->last_name}} --}}</div>
           <div class="email align-center">Christopher@yahoo.com{{-- {{Auth::user()->email}} --}}</div>
-          <div class="btn-group user-helper-dropdown">
+          <div class="btn-group user-helper-dropdown m-b-15">
             <i class="mdi-hardware-keyboard-arrow-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
             <ul class="dropdown-menu pull-right">
               <li><a href="javascript:void(0);" class="waves-lime"><i class="mdi-social-person pull-left"></i>Profile</a></li>
@@ -77,16 +76,17 @@
               <li><a href="javascript:void(0);" class="waves-lime"><i class="mdi-action-grade pull-left"></i>Likes</a></li>
               <li role="seperator" class="divider"></li>
               <li>
-              {{--  <a href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-               document.getElementById('logout-form').submit();">
-               Logout
-             </a>
+                  <a href="{{ route('logout') }}"
+                  onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();" class="waves-lime">
+                  <i class="mdi-action-exit-to-app pull-left"></i>
+                  Logout
+                  </a>
 
-             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-              {{ csrf_field() }}
-            </form> --}}
-          </li>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                  </form>
+              </li>
         </ul>
       </div>
     </div>
@@ -190,19 +190,19 @@
           </li>
           <li>
             <a href="{{route("businesstypes.index")}}" class="waves-yellow">
-              <i class="mdi-social-group"></i>
+              <i class="mdi-action-wallet-travel"></i>
               <span>Business Type</span>
             </a>
           </li>
           <li>
             <a href="{{route("requirements.index")}}" class="waves-yellow">
-              <i class="mdi-social-group"></i>
+              <i class="mdi-file-folder-open"></i>
               <span>Requirements</span>
             </a>
           </li>
           <li>
             <a href="{{route("repr-positions.index")}}" class="waves-yellow">
-              <i class="mdi-action-account-balance-wallet"></i>
+              <i class="mdi-social-person-outline"></i>
               <span>Representative Position</span>
             </a>
           </li>
@@ -225,19 +225,19 @@
           </li>
           <li>
             <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
-              <i class="mdi-action-assignment-ind"></i>
+              <i class="mdi-action-assignment-turned-in"></i>
               <span>Registration Approval</span>
             </a>
           </li>
           <li>
             <a href="{{route('offersheets.index')}}" class="waves-yellow">
-              <i class="mdi-action-thumbs-up-down"></i>
+              <i class="mdi-image-switch-camera"></i>
               <span>Offer Sheets</span>
             </a>
           </li>
           <li>
             <a href="{{route('registrationForfeit.index')}}" class=" waves-yellow">
-              <i class="mdi-action-thumbs-up-down"></i>
+              <i class="mdi-action-delete"></i>
               <span>Registration Forfeit</span>
             </a>
           </li>
@@ -250,7 +250,7 @@
 
           <li>
             <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-              <i class="mdi-communication-business"></i>
+              <i class="mdi-file-folder-open"></i>
               <span>Requirements</span>
             </a>
             <ul class="ml-menu">
