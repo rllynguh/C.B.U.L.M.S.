@@ -247,6 +247,15 @@
               <span>Offer Sheets Approval</span>
             </a>
           </li>
+<<<<<<< HEAD
+=======
+          <li>
+            <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
+              <i class="mdi-communication-business"></i>
+              <span>Reservation Fee Collection</span>
+            </a>
+          </li>
+>>>>>>> 9ab5ca6cb2d32add0e49ca01d33f01c036356c7b
           <li>
             <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
               <i class="mdi-communication-business"></i>
