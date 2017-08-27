@@ -26,8 +26,8 @@
                  {{ Form::number('txtRate',null,[
                   'id'=> 'txtRate',
                   'autocomplete' => 'off',
-                  'min' => '400',
-                  'max' => '2000',
+                  'min' => '100',
+                  'max' => '1000',
                   'class' => 'form-control text-center',
                   'required' => 'required',
                   'placeholder' => 'rate/sqm/month',

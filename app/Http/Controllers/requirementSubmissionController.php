@@ -30,7 +30,7 @@ class requirementSubmissionController extends Controller
     public function data()
     {
         $result=DB::table('registration_headers')
-        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(Distinctrow registration_details.id) as unit_count ,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 then 1 else null end) as pending_items,count(distinctrow Case when registration_requirements.status = 1 then 1 else null end ) as fulfiilled, count(distinctrow Case when registration_requirements.status != 1 then 1 else null end ) as unfulfillesd'))
+        ->select(DB::Raw('registration_headers.id,registration_headers.code,business_types.description as business,count(Distinctrow registration_details.id) as unit_count ,CONCAT(lessor_user.first_name," ",lessor_user.last_name) as name,count(case when registration_requirements.status != 1 then 1 else null end) as pending_items,offer_sheet_details.status'))
         ->join('users as lessor_user','registration_headers.user_id','lessor_user.id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('users as tenant_user','tenants.user_id','tenant_user.id')
@@ -51,13 +51,17 @@ class requirementSubmissionController extends Controller
         ->where('offer_sheet_details.status','1')
         ->where('offer_sheet_headers.status','1')
         ->groupby('registration_headers.id')
-        ->havingRaw('count(Distinctrow registration_details.id) =count(Distinctrow case when offer_sheet_details.status = 1 then 1 else null end) and count(distinctrow registration_requirements.status) > count(distinctrow Case when registration_requirements.status =1 then 1 else null end )')
+        ->havingRaw('count(Distinctrow registration_details.id) =count(Distinctrow offer_sheet_details.id) and count(registration_requirements.id) > count(  Case when registration_requirements.status =1 then 1 else null end ) and offer_sheet_details.status = 1')
         ->get()
         ;   
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
             return '<button id="btnShowRequirements" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value= "'.route('requirementSubmission.showRequirements',$data->id).'"><i class="mdi-action-visibility"></i></button>
             <button id="btnShowPendingRequirements" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value= "'.$data->id.'"><i class="mdi-content-add"></i></button>'
+            ;
+        })
+        ->editColumn('pending_items', function ($data) {
+            return $data->pending_items/$data->unit_count
             ;
         })
         ->setRowId(function ($data) {

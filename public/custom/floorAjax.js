@@ -161,6 +161,8 @@ $(document).ready(function()
           $.notify("The record has been successfully stored!", "success");
           getLatestUnit();
           $("#txtArea").val("");
+          $("#txtPrice").val("");
+          console.log($("#txtPrice").val());
           setTimeout(function(){
             $("#btnSaveUnit").removeAttr('disabled');
           }, 1000);
@@ -169,7 +171,8 @@ $(document).ready(function()
           console.log('Error:', data);
         }
       });
-    }});
+    }
+  });
 
 
   function successPrompt(){
@@ -178,6 +181,8 @@ $(document).ready(function()
       title="Record Successfully Stored!";
     $.notify(title, "success");
   }
+
+
 
   //for quering latest unit number
   function getLatestUnit()
@@ -196,6 +201,8 @@ $(document).ready(function()
     });
   }
 
+
+
   //for toggling between add and edit
   function changeLabel()
   {
@@ -210,6 +217,8 @@ $(document).ready(function()
     $('#label').replaceWith(label);
   }
 
+
+
   //for querying latest floor Number
   function getLatest()
   {
@@ -221,6 +230,7 @@ $(document).ready(function()
      });
     }
   }
+
 
   //for querying list of building
   function getBuilding()
@@ -242,6 +252,7 @@ $(document).ready(function()
     });
   }
 
+
   //for when floor modal gets closed
   $(document).on('hidden.bs.modal','#myModal', function () {
     $("#myForm").trigger('reset');
@@ -249,16 +260,19 @@ $(document).ready(function()
     $("#comBuilding").removeAttr("disabled");
   });
 
+
   //for when unit modal gets closed
   $(document).on('hidden.bs.modal','#modalUnit', function () {
     $("#frmUnit").trigger('reset');
     $('#frmUnit').parsley().destroy();
   });
 
+
   //for when user selects building
   $("#comBuilding").change(function(data){
     getLatest();
   });
+
 
 
   $(this).on('click', '#btnPrice',function()
