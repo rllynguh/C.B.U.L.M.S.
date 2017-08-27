@@ -27,7 +27,7 @@ class unitController extends Controller
     public function data()
     {
       $result=DB::table("units")
-      ->select(DB::Raw('Coalesce(price,1) as price,buildings.description,floors.number as floor_number,units.code as unit_code,units.type,units.size,units.is_active,units.id'))
+      ->select(DB::Raw('Coalesce(price * units.size,1) as price,buildings.description,floors.number as floor_number,units.code as unit_code,units.type,units.size,units.is_active,units.id'))
       ->join("floors","units.floor_id","floors.id")
       ->join("buildings","floors.building_id","buildings.id")
       ->join("building_types","buildings.building_type_id","building_types.id")

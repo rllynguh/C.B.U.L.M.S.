@@ -49,6 +49,22 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'deleted_at' => NULL,
             ),
+            2 => 
+            array (
+                'id' => 3,
+                'type' => 'tenant',
+                'first_name' => 'Jose',
+                'middle_name' => 'Fetemanaldo',
+                'last_name' => 'Santiago',
+                'email' => 'jose@yahoo.com',
+                'password' => '$2y$10$mxi2Oaq2jr7h/dF6R4doLuYIehYJguRT4wQT9zH3mUeBUF5pBvDdO',
+            'cell_num' => '+09 (121) 209-0',
+                'picture' => '5d05461aaef1ced923513112096a5b7a.png',
+                'is_active' => 0,
+                'last_log_at' => NULL,
+                'remember_token' => NULL,
+                'deleted_at' => NULL,
+            ),
         ));
         
         

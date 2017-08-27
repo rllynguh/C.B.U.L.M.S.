@@ -25,7 +25,7 @@ $(document).ready(function()
 			url: url,
 			data: $("#frmRequirement").serialize(),
 			success: function (data) {
-				$('#modalChoose').modal('hide');
+				window.location.replace(urlhome)
 			},
 			error: function (data) {
 				console.log('Error:', data.responseText);

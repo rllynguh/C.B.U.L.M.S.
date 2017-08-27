@@ -156,11 +156,11 @@
                 {{ Form::number('txtPrice',null,[
                   'id'=> 'txtPrice',
                   'required' => 'required',
-                  'min' => '1000',
-                  'max' => '99999',
+                  'min' => '100',
+                  'max' => '1000',
                   'data-parsley-type' => 'number',
                   'autocomplete' => 'off',
-                  'placeholder' => 'sqm',
+                  'placeholder' => 'P',
                   'step' => '0.01',
                   'class' => 'form-control text-center',
                   ])

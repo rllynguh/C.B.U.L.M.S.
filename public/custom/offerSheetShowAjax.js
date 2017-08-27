@@ -22,7 +22,7 @@ $(document).ready(function()
 		{data: 'unit_type'},
 		{data: 'floor'},
 		{data: 'unit_select'},
-		{data: 'price'},
+		{data: 'rate'},
 		{data: 'choose'}
 		]
 	}); 
@@ -40,8 +40,8 @@ $(document).ready(function()
 				if(value.offered_exact_size>=value.size_from && value.offered_exact_size<=value.size_to)
 					mode='success';
 				size="Size : <small class='label label-" + mode + "'>"+ value.offered_exact_size +" sqm</small>";
-				price="Prize: <small class='label label-success'>P "+ value.price +"</small>";
-				options+="<input class='myRadio' type='radio' name='unit_option' value='"+ value.unit_id +"'><input disabled type='text' value='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'> " + size + price + "<br>";
+				rate="Prize: <small class='label label-success'>"+ value.rate +"</small>";
+				options+="<input class='myRadio' type='radio' name='unit_option' value='"+ value.unit_id +"'><input disabled type='text' value='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'> " + size + rate + "<br>";
 			});
 			$("#divOptions").append(options);
 		});

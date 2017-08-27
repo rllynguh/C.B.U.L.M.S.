@@ -19,7 +19,7 @@ $(document).ready(function()
     {data: 'regi_id'},
     {data: 'offer_id'},
     {data: 'unit_code'},
-    {data: 'price'},
+    {data: 'rate'},
     {data: 'building_type'},
     {data: 'unit_size'},
     {data: 'unit_type'},
