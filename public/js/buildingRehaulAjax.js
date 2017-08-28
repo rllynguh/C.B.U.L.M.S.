@@ -237,10 +237,10 @@ $(document).ready(function()
 function getBuildingType()
 {
  $.get(urlbtype, function (data) {
-  $('#comBuilType').children('option').remove();
+  $('#building_type').children('option').remove();
   $.each(data,function(index,value)
   {
-    $('#comBuilType').append($('<option>', {value:value.id, text:value.description}));
+    $('#building_type').append($('<option>', {value:value.id, text:value.description}));
   });
 });
 }
@@ -249,10 +249,10 @@ function getBuildingType()
 function getProvince()
 {
   $.get(urlprov, function (data) {
-    $('#comProvince').children('option').remove();
+    $('#building_province').children('option').remove();
     $.each(data,function(index,value)
     {
-      $('#comProvince').append($('<option>', {value:value.id, text:value.description}));
+      $('#building_province').append($('<option>', {value:value.id, text:value.description}));
     });
     getCity();
   });
@@ -262,17 +262,17 @@ function getProvince()
 //for querying list of city
 function getCity()
 {
-  $.get('/custom/getCity/' + $("#comProvince").val(), function (data) {
-    $('#comCity').children('option').remove();
+  $.get('/custom/getCity/' + $("#building_province").val(), function (data) {
+    $('#building_city').children('option').remove();
     $.each(data,function(index,value)
     {
-      $('#comCity').append($('<option>', {value:value.id, text:value.description}));
+      $('#building_city').append($('<option>', {value:value.id, text:value.description}));
     });
   });
 }
 
 //for querying city when user selects province
-$("#comProvince").change(function(data){
+$("#building_province").change(function(data){
   getCity();
 });
 /*

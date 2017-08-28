@@ -133,33 +133,32 @@ class maintenanceBuildingController extends Controller
      */
     public function store(Request $request)
     {
-        //$create = Building::create($request->all());
         $latest=DB::table("buildings")
         ->select("buildings.*")
         ->orderBy('buildings.code',"DESC")
         ->join('building_types','buildings.building_type_id','building_types.id')
         ->join('addresses','buildings.address_id','addresses.id')
-        ->where('buildings.building_type_id',$request->comBuilType)
+        ->where('buildings.building_type_id',$request->building_type)
         ->first();
-        $btype=BuildingType::find($request->comBuilType);
-        $pk="BLDG".strtoupper(substr($btype->description, 0, 3));
+        $btype=BuildingType::find($request->building_type);
+        $pk="BLDG".strtoupper(substr($btype->building_name, 0, 3));
         if(!is_null($latest))
             $pk=$latest->code;
         $sc= new smartCounter();
         $pk=$sc->increment($pk);
         $address=new address();
-        $address->number=$request->txtAddressNo;
-        $address->street=$request->txtStreet;
-        $address->district=$request->txtDistrict;
-        $address->city_id=$request->comCity;
+        $address->number=$request->building_address;
+        $address->street=$request->building_street;
+        $address->district=$request->building_district;
+        $address->city_id=$request->building_city;
         $address->save();
         try
         {
             $result=new building();
             $result->code=$pk;
-            $result->description=$request->txtBuildingDesc;
-            $result->building_type_id=$request->comBuilType;
-            $result->num_of_floor=$request->txtNumFloors;
+            $result->description=$request->building_name;
+            $result->building_type_id=$request->building_type;
+            $result->num_of_floor=$request->building_num_of_floors;
             $result->address_id=$address->id;
             $result->save();
             return response()->json($result);
