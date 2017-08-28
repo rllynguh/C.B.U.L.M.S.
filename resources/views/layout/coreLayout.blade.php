@@ -247,7 +247,12 @@
               <span>Offer Sheets Approval</span>
             </a>
           </li>
-
+          <li>
+            <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
+              <i class="mdi-communication-business"></i>
+              <span>Reservation Fee Collection</span>
+            </a>
+          </li>
           <li>
             <a href="javascript:void(0);" class="menu-toggle waves-yellow">
               <i class="mdi-communication-business"></i>
@@ -290,6 +295,13 @@
               </li>
 
               <li>
+                <a href="{{route('contract.index')}}" class="waves-yellow">
+                  <i class="mdi-hardware-keyboard-arrow-right"></i>
+                  <span>View Contract</span>
+                </a>
+              </li>
+
+              <li>
                 <a href="/extendTable" class="waves-yellow">
                   <i class="mdi-hardware-keyboard-arrow-right"></i>
                   <span>Extension and Renewal</span>
@@ -311,6 +323,12 @@
             </ul>
           </li>
           <li>
+            <a href="{{route('move-in.index')}}" class="waves-yellow">
+              <i class="mdi-action-payment"></i>
+              <span>Move in</span>
+            </a>
+          </li>
+          <li>
             <a href="javascript:void(0);" class="menu-toggle waves-yellow">
               <i class="mdi-action-payment"></i>
               <span>Billing and Collection</span>
@@ -324,7 +342,7 @@
               </li>
 
               <li>
-                <a href="/collectionTable" class="waves-yellow">
+                <a href="{{route('collection.index')}}" class="waves-yellow">
                   <i class="mdi-hardware-keyboard-arrow-right"></i>
                   <span>Collection</span>
                 </a>

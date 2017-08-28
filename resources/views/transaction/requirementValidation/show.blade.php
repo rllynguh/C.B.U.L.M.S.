@@ -52,5 +52,6 @@
 	{{Html::script('custom/requirementValidationShowAjax.js')}}
 	<script type="text/javascript">
 		url = "{{route('requirementValidation.index',$id)}}";
+		urlhome = "{{route('requirementValidation.index')}}";
 	</script>
 	@endsection

@@ -154,7 +154,7 @@ class floorController extends Controller
       $unit_price=new UnitPrice();
       $unit_price->unit_id=$unit->id;
       $unit_price->date_as_of=Carbon::now(Config::get('app.timezone'));
-      $unit_price->price=$request->txtPrice;
+      $unit_price->price=$request->txtAllPrice;
       $unit_price->save();
     }
     return response::json($request->floor_id);

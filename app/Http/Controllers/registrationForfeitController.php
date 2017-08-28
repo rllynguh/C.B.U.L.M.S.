@@ -44,9 +44,9 @@ class registrationForfeitController extends Controller
         ->where('users.id',Auth::user()->id)
         ->leftjoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
         ->leftjoin('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
+        ->where('registration_headers.is_forfeited',0)
         ->whereRaw('offer_sheet_headers.status is null or offer_sheet_headers.status = 0')
         ->where('registration_headers.status','!=',2)
-        ->where('registration_headers.is_forfeited',0)
         ->groupBy('registration_headers.id')
         ->get();
         return Datatables::of($result)

@@ -9,7 +9,7 @@ $(document).ready(function()
     columns: [
     {data: 'code'},
     {data: 'tenant'},
-    {data: 'business'},
+    {data: 'submitted'},
     {data: 'progress'},
     {data: 'action'}
     ]
@@ -31,7 +31,7 @@ $(document).ready(function()
        $('#modalRequirement').modal('show');
      }
      else
-       $.notify('No Pending Requirements');
+       $.notify('The tenant has not yet submitted any documents!');
 
    });
   });

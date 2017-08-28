@@ -14,7 +14,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content modal-col-green">
           <div class="modal-header">
-            <h1  class="modal-title align-center p-b-15"><span id='labelReq'>Add Requirements</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+            <h1  class="modal-title align-center p-b-15"><span id='labelReq'>Validate Requirements</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
           </div>
           <div class="modal-body">
             <div id='divReq'>
@@ -34,9 +34,9 @@
         <table class="table table-hover dataTable" id="myTable">
           <thead>
             <tr>
-              <th class="align-center">REGISTRATION CODE</th>
+              <th class="align-center">Registration Code</th>
               <th class="align-center">Client</th>
-              <th class="align-center">Business</th>
+              <th class="align-center">Requirements Submitted</th>
               <th class="align-center">Requirements Fulfilled</th>
               <th class="align-center">Action</th>
             </tr>

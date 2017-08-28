@@ -93,6 +93,7 @@ class registrationApprovalController extends Controller
           $regi_detail->admin_remarks=$request->detail_remarks[$x];
           $regi_detail->save();
         }
+        return redirect(route('offersheets.show',$request->myId));
       }
       else //if the transaction was rejected
       {
