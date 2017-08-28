@@ -1,12 +1,19 @@
-
+$(document).ready(function()
+{
     var page = 1;
     var current_page = 1;
     var total_page = 0;
     var is_ajax_fire = 0;
     var load = 'buildings';
     var link = [];
-    var _url;
+    var _url = url;
+    var table;
+    getBuildingType();
+    getProvince();
     manageData();
+    setInterval( function () {
+        table.ajax.reload( null, false ); // user paging is not reset on reload
+    }, 30000 );
     $.ajaxSetup({
         headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -14,45 +21,64 @@
     });
     /* manage data list */
     function manageData() {
+        var _data = [];
         if(load === 'buildings'){
             _url = url;
+            table = $('#myTable').DataTable({
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: _url,
+            columns: [
+            {data: 'code', name: 'code', title: 'Building Code',class: 'align-center'},
+            {data: 'building_name', name: 'building_name', title: 'Building Name',class: 'align-center'},
+            {data: 'city_name', name: 'city_name', title: 'City',class: 'align-center'},
+            {data: 'is_active', name: 'is_active', title: 'Status',class: 'align-center', searchable: false},
+            {data: 'action', name: 'action', title: 'Actions',class: 'align-center', orderable: false, searchable: false}
+            ]
+            });
         }else if(load === 'floors'){
             _url = url + "/floors/" + link[0];
-            console.log(_url);
-            $("thead").html('<th class="align-center">Floor #</th><th class="align-center">Number of Units</th><th class="align-center">Status</th><th class="align-center">Action</th>');
+            table = $('#myTable').DataTable({
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: _url,
+            columns: [
+            {data: 'number', name: 'number', title: 'Floor #',class: 'align-center'},
+            {data: 'num_of_unit', name: 'num_of_unit', title: 'Number of units',class: 'align-center'},
+            {data: 'is_active', name: 'status', title: 'Status',class: 'align-center',searchable:false},
+            {data: 'action', name: 'action', title: 'Actions',class: 'align-center', orderable: false, searchable: false}
+            ]
+            });
+            
         }else if(load === 'units'){
             _url = url + '/units/' + link[1];
             console.log(_url);
-            $("thead").html('<th class="align-center">Unit ID</th><th class="align-center">Unit Type</th><th class="align-center">Area</th><th class="align-center">Rate</th><th class="align-center">Status</th><th class="align-center">Action</th>'); 
-        }
-        $.ajax({
-            dataType: 'json',
-            url: _url,
-            data: {page:page}
-        }).done(function(data){
-
-            total_page = data.last_page;
-            current_page = data.current_page;
-
-            $('#pagination').twbsPagination({
-                totalPages: total_page,
-                visiblePages: current_page,
-                onPageClick: function (event, pageL) {
-                    page = pageL;
-                    if(is_ajax_fire != 0){
-                      getPageData();
-                    }
-                }
+            table = $('#myTable').DataTable({
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ajax: _url,
+            columns: [
+            {data: 'code', name: 'code', title: 'Unit ID',class: 'align-center'},
+            {data: 'type', name: 'type', title: 'Unit Type',class: 'align-center'},
+            {data: 'size', name: 'size', title: 'Area',class: 'align-center'},
+            {data: 'price', name: 'price', title: 'Rates',class: 'align-center'},
+            {data: 'is_active', name: 'status',searchable:false, title: 'Status',class: 'align-center'},
+            {data: 'action', name: 'action', orderable: false, searchable: false, title: 'Actions',class: 'align-center'}
+            ]
             });
 
-            manageRow(data.data);
-            is_ajax_fire = 1;
-        });
+            //$("thead").html('<th class="align-center">Unit ID</th><th class="align-center">Unit Type</th><th class="align-center">Area</th><th class="align-center">Rate</th><th class="align-center">Status</th><th class="align-center">Action</th>'); 
+        }
+        
+       
     };
 
-    
-
-    /* Get Page Data*/
+    /* Get Page Data
+    Old Code, might need it again if shit doesn't work
+    */
     function getPageData() {
         $.ajax({
             dataType: 'json',
@@ -63,7 +89,9 @@
         });
     }
 
-    /* Add new Item table row */
+    /* Add new Item table row
+    Old Code, might need it again if shit doesn't work
+     */
     function manageRow(data) {
         var rows = '';
         $.each( data, function( key, value ) {
@@ -125,17 +153,18 @@
         $("tbody").html(rows);
     };
     /* Create new Item */
-    $(".crud-submit").click(function(e){
+    $("#btnBuildingSave").click(function(e){
+        $("#btnBuildingSave").attr('disabled','disabled');
+          setTimeout(function(){
+            $("#btnBuildingSave").removeAttr('disabled');
+          }, 1000);
         e.preventDefault();
-        var form_action = $("#create-item").find("form").attr("action");
-        var title = $("#create-item").find("input[name='title']").val();
-        var description = $("#create-item").find("textarea[name='description']").val();
-
+        var formData = $("#buildingCreateForm").serialize(); 
+        var form_action = $("#buildingCreateModal").find("form").attr("action");
         $.ajax({
-            dataType: 'json',
             type:'POST',
             url: form_action,
-            data:{title:title, description:description}
+            data:formData,
         }).done(function(data){
             getPageData();
             $(".modal").modal('hide');
@@ -143,21 +172,22 @@
         });
 
     });
-
-    /* Show Units */
-    $("body").on("click",".show-units",function(){
-        load = "units";
-        link[1] = $(this).attr("data-id")
-        console.log(link[1] + "," +load );
-        manageData();
-    });
-
-
     /* Show floors */
     $("body").on("click",".show-floors",function(){
         load = "floors";
         link[0] = $(this).attr("data-id")
         console.log(link[0] + "," +load );
+        table.destroy();
+        $('#myTable').empty();
+        manageData();
+    });
+      /* Show Units */
+    $("body").on("click",".show-units",function(){
+        load = "units";
+        link[1] = $(this).attr("data-id")
+        console.log(link[1] + "," +load );
+        table.destroy();
+        $('#myTable').empty();
         manageData();
     });
     /* Remove Item */
@@ -203,3 +233,70 @@
         });
     });
 
+});
+function getBuildingType()
+{
+ $.get(urlbtype, function (data) {
+  $('#comBuilType').children('option').remove();
+  $.each(data,function(index,value)
+  {
+    $('#comBuilType').append($('<option>', {value:value.id, text:value.description}));
+  });
+});
+}
+
+
+function getProvince()
+{
+  $.get(urlprov, function (data) {
+    $('#comProvince').children('option').remove();
+    $.each(data,function(index,value)
+    {
+      $('#comProvince').append($('<option>', {value:value.id, text:value.description}));
+    });
+    getCity();
+  });
+}
+
+
+//for querying list of city
+function getCity()
+{
+  $.get('/custom/getCity/' + $("#comProvince").val(), function (data) {
+    $('#comCity').children('option').remove();
+    $.each(data,function(index,value)
+    {
+      $('#comCity').append($('<option>', {value:value.id, text:value.description}));
+    });
+  });
+}
+
+//for querying city when user selects province
+$("#comProvince").change(function(data){
+  getCity();
+});
+/*
+ $.ajax({
+            dataType: 'json',
+            url: _url,
+            data: {page:page}
+        }).done(function(data){
+
+            total_page = data.last_page;
+            current_page = data.current_page;
+
+            $('#pagination').twbsPagination({
+                totalPages: total_page,
+                visiblePages: current_page,
+                onPageClick: function (event, pageL) {
+                    page = pageL;
+                    if(is_ajax_fire != 0){
+                      getPageData();
+                    }
+                }
+            });
+
+            manageRow(data.data);
+            is_ajax_fire = 1;
+        });
+        */
