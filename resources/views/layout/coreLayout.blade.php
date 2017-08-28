@@ -262,19 +262,19 @@
               <li>
                 <li>
                   <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
-                    <i class="mdi-action-thumbs-up-down"></i>
+                    <i class="mdi-navigation-chevron-right"></i>
                     <span>Requirement Assigning</span>
                   </a>
                 </li>
                 <li>
                   <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-                    <i class="mdi-content-inbox"></i>
-                    <span>Submission of Requirements</span>
+                    <i class="mdi-navigation-chevron-right"></i>
+                    <span>Requirement Submission</span>
                   </a>
                 </li>
                 <li>
                   <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
-                    <i class="mdi-content-inbox"></i>
+                    <i class="mdi-navigation-chevron-right"></i>
                     <span>Requirement Validation</span>
                   </a>
                 </li>
