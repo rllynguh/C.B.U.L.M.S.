@@ -37,7 +37,7 @@ class buildingController extends Controller
     	return Datatables::of($result)
     	->addColumn('action', function ($data) {
     		return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>
-    		<button id="btnPrice" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value= "'.$data->id.'"><i class="mdi-action-visibility"></i></button>
+    		<button id="btnPrice" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value= "'.$data->id.'"><i class="mdi-editor-attach-money"></i></button>
     		';
     	})
     	->editColumn('is_active', function ($data) {
