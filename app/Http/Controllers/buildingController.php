@@ -170,12 +170,7 @@ class buildingController extends Controller
     		$result->save();
     	}
     	catch(\Exception $e) {
-    		if($e->errorInfo[1]==1062)
-    			return "This Data Already Exists";
-    		else if($e->errorInfo[1]==1452)
-    			return "Already Deleted";
-    		else
-    			return var_dump($e->errorInfo[1]);
+    		return $e;
     	} 
     }
 

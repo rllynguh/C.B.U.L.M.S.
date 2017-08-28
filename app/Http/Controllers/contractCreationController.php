@@ -122,6 +122,7 @@ class contractCreationController extends Controller
         $units=DB::table('units')
         ->join('offer_sheet_details','units.id','offer_sheet_details.unit_id')
         ->join('registration_details','offer_sheet_details.registration_detail_id','registration_details.id')
+        ->where('registration_header_id',$request->regi_id)
         ->join('unit_prices','units.id','unit_prices.unit_id')
         ->whereRaw('date_as_of=(SELECT Max(date_as_of) from unit_prices where unit_id=units.id)')
         ->select('units.id','price')
@@ -275,9 +276,9 @@ class contractCreationController extends Controller
   }
   catch(\Exception $e)
   {
-   DB::rollBack();
-   dd($e);
-}
+     DB::rollBack();
+     dd($e);
+ }
 
 }
     /**
@@ -289,98 +290,98 @@ class contractCreationController extends Controller
     public function createData($id)
     {
 
-     $tenant=DB::table('registration_headers')
-     ->where('registration_headers.id',$id)
-     ->join('tenants','registration_headers.tenant_id','tenants.id')
-     ->join('business_types','tenants.business_type_id','business_types.id')
-     ->select('registration_headers.code','tenants.description as tenant','business_types.description as business_type')
-     ->first()
-     ;
-     $units=DB::table('registration_headers')
-     ->where('registration_headers.id',$id)
-     ->where('registration_headers.status','1')
-     ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
-     ->where('registration_details.is_rejected','0')
-     ->where('registration_details.is_forfeited','0')
-     ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-     ->where('offer_sheet_details.status','1')
-     ->join('units','offer_sheet_details.unit_id','units.id')
-     ->join('floors','units.floor_id','floors.id')
-     ->join('buildings','floors.building_id','buildings.id')
-     ->join('addresses','buildings.address_id','addresses.id')
-     ->join('cities','addresses.city_id','cities.id')
-     ->leftJoin("market_rates","cities.id","market_rates.city_id")
-     ->groupBy("cities.id")
-     ->whereRaw("market_rates.date_as_of=(SELECT MAX(date_as_of) from market_rates where city_id=cities.id) or isnull(market_rates.date_as_of)")
-     ->select(DB::raw("units.id,units.code,COALESCE(market_rates.rate,0) as rate"))
-     ->orderBy("cities.description")
-     ->get();
-     return Datatables::of($units)
-     ->editColumn('rate', function ($data) {
-      return "$data->rate sqm";
-  })
-     ->setRowId(function ($data) {
-      return $data = 'id'.$data->id;
-  }) 
-     ->rawColumns(['rate'])
-     ->make(true)
-     ;
+       $tenant=DB::table('registration_headers')
+       ->where('registration_headers.id',$id)
+       ->join('tenants','registration_headers.tenant_id','tenants.id')
+       ->join('business_types','tenants.business_type_id','business_types.id')
+       ->select('registration_headers.code','tenants.description as tenant','business_types.description as business_type')
+       ->first()
+       ;
+       $units=DB::table('registration_headers')
+       ->where('registration_headers.id',$id)
+       ->where('registration_headers.status','1')
+       ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
+       ->where('registration_details.is_rejected','0')
+       ->where('registration_details.is_forfeited','0')
+       ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+       ->where('offer_sheet_details.status','1')
+       ->join('units','offer_sheet_details.unit_id','units.id')
+       ->join('floors','units.floor_id','floors.id')
+       ->join('buildings','floors.building_id','buildings.id')
+       ->join('addresses','buildings.address_id','addresses.id')
+       ->join('cities','addresses.city_id','cities.id')
+       ->leftJoin("market_rates","cities.id","market_rates.city_id")
+       ->groupBy("cities.id")
+       ->whereRaw("market_rates.date_as_of=(SELECT MAX(date_as_of) from market_rates where city_id=cities.id) or isnull(market_rates.date_as_of)")
+       ->select(DB::raw("units.id,units.code,COALESCE(market_rates.rate,0) as rate"))
+       ->orderBy("cities.description")
+       ->get();
+       return Datatables::of($units)
+       ->editColumn('rate', function ($data) {
+          return "$data->rate sqm";
+      })
+       ->setRowId(function ($data) {
+          return $data = 'id'.$data->id;
+      }) 
+       ->rawColumns(['rate'])
+       ->make(true)
+       ;
 
- }
- public function show($id)
- {
+   }
+   public function show($id)
+   {
         //
-     $utilities=DB::table('utilities')
-     ->whereRaw('date_as_of=(Select Max(date_as_of) from utilities)')
-     ->select('utilities.*')
-     ->first();
+       $utilities=DB::table('utilities')
+       ->whereRaw('date_as_of=(Select Max(date_as_of) from utilities)')
+       ->select('utilities.*')
+       ->first();
 
-     $tenant=DB::table('registration_headers')
-     ->where('registration_headers.id',$id)
-     ->join('tenants','registration_headers.tenant_id','tenants.id')
-     ->join('business_types','tenants.business_type_id','business_types.id')
-     ->join('users','tenants.user_id','users.id')
-     ->join('representatives','users.id','representatives.user_id')
-     ->join('addresses','representatives.address_id','addresses.id')
-     ->join('cities','addresses.city_id','cities.id')
-     ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,business_types.description as business_type, CONCAT(first_name," ",last_name) as full_name,CONCAT(number," ",street," ",district,", ", cities.description) as address'))
-     ->first()
-     ;
-     $result=DB::table('registration_headers')
-     ->where('registration_headers.id',$id)
-     ->where('registration_headers.status','1')
-     ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
-     ->where('registration_details.is_rejected','0')
-     ->where('registration_details.is_forfeited','0')
-     ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-     ->where('offer_sheet_details.status','1')
-     ->join('units','offer_sheet_details.unit_id','units.id')
-     ->join('floors','units.floor_id','floors.id')
-     ->join('buildings','floors.building_id','buildings.id')
-     ->join('addresses','buildings.address_id','addresses.id')
-     ->join('cities','addresses.city_id','cities.id')
-     ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
-     ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)");
-     $units=$result->Select(DB::Raw("units.size,units.id,units.code,unit_prices.price as rate,unit_prices.price * units.size as price"))
-     ->get();
-     $subquery=$result->Select(DB::Raw("sum(unit_prices.price * units.size) as total,sum(units.size) as area,is_reserved"))->first();
-     $contents=DB::table('contents')
-     ->where('is_active',1)
-     ->select('id','description')
-     ->get()
-     ;
-     $area=$subquery->area;
-     $total=$subquery->total;
-     $vat=$total*($utilities->vat_rate/100);
-     $subtotal=$vat+$total;
-     $ewt=$total*($utilities->ewt_rate/100);
-     $final=$subtotal-$ewt;
-     $advance_rent=$utilities->advance_rent_rate*$final;
-     if($subquery->is_reserved==1)
-      $security_deposit=($utilities->security_deposit_rate*$total) - ($final* $utilities->reservation_fee);
-  else
-      $security_deposit=$utilities->security_deposit_rate*$total;
-     $cusa_size=100; //tentative cusa size
+       $tenant=DB::table('registration_headers')
+       ->where('registration_headers.id',$id)
+       ->join('tenants','registration_headers.tenant_id','tenants.id')
+       ->join('business_types','tenants.business_type_id','business_types.id')
+       ->join('users','tenants.user_id','users.id')
+       ->join('representatives','users.id','representatives.user_id')
+       ->join('addresses','representatives.address_id','addresses.id')
+       ->join('cities','addresses.city_id','cities.id')
+       ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,business_types.description as business_type, CONCAT(first_name," ",last_name) as full_name,CONCAT(number," ",street," ",district,", ", cities.description) as address'))
+       ->first()
+       ;
+       $result=DB::table('registration_headers')
+       ->where('registration_headers.id',$id)
+       ->where('registration_headers.status','1')
+       ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
+       ->where('registration_details.is_rejected','0')
+       ->where('registration_details.is_forfeited','0')
+       ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+       ->where('offer_sheet_details.status','1')
+       ->join('units','offer_sheet_details.unit_id','units.id')
+       ->join('floors','units.floor_id','floors.id')
+       ->join('buildings','floors.building_id','buildings.id')
+       ->join('addresses','buildings.address_id','addresses.id')
+       ->join('cities','addresses.city_id','cities.id')
+       ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+       ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)");
+       $units=$result->Select(DB::Raw("units.size,units.id,units.code,unit_prices.price as rate,unit_prices.price * units.size as price"))
+       ->get();
+       $subquery=$result->Select(DB::Raw("sum(unit_prices.price * units.size) as total,sum(units.size) as area,is_reserved"))->first();
+       $contents=DB::table('contents')
+       ->where('is_active',1)
+       ->select('id','description')
+       ->get()
+       ;
+       $area=$subquery->area;
+       $total=$subquery->total;
+       $vat=$total*($utilities->vat_rate/100);
+       $subtotal=$vat+$total;
+       $ewt=$total*($utilities->ewt_rate/100);
+       $final=$subtotal-$ewt;
+       $advance_rent=$utilities->advance_rent_rate*$final;
+       if($subquery->is_reserved==1)
+          $security_deposit=($utilities->security_deposit_rate*$total) - ($final* $utilities->reservation_fee);
+      else
+          $security_deposit=$utilities->security_deposit_rate*$total;
+     $cusa_size=$area; //tentative cusa size
      $cusa=($utilities->cusa_rate * $cusa_size) - ($utilities->cusa_rate * $cusa_size* 0.02); //tentative 2 %
      $vetting_fee=$utilities->vetting_fee*$area + ($utilities->vetting_fee *$area * ($utilities->vat_rate)/100);
      $fit_out=$utilities->fit_out_deposit*$final;
