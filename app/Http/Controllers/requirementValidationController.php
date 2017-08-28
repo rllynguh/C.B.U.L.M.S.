@@ -91,11 +91,21 @@ public function create()
 public function store(Request $request)
 {
         //
-    $registration_requirement=RegistrationRequirement::find($request->myId);
-    $registration_requirement->status=$request->decision;
-    $registration_requirement->admin_remarks=$request->modal_remarks;
-    $registration_requirement->save();
-    return redirect(route('requirementValidation.index'));
+    db::begintransaction();
+    try
+    {
+        $registration_requirement=RegistrationRequirement::find($request->myId);
+        $registration_requirement->status=$request->decision;
+        $registration_requirement->admin_remarks=$request->modal_remarks;
+        $registration_requirement->save();
+        db::commit();
+        $request->session()->flash('green', 'Requirement Validated.');
+    }
+    catch(\Exception $e)
+    {
+        db::rollback();
+        dd($e);
+    }
 }
 
 /**

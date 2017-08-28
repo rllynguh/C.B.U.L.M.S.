@@ -37,24 +37,24 @@ class collectionController extends Controller
     }
     public function data()
     {
-     $bill=DB::table('billing_headers')
-     ->join('billing_details','billing_headers.id','billing_details.billing_header_id')
-     ->leftJoin('payment_details','billing_details.id','payment_details.billing_detail_id')
-     ->havingRaw('SUM(billing_details.price) > SUM(payment_details.payment) or payment_details.billing_detail_id is null')
-     ->groupBy('billing_headers.id')
-     ->select(DB::Raw('billing_headers.code,CONCAT("₱ ",SUM(billing_details.price)) as balance,CONCAT("₱ ",COALESCE(SUM(payment_details.payment),0.00)) as amount_paid,payment_details.billing_detail_id,billing_headers.id'))
-     ->get();
+       $bill=DB::table('billing_headers')
+       ->join('billing_details','billing_headers.id','billing_details.billing_header_id')
+       ->leftJoin('payment_details','billing_details.id','payment_details.billing_detail_id')
+       ->havingRaw('SUM(billing_details.price) > SUM(payment_details.payment) or payment_details.billing_detail_id is null')
+       ->groupBy('billing_headers.id')
+       ->select(DB::Raw('billing_headers.code,CONCAT("₱ ",SUM(billing_details.price)) as balance,CONCAT("₱ ",COALESCE(SUM(payment_details.payment),0.00)) as amount_paid,payment_details.billing_detail_id,billing_headers.id'))
+       ->get();
 
-     return Datatables::of($bill)
-     ->addColumn('action', function ($data) {
+       return Datatables::of($bill)
+       ->addColumn('action', function ($data) {
         return '<button id="btnCollection" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.route("collection.show",$data->id).'"><i class="mdi-editor-border-color"></i></button>';
     })
-     ->setRowId(function ($data) {
+       ->setRowId(function ($data) {
         return $data = 'id'.$data->id;
     })
-     ->rawColumns(['is_active','action'])
-     ->make(true);
- }
+       ->rawColumns(['is_active','action'])
+       ->make(true);
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -97,8 +97,8 @@ class collectionController extends Controller
                 $payment_header->save();
                 for($x=0;$x<count($request->billings);$x++)
                 {
-                 if(!is_null($request->payments[$x]))
-                 {
+                   if(!is_null($request->payments[$x]))
+                   {
                     $payment_detail=new PaymentDetail();
                     $payment_detail->payment_header_id=$payment_header->id;
                     $payment_detail->billing_detail_id=$request->billings[$x];
@@ -131,8 +131,8 @@ class collectionController extends Controller
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
         ->leftJoin('payment_details','billing_details.id','payment_details.billing_detail_id')
         ->where('billing_header_id',$id)
-        ->havingRaw('SUM(billing_details.price) > COALESCE(SUM(payment_details.payment),0)')
-        ->select(DB::raw('SUM(billing_details.price) - COALESCE(SUM(payment_details.payment),0) as balance,billing_details.id,billing_items.description'))
+        ->havingRaw('billing_details.price > COALESCE(SUM(payment_details.payment),0)')
+        ->select(DB::raw('billing_details.price - COALESCE(SUM(payment_details.payment),0) as balance,billing_details.id,billing_items.description,billing_details.price '))
         ->groupby('billing_details.id')
         ->get();
         return response::json($billing_details);

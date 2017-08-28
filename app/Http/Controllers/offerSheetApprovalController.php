@@ -80,29 +80,42 @@ class offerSheetApprovalController extends Controller
     {
         //
            //
+      DB::beginTransaction();
+      try
+      {
       if($request->header_is_active==1)// if the transaction was accepted
       {
-        $offer_head=OfferSheetHeader::find($request->myId);
-        $offer_head->status=1;
-        $offer_head->tenant_remarks=$request->header_remarks;
-        $offer_head->save();
-        for($x=0;$x<count($request->offer_id); $x++)
-        { 
-          $offer_detail=OfferSheetDetail::find($request->offer_id[$x]);
-          $offer_detail->status=$request->offer_is_active[$x];
-          $offer_detail->tenant_remarks=$request->offer_remarks[$x];
-          $offer_detail->save();
+       $offer_head=OfferSheetHeader::find($request->myId);
+       $offer_head->status=1;
+       $offer_head->tenant_remarks=$request->header_remarks;
+       $offer_head->save();
+       for($x=0;$x<count($request->offer_id); $x++)
+       { 
+         $offer_detail=OfferSheetDetail::find($request->offer_id[$x]);
+         $offer_detail->status=$request->offer_is_active[$x];
+         $offer_detail->tenant_remarks=$request->offer_remarks[$x];
+         $offer_detail->save();
+       }
+       $request->session()->flash('green', 'Offer Sheet Approved.');
+     }
+           else //if the transaction was rejected
+           {
+             $offer_head=OfferSheetHeader::find($request->myId);
+             $offer_head->status=2;
+             $offer_head->tenant_remarks=$request->header_remarks;
+             $offer_head->save();
+             $request->session()->flash('green', 'Offer Sheet Rejected.');
+           }
+           db::commit();
+           return redirect(route('offerSheetApproval.index'));
+         }
+         catch(\Exception $e)
+         {
+          db::rollBack();
+          dd($e);
+          $request->session()->flash('red', 'Ooops, something went wrong.');
         }
       }
-      else //if the transaction was rejected
-      {
-        $offer_head=OfferSheetHeader::find($request->myId);
-        $offer_head->status=2;
-        $offer_head->tenant_remarks=$request->header_remarks;
-        $offer_head->save();
-      }
-      return redirect(route('offerSheetApproval.index'));
-    }
 
     /**
      * Display the specified resource.

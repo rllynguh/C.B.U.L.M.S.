@@ -80,24 +80,37 @@ class registrationForfeitController extends Controller
     public function store(Request $request)
     {
         //
-        $regi_header=RegistrationHeader::find($request->myId);
-        if($request->header_is_active==1)
-        {
-            $regi_header->is_forfeited=1;
-        }
-        else
-        {
-            $regi_header->is_forfeited=0;
-            for($x=0;$x<count($request->regi_id);$x++)
+        db::beginTransaction();
+        try
+        { 
+            $regi_header=RegistrationHeader::find($request->myId);
+            if($request->header_is_active==1)
             {
-                $regi_detail=RegistrationDetail::find($request->regi_id[$x]);
-                $regi_detail->is_forfeited=$request->regi_is_active[$x];
-                $regi_detail->save(); 
-            }
-        }
-        $regi_header->save();
-        return redirect(route('registrationForfeit.index'));
+             $regi_header->is_forfeited=1;
+             $request->session()->flash('green', 'Registration Forfeited.');
+         }
+         else
+         {
+             $regi_header->is_forfeited=0;
+             for($x=0;$x<count($request->regi_id);$x++)
+             {
+                 $regi_detail=RegistrationDetail::find($request->regi_id[$x]);
+                 $regi_detail->is_forfeited=$request->regi_is_active[$x];
+                 $regi_detail->save(); 
+                 $request->session()->flash('green', 'Unit Request Forfeited.');
+             }
+         }
+         $regi_header->save();
+         db::commit();
+         return redirect(route('registrationForfeit.index'));
+     }
+     catch(\Exception $e)
+     {
+        db::rollback();
+        $request->session()->flash('red', 'Ooops, something went wrong.');
+        dd($e);
     }
+}
 
     /**
      * Display the specified resource.

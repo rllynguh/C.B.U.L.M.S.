@@ -177,11 +177,13 @@ class registrationController extends Controller
           }
           Image::make($image)->resize(400,400)->save($location);
           DB::commit();
+          $request->session()->flash('green', 'Registration Successful!');
           return redirect('/');
         }
         catch(\Exception $e)
         {
          DB::rollBack();
+         $request->session()->flash('red', 'Oops, something went wrong.');
          return dd($e);
        }
 

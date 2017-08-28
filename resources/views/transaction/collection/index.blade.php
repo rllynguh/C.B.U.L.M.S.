@@ -35,7 +35,7 @@
                   <input class="form-control align-center" type="date" required=""  name="dateCollected"> <br>  
                 </div>
               </div>
-              <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> SAVE</span></button>
+              <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> Collect payment</span></button>
             </div>
             {{Form::close()}}
           </div>

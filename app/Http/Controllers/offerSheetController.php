@@ -83,165 +83,175 @@ class offerSheetController extends Controller
      */
     public function store(Request $request)
     {
-        //
-      $query=DB::table("offer_sheet_headers")
-      ->select("code")
-      ->orderBy("id","desc")
-      ->first();
-      $pk="Offer Sheet ";
-      if(!is_null($query))
-        $pk=$query->code;
-      $sc= new smartCounter();
-      $pk=$sc->increment($pk);  
-      $offerheader=new OfferSheetHeader;
-      $offerheader->code=$pk;
-      $offerheader->user_id=Auth::user()->id;
-      $offerheader->date_issued=Carbon::now(Config::get('app.timezone'));
-      $offerheader->save();
-      for($x=0;$x<count($request->detail_id);$x++)
-      { 
-        $offerdetail=new OfferSheetDetail;
-        $offerdetail->offer_sheet_header_id=$offerheader->id;
-        $offerdetail->registration_detail_id=$request->detail_id[$x];
-        $offerdetail->unit_id=$request->offer_id[$x];
-        $offerdetail->save();
-      }
-      return redirect(route('offersheets.index'));
+      db::beginTransaction();
+      try
+     {   //
+       $query=DB::table("offer_sheet_headers")
+       ->select("code")
+       ->orderBy("id","desc")
+       ->first();
+       $pk="Offer Sheet ";
+       if(!is_null($query))
+         $pk=$query->code;
+       $sc= new smartCounter();
+       $pk=$sc->increment($pk);  
+       $offerheader=new OfferSheetHeader;
+       $offerheader->code=$pk;
+       $offerheader->user_id=Auth::user()->id;
+       $offerheader->date_issued=Carbon::now(Config::get('app.timezone'));
+       $offerheader->save();
+       for($x=0;$x<count($request->detail_id);$x++)
+       { 
+         $offerdetail=new OfferSheetDetail;
+         $offerdetail->offer_sheet_header_id=$offerheader->id;
+         $offerdetail->registration_detail_id=$request->detail_id[$x];
+         $offerdetail->unit_id=$request->offer_id[$x];
+         $offerdetail->save();
+       }
+       db::commit();
+       $request->session()->flash('green', 'Offer Sheet Successfully Generated!');
+       return redirect(route('offersheets.index'));
+     }
+     catch(\Exception $e)
+     {
+      db::rollback();
+      return dd($e);
     }
+  }
 
-    /**
+   /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+   public function show($id)
+   {
         //
-      $tenant=DB::table('registration_headers')
-      ->join('tenants','registration_headers.tenant_id','tenants.id')
-      ->select('tenants.description','registration_headers.code','registration_headers.id')
-      ->where('registration_headers.id','=',$id)
-      ->first();
-      return view('transaction.offerSheet.show')
-      ->withTenant($tenant);
-    }
-    public function showData($id)
-    {
+    $tenant=DB::table('registration_headers')
+    ->join('tenants','registration_headers.tenant_id','tenants.id')
+    ->select('tenants.description','registration_headers.code','registration_headers.id')
+    ->where('registration_headers.id','=',$id)
+    ->first();
+    return view('transaction.offerSheet.show')
+    ->withTenant($tenant);
+  }
+  public function showData($id)
+  {
         //
-      $tenant=DB::table('registration_headers')
-      ->join('tenants','registration_headers.tenant_id','tenants.id')
-      ->select('tenants.description','registration_headers.code')
-      ->where('registration_headers.id','=',$id)
-      ->first();
-      $result=DB::table('registration_details')
-      ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,Concat("₱ ",price*size) as rate'))
-      ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-      ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
-      ->leftJoin('units as offered_unit', function($join)
-      {
-       $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-       $join->on('registration_details.size_from','<=','offered_unit.size');
-       $join->on('registration_details.size_to','>=','offered_unit.size');
-     })
-      ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
-      ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
-      ->whereRaw('offered_unit.id not in (Select unit_id from registration_details inner join offer_sheet_details on registration_details.id=offer_sheet_details.registration_detail_id 
-        inner join units on offer_sheet_details.unit_id=units.id
-        where units.is_active=1 and
-        is_reserved=1)')
-      ->where('registration_details.is_rejected','0')
-      ->where('registration_details.is_forfeited','0')
-      ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
-      ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
-      ->groupBy('registration_details.id')
-      ->orderBy('registration_details.id')
-      ->where('registration_headers.status','1')
-      ->where('registration_headers.id',$id)
-      ->get();
-      return Datatables::of($result)
-      ->addColumn('unit_select', function ($data) {
-        return "<input type='text' id='regi$data->id' value='$data->unit_code' disabled=''><input type='hidden' name='detail_id[]' value='$data->id'>
-        <input type='hidden' name='offer_id[]' id='offer$data->id' value='$data->unit_id'>";
-      })
-      ->addColumn('choose', function ($data) {
-        return "<button id='btnChoose' type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float' value='$data->id'><i class='mdi-content-add'></i></button>";
-      })
-      ->editColumn('unit_type', function ($data) {
-        $value='Raw';
-        if($data->unit_type==1)
-          $value='Shell';
-        return $value; 
-      })
-      ->setRowId(function ($data) {
-        return $data = 'id'.$data->id;
-      }) 
-      ->rawColumns(['unit_select','choose'])
-      ->make(true)
-      ;
-    }
-    public function showOptions($id)
+    $tenant=DB::table('registration_headers')
+    ->join('tenants','registration_headers.tenant_id','tenants.id')
+    ->select('tenants.description','registration_headers.code')
+    ->where('registration_headers.id','=',$id)
+    ->first();
+    $result=DB::table('registration_details')
+    ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,Concat("₱ ",price*size) as rate'))
+    ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+    ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
+    ->leftJoin('units as offered_unit', function($join)
     {
-      $result=DB::table('registration_details')
-      ->select(DB::Raw('registration_details.id as order_number, offered_unit.code as unit_offered, offered_unit.id as unit_id,  registration_details.unit_type as ordered_unit, offered_unit.type as offered_unit, 
-        registration_details.size_from,registration_details.size_to,
-        offered_unit.size as offered_exact_size,
-        ordered_building_type.description as ordered_building_type,
-        registration_details.floor as ordered_floor,Concat("₱ ",price*size) as rate'))
-      ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
-      ->leftJoin('units as offered_unit', function($join)
-      {
-       $join->on('registration_details.unit_type', '=', 'offered_unit.type');
-       $join->on('registration_details.size_from','<=','offered_unit.size');
-       $join->on('registration_details.size_to','>=','offered_unit.size');
-     })
-      ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
-      ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
-      ->where('registration_details.id',$id)
-      ->where('registration_headers.status','1')
-      ->whereRaw('offered_unit.id not in (Select unit_id from registration_details inner join offer_sheet_details on registration_details.id=offer_sheet_details.registration_detail_id 
-        inner join units on offer_sheet_details.unit_id=units.id
-        where units.is_active=1 and
-        is_reserved=1)')
-      ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
-      ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
-      ->orderBy('registration_details.id')
-      ->groupBy('offered_unit.id')
-      ->get();
+     $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+     $join->on('registration_details.size_from','<=','offered_unit.size');
+     $join->on('registration_details.size_to','>=','offered_unit.size');
+   })
+    ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
+    ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
+    ->whereRaw('offered_unit.id not in (Select unit_id from registration_details inner join offer_sheet_details on registration_details.id=offer_sheet_details.registration_detail_id 
+      inner join units on offer_sheet_details.unit_id=units.id
+      where units.is_active=1 and
+      is_reserved=1)')
+    ->where('registration_details.is_rejected','0')
+    ->where('registration_details.is_forfeited','0')
+    ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
+    ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
+    ->groupBy('registration_details.id')
+    ->orderBy('registration_details.id')
+    ->where('registration_headers.status','1')
+    ->where('registration_headers.id',$id)
+    ->get();
+    return Datatables::of($result)
+    ->addColumn('unit_select', function ($data) {
+      return "<input type='text' id='regi$data->id' value='$data->unit_code' disabled=''><input type='hidden' name='detail_id[]' value='$data->id'>
+      <input type='hidden' name='offer_id[]' id='offer$data->id' value='$data->unit_id'>";
+    })
+    ->addColumn('choose', function ($data) {
+      return "<button id='btnChoose' type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float' value='$data->id'><i class='mdi-content-add'></i></button>";
+    })
+    ->editColumn('unit_type', function ($data) {
+      $value='Raw';
+      if($data->unit_type==1)
+        $value='Shell';
+      return $value; 
+    })
+    ->setRowId(function ($data) {
+      return $data = 'id'.$data->id;
+    }) 
+    ->rawColumns(['unit_select','choose'])
+    ->make(true)
+    ;
+  }
+  public function showOptions($id)
+  {
+    $result=DB::table('registration_details')
+    ->select(DB::Raw('registration_details.id as order_number, offered_unit.code as unit_offered, offered_unit.id as unit_id,  registration_details.unit_type as ordered_unit, offered_unit.type as offered_unit, 
+      registration_details.size_from,registration_details.size_to,
+      offered_unit.size as offered_exact_size,
+      ordered_building_type.description as ordered_building_type,
+      registration_details.floor as ordered_floor,Concat("₱ ",price*size) as rate'))
+    ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
+    ->leftJoin('units as offered_unit', function($join)
+    {
+     $join->on('registration_details.unit_type', '=', 'offered_unit.type');
+     $join->on('registration_details.size_from','<=','offered_unit.size');
+     $join->on('registration_details.size_to','>=','offered_unit.size');
+   })
+    ->leftJoin("unit_prices","offered_unit.id","unit_prices.unit_id")
+    ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=offered_unit.id)")
+    ->where('registration_details.id',$id)
+    ->where('registration_headers.status','1')
+    ->whereRaw('offered_unit.id not in (Select unit_id from registration_details inner join offer_sheet_details on registration_details.id=offer_sheet_details.registration_detail_id 
+      inner join units on offer_sheet_details.unit_id=units.id
+      where units.is_active=1 and
+      is_reserved=1)')
+    ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
+    ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
+    ->orderBy('registration_details.id')
+    ->groupBy('offered_unit.id')
+    ->get();
 
-      return response::json($result);
-    }
+    return response::json($result);
+  }
 
-/**
+  /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-public function edit($id)
-{
+  public function edit($id)
+  {
         //
-}
+  }
 
-/**
+  /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-public function update(Request $request, $id)
-{
+  public function update(Request $request, $id)
+  {
         //
-}
+  }
 
-/**
+  /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-public function destroy($id)
-{
-}
+  public function destroy($id)
+  {
+  }
 }

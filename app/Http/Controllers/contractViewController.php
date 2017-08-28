@@ -21,10 +21,10 @@ class contractViewController extends Controller
     {
         //
 
-       return view('transaction.contractView.index');
-   }
-   public function data()
-   {
+     return view('transaction.contractView.index');
+ }
+ public function data()
+ {
     $contracts=DB::table('current_contracts')
     ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
     ->join('registration_headers','contract_headers.registration_header_id','registration_headers.id')
@@ -68,14 +68,25 @@ public function create()
 public function store(Request $request)
 {
         //
-    $id=$request->myId;
-    if(!is_null($request->aggree))
+    db::begintransaction();
+    try
     {
-        $current_contract=CurrentContract::find($id);
-        $current_contract->status=1;
-        $current_contract->save();
+        $id=$request->myId;
+        if(!is_null($request->aggree))
+        {
+            $current_contract=CurrentContract::find($id);
+            $current_contract->status=1;
+            $current_contract->save();
+        }
+        db::commit();
+        $request->session()->flash('green', 'Contract accepted.');
+        return redirect(route('contract.index'));
     }
-    return redirect(route('contract.index'));
+    catch(\Exception $e)
+    {
+        db::rollback();
+        dd($e);
+    }
 }
 
 /**
