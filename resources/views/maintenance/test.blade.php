@@ -13,7 +13,7 @@
         </nav>
       </div>
       <div class="align-center">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#buildingCreateModal">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#buildingCreateModal" id = "btnShowCreate">
         Create Item
         </button>
       </div>

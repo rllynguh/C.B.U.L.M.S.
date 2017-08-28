@@ -85,7 +85,7 @@
                 <div class="col-sm-4 col-md-4">
                   <div class="form-line">
                     <h5 class="card-inside-title">Town / Barangay</h5>
-                    {{ Form::text('bulding_district',null,[
+                    {{ Form::text('building_district',null,[
                       'id'=> 'building_district',
                       'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
                       'class' => 'form-control',
@@ -120,7 +120,7 @@
             </div>
           </div>
           <div class="modal-footer">
-           <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12 col-sm-12" id="btnBuildingSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
+           <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12 col-sm-12" id="btnBuildingSubmit" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
            {{ Form::hidden(null,null,[
             'id'=> 'myId'
             ])

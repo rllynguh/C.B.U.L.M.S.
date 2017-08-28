@@ -34,7 +34,7 @@ class maintenanceBuildingController extends Controller
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
             return '<button data-target="#show-units" class="btn btn-primary show-floors" data-id = "'  .$data->id.  '">Show floors</button>
-            <button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button>
+            <button data-toggle="modal" data-target="#buildingCreateModal" class="btn btn-primary btnEdit" data-edit = "building" data-id = "'.$data->id.'">Edit</button>
             <button class="btn btn-danger remove-item">Delete</button>';
         })
         ->editColumn('is_active', function ($data) {
@@ -191,7 +191,17 @@ class maintenanceBuildingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $result = DB::table('buildings')
+        ->select('addresses.*','addresses.number as address_number','cities.*','floors.*','provinces.*','building_types.description as building_type_description','buildings.*',DB::raw('COUNT(floors.building_id) as current'))
+        ->leftJoin('floors','buildings.id','=','floors.building_id')
+        ->join('addresses','buildings.address_id','=','addresses.id')
+        ->join('cities','addresses.city_id',"cities.id")
+        ->join('provinces','cities.province_id',"provinces.id")
+        ->join('building_types','buildings.building_type_id','=','building_types.id')
+        ->where('buildings.id','=',$id)
+        ->groupBy('buildings.id')
+        ->first();
+        return Response()->json($result);
     }
     /**
      * Update the specified resource in storage.
@@ -202,8 +212,33 @@ class maintenanceBuildingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $edit = Building::find($id)->update($request->all());
-        return response()->json($edit);
+      try
+      {
+        try
+        {
+          $result=building::find($id);
+          $result->description=$request->building_name;
+          $result->num_of_floor=$request->building_num_of_floors;
+          $result->save();
+        }catch(\Exception $e)
+        {
+          if($e->errorInfo[1]==1062)
+            return "This Data Already Exists";
+          else
+            return var_dump($e->errorInfo[1]);
+        }
+      }
+      catch(\Exception $e)
+      {
+        return "Deleted";
+      }
+      $address=address::find($result->address_id);
+      $address->number=$request->building_address;
+      $address->street=$request->building_street;
+      $address->district=$request->building_district;
+      $address->city_id=$request->building_city;
+      $address->save();
+      return response()->json($result);
     }
     /**
      * Remove the specified resource from storage.
