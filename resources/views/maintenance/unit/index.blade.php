@@ -94,14 +94,14 @@
               <div class="col-md-6 col-sm-6">
                 <div class="form-line">
                   <h5 class="card-inside-title">Building Name</h5>
-                  <select required id="comBuilding" name="comBuilding" class="form-control show-tick align-center">
+                  <select required id="comBuilding" name="comBuilding" class="form-control show-tick">
                   </select>
                 </div>
               </div>
               <div class="col-md-6 col-sm-6">
                 <div class="form-line">
                   <h5 class="card-inside-title">Floor</h5>
-                  <select required id="comFloor" name="comFloor" class="form-control show-tick align-center">
+                  <select required id="comFloor" name="comFloor" class="form-control show-tick">
                   </select>
                 </div>
               </div>
@@ -111,7 +111,7 @@
               <div class="col-md-6 col-sm-6">
                 <div class="form-line">
                   <h5 class="card-inside-title">Unit Type</h5>
-                  <select required id="comUnitType" name="comUnitType" class="form-control show-tick align-center">
+                  <select required id="comUnitType" name="comUnitType" class="form-control show-tick">
                    <option value="0">Raw</option>
                    <option value="1">Shell</option>
                  </select>
@@ -124,14 +124,14 @@
                    'id'=> 'txtUNum',
                    'required' => 'required',
                    'readonly' => '',
-                   'class' => 'form-control text-center',
+                   'class' => 'form-control',
                    ])
                  }}
                </div>
              </div>
            </div>
            <div class="form-group p-l-30 p-b-10">
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-6 col-sm-6">
               <div class="form-line">
                 <h5 class="card-inside-title">Area</h5>
                 {{ Form::number('txtArea',null,[
@@ -143,16 +143,15 @@
                   'autocomplete' => 'off',
                   'placeholder' => 'sqm',
                   'step' => '0.01',
-                  'class' => 'form-control text-center',
+                  'class' => 'form-control',
                   ])
                 }}
               </div>
             </div>
-          </div>
-          <div class="form-group p-l-30 p-b-10">
-            <div class="col-md-12 col-sm-12">
+                    
+            <div class="col-md-6 col-sm-6">
               <div class="form-line">
-                <h5 class="card-inside-title">Rate/Sqm</h5>
+                <h5 class="card-inside-title">Rate per sqm</h5>
                 {{ Form::number('txtPrice',null,[
                   'id'=> 'txtPrice',
                   'required' => 'required',
@@ -160,9 +159,11 @@
                   'max' => '1000',
                   'data-parsley-type' => 'number',
                   'autocomplete' => 'off',
-                  'placeholder' => 'P',
+                  'placeholder' => 'P 0.00',
+
+
                   'step' => '0.01',
-                  'class' => 'form-control text-center',
+                  'class' => 'form-control',
                   ])
                 }}
               </div>

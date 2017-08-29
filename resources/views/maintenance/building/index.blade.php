@@ -9,6 +9,7 @@
       urlprov="{{route("custom.getProvince")}}";
       urlprice="{{route("buildings.storePrice")}}";
     </script>
+
     @endsection
     @section('content')
     <div class="container-fluid">
@@ -210,20 +211,20 @@
             </div>
             <div class="modal-body">
               <div class="form-group p-l-30 p-b-10">
-                <div class="col-sm-6 col-md-6">
+                <div class="col-sm-4 col-md-4">
                   <div class="form-line">
                     <h5 class="card-inside-title">Building Type</h5>
-                    <select required id="comBuilType" name="comBuilType" class="form-control show-tick align-center">
+                    <select required id="comBuilType" name="comBuilType" class="form-control show-tick">
                     </select>
                   </div>
                 </div>
-                <div class="col-sm-6 col-md-6">
+                <div class="col-sm-4 col-md-4">
                   <div class="form-line">
                     <h5 class="card-inside-title">Building Name</h5>
                     {{ Form::text('txtBuilDesc',null,[
                       'id'=> 'txtBuilDesc',
                       'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
-                      'class' => 'form-control text-center',
+                      'class' => 'form-control',
                       'autocomplete' => 'off',
                       'minlegth' => '3',
                       'maxlength' => '20',
@@ -232,18 +233,16 @@
                     }}
                   </div>
                 </div>
-              </div>
-
-              <div class="form-group p-l-30 p-b-10">
-                <div class="col-sm-12">
+              
+                <div class="col-sm-4 col-md-4">
                   <div class="form-line">
                     <h5 class="card-inside-title">Number of Floors</h5>
                     {{ Form::number('txtBFNum',1,[
                       'id'=> 'txtBFNum',
-                      'class' => 'form-control text-center max-digits-2',
+                      'minlenght' => '1',
+                      'maxlenght' => '99',
+                      'class' => 'form-control max-digits-2',
                       'autocomplete' => 'off',
-                      'min' => '1',
-                      'max' => '99',
                       'required' => 'required',
                       ])
                     }}
@@ -257,7 +256,7 @@
                     <h5 class="card-inside-title">Address No.</h5>
                     {{ Form::text('txtSNum',null,[
                       'id'=> 'txtSNum',
-                      'class' => 'form-control text-center max-digits-4',
+                      'class' => 'form-control max-digits-4',
                       'autocomplete' => 'off',
                       'minlength' => '1',
                       'maxlength' => '4',
@@ -272,7 +271,7 @@
                     {{ Form::text('txtStreet',null,[
                       'id'=> 'txtStreet',
                       'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
-                      'class' => 'form-control text-center',
+                      'class' => 'form-control',
                       'autocomplete' => 'off',
                       'minlength' => '3',
                       'maxlength' => '20',
@@ -287,7 +286,7 @@
                     {{ Form::text('txtDistrict',null,[
                       'id'=> 'txtDistrict',
                       'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
-                      'class' => 'form-control text-center',
+                      'class' => 'form-control',
                       'autocomplete' => 'off',
                       'minlength' => '3',
                       'maxlength' => '20',
@@ -302,7 +301,7 @@
                 <div class="col-sm-6 col-md-6">
                  <div class="form-line">
                    <h5 class="card-inside-title">Province</h5>
-                   <select required name="comProvince" id="comProvince" class="form-control show-tick align-center">
+                   <select required name="comProvince" id="comProvince" class="form-control show-tick">
                    </select>
                  </div>
                </div>
@@ -310,18 +309,25 @@
                  <div class="col-sm-6 col-md-6">
                   <div class="form-line">
                     <h5 class="card-inside-title">City</h5>
-                    <select required name="comCity" id="comCity" class="form-control show-tick align-center"></select>
+                    <select required name="comCity" id="comCity" class="form-control show-tick">
+                      
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          
+         
           <div class="modal-footer">
+          
            <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12 col-sm-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
+
            {{ Form::hidden(null,null,[
             'id'=> 'myId'
             ])
           }}
+        
         </div>
         {{Form::close()}}
       </div>

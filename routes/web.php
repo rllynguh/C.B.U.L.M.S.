@@ -26,9 +26,10 @@ Route::get('test/floors/{id}',['uses' => 'maintenanceBuildingController@getFloor
 Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits', 'as' =>'test.getUnits']);
 Route::resource('test','maintenanceBuildingController');
 Route::group(['prefix' => 'tenant/'],function(){
-	Route::get('/', function () {
-		return view('tenant.index');
-	});
+	Route::get('/', function () {return view('tenant.index');});
+	Route::get('/home', function () {return view('tenant.login');});
+	Route::get('/profile', function () {return view('tenant.profile');});
+	Route::get('/soa', function () {return view('tenant.soa');});
 });
 Route::group(['prefix' => 'admin/'], function () {
 	Route::resource('maintenance/banks','bankController');

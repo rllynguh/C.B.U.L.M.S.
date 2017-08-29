@@ -182,57 +182,51 @@
           </div>
         </div>
       </div>
-      {{-- modalFLoor end --}}
-      <!--MODAL-->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content modal-col-green">
-            {{ Form::open([
-              'id' => 'myForm', 'class' => 'form-horizontal'
-              ])
-            }}
-            <div class="modal-header">
-              <h1 id="label" class="modal-title align-center p-b-15">NEW FLOOR<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+
+    </div>
+  </div>
+  {{-- modalFLoor end --}}
+  <!--MODAL-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content modal-col-green">
+        {{ Form::open([
+          'id' => 'myForm', 'class' => 'form-horizontal'
+          ])
+        }}
+        <div class="modal-header">
+          <h1 id="label" class="modal-title p-b-15">NEW FLOOR<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+        </div>
+        <div class="modal-body">
+          <div class="form-group p-l-30 p-b-10">
+            <div class="form-line">
+              <h5 class="card-inside-title">Building Name</h5>
+              <select required id="comBuilding" name="comBuilding" class="form-control show-tick">
+              </select>
             </div>
-            <div class="modal-body">
-              <div class="form-group p-l-30 p-b-10">
-                <div class="form-line">
-                  <h5 class="card-inside-title">Building Name</h5>
-                  <select required id="comBuilding" name="comBuilding" class="form-control show-tick align-center">
-                  </select>
-                </div>
-              </div>
-              <div class="form-group p-l-30 p-b-10">
-                <div class="form-line">
-                  <h5 class="card-inside-title">Floor Number</h5>
-                  {{ Form::number('txtFNum',null,[
-                    'id'=> 'txtFNum',
-                    'readonly' => '',
-                    'class' => 'form-control text-center',
-                    'required' => 'required',
-                    ])
-                  }}
-                </div>
-              </div>
-              <div class="form-group p-l-30">
-                <div class="form-line">
-                  <h5 class="card-inside-title">Number of Units</h5>
-                  {{ Form::number('txtUNum',1,[
-                    'id'=> 'txtUNum',
-                    'autocomplete' => 'off',
-                    'min' => '1',
-                    'max' => '99',
-                    'class' => 'form-control text-center max-digits-2',
-                    'required' => 'required',
-                    ])
-                  }}
-                </div>
-              </div>
+          </div>
+          <div class="form-group p-l-30 p-b-10">
+            <div class="form-line">
+              <h5 class="card-inside-title">Floor Number</h5>
+              {{ Form::number('txtFNum',null,[
+                'id'=> 'txtFNum',
+                'readonly' => '',
+                'class' => 'form-control',
+                'required' => 'required',
+                ])
+              }}
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
-              {{ Form::hidden(null,1,[
-                'id' => 'myId'
+          </div>
+          <div class="form-group p-l-30">
+            <div class="form-line">
+              <h5 class="card-inside-title">Number of Units</h5>
+              {{ Form::number('txtUNum',1,[
+                'id'=> 'txtUNum',
+                'autocomplete' => 'off',
+                'min' => '1',
+                'max' => '99',
+                'class' => 'form-control max-digits-2',
+                'required' => 'required',
                 ])
               }}
             </div>
