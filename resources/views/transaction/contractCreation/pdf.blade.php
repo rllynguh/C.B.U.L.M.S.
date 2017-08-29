@@ -43,6 +43,7 @@ End of Contract:  {{$contract->end_of_contract}} <br>
 	</tr>
 	@endforeach
 </table>
+Total : {{$cost}}
 <br>
 Here are the contract contents <br>
 @foreach($contents as $content)

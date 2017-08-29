@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatePaymentHeadersTable extends Migration {
+class CreatePaymentsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,16 @@ class CreatePaymentHeadersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('payment_headers', function(Blueprint $table)
+		Schema::create('payments', function(Blueprint $table)
 		{
 			$table->integer('id', true);
+			$table->integer('billing_header_id')->index('bill_header_idx');
 			$table->integer('bank_id')->index('str_bank_idx');
 			$table->string('code', 45);
 			$table->date('date_issued');
 			$table->date('date_collected');
 			$table->integer('user_id')->index('user_id_header_idx');
+			$table->float('payment', 10, 0);
 			$table->boolean('status')->default(0);
 		});
 	}
@@ -32,7 +34,7 @@ class CreatePaymentHeadersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('payment_headers');
+		Schema::drop('payments');
 	}
 
 }

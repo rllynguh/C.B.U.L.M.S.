@@ -68,7 +68,7 @@
 
 							</tbody>
 						</table>
-						<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave"><i class="mdi-content-save"></i><span> SAVE</span></button>
+						<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave"><i class="mdi-content-save"></i><span> Generate Offer Sheet Approval</span></button>
 						{{Form::close()}}
 					</div>
 				</div>

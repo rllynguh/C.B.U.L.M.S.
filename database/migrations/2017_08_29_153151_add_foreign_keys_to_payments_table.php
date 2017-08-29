@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddForeignKeysToPaymentHeadersTable extends Migration {
+class AddForeignKeysToPaymentsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,8 +12,9 @@ class AddForeignKeysToPaymentHeadersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('payment_headers', function(Blueprint $table)
+		Schema::table('payments', function(Blueprint $table)
 		{
+			$table->foreign('billing_header_id', 'bill_header')->references('id')->on('billing_headers')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 			$table->foreign('bank_id', 'str_bank_')->references('id')->on('banks')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 			$table->foreign('user_id', 'user_id_header')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
@@ -27,8 +28,9 @@ class AddForeignKeysToPaymentHeadersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('payment_headers', function(Blueprint $table)
+		Schema::table('payments', function(Blueprint $table)
 		{
+			$table->dropForeign('bill_header');
 			$table->dropForeign('str_bank_');
 			$table->dropForeign('user_id_header');
 		});

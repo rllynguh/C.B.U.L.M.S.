@@ -1,5 +1,7 @@
 $(document).ready(function()
 { 
+  balance=0; 
+  // for computation 
   xhrPool=[];
   $.ajaxSetup(
   {
@@ -14,14 +16,15 @@ $(document).ready(function()
     ajax: dataurl,
     columns: [
     {data: 'code'},
-    {data: 'balance'},
+    {data: 'cost'},
     {data: 'amount_paid'},
     {data: 'action'}
     ]
   });
   $(this).on('click', '#btnCollection',function()
   {
-    showUrl=$(this).val();
+    showUrl=url + "/" + $(this).val();
+    $('#myId').val($(this).val());
     $(this).attr('disabled','disabled');
     $.get(showUrl, function (data) 
     {
@@ -30,20 +33,21 @@ $(document).ready(function()
       }, 1000);
       if(Object.keys(data).length>0)
       {
-        content=" <table class='table table-hover dataTable'id=''><thead><tr><th class='align-center'>DESCRIPTION</th><th class='align-center'>AMOUNT DUE</th><th class='align-center'>AMOUNT COLLECTED</th></tr></thead><tbody id='myList'>";
+        balance=data[1].balance;
+        content=" <table class='table table-hover dataTable'id=''><thead><tr><th class='align-center'>DESCRIPTION</th><th class='align-center'>AMOUNT DUE</th></tr></thead><tbody id='myList'>";
         $("#modalCollection").modal("show");
-        $.each( data, function( index, value ){
+        $.each( data[0], function( index, value ){
           content+="<tr>" +
           "<td>" + value.description + "</td>" +
-          "<td> ₱ " + value.balance + "</td>" +
-          "<td>" + "<input name='billings[]' type='hidden' value='" +  value.id + "'>₱ <input type='number' name='payments[]' max='" + value.balance +  "'></td>" +
+          "<td> ₱ " + value.price + "</td>" +
           "</tr>";
         });
         content+="</tbody></table>";
+        content+="Total: ₱ " + data[1].cost + "     Balance: ₱ " + data[1].balance;  
         $('#divCollect').append(content);
       }
       else
-       $.notify("No Requirements Assigned", "error");
+       $.notify("No Items can be collected", "error");
    });
   });
 
@@ -53,7 +57,7 @@ $(document).ready(function()
   });
 
 
-  $('#btnSaveRequirements').on('click',function(e)
+  $('#btnSave').on('click',function(e)
   {
     if($('#frmCollection').parsley().isValid())
     {
@@ -61,8 +65,9 @@ $(document).ready(function()
       e.preventDefault(); 
       var my_url = url;
       var type="POST";
-      var formData = $('frmCollection').serialize();
-      console.log(formData);
+      if(parseFloat($('#txtAmount').val()) > parseFloat(balance))
+        $('#txtAmount').val(parseFloat(balance));
+      var formData = $('#frmCollection').serialize();
       $.ajax({
         beforeSend: function (jqXHR, settings) {
           xhrPool.push(jqXHR);
@@ -70,18 +75,29 @@ $(document).ready(function()
         type: type,
         url: my_url,
         data: formData,
-        processData: false,
-        contentType: false,
         success: function (data) {
           console.log(data);
-          table.draw();  
-          successPrompt(); 
-          $('#modalCollection').modal('hide');
-        },
-        error: function (data) {
-          console.log('Error:', data.responseText);
-        }
-      });
+          table.draw(); 
+          console.log(balance); 
+          if(parseFloat($('#txtAmount').val()) > parseFloat(balance))
+          {
+            $.notify("Payment Successfully collected. Change is ₱ " + (parseFloat($('#txtAmount').val()) - parseFloat(balance)) + ".", "success",
+            {
+              timer:1000
+            });
+          }
+          else
+           $.notify("Payment Successfully collected.", "success",
+           {
+            timer:1000
+          });
+         $('#frmCollection').trigger('reset');
+         $('#modalCollection').modal('hide');
+       },
+       error: function (data) {
+        console.log('Error:', data.responseText);
+      }
+    });
     }}
     );
 

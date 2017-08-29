@@ -41,12 +41,12 @@ class registrationForfeitController extends Controller
         ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('users','tenants.user_id','users.id')
-        ->where('users.id',Auth::user()->id)
         ->leftjoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
         ->leftjoin('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
         ->where('registration_headers.is_forfeited',0)
         ->whereRaw('offer_sheet_headers.status is null or offer_sheet_headers.status = 0')
         ->where('registration_headers.status','!=',2)
+        ->where('users.id',Auth::user()->id)
         ->groupBy('registration_headers.id')
         ->get();
         return Datatables::of($result)
@@ -80,24 +80,37 @@ class registrationForfeitController extends Controller
     public function store(Request $request)
     {
         //
-        $regi_header=RegistrationHeader::find($request->myId);
-        if($request->header_is_active==1)
-        {
-            $regi_header->is_forfeited=1;
-        }
-        else
-        {
-            $regi_header->is_forfeited=0;
-            for($x=0;$x<count($request->regi_id);$x++)
+        db::beginTransaction();
+        try
+        { 
+            $regi_header=RegistrationHeader::find($request->myId);
+            if($request->header_is_active==1)
             {
-                $regi_detail=RegistrationDetail::find($request->regi_id[$x]);
-                $regi_detail->is_forfeited=$request->regi_is_active[$x];
-                $regi_detail->save(); 
-            }
-        }
-        $regi_header->save();
-        return redirect(route('registrationForfeit.index'));
+             $regi_header->is_forfeited=1;
+             $request->session()->flash('green', 'Registration Forfeited.');
+         }
+         else
+         {
+             $regi_header->is_forfeited=0;
+             for($x=0;$x<count($request->regi_id);$x++)
+             {
+                 $regi_detail=RegistrationDetail::find($request->regi_id[$x]);
+                 $regi_detail->is_forfeited=$request->regi_is_active[$x];
+                 $regi_detail->save(); 
+                 $request->session()->flash('green', 'Unit Request Forfeited.');
+             }
+         }
+         $regi_header->save();
+         db::commit();
+         return redirect(route('registrationForfeit.index'));
+     }
+     catch(\Exception $e)
+     {
+        db::rollback();
+        $request->session()->flash('red', 'Ooops, something went wrong.');
+        dd($e);
     }
+}
 
     /**
      * Display the specified resource.
