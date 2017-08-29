@@ -1,85 +1,96 @@
+@extends('layout.tenantNav')
+@section('content')
+<section id="home">
+		
+		<div id="main-carousel" class="carousel slide" data-ride="carousel"> 
+			<ol class="carousel-indicators">
+				<li data-target="#main-carousel" data-slide-to="0" class="active"></li>
+				<li data-target="#main-carousel" data-slide-to="1"></li>
+				<li data-target="#main-carousel" data-slide-to="2"></li>
+			</ol><!--/.carousel-indicators--> 
+			<div class="carousel-inner">
+				<div class="item active" style="background-image: url(../images/tenant/slide1.jpg)"> 
+					<div class="carousel-caption"> 
+						<div> 
+							<h2 class="heading animated bounceInDown">Welcome to Majent</h2> 
+							<p class="animated bounceInUp">Change the world with us</p> 
 
-<!DOCTYPE html>
-<html lang="en">
-<head> 
-	<meta charset="utf-8"> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-	<meta name="description" content="Creative One Page Parallax Template">
-	<meta name="keywords" content="Creative, Onepage, Parallax, HTML5, Bootstrap, Popular, custom, personal, portfolio" /> 
-	<meta name="author" content=""> 
-	<title>HIMU - OnePage HTML Parallax template</title> 
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/prettyPhoto.css" rel="stylesheet"> 
-	<link href="css/font-awesome.min.css" rel="stylesheet"> 
-	<link href="css/animate.css" rel="stylesheet"> 
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/responsive.css" rel="stylesheet"> 
-	<!--[if lt IE 9]> <script src="js/html5shiv.js"></script> 
-	<script src="js/respond.min.js"></script> <![endif]--> 
-	<link rel="shortcut icon" href="images/ico/favicon.png"> 
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png"> 
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"> 
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"> 
-	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-</head><!--/head-->
-<body>
-	<div class="preloader">
-		<div class="preloder-wrap">
-			<div class="preloder-inner"> 
-				<div class="ball"></div> 
-				<div class="ball"></div> 
-				<div class="ball"></div> 
-				<div class="ball"></div> 
-				<div class="ball"></div> 
-				<div class="ball"></div> 
-				<div class="ball"></div>
+							<button type="button" class="btn btn-default slider-btn animated fadeIn" data-toggle="modal" data-target="#buttonModal">Get Started</button> 
+						</div> 
+					</div> 
+				</div>
+				
+				<div class="item" style="background-image: url(../images/tenant/slide2.jpeg)"> 
+					<div class="carousel-caption"> <div> 
+						<h2 class="heading animated bounceInDown">budget?</h2> 
+						<p class="animated bounceInUp">Let us give you great and flexible deal.</p> <button type="button" class="btn btn-default slider-btn animated fadeIn" data-toggle="modal" data-target="#buttonModal">Get Started</button>  
+					</div> 
+				</div> 
+			</div>  
+			<div class="item" style="background-image: url(../images/tenant/slide3.jpeg)"> 
+				<div class="carousel-caption"> 
+					<div> 
+						<h2 class="heading animated bounceInRight">We care</h2> 
+						<p class="animated bounceInLeft">Let us grow together</p> 
+						<button type="button" class="btn btn-default slider-btn animated fadeIn" data-toggle="modal" data-target="#buttonModal">Get Started</button> 					</div> 
+				</div> 
 			</div>
-		</div>
-	</div><!--/.preloader-->
-	<header id="navigation"> 
-		<div class="navbar navbar-inverse navbar-fixed-top" role="banner"> 
-			<div class="container"> 
-				<div class="navbar-header"> 
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
-						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
-					</button> 
-					<a class="navbar-brand" href="index.html"><h1><img src="images/logo.png" alt="logo"></h1></a> 
-				</div> 
-				<div class="collapse navbar-collapse"> 
-					<ul class="nav navbar-nav navbar-right"> 
-						<li class="scroll active"><a href="#navigation">Home</a></li> 
-						<li class="scroll"><a href="#about-us">About Us</a></li> 
-						<li class="scroll"><a href="#services">Sites</a></li> 
-						<li class="scroll"><a href="#our-team">Clients</a></li> 
-						<li class="scroll"><a href="#clients">Testimonials</a></li>
-						<li class="scroll"><a href="#blog">Contact</a></li> 
-						<li class="scroll"><a href="#contact">Accounts</a></li> 
-					</ul> 
-				</div> 
-			</div> 
-		</div><!--/navbar--> 
-	</header> <!--/#navigation--> 
+		</div><!--/.carousel-inner-->
 
-	
+		<a class="carousel-left member-carousel-control hidden-xs" href="#main-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+		<a class="carousel-right member-carousel-control hidden-xs" href="#main-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
+	</div> 
 
-	
+<!--MODAL-->
+<div class="modal fade" id="buttonModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content modal-col-green">
+            {{ Form::open([
+              'id' => 'myForm', 'class' => 'form-horizontal'
+              ])
+            }}
+            <div class="modal-header">
+              <h1 id='label' class="modal-title align-center p-b-15">LOGIN<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+            </div>
+            <div class="modal-body">
+              <div class="form-group p-l-30 p-b-10">
+                <div class="col-sm-12 col-md-12">
+                  <div class="form-line">
+                    <h5 class="card-inside-title">Username</h5>
+                    {{ Form::text('username',null,[
+                      'id'=> 'username', 'required' => 'required',
+                      'class' => 'form-control'])}}
+                  </div>
+                </div>
+                </div>
+                <div class="form-group p-l-30 p-b-10">
+                <div class="col-sm-12 col-md-12">
+                  <div class="form-line">
+                    <h5 class="card-inside-title">Password</h5>
+                    {{ Form::text('password',null,[
+                      'id'=> 'password', 'required' => 'required',
+                      'class' => 'form-control'])}}
+                  </div>
+                </div>               
+              </div>
+            </div>
+            
+         
+          <div class="modal-footer">
+          
+           <button type="submit" class="btn btn-SM bg-brown waves-effect waves-white col-md-12 col-sm-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
+
+           {{ Form::hidden(null,null,[
+            'id'=> 'myId'
+            ])
+          }}
+        
+        </div>
+        {{Form::close()}}
+      </div>
+    </div>
+  </div>
 
 </section><!--/#home-->
 
-	<footer id="footer"> 
-		<div class="container"> 
-			<div class="text-center"> 
-				<p>Copyright &copy; 2014 - <a href="http://mostafiz.me/">Mostafiz</a> | All Rights Reserved</p> 
-			</div> 
-		</div> 
-	</footer> <!--/#footer--> 
-
-	<script type="text/javascript" src="js/jquery.js"></script> 
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/smoothscroll.js"></script> 
-	<script type="text/javascript" src="js/jquery.isotope.min.js"></script>
-	<script type="text/javascript" src="js/jquery.prettyPhoto.js"></script> 
-	<script type="text/javascript" src="js/jquery.parallax.js"></script> 
-	<script type="text/javascript" src="js/main.js"></script> 
-</body>
-</html>
+@endsection
