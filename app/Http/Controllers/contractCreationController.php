@@ -142,20 +142,21 @@ class contractCreationController extends Controller
         ->select("billing_headers.*")
         ->orderBy('code',"DESC")
         ->first();
-        $code="BILL";
+        $code="BILL001";
         if(!is_null($latest))
           $code=$latest->code;
         $sc= new smartCounter();
         $code=$sc->increment($code);
 
 
+        $cost=$request->net_rent + $request->advance_rent + $request->cusa + $request->security_deposit + $request->vetting_fee + $request->fit_out;
         $billing_header=new BillingHeader();
         $billing_header->user_id=Auth::user()->id;
         $billing_header->code=$code;
         $billing_header->current_contract_id=$current_contract->id;
         $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
+        $billing_header->cost=$cost;
         $billing_header->save();
-
 
         $rent=DB::table('billing_items')
         ->select('id')
@@ -262,8 +263,8 @@ class contractCreationController extends Controller
         ->select('description')
         ->where('current_contracts.id',$current_contract->id)
         ->get();
-
-        $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents'));
+        $cost="₱ $cost";
+        $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents','cost'));
         $date_issued=date_format($current_contract->date_issued,"Y-m-d");
         $pdfName="$contract_header->code($date_issued).pdf";
         $location=public_path("docs/$pdfName");

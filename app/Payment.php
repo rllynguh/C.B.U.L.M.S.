@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentHeader extends Model
+class Payment extends Model
 {
     //
 	public $timestamps=false;
-	protected $table="payment_headers";
+	
 }

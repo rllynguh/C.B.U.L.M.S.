@@ -17,24 +17,38 @@
               'id' => 'frmCollection', 'class' => 'form-horizontal'
               ])
             }}
+            {{ Form::hidden('myId',null,[
+              'id' => 'myId'
+              ])
+            }}
             <div class="modal-header">
               <h1  class="modal-title align-center p-b-15"><span>Collect Payment</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
             </div>
             <div class="modal-body">
+              <div id='divCollect'>
+              </div>
               Bank
               {{ Form::select('bank',$banks, null, [
                 'id' => 'bank',
                 'required' => 'required',
                 'class' => 'form-control form-line align'])
               }}
-              <div id='divCollect'>
-              </div>
               Date Collected
-              <div class="form-group p-l-30">
-                <div class="form-line">
-                  <input class="form-control align-center" type="date" required=""  name="dateCollected"> <br>  
-                </div>
+              <div class="form-line">
+                <input class="form-control align-center" type="date" required=""  name="dateCollected"> <br>  
               </div>
+              Amount Collected
+              {{ Form::text('txtAmount',null,[
+                'id'=> 'txtAmount',
+                'class' => 'form-control text-center',
+                'autocomplete' => 'off',
+                'required' => 'required',
+                'data-parsley-type' => 'number',
+                'max' => '1000000',
+                'min' => '1000'
+
+                ])
+              }}
               <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton"> Collect payment</span></button>
             </div>
             {{Form::close()}}
