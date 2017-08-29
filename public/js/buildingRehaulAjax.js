@@ -49,6 +49,7 @@ $(document).ready(function() {
 
         } else if (load === 'unit') {
             _url = url + '/units/' + link[1];
+            console.log(_url);
             table = $('#myTable').DataTable({
                 responsive: true,
                 processing: true,
@@ -177,30 +178,29 @@ $(document).ready(function() {
             getPageData();
         });
     });
-    /*
-        Table swapping
-    */
 
+    /*  When navigation button is clicked */
 
-    /* Show floors */
-    $("body").on("click", ".show-floors", function() {
-        load = "floor";
-        link[0] = $(this).attr("data-id");
-        console.log(link[0] + "," + load);
+    $(".body").on("click", ".btnChangeTable", function() {
+        $('#navBuilding').html( '<a class="breadcrumb-item" href="#">Buildings</a>' );
+        if($(this).attr("id")==='btnShowBuilding'){
+            load = "building";
+        }else if($(this).attr("id")==='btnShowFloor'){
+            load = "floor";
+            link[0] = $(this).attr("data-id");
+            console.log("access: building "+ link[0]);
+            $('#navBuilding').append( '<span class="breadcrumb-item active" id = "btnShowFloor" data-id = "'+$(this).attr("data-id")+'">Floors</span>' );
+        }else if($(this).attr("id")==='btnShowUnit'){
+            load = "unit";
+            link[1] = $(this).attr("data-id");
+            console.log("access: floor "+ link[1]);
+            $('#navBuilding').append( '<a span class="breadcrumb-item" id = "btnShowFloor" href ="#" data-id = "'+load[0]+'">Floors</span>' );
+            $('#navBuilding').append( '<span class="breadcrumb-item active">Units</span>' );
+        }
         table.destroy();
         $('#myTable').empty();
         manageData();
     });
-    /* Show Units */
-    $("body").on("click", ".show-units", function() {
-        load = "unit";
-        link[1] = $(this).attr("data-id");
-        console.log(link[1] + "," + load);
-        table.destroy();
-        $('#myTable').empty();
-        manageData();
-    });
-
 
     /*
         Pointless things that are just there to load data

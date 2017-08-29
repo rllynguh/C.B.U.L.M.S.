@@ -5,11 +5,8 @@
     <div class="col-lg-12 margin-tb">
       <div class="header align-center">
         <h2>Buildings wooo</h2>
-        <nav class="breadcrumb">
-          <a class="breadcrumb-item" href="#">Home</a>
-          <a class="breadcrumb-item" href="#">Library</a>
-          <a class="breadcrumb-item" href="#">Data</a>
-          <span class="breadcrumb-item active">Bootstrap</span>
+        <nav class="breadcrumb" id = "navBuilding">
+          <a class="breadcrumb-item active" href="#">Buildings</a>
         </nav>
       </div>
       <div class="align-center">

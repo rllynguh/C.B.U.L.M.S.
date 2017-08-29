@@ -33,7 +33,7 @@ class maintenanceBuildingController extends Controller
         // Returns data as data table with action buttons
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button data-target="#show-units" class="btn btn-primary show-floors" data-id = "'  .$data->id.  '">Show floors</button>
+            return '<button data-target="#show-units" id = "btnShowFloor" class="btn btn-primary btnChangeTable" data-id = "'  .$data->id.  '">Show floors</button>
             <button data-toggle="modal" data-target="#buildingCreateModal" class="btn btn-primary btnEdit" data-edit = "building" data-id = "'.$data->id.'">Edit</button>
             <button class="btn btn-danger remove-item">Delete</button>';
         })
@@ -57,7 +57,9 @@ class maintenanceBuildingController extends Controller
         //return response()->json($result);
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button data-target="#show-floors" class="btn btn-primary show-units" data-id = "'  .$data->id.  '">Show Units</button>
+            return '
+            <button id = "btnShowBuilding" class="btn btn-primary btnChangeTable" data-id = "'  .$data->id.  '">Go back</button>
+            <button id = "btnShowUnit" class="btn btn-primary btnChangeTable" data-id = "'  .$data->id.  '">Show Units</button>
             <button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button>
             <button class="btn btn-danger remove-item">Delete</button>';
         })
@@ -75,19 +77,21 @@ class maintenanceBuildingController extends Controller
         ->make(true);
     }
     public function getUnits($id){
-        $result=DB::table("units")
-      ->select(DB::Raw('Coalesce(price,1) as price,buildings.description as building_name,floors.number as floor_number,units.code as code,units.type as type,units.size as size,units.is_active as is_active,units.id'))
+      $result=DB::table("units")
+      ->select(DB::Raw('Coalesce(price,1) as price,buildings.description as building_name,floors.number as floor_number,units.code as code,units.type as type,units.size as size,units.is_active as is_active,units.id,buildings.id as building_id'))
       ->join("floors","units.floor_id","floors.id")
       ->join("buildings","floors.building_id","buildings.id")
-      ->join("building_types","buildings.building_type_id","building_types.id")
       ->leftJoin('unit_prices','units.id','unit_prices.unit_id')
+      ->where("units.floor_id",$id)
       ->whereRaw("unit_prices.date_as_of=(SELECT MAX(unit_prices.date_as_of) from unit_prices where unit_id=units.id) or isnull(unit_prices.date_as_of)")
-      ->where("buildings.is_active",1)
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
-        return '<button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
-      })
+        return '
+            <button id = "btnShowFloor" class="btn btn-primary btnChangeTable" data-id = "'.$data->building_id.'">Go back</button>
+            <button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button>
+            <button class="btn btn-danger remove-item">Delete</button>';
+      })  
       ->editColumn('is_active', function ($data) {
         $checked = '';
         if($data->is_active==1){
