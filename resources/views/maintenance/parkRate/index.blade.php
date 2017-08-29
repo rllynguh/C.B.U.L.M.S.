@@ -27,14 +27,14 @@
           <div class="modal-body">
             <div class="form-group p-l-30">
               <div class="form-line">
-               {{ Form::number('txtRate',null,[
+               {{ Form::text('txtRate',null,[
                 'id'=> 'txtRate',
                 'required' => 'required',
                 'min' => '400',
                 'max' => '2000',
                 'autocomplete' => 'off',
                 'placeholder' => 'rate/sqm/month',
-                'step' => '0.01',
+                'data-parsley-type' => 'number',
                 'class' => 'form-control text-center',
                 ])
               }}

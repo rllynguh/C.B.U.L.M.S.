@@ -65,7 +65,7 @@
                   <div class="form-group p-l-30">
                     <div class="form-line">
                       <h5 class="card-inside-title">Size</h5>
-                      {{ Form::number('txtPArea',null,[
+                      {{ Form::text('txtPArea',null,[
                         'id'=> 'txtPArea',
                         'required' => 'required',
                         'class' => 'form-control text-center',
@@ -74,7 +74,6 @@
                         'max' => '9999',
                         'autocomplete' => 'off',
                         'placeholder' => 'sqm',
-                        'step' => '0.01'
                         ])
                       }}
                     </div>
@@ -125,7 +124,7 @@
                 <div class="form-group p-l-30">
                   <div class="form-line">
                     <h5 class="card-inside-title">Floor Area</h5>
-                    {{ Form::number('txtArea',null,[
+                    {{ Form::text('txtArea',null,[
                       'id'=> 'txtArea',
                       'required' => 'required',
                       'class' => 'form-control text-center',
@@ -134,7 +133,6 @@
                       'max' => '9999',
                       'autocomplete' => 'off',
                       'placeholder' => 'sqm',
-                      'step' => '0.01'
                       ])
                     }}
                   </div>

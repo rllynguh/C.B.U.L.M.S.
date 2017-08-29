@@ -134,7 +134,7 @@
             <div class="col-md-12 col-sm-12">
               <div class="form-line">
                 <h5 class="card-inside-title">Area</h5>
-                {{ Form::number('txtArea',null,[
+                {{ Form::text('txtArea',null,[
                   'id'=> 'txtArea',
                   'required' => 'required',
                   'min' => '1',
@@ -142,7 +142,6 @@
                   'data-parsley-type' => 'number',
                   'autocomplete' => 'off',
                   'placeholder' => 'sqm',
-                  'step' => '0.01',
                   'class' => 'form-control text-center',
                   ])
                 }}

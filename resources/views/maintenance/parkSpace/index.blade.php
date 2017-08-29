@@ -56,7 +56,17 @@
                   <div class="form-group p-l-30">
                     <div class="form-line">
                       <h5 class="card-inside-title">Size</h5>
-                      <input required type="number" min="1" max="9999" autocomplete="off" data-parsley-type="number" id="txtArea" name="txtArea" class="form-control align-center" placeholder="sqm" step="0.01" >
+                      {{ Form::text('txtArea',null,[
+                        'id'=> 'txtArea',
+                        'required' => 'required',
+                        'class' => 'form-control text-center',
+                        'data-parsley-type' => "number",
+                        'min' => '99',
+                        'max' => '9999',
+                        'autocomplete' => 'off',
+                        'placeholder' => 'sqm',
+                        ])
+                      }}
                     </div>
                   </div>
 

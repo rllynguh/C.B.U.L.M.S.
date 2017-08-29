@@ -43,13 +43,14 @@
                   <div class="form-group p-l-30">
                     <h5 class="card-inside-title">Set price for all the units on this floor to:</h5>
                     <div class="form-line m-b-30">
-                      {{ Form::number('txtAllPrice',null,[
+                      {{ Form::text('txtAllPrice',null,[
                         'id'=> 'txtAllPrice',
                         'class' => 'form-control text-center',
                         'autocomplete' => 'off',
                         'required' => 'required',
                         'min' => '100',
                         'max' => '1000',
+                        'data-parsley-type' => 'number',
                         ])
                       }}
                     </div>
@@ -138,7 +139,7 @@
                 <div class="col-md-12 col-sm-12">
                   <div class="form-line">
                     <h5 class="card-inside-title">Area</h5>
-                    {{ Form::number('txtArea',null,[
+                    {{ Form::text('txtArea',null,[
                       'id'=> 'txtArea',
                       'data-parsley-type' => "number",
                       'min' => '1',
@@ -146,7 +147,6 @@
                       'class' => 'form-control text-center',
                       'required' => 'required',
                       'placeholder' => 'sqm',
-                      'step' => "0.01"
                       ])
                     }}
                   </div>
@@ -156,7 +156,7 @@
                 <div class="col-md-12 col-sm-12">
                   <div class="form-line">
                     <h5 class="card-inside-title">Price</h5>
-                    {{ Form::number('txtPrice',null,[
+                    {{ Form::text('txtPrice',null,[
                       'id'=> 'txtPrice',
                       'data-parsley-type' => "number",
                       'min' => '100',
@@ -164,7 +164,6 @@
                       'class' => 'form-control text-center',
                       'required' => 'required',
                       'placeholder' => 'P 100',
-                      'step' => "0.01"
                       ])
                     }}
                   </div>
