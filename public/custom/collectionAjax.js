@@ -65,8 +65,6 @@ $(document).ready(function()
       e.preventDefault(); 
       var my_url = url;
       var type="POST";
-      if(parseFloat($('#txtAmount').val()) > parseFloat(balance))
-        $('#txtAmount').val(parseFloat(balance));
       var formData = $('#frmCollection').serialize();
       $.ajax({
         beforeSend: function (jqXHR, settings) {

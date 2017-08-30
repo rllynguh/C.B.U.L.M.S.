@@ -52,6 +52,10 @@ $(document).ready(function()
 			$("#txtVet").val(data.vetting_fee);
 			$("#txtEsca").val(data.escalation_rate);
 			$("#txtVAT").val(data.vat_rate);
+			$("#txtRes").val(data.reservation_fee);
+			$("#txtFit").val(data.fit_out_deposit);
+			$("#txtAdvance").val(data.advance_rent_rate);
+
 		}) 
 	}
 });

@@ -175,284 +175,275 @@
                 </li>
 
                 <li>
-<<<<<<< HEAD
                   <a href="{{route('parkrates.index')}}" class="waves-yellow">
                     <i class="mdi-hardware-keyboard-arrow-right"></i>
                     <span>Parking Space Lease Rate</span>
-=======
-                  <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
-                    <i class="mdi-navigation-chevron-right"></i>
-                    <span>Requirement Assigning</span>
->>>>>>> refs/remotes/origin/master
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="{{route("banks.index")}}" class="waves-yellow">
-                <i class="mdi-action-account-balance-wallet"></i>
-                <span>Banks</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route("businesstypes.index")}}" class="waves-yellow">
-                <i class="mdi-action-wallet-travel"></i>
-                <span>Business Type</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route("requirements.index")}}" class="waves-yellow">
-                <i class="mdi-file-folder-open"></i>
-                <span>Requirements</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route("repr-positions.index")}}" class="waves-yellow">
-                <i class="mdi-social-person-outline"></i>
-                <span>Representative Position</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!--END OF MAINTENANCE-->
-
-        <!--TRANSACTIONS-->
-        <li>
-          <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-            <i class="mdi-action-swap-horiz"></i>
-            <span>Transactions</span>
-          </a>
-          <ul class="ml-menu">
-            <li>
-              <a href="{{ route('registration.index')}}" class="waves-yellow">
-                <i class="mdi-action-assignment-ind"></i>
-                <span>Registration</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
-                <i class="mdi-action-assignment-turned-in"></i>
-                <span>Registration Approval</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route('offersheets.index')}}" class="waves-yellow">
-                <i class="mdi-image-switch-camera"></i>
-                <span>Offer Sheets</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route('registrationForfeit.index')}}" class=" waves-yellow">
-                <i class="mdi-action-delete"></i>
-                <span>Registration Forfeit</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route('offerSheetApproval.index')}}" class=" waves-yellow">
-                <i class="mdi-action-thumbs-up-down"></i>
-                <span>Offer Sheets Approval</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
-                <i class="mdi-maps-local-atm"></i>
-                <span>Reservation Fee Collection</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                <i class="mdi-file-folder-open"></i>
-                <span>Requirements</span>
-              </a>
-              <ul class="ml-menu">
-                <li>
-                  <li>
                     <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
-                      <i class="mdi-action-thumbs-up-down"></i>
+                      <i class="mdi-navigation-chevron-right"></i>
                       <span>Requirement Assigning</span>
                     </a>
                   </li>
+                </ul>
+              </li>
+              <li>
+                <a href="{{route("banks.index")}}" class="waves-yellow">
+                  <i class="mdi-action-account-balance-wallet"></i>
+                  <span>Banks</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route("businesstypes.index")}}" class="waves-yellow">
+                  <i class="mdi-action-wallet-travel"></i>
+                  <span>Business Type</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route("requirements.index")}}" class="waves-yellow">
+                  <i class="mdi-file-folder-open"></i>
+                  <span>Requirements</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route("repr-positions.index")}}" class="waves-yellow">
+                  <i class="mdi-social-person-outline"></i>
+                  <span>Representative Position</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!--END OF MAINTENANCE-->
+
+          <!--TRANSACTIONS-->
+          <li>
+            <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+              <i class="mdi-action-swap-horiz"></i>
+              <span>Transactions</span>
+            </a>
+            <ul class="ml-menu">
+              <li>
+                <a href="{{ route('registration.index')}}" class="waves-yellow">
+                  <i class="mdi-action-assignment-ind"></i>
+                  <span>Registration</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
+                  <i class="mdi-action-assignment-turned-in"></i>
+                  <span>Registration Approval</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route('offersheets.index')}}" class="waves-yellow">
+                  <i class="mdi-image-switch-camera"></i>
+                  <span>Offer Sheets</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route('registrationForfeit.index')}}" class=" waves-yellow">
+                  <i class="mdi-action-delete"></i>
+                  <span>Registration Forfeit</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route('offerSheetApproval.index')}}" class=" waves-yellow">
+                  <i class="mdi-action-thumbs-up-down"></i>
+                  <span>Offer Sheets Approval</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
+                  <i class="mdi-maps-local-atm"></i>
+                  <span>Reservation Fee Collection</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+                  <i class="mdi-file-folder-open"></i>
+                  <span>Requirements</span>
+                </a>
+                <ul class="ml-menu">
                   <li>
-                    <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-                      <i class="mdi-content-inbox"></i>
-                      <span>Submission of Requirements</span>
+                    <li>
+                      <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
+                        <i class="mdi-action-thumbs-up-down"></i>
+                        <span>Requirement Assigning</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
+                        <i class="mdi-content-inbox"></i>
+                        <span>Submission of Requirements</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
+                        <i class="mdi-content-inbox"></i>
+                        <span>Requirement Validation</span>
+                      </a>
+                    </li>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+                  <i class="mdi-action-assignment"></i>
+                  <span>Contracts</span>
+                </a>
+                <ul class="ml-menu">
+                  <li>
+                    <a href="{{route("contract-create.index")}}" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>New Contract</span>
+                      <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
+                        <i class="mdi-navigation-chevron-right"></i>
+                        <span>Requirement Submission</span>
+                      </a>
+                    </li>
+
+                    <li>
+                      <a href="{{route('contract.index')}}" class="waves-yellow">
+                        <i class="mdi-hardware-keyboard-arrow-right"></i>
+                        <span>View Contract</span>
+                        <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
+                          <i class="mdi-navigation-chevron-right"></i>
+                          <span>Requirement Validation</span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a href="/extendTable" class="waves-yellow">
+                          <i class="mdi-hardware-keyboard-arrow-right"></i>
+                          <span>Extension and Renewal</span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a href="/terminateTable" class="waves-yellow">
+                          <i class="mdi-hardware-keyboard-arrow-right"></i>
+                          <span>Contract Termination</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/addammend" class="waves-yellow">
+                          <i class="mdi-hardware-keyboard-arrow-right"></i>
+                          <span>Addendum and Ammendment</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="{{route('move-in.index')}}" class="waves-yellow">
+                      <i class="mdi-action-exit-to-app"></i>
+                      <span>Move In</span>
                     </a>
                   </li>
                   <li>
-                    <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
-                      <i class="mdi-content-inbox"></i>
-                      <span>Requirement Validation</span>
+                    <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+                      <i class="mdi-action-payment"></i>
+                      <span>Billing and Collection</span>
                     </a>
+                    <ul class="ml-menu">
+                      <li>
+                        <a href="/billingTable" class="waves-yellow">
+                          <i class="mdi-hardware-keyboard-arrow-right"></i>
+                          <span>Billing</span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a href="{{route('collection.index')}}" class="waves-yellow">
+                          <i class="mdi-hardware-keyboard-arrow-right"></i>
+                          <span>Collection</span>
+                        </a>
+                      </li>
+                    </ul>
                   </li>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                <i class="mdi-action-assignment"></i>
-                <span>Contracts</span>
-              </a>
-              <ul class="ml-menu">
-                <li>
-<<<<<<< HEAD
-                  <a href="{{route("contract-create.index")}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>New Contract</span>
-=======
-                  <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-                    <i class="mdi-navigation-chevron-right"></i>
-                    <span>Requirement Submission</span>
->>>>>>> refs/remotes/origin/master
-                  </a>
-                </li>
+                </ul>
+              </li>
+              <!--END OF TRANSACTIONS-->
 
-                <li>
-<<<<<<< HEAD
-                  <a href="{{route('contract.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>View Contract</span>
-=======
-                  <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
-                    <i class="mdi-navigation-chevron-right"></i>
-                    <span>Requirement Validation</span>
->>>>>>> refs/remotes/origin/master
-                  </a>
-                </li>
+              <!--REPORTS-->
+              <li>
+                <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+                  <i class="mdi-action-assessment"></i>
+                  <span>Reports</span>
+                </a>
+                <ul class="ml-menu">
+                  <li>
+                    <a href="{{-- {{route('registrationReport.index')}} --}}">Registration</a>
+                  </li>
+                </ul>
+              </li>
+              <!--END OF REPORTS-->
 
-                <li>
-                  <a href="/extendTable" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Extension and Renewal</span>
-                  </a>
-                </li>
+              <!--QUERIES-->
+              <li>
+                <a href="javascript:void(0);" class="menu-toggle">
+                  <i class="mdi-action-find-in-page"></i>
+                  <span>Queries</span>
+                </a>
+                <ul class="ml-menu">
+                </ul>
+              </li>
+              <!--END OF QUERIES-->
 
-                <li>
-                  <a href="/terminateTable" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Contract Termination</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/addammend" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Addendum and Ammendment</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="{{route('move-in.index')}}" class="waves-yellow">
-                <i class="mdi-action-exit-to-app"></i>
-                <span>Move In</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                <i class="mdi-action-payment"></i>
-                <span>Billing and Collection</span>
-              </a>
-              <ul class="ml-menu">
-                <li>
-                  <a href="/billingTable" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Billing</span>
-                  </a>
-                </li>
+              <!--Utilities-->
+              <li>
+                <a href="{!! route('utilities.index') !!}" >
+                  <i class="mdi-image-tune"></i>
+                  <span>Utilities</span>
+                </a>
+              </li>
+              <!--END OF UTILITIES-->
+              <li>
+                <a href="{!! route('users.index') !!}" >
+                  <i class="mdi-image-tune"></i>
+                  <span>User Accounts</span>
+                </a>
+              </li>
 
-                <li>
-                  <a href="{{route('collection.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Collection</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <!--END OF TRANSACTIONS-->
+              <!-- #Menu -->
+            </aside>
 
-        <!--REPORTS-->
-        <li>
-          <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-            <i class="mdi-action-assessment"></i>
-            <span>Reports</span>
-          </a>
-          <ul class="ml-menu">
-            <li>
-              <a href="{{-- {{route('registrationReport.index')}} --}}">Registration</a>
-            </li>
-          </ul>
-        </li>
-        <!--END OF REPORTS-->
+            <!-- #END# Left Sidebar -->
+          </section>
 
-        <!--QUERIES-->
-        <li>
-          <a href="javascript:void(0);" class="menu-toggle">
-            <i class="mdi-action-find-in-page"></i>
-            <span>Queries</span>
-          </a>
-          <ul class="ml-menu">
-          </ul>
-        </li>
-        <!--END OF QUERIES-->
+          <section class="content">
+            <div class="flash-message">
+              @foreach (['red', 'green'] as $color)
+              @if(Session::has($color))
 
-        <!--Utilities-->
-        <li>
-          <a href="{!! route('utilities.index') !!}" >
-            <i class="mdi-image-tune"></i>
-            <span>Utilities</span>
-          </a>
-        </li>
-        <!--END OF UTILITIES-->
-        <li>
-          <a href="{!! route('users.index') !!}" >
-            <i class="mdi-image-tune"></i>
-            <span>User Accounts</span>
-          </a>
-        </li>
+              <p class="alert bg-{{ $color }}">{{ Session::get($color) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+              @endif
+              @endforeach
+            </div> <!-- end .flash-message -->
+            @yield('content')
+          </section>
+          {!!Html::script("plugins/jquery/jquery.min.js")!!}
+          @yield('scripts')
+          {!!Html::script("js/pages/forms/form-wizard.js")!!}
+          {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
+          {!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
+          {!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
+          {!!Html::script('plugins/jquery/parsley.min.js')!!}
+          {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
+          {!!Html::script('plugins/node-waves/waves.js')!!}
+          {!!Html::script('plugins/jquery-countto/jquery.countTo.js')!!}
+          {!!Html::script('plugins/raphael/raphael.min.js')!!}
+          {!!Html::script('plugins/morrisjs/morris.js')!!}
+          {!!Html::script('plugins/chartjs/Chart.bundle.js')!!}
+          {!!Html::script('plugins/jquery-sparkline/jquery.sparkline.js')!!}
+          {!!Html::script('js/admin.js')!!}
+          {!!Html::script('js/demo.js')!!}
+          {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
+          {!!Html::script('js/pages/ui/notifications.js')!!}
+          {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
+          {!!Html::script('js/notify/notify.min.js')!!}
+          {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
+          {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
+          {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
+          {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
 
-        <!-- #Menu -->
-      </aside>
+        </body>
 
-      <!-- #END# Left Sidebar -->
-    </section>
-
-    <section class="content">
-      <div class="flash-message">
-        @foreach (['red', 'green'] as $color)
-        @if(Session::has($color))
-
-        <p class="alert bg-{{ $color }}">{{ Session::get($color) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-        @endif
-        @endforeach
-      </div> <!-- end .flash-message -->
-      @yield('content')
-    </section>
-    {!!Html::script("plugins/jquery/jquery.min.js")!!}
-    @yield('scripts')
-    {!!Html::script("js/pages/forms/form-wizard.js")!!}
-    {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
-    {!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
-    {!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
-    {!!Html::script('plugins/jquery/parsley.min.js')!!}
-    {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
-    {!!Html::script('plugins/node-waves/waves.js')!!}
-    {!!Html::script('plugins/jquery-countto/jquery.countTo.js')!!}
-    {!!Html::script('plugins/raphael/raphael.min.js')!!}
-    {!!Html::script('plugins/morrisjs/morris.js')!!}
-    {!!Html::script('plugins/chartjs/Chart.bundle.js')!!}
-    {!!Html::script('plugins/jquery-sparkline/jquery.sparkline.js')!!}
-    {!!Html::script('js/admin.js')!!}
-    {!!Html::script('js/demo.js')!!}
-    {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
-    {!!Html::script('js/pages/ui/notifications.js')!!}
-    {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
-    {!!Html::script('js/notify/notify.min.js')!!}
-    {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
-    {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
-    {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
-    {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-
-  </body>
-
-  </html>
+        </html>

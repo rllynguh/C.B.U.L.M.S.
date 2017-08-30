@@ -248,13 +248,13 @@ class contractCreationController extends Controller
         $units=db::table('units')
         ->join('contract_details','units.id','contract_details.unit_id')
         ->where('current_contract_id',$current_contract->id)
-        ->select(DB::raw('code,CONCAT("₱",price * size) as price'))
+        ->select(DB::raw('code,CONCAT("PHP ",price * size) as price'))
         ->get();
 
         $billing_details=DB::table('billing_details')
         ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
         ->where('billing_headers.current_contract_id',$current_contract->id)
-        ->select(DB::RAW('description,CONCAT("₱ ",price) as price'))
+        ->select(DB::RAW('description,CONCAT("PHP ",price) as price'))
         ->get()
         ;
         $contents=DB::table('contents')
@@ -263,7 +263,7 @@ class contractCreationController extends Controller
         ->select('description')
         ->where('current_contracts.id',$current_contract->id)
         ->get();
-        $cost="₱ $cost";
+        $cost="PHP $cost";
         $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents','cost'));
         $date_issued=date_format($current_contract->date_issued,"Y-m-d");
         $pdfName="$contract_header->code($date_issued).pdf";

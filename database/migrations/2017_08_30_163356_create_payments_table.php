@@ -23,6 +23,7 @@ class CreatePaymentsTable extends Migration {
 			$table->integer('user_id')->index('user_id_header_idx');
 			$table->float('payment', 10, 0);
 			$table->boolean('status')->default(0);
+			$table->string('pdf', 60);
 		});
 	}
 

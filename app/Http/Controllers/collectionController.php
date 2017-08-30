@@ -10,6 +10,8 @@ use App\Payment;
 use Carbon\Carbon;
 use Config;
 use Auth;
+use PDF;
+
 
 class collectionController extends Controller
 {
@@ -78,16 +80,25 @@ class collectionController extends Controller
      */
     public function store(Request $request)
     {
-        DB::begintransaction();
+        // DB::begintransaction();
         //
-        try{
-
-          $latest=DB::table("payments")
-          ->select('code')
-          ->orderBy('code',"DESC")
-          ->first();
-          $pk="COLLECTION001";
-          if(!is_null($latest))
+        // try{
+        $billing_details=DB::table('billing_details')
+        ->where('billing_header_id',$request->myId)
+        ->join('billing_items','billing_details.billing_item_id','billing_items.id')
+        ->select('billing_items.description','price')
+        ->get();
+        $summary=db::table('billing_headers')
+        ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
+        ->select(DB::Raw('cost,cost- sum(COALESCE(payment,0)) as balance, CONCAT(first_name," ",last_name) as full_name'))
+        ->join('users','payments.user_id','users.id')
+        ->first();
+        $latest=DB::table("payments")
+        ->select('code')
+        ->orderBy('code',"DESC")
+        ->first();
+        $pk="COLLECTION001";
+        if(!is_null($latest))
             $pk=$latest->code;
         $sc= new smartCounter();
         $pk=$sc->increment($pk);
@@ -100,16 +111,22 @@ class collectionController extends Controller
         $payment->user_id=Auth::user()->id;
         $payment->payment=$request->txtAmount;
         $payment->save();
-
+        $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment'));
+        $date_issued=date_format($payment->date_issued,"Y-m-d");
+        $pdfName="$payment->code($date_issued).pdf";
+        $location=public_path("docs/$pdfName");
+        $pdf->save($location);
+        $payment->pdf=$pdfName;
+        $payment->save();
         DB::commit();
-    }
-    catch(\Exception $e)
-    {
-        return response::json($e);
-        DB::rollBack();
-    }
+    // }
+    // catch(\Exception $e)
+    // {
+    //     DB::rollBack();
+    //     return response::json($e);
+    // }
 
-}
+    }
 
     /**
      * Display the specified resource.
