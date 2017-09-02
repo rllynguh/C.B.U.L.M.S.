@@ -21,7 +21,6 @@ class maintenanceBuildingController extends Controller
      */
     public function index()
     {
-        // Query for building table display
         $result=DB::table("buildings")
         ->select("addresses.*","cities.description as city_description", 'provinces.*' ,'buildings.*')
         ->join('addresses','buildings.address_id','addresses.id')
@@ -30,11 +29,13 @@ class maintenanceBuildingController extends Controller
         ->select('cities.description as city_name','buildings.code as code','buildings.description as building_name','buildings.is_active as status',
             'buildings.id as id')
         ->get();
-        // Returns data as data table with action buttons
+        // <button id = "btnShowParkArea" class="btn btn-primary btnChangeTable" data-id = "'.$data->id.'">Show Park Area</button>
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button data-target="#show-units" id = "btnShowFloor" class="btn btn-primary btnChangeTable" data-id = "'  .$data->id.  '">Show floors</button>
+            return '<button id = "btnShowFloor" class="btn btn-primary btnChangeTable" data-id = "'  .$data->id.  '">Show floors</button>
+            <button data-toggle="modal" data-target="#buildingCreateModal" class="btn btn-primary btnEdit" data-edit = "building" data-id = "'.$data->id.'">Show price</button>
             <button data-toggle="modal" data-target="#buildingCreateModal" class="btn btn-primary btnEdit" data-edit = "building" data-id = "'.$data->id.'">Edit</button>
+            
             <button class="btn btn-danger remove-item">Delete</button>';
         })
         ->editColumn('is_active', function ($data) {
@@ -54,13 +55,12 @@ class maintenanceBuildingController extends Controller
         $result=DB::table("floors")
         ->where("building_id",$id)
         ->get();
-        //return response()->json($result);
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
             return '
             <button id = "btnShowBuilding" class="btn btn-primary btnChangeTable" data-id = "'  .$data->id.  '">Go back</button>
             <button id = "btnShowUnit" class="btn btn-primary btnChangeTable" data-id = "'  .$data->id.  '">Show Units</button>
-            <button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button>
+            <button data-toggle="modal" data-target="#floorCreateModal" class="btn btn-primary edit-item">Edit</button>
             <button class="btn btn-danger remove-item">Delete</button>';
         })
         ->editColumn('is_active', function ($data) {
@@ -76,6 +76,13 @@ class maintenanceBuildingController extends Controller
         ->rawColumns(['is_active','action'])
         ->make(true);
     }
+    public function insertFloor(Request $request){
+      $floor=new floor();
+      $floor->number=$request->floor_number;
+      $floor->building_id=$request->comBuilding;
+      $floor->num_of_unit=$request->floor_units;
+      $floor->save();
+    }
     public function getUnits($id){
       $result=DB::table("units")
       ->select(DB::Raw('Coalesce(price,1) as price,buildings.description as building_name,floors.number as floor_number,units.code as code,units.type as type,units.size as size,units.is_active as is_active,units.id,buildings.id as building_id'))
@@ -89,7 +96,7 @@ class maintenanceBuildingController extends Controller
       ->addColumn('action', function ($data) {
         return '
             <button id = "btnShowFloor" class="btn btn-primary btnChangeTable" data-id = "'.$data->building_id.'">Go back</button>
-            <button data-toggle="modal" data-target="#edit-item" class="btn btn-primary edit-item">Edit</button>
+            <button data-toggle="modal" data-target="#unitCreateModal" class="btn btn-primary btnEdit" data-edit = "unit" data-id = "'.$data->id.'">Edit</button>
             <button class="btn btn-danger remove-item">Delete</button>';
       })  
       ->editColumn('is_active', function ($data) {
@@ -113,6 +120,33 @@ class maintenanceBuildingController extends Controller
           $value = 'Shell';
         }
         return $value;
+      })
+      ->setRowId(function ($data) {
+        return $data = 'id'.$data->id;
+      })
+      ->rawColumns(['is_active','action'])
+      ->make(true);
+    }
+    public function getParkAreas($id){
+      $result=DB::table("Park_areas")
+      ->join("floors","Park_areas.floor_id","floors.id")
+      ->join("buildings","floors.building_id","buildings.id")
+      ->select("buildings.description as building_description","floors.number","Park_areas.*")
+      ->get();
+      return Datatables::of($result)
+      ->addColumn('action', function ($data) {
+        return '<button id="btnAddParkSpace" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float open-modal" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
+      })
+      ->editColumn('is_active', function ($data) {
+        $checked = '';
+        if($data->is_active==1){
+          $checked = 'checked';
+        }
+        return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
+      })
+      ->editColumn('dblParkAreaSize', function ($data) {
+
+        return "$data->size sqm";
       })
       ->setRowId(function ($data) {
         return $data = 'id'.$data->id;
@@ -206,6 +240,19 @@ class maintenanceBuildingController extends Controller
         ->groupBy('buildings.id')
         ->first();
         return Response()->json($result);
+    }
+    public function floorEdit($id){
+      $result = DB::table('floors')
+      ->select('unit_prices.date_as_of','unit_prices.price','units.*','buildings.*','floors.*',DB::raw('COUNT(units.id) as current,AVG(unit_prices.price) as avg_price'))
+      ->leftJoin('units','floors.id','=','units.floor_id')
+      ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+      ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
+      ->join('buildings','floors.building_id','=','buildings.id')
+      ->where('floors.id','=',$id)
+      ->groupBy('floors.id')
+      ->orderBy('floors.id')
+      ->first();
+      return Response::json($result);
     }
     /**
      * Update the specified resource in storage.

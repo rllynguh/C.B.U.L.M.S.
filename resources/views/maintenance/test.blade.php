@@ -4,7 +4,6 @@
   <div class="row">
     <div class="col-lg-12 margin-tb">
       <div class="header align-center">
-        <h2>Buildings wooo</h2>
         <nav class="breadcrumb" id = "navBuilding">
           <a class="breadcrumb-item active" href="#">Buildings</a>
         </nav>
@@ -18,9 +17,9 @@
   </div>
   <div class="card">
     <div class="header align-center">
-      <h2>
-      LIST OF BUILDINGS
-      </h2>
+      <div id = "header">
+    <h3>  LIST OF BUILDINGS </h3>
+      </div>
     </div>
     <div class="body">
       <table class="table row-border display compact table-hover dataTable table-striped ui celled" id="myTable">
@@ -59,4 +58,5 @@ urlbtype="{{route("custom.getBuildingType")}}";
 urlprov="{{route("custom.getProvince")}}";
 </script>
 <script src="/js/buildingRehaulAjax.js"></script>
+{!!Html::script("js/datatables.cellEdit.js")!!}
 @endsection

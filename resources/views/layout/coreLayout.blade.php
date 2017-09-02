@@ -16,6 +16,7 @@
   {!!Html::style("css/style.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
+  {!!Html::style("lib/DataTables/datatables.css")!!}
   @yield("styles")
 </head>
 
@@ -401,7 +402,8 @@
   <section class="content">
     @yield('content')
   </section>
-  {!!Html::script("plugins/jquery/jquery.min.js")!!}
+ {!!Html::script("lib/DataTables/datatables.js")!!}
+ {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!}
   @yield('scripts')
   {!!Html::script("js/pages/forms/form-wizard.js")!!}
   {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
@@ -421,10 +423,9 @@
   {!!Html::script('js/pages/ui/notifications.js')!!}
   {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
   {!!Html::script('js/notify/notify.min.js')!!}
-  {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
-  {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
   {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+  
   
 </body>
 
