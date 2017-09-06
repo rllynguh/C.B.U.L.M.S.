@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Manila',
 
     /*
     |--------------------------------------------------------------------------
@@ -137,7 +137,7 @@ return [
 
     'providers' => [
 
-        /*
+    /*
          * Laravel Framework Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
@@ -168,13 +168,9 @@ return [
         Orangehill\Iseed\IseedServiceProvider::class,
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
-        /*
-         * Package Service Providers...
-         */
         Laravel\Tinker\TinkerServiceProvider::class,
-        /*
-         * Application Service Providers...
-         */
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,

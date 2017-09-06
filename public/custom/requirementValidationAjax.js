@@ -36,4 +36,8 @@ $(document).ready(function()
    });
   });
 
+  $(document).on('hidden.bs.modal','#modalRequirement', function () {
+    $("#divReq").empty();
+  });
+
 });

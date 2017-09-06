@@ -19,7 +19,8 @@
 						'id'=> 'myId',
 						])
 					}}
-					<input type="checkbox" name="aggree"> i have read and agree to the terms and conditions.
+					<input type="checkbox" id="agree" name="agree" class="filled-in chk-col-yellow">
+					<label for='agree'> I have read and agree to the terms and conditions</label>
 					<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12"><i class="mdi-content-save"></i><span> Submit</span></button>
 				</div>
 				{{Form::close()}}

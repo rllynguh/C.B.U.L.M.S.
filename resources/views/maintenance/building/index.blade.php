@@ -59,11 +59,11 @@
                   <div class= "col-sm-6 col-md-6">
                     <div class= "form-line">
                       <h5 class="card-inside-title">Price</h5>
-                      {{ Form::number('txtBasePrice',null,[
+                      {{ Form::text('txtBasePrice',null,[
                         'id'=> 'txtBasePrice',
                         'class' => 'form-control text-center',
                         'readonly' => '',
-                        'data-rule' => 'quantity',
+                        'data-parsley-type' => 'number',
                         'autocomplete' => 'off',
                         'min' => '100',
                         'max' => '1000',
@@ -94,12 +94,13 @@
                   <div class= "col-sm-6 col-md-6">
                     <div class= "form-line">
                       <h5 class="card-inside-title">Percentage / Fixed</h5>
-                      {{ Form::number('txtPriceChange',null,[
+                      {{ Form::text('txtPriceChange',null,[
                         'id'=> 'txtPriceChange',
                         'class' => 'form-control text-center',
                         'autocomplete' => 'off',
                         'max' => '3',
                         'required' => 'required',
+                        'data-parsley-type' => 'number',
                         ])
                       }}
                     </div>

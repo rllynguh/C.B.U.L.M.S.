@@ -14,8 +14,8 @@ use Auth;
 
 class moveInController extends Controller
 {
- public function __construct()
- {
+   public function __construct()
+   {
     $this->middleware('admin');
     $this->middleware('auth');
 }
@@ -106,11 +106,13 @@ class moveInController extends Controller
                 }
             }
             DB::commit();
+            $request->session()->flash('green', 'Move in form successfully generated.');
             return redirect(route('move-in.index'));
         }
         catch(\Exception $e)
         {
             DB::rollBack();
+            $request->session()->flash('red', 'Oops, something went wrong.');
             return dd($e);
         }
     }

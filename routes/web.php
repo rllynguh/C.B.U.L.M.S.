@@ -17,7 +17,7 @@ $buildings = DB::table('buildings as b')
 
 Route::get('/', function () {
 	return view('welcome');
-});
+})->middleware('auth');
 Route::get('/404',function(){
 	return view('utilities.error');
 });
@@ -32,7 +32,15 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::get('/profile', function () {return view('tenant.profile');});
 	Route::get('/soa', function () {return view('tenant.soa');});
 });
+
+//temporary for when the template is only for admin
+
 Route::group(['prefix' => 'admin/'], function () {
+	Route::get('/', function () {
+		return view('user.admin.index');
+	})->middleware('auth','admin');
+
+
 	Route::resource('maintenance/banks','bankController');
 	Route::get('maintenance/banks/get/data', ['uses' => 'bankController@data', 'as' => 'banks.getData']);
 	Route::put('maintenance/banks/softdelete/{bank}', ['uses' => 'bankController@softdelete', 'as' => 'banks.softDelete']);
@@ -95,7 +103,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::post('maintenance/buildings/storefloor',['uses' => 'buildingController@storefloor', 'as' => 'buildings.storefloor']);
 	Route::get('maintenance/buildings/getFloor/{floor}',['uses' => 'buildingController@getFloor', 'as' => 'buildings.getfloor']);
 	Route::post('maintenance/buildings/storePrice', ['uses' => 'buildingController@storePrice', 'as' => 'buildings.storePrice']);
-	
+
 
 	Route::resource("maintenance/floors","floorController");
 	Route::get('maintenance/floors/getFloor/{id}', ['uses' => 'floorController@getFloor', 'as' => 'floors.getFloor']);
@@ -164,6 +172,14 @@ Route::group(['prefix' => 'admin/'], function () {
 
 
 Route::group(['prefix' => 'tenant/'], function () {
+
+
+	Route::get('/', function () {
+		return view('user.tenant.index');
+	})->middleware('auth','tenant');
+
+
+
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
 	Route::get('/transaction/offerSheetApproval/get/data', ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
 	Route::post('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
