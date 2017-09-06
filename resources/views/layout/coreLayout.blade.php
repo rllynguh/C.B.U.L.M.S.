@@ -12,7 +12,6 @@
   {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.css")!!}
-  {!!Html::style("plugins/morrisjs/morris.css")!!}
   {!!Html::style("css/style.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
@@ -294,156 +293,143 @@
                     <a href="{{route("contract-create.index")}}" class="waves-yellow">
                       <i class="mdi-hardware-keyboard-arrow-right"></i>
                       <span>New Contract</span>
-                      <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-                        <i class="mdi-navigation-chevron-right"></i>
-                        <span>Requirement Submission</span>
-                      </a>
-                    </li>
-
-                    <li>
-                      <a href="{{route('contract.index')}}" class="waves-yellow">
-                        <i class="mdi-hardware-keyboard-arrow-right"></i>
-                        <span>View Contract</span>
-                        <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
-                          <i class="mdi-navigation-chevron-right"></i>
-                          <span>Requirement Validation</span>
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="/extendTable" class="waves-yellow">
-                          <i class="mdi-hardware-keyboard-arrow-right"></i>
-                          <span>Extension and Renewal</span>
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="/terminateTable" class="waves-yellow">
-                          <i class="mdi-hardware-keyboard-arrow-right"></i>
-                          <span>Contract Termination</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/addammend" class="waves-yellow">
-                          <i class="mdi-hardware-keyboard-arrow-right"></i>
-                          <span>Addendum and Ammendment</span>
-                        </a>
-                      </li>
-                    </ul>
+                    </a>
                   </li>
+
                   <li>
-                    <a href="{{route('move-in.index')}}" class="waves-yellow">
-                      <i class="mdi-action-exit-to-app"></i>
-                      <span>Move In</span>
+                    <a href="{{route('contract.index')}}" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>View Contract</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="/extendTable" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>Extension and Renewal</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="/terminateTable" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>Contract Termination</span>
                     </a>
                   </li>
                   <li>
-                    <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                      <i class="mdi-action-payment"></i>
-                      <span>Billing and Collection</span>
+                    <a href="/addammend" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>Addendum and Ammendment</span>
                     </a>
-                    <ul class="ml-menu">
-                      <li>
-                        <a href="/billingTable" class="waves-yellow">
-                          <i class="mdi-hardware-keyboard-arrow-right"></i>
-                          <span>Billing</span>
-                        </a>
-                      </li>
-
-                      <li>
-                        <a href="{{route('collection.index')}}" class="waves-yellow">
-                          <i class="mdi-hardware-keyboard-arrow-right"></i>
-                          <span>Collection</span>
-                        </a>
-                      </li>
-                    </ul>
                   </li>
                 </ul>
               </li>
-              <!--END OF TRANSACTIONS-->
-
-              <!--REPORTS-->
+              <li>
+                <a href="{{route('move-in.index')}}" class="waves-yellow">
+                  <i class="mdi-action-exit-to-app"></i>
+                  <span>Move In</span>
+                </a>
+              </li>
               <li>
                 <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                  <i class="mdi-action-assessment"></i>
-                  <span>Reports</span>
+                  <i class="mdi-action-payment"></i>
+                  <span>Billing and Collection</span>
                 </a>
                 <ul class="ml-menu">
                   <li>
-                    <a href="{{-- {{route('registrationReport.index')}} --}}">Registration</a>
+                    <a href="/billingTable" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>Billing</span>
+                    </a>
+                  </li>
+
+                  <li>
+                    <a href="{{route('collection.index')}}" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>Collection</span>
+                    </a>
                   </li>
                 </ul>
               </li>
-              <!--END OF REPORTS-->
+            </ul>
+          </li>
+          <!--END OF TRANSACTIONS-->
 
-              <!--QUERIES-->
+          <!--REPORTS-->
+          <li>
+            <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+              <i class="mdi-action-assessment"></i>
+              <span>Reports</span>
+            </a>
+            <ul class="ml-menu">
               <li>
-                <a href="javascript:void(0);" class="menu-toggle">
-                  <i class="mdi-action-find-in-page"></i>
-                  <span>Queries</span>
-                </a>
-                <ul class="ml-menu">
-                </ul>
+                <a href="{{-- {{route('registrationReport.index')}} --}}">Registration</a>
               </li>
-              <!--END OF QUERIES-->
+            </ul>
+          </li>
+          <!--END OF REPORTS-->
 
-              <!--Utilities-->
-              <li>
-                <a href="{!! route('utilities.index') !!}" >
-                  <i class="mdi-image-tune"></i>
-                  <span>Utilities</span>
-                </a>
-              </li>
-              <!--END OF UTILITIES-->
-              <li>
-                <a href="{!! route('users.index') !!}" >
-                  <i class="mdi-image-tune"></i>
-                  <span>User Accounts</span>
-                </a>
-              </li>
+          <!--QUERIES-->
+          <li>
+            <a href="javascript:void(0);" class="menu-toggle">
+              <i class="mdi-action-find-in-page"></i>
+              <span>Queries</span>
+            </a>
+            <ul class="ml-menu">
+            </ul>
+          </li>
+          <!--END OF QUERIES-->
 
-              <!-- #Menu -->
-            </aside>
+          <!--Utilities-->
+          <li>
+            <a href="{!! route('utilities.index') !!}" >
+              <i class="mdi-image-tune"></i>
+              <span>Utilities</span>
+            </a>
+          </li>
+          <!--END OF UTILITIES-->
+          <li>
+            <a href="{!! route('users.index') !!}" >
+              <i class="mdi-image-tune"></i>
+              <span>User Accounts</span>
+            </a>
+          </li>
 
-            <!-- #END# Left Sidebar -->
-          </section>
+          <!-- #Menu -->
+        </aside>
 
-          <section class="content">
-            <div class="flash-message">
-              @foreach (['red', 'green'] as $color)
-              @if(Session::has($color))
+        <!-- #END# Left Sidebar -->
+      </section>
 
-              <p class="alert bg-{{ $color }}">{{ Session::get($color) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-              @endif
-              @endforeach
-            </div> <!-- end .flash-message -->
-            @yield('content')
-          </section>
-          {!!Html::script("plugins/jquery/jquery.min.js")!!}
-          @yield('scripts')
-          {!!Html::script("js/pages/forms/form-wizard.js")!!}
-          {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
-          {!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
-          {!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
-          {!!Html::script('plugins/jquery/parsley.min.js')!!}
-          {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
-          {!!Html::script('plugins/node-waves/waves.js')!!}
-          {!!Html::script('plugins/jquery-countto/jquery.countTo.js')!!}
-          {!!Html::script('plugins/raphael/raphael.min.js')!!}
-          {!!Html::script('plugins/morrisjs/morris.js')!!}
-          {!!Html::script('plugins/chartjs/Chart.bundle.js')!!}
-          {!!Html::script('plugins/jquery-sparkline/jquery.sparkline.js')!!}
-          {!!Html::script('js/admin.js')!!}
-          {!!Html::script('js/demo.js')!!}
-          {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
-          {!!Html::script('js/pages/ui/notifications.js')!!}
-          {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
-          {!!Html::script('js/notify/notify.min.js')!!}
-          {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
-          {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
-          {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
-          {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+      <section class="content">
+        <div class="flash-message">
+          @foreach (['red', 'green'] as $color)
+          @if(Session::has($color))
 
-        </body>
+          <p class="alert bg-{{ $color }}">{{ Session::get($color) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+          @endif
+          @endforeach
+        </div> <!-- end .flash-message -->
+        @yield('content')
+      </section>
+      {!!Html::script("plugins/jquery/jquery.min.js")!!}
+      @yield('scripts')
+      {!!Html::script("js/pages/forms/form-wizard.js")!!}
+      {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
+      {!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
+      {!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
+      {!!Html::script('plugins/jquery/parsley.min.js')!!}
+      {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
+      {!!Html::script('plugins/node-waves/waves.js')!!}
+      {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
+      {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
+      {!!Html::script('js/notify/notify.min.js')!!}
+      {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
+      {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
+      {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
+      {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+      {!!Html::script('js/admin.js')!!}
 
-        </html>
+    </body>
+
+    </html>

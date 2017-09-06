@@ -1,7 +1,8 @@
 $(function () {
 
+
     //Masked Input ============================================================================================================================
-    var $demoMaskedInput = $('.content');
+    var $demoMaskedInput = $('.demo-masked-input');
 
     //Date
     $demoMaskedInput.find('.date').inputmask('dd/mm/yyyy', { placeholder: '__/__/____' });
@@ -17,17 +18,9 @@ $(function () {
     $demoMaskedInput.find('.mobile-phone-number').inputmask('+99 (999) 999-99-99', { placeholder: '+__ (___) ___-__-__' });
     //Phone Number
     $demoMaskedInput.find('.phone-number').inputmask('+99 (999) 999-99-99', { placeholder: '+__ (___) ___-__-__' });
-    $demoMaskedInput.find('.telephone-number').inputmask('999-9999', { placeholder: '___-____' });
-    $demoMaskedInput.find('.max-digits-4').mask('0000');
-    $demoMaskedInput.find('.max-digits-2').mask('00');
-
-
-
-
 
     //Dollar Money
     $demoMaskedInput.find('.money-dollar').inputmask('99,99 $', { placeholder: '__,__ $' });
-    $demoMaskedInput.find('.area-mask').mask('9.99');
     //Euro Money
     $demoMaskedInput.find('.money-euro').inputmask('99,99 €', { placeholder: '__,__ €' });
 
@@ -44,5 +37,5 @@ $(function () {
     $demoMaskedInput.find('.key').inputmask('****-****-****-****', { placeholder: '____-____-____-____' });
     //===========================================================================================================================================
 
-
-})
+});
+// }

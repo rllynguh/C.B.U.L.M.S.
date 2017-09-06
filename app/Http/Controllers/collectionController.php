@@ -90,8 +90,10 @@ class collectionController extends Controller
         ->get();
         $summary=db::table('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
-        ->select(DB::Raw('cost,cost- sum(COALESCE(payment,0)) as balance, CONCAT(first_name," ",last_name) as full_name'))
+        ->select(DB::Raw('cost,(cost - COALESCE(sum(payment),0)) as balance, COALESCE(sum(payment),0) as payment, CONCAT(first_name," ",last_name) as full_name'))
         ->join('users','payments.user_id','users.id')
+        ->groupby('billing_headers.id')
+        ->where('billing_headers.id',$request->myId)
         ->first();
         $latest=DB::table("payments")
         ->select('code')

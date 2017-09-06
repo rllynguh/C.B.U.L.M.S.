@@ -22,7 +22,7 @@ class FloorsTableSeeder extends Seeder
                 'id' => 1,
                 'building_id' => 1,
                 'number' => 1,
-                'num_of_unit' => 1,
+                'num_of_unit' => 10,
                 'is_active' => 1,
             ),
         ));
