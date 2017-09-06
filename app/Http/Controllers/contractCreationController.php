@@ -105,7 +105,7 @@ class contractCreationController extends Controller
         $contract_header->code=$code;
         $contract_header->escalation_rate=$utilities->escalation_rate;
         $contract_header->save();
-
+        $full_name=Auth::user()->first_name." ".Auth::user()->last_name;
 
         $date_end = date("Y-m-d", strtotime(date("Y-m-d", strtotime($request->startDate)) . " + $request->txtDuration year"));
             //+ years
@@ -122,6 +122,7 @@ class contractCreationController extends Controller
         $units=DB::table('units')
         ->join('offer_sheet_details','units.id','offer_sheet_details.unit_id')
         ->join('registration_details','offer_sheet_details.registration_detail_id','registration_details.id')
+        ->where('registration_header_id',$request->regi_id)
         ->join('unit_prices','units.id','unit_prices.unit_id')
         ->whereRaw('date_as_of=(SELECT Max(date_as_of) from unit_prices where unit_id=units.id)')
         ->select('units.id','price')
@@ -141,20 +142,21 @@ class contractCreationController extends Controller
       ->select("billing_headers.*")
       ->orderBy('code',"DESC")
       ->first();
-      $code="BILL";
+      $code="BILL001";
       if(!is_null($latest))
           $code=$latest->code;
       $sc= new smartCounter();
       $code=$sc->increment($code);
 
 
+      $cost=$request->net_rent + $request->advance_rent + $request->cusa + $request->security_deposit + $request->vetting_fee + $request->fit_out;
       $billing_header=new BillingHeader();
       $billing_header->user_id=Auth::user()->id;
       $billing_header->code=$code;
       $billing_header->current_contract_id=$current_contract->id;
       $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
+      $billing_header->cost=$cost;
       $billing_header->save();
-
 
       $rent=DB::table('billing_items')
       ->select('id')
@@ -246,13 +248,13 @@ class contractCreationController extends Controller
       $units=db::table('units')
       ->join('contract_details','units.id','contract_details.unit_id')
       ->where('current_contract_id',$current_contract->id)
-      ->select(DB::raw('code,CONCAT("₱",price * size) as price'))
+      ->select(DB::raw('code,CONCAT("PHP ",price * size) as price'))
       ->get();
 
       $billing_details=DB::table('billing_details')
       ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
       ->where('billing_headers.current_contract_id',$current_contract->id)
-      ->select(DB::RAW('description,CONCAT("₱ ",price) as price'))
+      ->select(DB::RAW('description,CONCAT("PHP ",price) as price'))
       ->get()
       ;
       $contents=DB::table('contents')
@@ -261,8 +263,10 @@ class contractCreationController extends Controller
       ->select('description')
       ->where('current_contracts.id',$current_contract->id)
       ->get();
+      $cost="PHP $cost";
 
-      $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents'));
+      $res_fee=$utilities->reservation_fee * $request->net_rent;
+      $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents','cost','request','utilities','full_name','res_fee'));
       $date_issued=date_format($current_contract->date_issued,"Y-m-d");
       $pdfName="$contract_header->code($date_issued).pdf";
       $location=public_path("docs/$pdfName");
@@ -271,11 +275,13 @@ class contractCreationController extends Controller
       $current_contract->save();
 
       DB::commit();
+      $request->session()->flash('green', 'Contract successfully generated.');
       return redirect(route('contract-create.index'));
   }
   catch(\Exception $e)
   {
    DB::rollBack();
+   $request->session()->flash('red', 'Oooops something went wrong.');
    dd($e);
 }
 
@@ -380,7 +386,7 @@ class contractCreationController extends Controller
       $security_deposit=($utilities->security_deposit_rate*$total) - ($final* $utilities->reservation_fee);
   else
       $security_deposit=$utilities->security_deposit_rate*$total;
-     $cusa_size=100; //tentative cusa size
+     $cusa_size=$area; //tentative cusa size
      $cusa=($utilities->cusa_rate * $cusa_size) - ($utilities->cusa_rate * $cusa_size* 0.02); //tentative 2 %
      $vetting_fee=$utilities->vetting_fee*$area + ($utilities->vetting_fee *$area * ($utilities->vat_rate)/100);
      $fit_out=$utilities->fit_out_deposit*$final;

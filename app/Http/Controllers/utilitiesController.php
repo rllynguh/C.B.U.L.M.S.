@@ -61,6 +61,9 @@ class utilitiesController extends Controller
         $util->ewt_rate=$request->txtEWT;
         $util->escalation_rate=$request->txtEsca;
         $util->vetting_fee=$request->txtVet;
+        $util->reservation_fee=$request->txtRes;
+        $util->advance_rent_rate=$request->txtAdvance;
+        $util->fit_out_deposit=$request->txtFit;
         $util->date_as_of=date("Y-m-d H:i:s");
         $util->save();
         return Response::json($util);

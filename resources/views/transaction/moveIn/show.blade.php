@@ -27,7 +27,8 @@
 					<fieldset>
 						Choose from these units: <br>
 						@foreach($units as $unit)
-						<input type="checkbox" value="{{$unit->id}}" name="units[]"> {{$unit->code}}<br>	
+						<input type="checkbox" id="{{$unit->code}}" name="units[]" value="{{$unit->id}}" class="filled-in chk-col-yellow">
+						<label for='{{$unit->code}}'> {{$unit->code}}</label> <br>
 						@endforeach
 					</fieldset>
 					<h3>Finalization</h3>

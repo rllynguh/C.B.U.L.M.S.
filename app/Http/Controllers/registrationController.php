@@ -83,7 +83,7 @@ class registrationController extends Controller
           $password=Hash::make("password");
           $image = $request->file('picture');
           $imagename = md5($request->email. time()).'.'.$image->getClientOriginalExtension();
-          $location = public_path('images/'.$imagename);
+          $location = public_path('images/users/'.$imagename);
 
           $user=new User;
           $user->first_name=$request->fname;
@@ -177,11 +177,13 @@ class registrationController extends Controller
           }
           Image::make($image)->resize(400,400)->save($location);
           DB::commit();
+          $request->session()->flash('green', 'Registration Successful!');
           return redirect('/');
         }
         catch(\Exception $e)
         {
          DB::rollBack();
+         $request->session()->flash('red', 'Oops, something went wrong.');
          return dd($e);
        }
 

@@ -25,6 +25,33 @@
                 <input autocomplete="off" min="1" max="12" required  id="txtSec" name="txtSec" type="number" class="form-control text-center " data-parsley-pattern="^[0-9]+$" data-parsley-type="number"  placeholder="months">
               </div>
             </div>
+            <div class="form-group p-l-30">
+              <h5 data-toggle="tooltip" data-placement="top" title="Used to cover damage to the property(Months).">
+                Reservation Fee(Months)
+              </h5>
+              
+              <div class="form-line">
+                <input autocomplete="off" min="1" max="12" required  id="txtRes" name="txtRes" type="number" class="form-control text-center " data-parsley-pattern="^[0-9]+$" data-parsley-type="number"  placeholder="months">
+              </div>
+            </div>
+            <div class="form-group p-l-30">
+              <h5 data-toggle="tooltip" data-placement="top" title="Used to cover damage to the property(Months).">
+                Advance Rent(Months)
+              </h5>
+              
+              <div class="form-line">
+                <input autocomplete="off" min="1" max="12" required  id="txtAdvance" name="txtAdvance" type="number" class="form-control text-center " data-parsley-pattern="^[0-9]+$" data-parsley-type="number"  placeholder="months">
+              </div>
+            </div>
+            <div class="form-group p-l-30">
+              <h5 data-toggle="tooltip" data-placement="top" title="Used to cover damage to the property(Months).">
+                Fitout Deposit(Months)
+              </h5>
+              
+              <div class="form-line">
+                <input autocomplete="off" min="1" max="12" required  id="txtFit" name="txtFit" type="number" class="form-control text-center " data-parsley-pattern="^[0-9]+$" data-parsley-type="number"  placeholder="months">
+              </div>
+            </div>
             <div class="form-group p-l-30 p-t-30">
               <h5 data-toggle="tooltip" data-placement="top" title="(%)" >
                 Value Added Tax(%)
