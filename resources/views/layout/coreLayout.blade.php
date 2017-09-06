@@ -175,92 +175,9 @@
                 </li>
 
                 <li>
-                  <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
-                    <i class="mdi-navigation-chevron-right"></i>
-                    <span>Requirement Assigning</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="{{route("banks.index")}}" class="waves-yellow">
-                <i class="mdi-action-account-balance-wallet"></i>
-                <span>Banks</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route("businesstypes.index")}}" class="waves-yellow">
-                <i class="mdi-action-wallet-travel"></i>
-                <span>Business Type</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route("requirements.index")}}" class="waves-yellow">
-                <i class="mdi-file-folder-open"></i>
-                <span>Requirements</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route("repr-positions.index")}}" class="waves-yellow">
-                <i class="mdi-social-person-outline"></i>
-                <span>Representative Position</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!--END OF MAINTENANCE-->
-
-        <!--TRANSACTIONS-->
-        <li>
-          <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-            <i class="mdi-action-swap-horiz"></i>
-            <span>Transactions</span>
-          </a>
-          <ul class="ml-menu">
-            <li>
-              <a href="{{ route('registration.index')}}" class="waves-yellow">
-                <i class="mdi-action-assignment-ind"></i>
-                <span>Registration</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
-                <i class="mdi-action-assignment-turned-in"></i>
-                <span>Registration Approval</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route('offersheets.index')}}" class="waves-yellow">
-                <i class="mdi-image-switch-camera"></i>
-                <span>Offer Sheets</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route('registrationForfeit.index')}}" class=" waves-yellow">
-                <i class="mdi-action-delete"></i>
-                <span>Registration Forfeit</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route('offerSheetApproval.index')}}" class=" waves-yellow">
-                <i class="mdi-action-thumbs-up-down"></i>
-                <span>Offer Sheets Approval</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
-                <i class="mdi-maps-local-atm"></i>
-                <span>Reservation Fee Collection</span>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                <i class="mdi-file-folder-open"></i>
-                <span>Requirements</span>
-              </a>
-              <ul class="ml-menu">
-                <li>
-                  <li>
+                  <a href="{{route('parkrates.index')}}" class="waves-yellow">
+                    <i class="mdi-hardware-keyboard-arrow-right"></i>
+                    <span>Parking Space Lease Rate</span>
                     <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
                       <i class="mdi-navigation-chevron-right"></i>
                       <span>Requirement Assigning</span>
@@ -346,10 +263,24 @@
                 </a>
                 <ul class="ml-menu">
                   <li>
-                    <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-                      <i class="mdi-navigation-chevron-right"></i>
-                      <span>Submission of Requirements</span>
-                    </a>
+                    <li>
+                      <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
+                        <i class="mdi-action-thumbs-up-down"></i>
+                        <span>Requirement Assigning</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
+                        <i class="mdi-content-inbox"></i>
+                        <span>Submission of Requirements</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
+                        <i class="mdi-content-inbox"></i>
+                        <span>Requirement Validation</span>
+                      </a>
+                    </li>
                   </li>
                 </ul>
               </li>
@@ -360,33 +291,18 @@
                 </a>
                 <ul class="ml-menu">
                   <li>
-                    <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
-                      <i class="mdi-navigation-chevron-right"></i>
-                      <span>Requirement Validation</span>
+                    <a href="{{route("contract-create.index")}}" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>New Contract</span>
                     </a>
                   </li>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                <i class="mdi-action-assignment"></i>
-                <span>Contracts</span>
-              </a>
-              <ul class="ml-menu">
-                <li>
-                  <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-                    <i class="mdi-navigation-chevron-right"></i>
-                    <span>Requirement Submission</span>
-                  </a>
-                </li>
 
-                <li>
-                  <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
-                    <i class="mdi-navigation-chevron-right"></i>
-                    <span>Requirement Validation</span>
-                  </a>
-                </li>
+                  <li>
+                    <a href="{{route('contract.index')}}" class="waves-yellow">
+                      <i class="mdi-hardware-keyboard-arrow-right"></i>
+                      <span>View Contract</span>
+                    </a>
+                  </li>
 
                   <li>
                     <a href="/extendTable" class="waves-yellow">
