@@ -97,7 +97,7 @@ return array(
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
-    'App\\Http\\Middleware\\adminMiddleware' => $baseDir . '/app/Http/Middleware/adminMiddleware.php',
+    'App\\Http\\Middleware\\isUserAdmin' => $baseDir . '/app/Http/Middleware/isUserAdmin.php',
     'App\\Listeners\\EventListener' => $baseDir . '/app/Listeners/EventListener.php',
     'App\\Listeners\\LogSuccessfulLogin' => $baseDir . '/app/Listeners/LogSuccessfulLogin.php',
     'App\\MarketRate' => $baseDir . '/app/MarketRate.php',

@@ -171,7 +171,7 @@ class offerSheetController extends Controller
     ->get();
     return Datatables::of($result)
     ->addColumn('unit_select', function ($data) {
-      return "<input type='text' id='regi$data->id' value='$data->unit_code' disabled=''><input type='hidden' name='detail_id[]' value='$data->id'>
+      return "<div id='regi$data->id'>$data->unit_code</div><input type='hidden' name='detail_id[]' value='$data->id'>
       <input type='hidden' name='offer_id[]' id='offer$data->id' value='$data->unit_id'>";
     })
     ->addColumn('choose', function ($data) {

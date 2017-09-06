@@ -83,7 +83,7 @@ class registrationController extends Controller
           $password=Hash::make("password");
           $image = $request->file('picture');
           $imagename = md5($request->email. time()).'.'.$image->getClientOriginalExtension();
-          $location = public_path('images/'.$imagename);
+          $location = public_path('images/users/'.$imagename);
 
           $user=new User;
           $user->first_name=$request->fname;

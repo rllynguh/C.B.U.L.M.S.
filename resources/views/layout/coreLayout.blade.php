@@ -60,11 +60,11 @@
     <aside id="leftsidebar" class="sidebar">
       <div class="user-info">
         <div class="image p-l-80">
-          <img src="{{-- {{ asset('images/'.Auth::user()->picture) }} --}}{{asset('images/user.png')}} " class="user-image" height="60" width="60" alt="User Image">
+          <img src="{{ asset('images/users/'.Auth::user()->picture) }} " class="user-image" height="60" width="60" alt="User Image">
         </div>
         <div class="info-container m-t--10">
-          <div class="name align-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Christopher Atienza{{-- {{Auth::user()->first_name }} {{Auth::user()->last_name}} --}}</div>
-          <div class="email align-center">Christopher@yahoo.com{{-- {{Auth::user()->email}} --}}</div>
+          <div class="name align-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{Auth::user()->first_name }} {{Auth::user()->last_name}}</div>
+          <div class="email align-center">{{Auth::user()->email}}</div>
           <div class="btn-group user-helper-dropdown m-b-15">
             <i class="mdi-hardware-keyboard-arrow-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
             <ul class="dropdown-menu pull-right">
@@ -73,6 +73,7 @@
               <li><a href="javascript:void(0);" class="waves-lime"><i class="mdi-social-group pull-left"></i>Followers</a></li>
               <li><a href="javascript:void(0);" class="waves-lime"><i class="mdi-action-shopping-cart pull-left"></i>Sales</a></li>
               <li><a href="javascript:void(0);" class="waves-lime"><i class="mdi-action-grade pull-left"></i>Likes</a></li>
+              
               <li role="seperator" class="divider"></li>
               <li>
                 <a href="{{ route('logout') }}"

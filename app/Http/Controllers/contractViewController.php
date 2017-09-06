@@ -72,7 +72,7 @@ public function store(Request $request)
     try
     {
         $id=$request->myId;
-        if(!is_null($request->aggree))
+        if(!is_null($request->agree))
         {
             $current_contract=CurrentContract::find($id);
             $current_contract->status=1;

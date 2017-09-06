@@ -218,7 +218,8 @@
 						Select terms and conditions for this contract<br>
 						@if(!is_null($contents))
 						@foreach($contents as $content)
-						<input type="checkbox" value='{{$content->id}}' name="contents[]"> {{$content->description}} <br>
+						<input type="checkbox" value='{{$content->id}}' name="contents[]" id="term{{$content->id}}" class="filled-in chk-col-yellow">
+						<label for="term{{$content->id}}">{{$content->description}}</label><br>
 						@endforeach
 						@endif
 					</fieldset>
