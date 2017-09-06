@@ -175,15 +175,9 @@
                 </li>
 
                 <li>
-<<<<<<< HEAD
-                  <a href="{{route('parkrates.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Parking Space Lease Rate</span>
-=======
                   <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
                     <i class="mdi-navigation-chevron-right"></i>
                     <span>Requirement Assigning</span>
->>>>>>> refs/remotes/origin/master
                   </a>
                 </li>
               </ul>
@@ -268,19 +262,19 @@
                 <li>
                   <li>
                     <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
-                      <i class="mdi-action-thumbs-up-down"></i>
+                      <i class="mdi-navigation-chevron-right"></i>
                       <span>Requirement Assigning</span>
                     </a>
                   </li>
                   <li>
                     <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-                      <i class="mdi-content-inbox"></i>
+                      <i class="mdi-navigation-chevron-right"></i>
                       <span>Submission of Requirements</span>
                     </a>
                   </li>
                   <li>
                     <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
-                      <i class="mdi-content-inbox"></i>
+                      <i class="mdi-navigation-chevron-right"></i>
                       <span>Requirement Validation</span>
                     </a>
                   </li>
@@ -294,28 +288,16 @@
               </a>
               <ul class="ml-menu">
                 <li>
-<<<<<<< HEAD
-                  <a href="{{route("contract-create.index")}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>New Contract</span>
-=======
                   <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
                     <i class="mdi-navigation-chevron-right"></i>
                     <span>Requirement Submission</span>
->>>>>>> refs/remotes/origin/master
                   </a>
                 </li>
 
                 <li>
-<<<<<<< HEAD
-                  <a href="{{route('contract.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>View Contract</span>
-=======
                   <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
                     <i class="mdi-navigation-chevron-right"></i>
                     <span>Requirement Validation</span>
->>>>>>> refs/remotes/origin/master
                   </a>
                 </li>
 
