@@ -4,7 +4,7 @@
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
-      <h2 class="align-center">Unsettled Tenant Registration</h2>
+      <h2 class="align-center">OFFER SHEET</h2>
     </div>
     
   </div>
@@ -13,7 +13,7 @@
       <div class="card">
         <div class="header align-center">
           <h2>
-            LIST OF PENDING REGISTRATION 
+            LIST OF REGISTRATION READY FOR OFFER SHEET
           </h2>
         </div>
         <div class="body">

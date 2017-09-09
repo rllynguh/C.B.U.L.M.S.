@@ -12,7 +12,7 @@
       <div class="card">
         <div class="header align-center">
           <h2>
-            Offer Sheets for Contract Creation 
+            CONTRACTS 
           </h2>
         </div>
         <div class="body">

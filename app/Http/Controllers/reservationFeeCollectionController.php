@@ -72,22 +72,32 @@ class reservationFeeCollectionController extends Controller
     public function store(Request $request)
     {
         //
-        $regi_details=DB::table('registration_details')
-        ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
-        ->select('registration_details.id')
-        ->where('registration_headers.id',$request->myId)
-        ->get();
-        foreach ($regi_details as $regi_detail)
+        db::begintransaction();
+        try
         {
-            $regi_detail_update=RegistrationDetail::find($regi_detail->id);
-            if(($regi_detail_update->is_rejected==0) && ($regi_detail_update->is_forfeited==0))
-             { $regi_detail_update->is_reserved=1;
-                 $regi_detail_update->save();
-             }
-         }
-         return response::json('yas');
+            $regi_details=DB::table('registration_details')
+            ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+            ->select('registration_details.id')
+            ->where('registration_headers.id',$request->myId)
+            ->get();
+            foreach ($regi_details as $regi_detail)
+            {
+                $regi_detail_update=RegistrationDetail::find($regi_detail->id);
+                if(($regi_detail_update->is_rejected==0) && ($regi_detail_update->is_forfeited==0))
+                   { $regi_detail_update->is_reserved=1;
+                       $regi_detail_update->save();
+                   }
+               }
+               db::commit();
+               return response::json('yas');
+           }
+           catch(\Exception $e)
+           {
+            db::rollback();
+            dd($e);
+        }
 
-     }
+    }
 
     /**
      * Display the specified resource.

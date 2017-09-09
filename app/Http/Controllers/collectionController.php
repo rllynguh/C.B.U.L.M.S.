@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Datatables;
 use Response;
 use DB;
-use App\PaymentHeader;
-use App\PaymentDetail;
+use App\Payment;
 use Carbon\Carbon;
 use Config;
 use Auth;
+use PDF;
+
 
 class collectionController extends Controller
 {
@@ -37,24 +38,29 @@ class collectionController extends Controller
     }
     public function data()
     {
-     $bill=DB::table('billing_headers')
-     ->join('billing_details','billing_headers.id','billing_details.billing_header_id')
-     ->leftJoin('payment_details','billing_details.id','payment_details.billing_detail_id')
-     ->havingRaw('SUM(billing_details.price) > SUM(payment_details.payment) or payment_details.billing_detail_id is null')
-     ->groupBy('billing_headers.id')
-     ->select(DB::Raw('billing_headers.code,CONCAT("₱ ",SUM(billing_details.price)) as balance,CONCAT("₱ ",COALESCE(SUM(payment_details.payment),0.00)) as amount_paid,payment_details.billing_detail_id,billing_headers.id'))
-     ->get();
+        $bill=db::table('billing_headers')
+        ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
+        ->havingRaw('cost>coalesce(sum(payments.payment),0)')
+        ->groupby('billing_headers.id')
+        ->select(db::raw('billing_headers.code,billing_headers.id,cost,coalesce(sum(payments.payment),0) as amount_paid'))
+        ->get();
 
-     return Datatables::of($bill)
-     ->addColumn('action', function ($data) {
-        return '<button id="btnCollection" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.route("collection.show",$data->id).'"><i class="mdi-editor-border-color"></i></button>';
-    })
-     ->setRowId(function ($data) {
-        return $data = 'id'.$data->id;
-    })
-     ->rawColumns(['is_active','action'])
-     ->make(true);
- }
+        return Datatables::of($bill)
+        ->addColumn('action', function ($data) {
+            return '<button id="btnCollection" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
+        })
+        ->editColumn('cost',function ($data) {
+            return $data = '₱ '.$data->cost;
+        })
+        ->editColumn('amount_paid',function ($data) {
+            return $data = '₱ '.$data->amount_paid;
+        })
+        ->setRowId(function ($data) {
+            return $data = 'id'.$data->id;
+        })
+        ->rawColumns(['is_active','action'])
+        ->make(true);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -74,49 +80,55 @@ class collectionController extends Controller
      */
     public function store(Request $request)
     {
-        DB::begintransaction();
+        // DB::begintransaction();
         //
-        try{
-            if(!is_null($request->payments))
-            { 
-                $latest=DB::table("payment_headers")
-                ->select("id",'code')
-                ->orderBy('code',"DESC")
-                ->first();
-                $pk="COLLECTION001";
-                if(!is_null($latest))
-                    $pk=$latest->code;
-                $sc= new smartCounter();
-                $pk=$sc->increment($pk);
-                $payment_header=new PaymentHeader();
-                $payment_header->bank_id=$request->bank;
-                $payment_header->date_issued=Carbon::now(Config::get('app.timezone'));
-                $payment_header->date_collected=$request->dateCollected;
-                $payment_header->user_id=Auth::user()->id;
-                $payment_header->code=$pk;
-                $payment_header->save();
-                for($x=0;$x<count($request->billings);$x++)
-                {
-                 if(!is_null($request->payments[$x]))
-                 {
-                    $payment_detail=new PaymentDetail();
-                    $payment_detail->payment_header_id=$payment_header->id;
-                    $payment_detail->billing_detail_id=$request->billings[$x];
-                    $payment_detail->payment=$request->payments[$x];
-                    $payment_detail->save();
-                }
-            }
-        }
+        // try{
+        $billing_details=DB::table('billing_details')
+        ->where('billing_header_id',$request->myId)
+        ->join('billing_items','billing_details.billing_item_id','billing_items.id')
+        ->select('billing_items.description','price')
+        ->get();
+        $summary=db::table('billing_headers')
+        ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
+        ->select(DB::Raw('cost,(cost - COALESCE(sum(payment),0)) as balance, COALESCE(sum(payment),0) as payment, CONCAT(first_name," ",last_name) as full_name'))
+        ->join('users','payments.user_id','users.id')
+        ->groupby('billing_headers.id')
+        ->where('billing_headers.id',$request->myId)
+        ->first();
+        $latest=DB::table("payments")
+        ->select('code')
+        ->orderBy('code',"DESC")
+        ->first();
+        $pk="COLLECTION001";
+        if(!is_null($latest))
+            $pk=$latest->code;
+        $sc= new smartCounter();
+        $pk=$sc->increment($pk);
+        $payment=new Payment();
+        $payment->billing_header_id=$request->myId;
+        $payment->bank_id=$request->bank;
+        $payment->code=$pk;
+        $payment->date_issued=Carbon::now(Config::get('app.timezone'));
+        $payment->date_collected=$request->dateCollected;
+        $payment->user_id=Auth::user()->id;
+        $payment->payment=$request->txtAmount;
+        $payment->save();
+        $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment'));
+        $date_issued=date_format($payment->date_issued,"Y-m-d");
+        $pdfName="$payment->code($date_issued).pdf";
+        $location=public_path("docs/$pdfName");
+        $pdf->save($location);
+        $payment->pdf=$pdfName;
+        $payment->save();
         DB::commit();
-        return redirect(route('collection.index'));
-    }
-    catch(\Exception $e)
-    {
-        DB::rollBack();
-        dd($e);
-    }
+    // }
+    // catch(\Exception $e)
+    // {
+    //     DB::rollBack();
+    //     return response::json($e);
+    // }
 
-}
+    }
 
     /**
      * Display the specified resource.
@@ -127,15 +139,19 @@ class collectionController extends Controller
     public function show($id)
     {
         //
-        $billing_details=DB::table('billing_details')
+        $bill_items=DB::table('billing_headers')
+        ->join('billing_details','billing_headers.id','billing_details.billing_header_id')
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
-        ->leftJoin('payment_details','billing_details.id','payment_details.billing_detail_id')
-        ->where('billing_header_id',$id)
-        ->havingRaw('SUM(billing_details.price) > COALESCE(SUM(payment_details.payment),0)')
-        ->select(DB::raw('SUM(billing_details.price) - COALESCE(SUM(payment_details.payment),0) as balance,billing_details.id,billing_items.description'))
-        ->groupby('billing_details.id')
-        ->get();
-        return response::json($billing_details);
+        ->select('billing_items.description','billing_details.price')
+        ->where('billing_headers.id',$id)
+        ->get()
+        ;
+        $summary=db::table('billing_headers')
+        ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
+        ->select(DB::raw('cost,cost - coalesce(sum(payment),0) as balance'))
+        ->where('billing_headers.id',$id)
+        ->first();
+        return response::json([$bill_items,$summary]);
     }
 
     /**
