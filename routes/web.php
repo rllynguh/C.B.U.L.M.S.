@@ -164,7 +164,7 @@ Route::group(['prefix' => 'tenant/'], function () {
 
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
 	Route::get('/transaction/offerSheetApproval/get/data', ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
-	Route::post('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
+	Route::get('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
 
 
 	Route::resource("/transaction/registrationForfeit","registrationForfeitController");

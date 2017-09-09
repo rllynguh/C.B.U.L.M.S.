@@ -55,10 +55,6 @@
 									<th class="align-center">Registration Detail</th>
 									<th class="align-center">Unit Offered</th>
 									<th class="align-center">Unit Rate</th>
-									<th class="align-center">Building Type Offered</th>
-									<th class="align-center">Size Offered</th>
-									<th class="align-center">Unit Type Offered</th>
-									<th class="align-center">Floor Offered</th>
 									<th class="align-center">Action</th>
 
 
