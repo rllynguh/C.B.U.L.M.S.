@@ -43,7 +43,7 @@ class contractCreationController extends Controller
       ->where('registration_details.is_forfeited','0')
       ->where('registration_details.is_rejected','0')
       ->where('offer_sheet_details.status','1')
-      ->where('registration_requirements.status','1')
+      ->where('registration_requirements.is_fulfilled','1')
       ->whereRaw('registration_headers.id not in (Select registration_header_id from contract_headers)')
       ->groupby('registration_headers.id')
       ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id)')

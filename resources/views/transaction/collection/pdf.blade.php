@@ -1,7 +1,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <center>
 	Collection  {{$payment->code}} <br>
-	Collected By  {{$summary->full_name}} <br>
+	Collected By  {{$full_name}} <br>
 	Date Collected:  {{$payment->date_collected}} <br>
 
 	<table>

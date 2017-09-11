@@ -27,8 +27,16 @@ $(document).ready(function()
   $(this).on('click', '#btnReserve',function(e)
   { 
    id=$(this).val();
+   content="";
    $.get(url + '/' + id, function (data) {
-    $('#divRes').append("Reservation fee: ₱ " +data);
+    content="<table class='table table-hover dataTable'><thead><tr><th class='align-center'>Unit</th><th class='align-center'>Area</th><th class='align-center'>Price</th> </tr></thead><tbody>"
+    $.each( data[1], function( index, value ){
+      content+="<tr><td>" + value.code  + "</td> <td>" + value.size  + " sqm</td> <td>₱ " + value.price  + "</td></tr>";
+    });
+    content+="</tbody></table><br>";
+    content+="Total: ₱ " +data[2].fee + " * " + data[2].month + " month(s)<br>";
+    content+="Reservation fee: ₱ " +data[0];
+    $('#divRes').append(content);
     $("#myId").val(id);
     $('#modalReserve').modal('show');
   });

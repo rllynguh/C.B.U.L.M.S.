@@ -93,13 +93,6 @@ $(document).ready(function()
       setTimeout(function(){
         $("#btnSave").removeAttr('disabled');
       }, 1000);
-      $.ajaxSetup(
-      {
-        headers: 
-        {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      });
       e.preventDefault(); 
       var formData = new FormData($('#myForm')[0]);
     type = "POST"; //for updating existing resource
@@ -147,13 +140,6 @@ $(document).ready(function()
   //for record soft deletion
   $('#myList').on('change', '#IsActive',function(e)
   { 
-    $.ajaxSetup(
-    {
-      headers: 
-      {
-        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-      }
-    });
     e.preventDefault(); 
     var id = $(this).val();
     $.ajax(

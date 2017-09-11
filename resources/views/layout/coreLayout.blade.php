@@ -270,12 +270,6 @@
                       </a>
                     </li>
                     <li>
-                      <a href="{{route('requirementSubmission.index')}}" class="waves-yellow">
-                        <i class="mdi-content-inbox"></i>
-                        <span>Submission of Requirements</span>
-                      </a>
-                    </li>
-                    <li>
                       <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
                         <i class="mdi-content-inbox"></i>
                         <span>Requirement Validation</span>

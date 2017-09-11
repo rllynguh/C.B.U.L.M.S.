@@ -35,8 +35,8 @@ $(document).ready(function()
       {
         $("#modalRequirement").modal("show");
         $.each( data, function( index, value ){
-          req+="<input id='checkboxReq' name='checkboxReq[]' value='" + 
-          value.id +"'' type='checkbox'>" + value.description + "<br>";
+          req+="<input id='" + value.description + "' name='checkboxReq[]' class='filled-in chk-col-yellow' value='" + 
+          value.id +"'' type='checkbox'> <label for='" + value.description +  "'>" + value.description +"</label><br>";
         });
         $("#divReq").append(req);
       }
@@ -69,9 +69,8 @@ $(document).ready(function()
             mode=" ";
           else
             mode="disabled ";
-          req+="<input id='checkboxReq' name='checkboxReq[]' " + mode + " value='" +  
-          value.id +"' type='checkbox' checked>" + value.description + "<br>";
-        });
+          req+="<input id='" + value.description + "' name='checkboxReq[]' checked " + mode +" class='filled-in chk-col-yellow' value='" + 
+          value.id +"'' type='checkbox'> <label for='" + value.description +  "'>" + value.description +"</label><br>";        });
         $("#divReq").append(req);
       }
       else
