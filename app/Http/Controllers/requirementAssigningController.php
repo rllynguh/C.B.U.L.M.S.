@@ -37,11 +37,10 @@ class requirementAssigningController extends Controller
             'registration_details.id',
             'offer_sheet_details.registration_detail_id')
         ->leftjoin('registration_requirements','registration_headers.id','registration_requirements.registration_header_id')
-        ->where('pdf','=',null)
         ->where('registration_details.is_forfeited','0')
         ->where('registration_details.is_rejected','0')
         ->groupby('registration_headers.id')
-        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id) and count( registration_requirements.id)>count( Case when registration_requirements.status =1 then 1 else null end )')
+        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id) and count( registration_requirements.id)>count( Case when registration_requirements.is_fulfilled =1 then 1 else null end )')
         ->get()
         ;   
         return Datatables::of($result)

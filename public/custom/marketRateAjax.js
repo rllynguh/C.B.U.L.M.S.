@@ -1,6 +1,12 @@
 
 $(document).ready(function()
 { 
+ $.ajaxSetup(
+ {
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+  }
+})
   //for datatables
   var table = $('#myTable').DataTable({
     responsive: true,
@@ -34,12 +40,7 @@ $(document).ready(function()
   {
     if($('#myForm').parsley().isValid())
     {
-      $.ajaxSetup(
-      {
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      })
+
       e.preventDefault(); 
       var my_url = url;
       var type="POST";

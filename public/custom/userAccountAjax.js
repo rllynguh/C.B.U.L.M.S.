@@ -1,6 +1,12 @@
 
 $(document).ready(function()
 { 
+ $.ajaxSetup(
+ {
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+  }
+})
   //datatables
   var table = $('#myTable').DataTable({
     responsive: true,
@@ -18,12 +24,6 @@ $(document).ready(function()
   });
   $('#myList').on('change', '#IsActive',function(e)
   { 
-    $.ajaxSetup(
-    {
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-      }
-    })
     e.preventDefault(); 
     var id = $(this).val();
     $.ajax(
@@ -52,11 +52,6 @@ $(document).ready(function()
   //delete a record
   $('#btnDelete').on('click',function(e)
   {
-   $.ajaxSetup({
-    headers: {
-     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-   }
- })
 
    e.preventDefault(); 
    var myId = $(this).val();

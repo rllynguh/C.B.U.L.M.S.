@@ -202,9 +202,9 @@ $(this).on('click', '#btnAddRequirement',function(e)
     {
       $("#modalRequirement").modal("show");
       $.each( data, function( index, value ){
-        req+="<input id='checkboxReq' name='checkboxReq[]' value='" + 
-        value.id +"'' type='checkbox'>" + value.description + "<br>";
-      });
+       req+="<input id='" + value.description + "' name='checkboxReq[]' class='filled-in chk-col-yellow' value='" + 
+       value.id +"'' type='checkbox'> <label for='" + value.description +  "'>" + value.description +"</label><br>";
+     });
       $("#divReq").append(req);
     }
     else
@@ -231,8 +231,8 @@ $(this).on('click', '#btnEditRequirement',function(e)
     {
       $("#modalRequirement").modal("show");
       $.each( data, function( index, value ){
-        req+="<input id='checkboxReq' name='checkboxReq[]' value='" + 
-        value.id +"'' type='checkbox' checked>" + value.description + "<br>";
+        req+="<input id='" + value.description + "' name='checkboxReq[]' checked class='filled-in chk-col-yellow' value='" + 
+        value.id +"'' type='checkbox'> <label for='" + value.description +  "'>" + value.description +"</label><br>";
       });
       $("#divReq").append(req);
     }

@@ -11,19 +11,12 @@ $(document).ready(function()
     responsive: true,
     processing: true,
     serverSide: true,
-    ajax: {
-      url: dataurl,
-      type: "POST"
-    },
+    ajax: dataurl,
     columns: [
     {data: 'regi_id'},
     {data: 'offer_id'},
     {data: 'unit_code'},
     {data: 'rate'},
-    {data: 'building_type'},
-    {data: 'unit_size'},
-    {data: 'unit_type'},
-    {data: 'floor'},
     {data: 'action'}
     ]
   });

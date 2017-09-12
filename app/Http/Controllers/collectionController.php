@@ -88,10 +88,10 @@ class collectionController extends Controller
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
         ->select('billing_items.description','price')
         ->get();
+        $full_name=Auth::user()->first_name." ".Auth::user()->last_name;
         $summary=db::table('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
-        ->select(DB::Raw('cost,(cost - COALESCE(sum(payment),0)) as balance, COALESCE(sum(payment),0) as payment, CONCAT(first_name," ",last_name) as full_name'))
-        ->join('users','payments.user_id','users.id')
+        ->select(DB::Raw('cost,(cost - COALESCE(sum(payment),0)) as balance, COALESCE(sum(payment),0) as payment'))
         ->groupby('billing_headers.id')
         ->where('billing_headers.id',$request->myId)
         ->first();
@@ -113,7 +113,7 @@ class collectionController extends Controller
         $payment->user_id=Auth::user()->id;
         $payment->payment=$request->txtAmount;
         $payment->save();
-        $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment'));
+        $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment','full_name'));
         $date_issued=date_format($payment->date_issued,"Y-m-d");
         $pdfName="$payment->code($date_issued).pdf";
         $location=public_path("docs/$pdfName");

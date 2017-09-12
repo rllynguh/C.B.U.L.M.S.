@@ -40,7 +40,7 @@ $(document).ready(function()
 				if(value.offered_exact_size>=value.size_from && value.offered_exact_size<=value.size_to)
 					mode='success';
 				size="Size : <small class='label label-" + mode + "'>"+ value.offered_exact_size +" sqm</small>";
-				rate="Prize: <small class='label label-success'>"+ value.rate +"</small>";
+				rate="Price: <small id='myRate"+ value.unit_id +"' class='label label-success'>"+ value.rate +"</small>";
 				options+="<input type='radio' id='"+ value.unit_offered +"' class='myRadio' class='radio-col-yellow type='radio' name='unit_option' value='"+ value.unit_id +"'><label for='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'>" + value.unit_offered+ "</label> " + size + rate + "<br>";
 			});
 			$("#divOptions").append(options);
@@ -52,7 +52,7 @@ $(document).ready(function()
 		name=$('#unit'+value).text();
 		$('#offer'+myId).val(value);
 		$('#regi'+myId).text(name);
-		console.log(value + " " + 'offer'+myId);
+		$('#rate'+myId).text($('#myRate'+value).text());
 		$("#modalChoose").modal("hide");
 	});
 	$(document).on('hidden.bs.modal','#modalChoose', function () 
