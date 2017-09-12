@@ -13,6 +13,7 @@
   <link href="../css/tenant/animate.css" rel="stylesheet"> 
   <link href="../css/tenant/main.css" rel="stylesheet">
   <link href="../css/tenant/responsive.css" rel="stylesheet"> 
+  @yield('styles')
   <!--[if lt IE 9]> <script src="js/html5shiv.js"></script> 
   <script src="js/respond.min.js"></script> <![endif]--> 
 </head><!--/head-->
@@ -61,3 +62,4 @@
   <script type="text/javascript" src="../js/tenant/jquery.prettyPhoto.js"></script> 
   <script type="text/javascript" src="../js/tenant/jquery.parallax.js"></script> 
   <script type="text/javascript" src="../js/tenant/main.js"></script> 
+@yield('scripts')

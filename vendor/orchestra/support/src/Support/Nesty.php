@@ -2,8 +2,6 @@
 
 namespace Orchestra\Support;
 
-use Illuminate\Support\Fluent;
-
 class Nesty
 {
     use Traits\Descendible;
@@ -41,8 +39,8 @@ class Nesty
      */
     protected function toFluent($id)
     {
-        $defaults = isset($this->config['defaults']) ? $this->config['defaults'] : [];
-        $class    = isset($this->config['fluent']) ? $this->config['fluent'] : Fluent::class;
+        $defaults = $this->config['defaults'] ?? [];
+        $class    = $this->config['fluent'] ?? Fluent::class;
 
         return new $class(array_merge($defaults, [
             'id'     => $id,

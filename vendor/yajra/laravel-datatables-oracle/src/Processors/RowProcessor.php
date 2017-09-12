@@ -1,16 +1,10 @@
 <?php
 
-namespace Yajra\Datatables\Processors;
+namespace Yajra\DataTables\Processors;
 
 use Illuminate\Support\Arr;
-use Yajra\Datatables\Helper;
+use Yajra\DataTables\Utilities\Helper;
 
-/**
- * Class RowProcessor.
- *
- * @package Yajra\Datatables
- * @author  Arjay Angeles <aqangeles@gmail.com>
- */
 class RowProcessor
 {
     /**
@@ -36,14 +30,14 @@ class RowProcessor
     /**
      * Process DT RowId and Class value.
      *
-     * @param string $attribute
+     * @param string          $attribute
      * @param string|callable $template
      * @return $this
      */
     public function rowValue($attribute, $template)
     {
-        if (! empty($template)) {
-            if (! is_callable($template) && Arr::get($this->data, $template)) {
+        if (!empty($template)) {
+            if (!is_callable($template) && Arr::get($this->data, $template)) {
                 $this->data[$attribute] = Arr::get($this->data, $template);
             } else {
                 $this->data[$attribute] = Helper::compileContent($template, $this->data, $this->row);
@@ -57,7 +51,7 @@ class RowProcessor
      * Process DT Row Data and Attr.
      *
      * @param string $attribute
-     * @param array $template
+     * @param array  $template
      * @return $this
      */
     public function rowData($attribute, array $template)

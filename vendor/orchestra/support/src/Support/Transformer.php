@@ -129,7 +129,7 @@ abstract class Transformer
     protected function transformByMeta($meta, $data, ...$parameters)
     {
         $name  = Str::singular($meta);
-        $types = isset($this->options[$meta]) ? $this->options[$meta] : null;
+        $types = $this->options[$meta] ?? null;
 
         if (empty($types)) {
             return $data;
@@ -145,8 +145,6 @@ abstract class Transformer
 
         return $data;
     }
-
-
 
     /**
      * Merge meta options.
@@ -185,7 +183,7 @@ abstract class Transformer
      */
     protected function filterMetaType($name)
     {
-        $types = Arr::get($this->options, $name, $this->request->input($name));
+        $types = $this->options[$name] ?? $this->request->input($name);
 
         if (is_string($types)) {
             $types = explode(',', $types);

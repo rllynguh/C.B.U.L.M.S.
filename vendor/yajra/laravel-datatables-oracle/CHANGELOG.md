@@ -1,4 +1,4 @@
-## Datatables Package for Laravel 4|5
+## DataTables Package for Laravel 4|5
 
 [![Latest Stable Version](https://poser.pugx.org/yajra/laravel-datatables-oracle/v/stable.png)](https://packagist.org/packages/yajra/laravel-datatables-oracle)
 [![Total Downloads](https://poser.pugx.org/yajra/laravel-datatables-oracle/downloads.png)](https://packagist.org/packages/yajra/laravel-datatables-oracle)
@@ -8,73 +8,78 @@
 
 ## Change Log
 
-### v7.5.0 - 05-22-2017
-- Do not use ::class to avoid IDE error when fractal is not installed. #1132
-- Add server-side [error handler](https://yajrabox.com/docs/laravel-datatables/7.0/error-handler). #1131
+### v8.0.3 (12-SEP-2017)
+- Fix compatibility with Lumen. #1382
+- Fix #1377.
 
-### v7.4.0 - 05-01-2017
-- Implement multi-term smart search in collection engine. #1115
-- Implement multi-term smart search in QueryBuilderEngine. #1113
-- Fix #881, #1109, #998
-- Credits to @apreiml.
+### v8.0.2 (06-SEP-2017)
+- Remove void return type. 
+- Fix #1367, PR #1368.
 
-### v7.3.0 - 02-23-2017
-- Add support ordering when search in nested relations #965.
-- Credits to @AdrienPoupa and @ethaizone.
+### v8.0.1 (31-AUG-2017)
+- Do not resolve column if relation is not eager loaded. #1355
+- Fix #1353, sort/search not working when using join statements.
+- Add tests for join statements.
 
-### v7.2.1 - 02-16-2017
-- Move orchestra/testbench to require-dev.
-- Use phpunit 5.7 to match Laravel’s requirement.
-- Revert branch alias.
+### v8.0.0 (31-AUG-2017)
+### ADDED
+- Add support for Laravel 5.5.
+- Package auto-discovery implemented.
+- Add the raw data to model key when compiling views when using addColumn and editColumn.
+- Make multi-term search configurable.
+- Source code clean-up, refactoring and type-hinting.
+- Improved scrutinizer code quality score from 6 to ~9 pts.
+- On the fly support for `SoftDeletes`. No need to use `withTrashed` and `onlyTrashed`.
+- Add `getQuery` api to get the query used by dataTable.
+- Add `getFilteredQuery` api to get the prepared (filtered, ordered & paginated) query.
+- Add `Arrayable` and `Jsonable` interface for a more Laravel like response.
+```php
+use Yajra\DataTables\Facades\DataTables;
 
-### v7.2.0 - 02-16-2017
-- Add support for array data source. [#992](https://github.com/yajra/laravel-datatables/pull/992)
-- Minor comment correction [#1002](https://github.com/yajra/laravel-datatables/pull/1002), credits to @lk77.
+return DataTables::eloquent(User::query())->toJson();
+return DataTables::eloquent(User::query())->toArray();
+```
+- Introducing a new OOP / intuitive syntax.
+```php
+// using DataTables Factory
+use Yajra\DataTables\DataTables;
 
-### v7.1.4 - 02-09-2017
-- Fix collection case insensitive ordering.
-- Fix [#945](https://github.com/yajra/laravel-datatables/issues/945).
+return DataTables::of(User::query())->toJson();
+return (new DataTables)->eloquent(User::query())->toJson();
+return (new DataTables)->queryBuilder(DB::table('users'))->toJson();
+return (new DataTables)->collection(User::all())->toJson();
 
-### v7.1.3 - 02-06-2017
-- Use stable packages. 
-- Fix [#977](https://github.com/yajra/laravel-datatables/issues/977).
+// using DataTable class directly
+use Yajra\DataTables\EloquentDataTable;
+return (new EloquentDataTable(User::query())->toJson();
 
-### v7.1.2 - 02-06-2017
-- Add bindings from relation. [#979](https://github.com/yajra/laravel-datatables/pull/979)
-- Fix [#960](https://github.com/yajra/laravel-datatables/issues/960).
-- PR [#962](https://github.com/yajra/laravel-datatables/pull/962), credits to @snagytx.
+use Yajra\DataTables\QueryDataTable;
+return (new QueryDataTable(DB::table('users'))->toJson();
 
-### v7.1.1 - 01-30-2017
-- Fix doc block.
-- Fix request class usage on collection engine.
+use Yajra\DataTables\CollectionDataTable;
+return (new CollectionDataTable(User::all())->toJson();
+```
+- Add `datatables()` function helper.
 
-### v7.1.0 - 01-30-2017
-- Use orchestra testbench to test the package.
-- Enhance identification of proper engine to use for a given builder. Fix [#954](https://github.com/yajra/laravel-datatables/issues/954).
-- Use Laravel config helper instead of using the facade.
-- Enhance Request class to make it testable using phpunit. Address issue [#901](https://github.com/yajra/laravel-datatables/issues/901)
+### CHANGED
+- Namespace changed from `Yajra\Datatables` to `Yajra\DataTables`.
+- Rename `Datatables` to `DataTables` class.
+- Rename Facade from `Datatables` to `DataTables` class.
+- Preserve `Eloquent\Builder` when overriding the default ordering of dataTables when using `EloquentEngine`.
+- Preserve `Eloquent\Builder` when using filterColumn api. Allows us to use model scope and any eloquent magics.
+- Fractal integration extracted to own plugin [laravel-datatables-fractal](https://github.com/yajra/laravel-datatables-fractal).
+- Raw output are always passed on transformer instance.
+- Object response is now the default output `public function make($mDataSupport = true)`.
 
-### v7.0.2 - 01-29-2017
-- Map all model relations to eloquent engine. Fix #950
+### REMOVED
+- Remove `filterColumn` api magic query method in favor of closure.
+- Remove support on older `snake_case` methods.
+- Remove silly implementation of proxying query builder calls via magic method. 
+- Removed unused methods.
+- Remove `withTrashed` and `onlyTrashed` api.
 
-### v7.0.1 - 01-27-2017
-- Revert getHtmlBuilder method for backward compatibility.
-- Add html builder test.
-- Rename Test class name.
-- Add eloquent engine test.
-
-### v7.0.0 - 01-27-2017
-- Support for Laravel 5.4.
-- Features are split across packages. #832
-    - Buttons service approach extracted to own plugin.
-        - Add fluent way to send variables to DataTable class. #845
-    - Html builder extracted to own plugin.
-- DataTable Engines are now pluggable. #544
-- Added option to order by nulls last. #794
-- Escape all columns by default for XSS protection. Fix #909
-- Add rawColumns method for unescaped columns. https://github.com/yajra/laravel-datatables/commit/81adef8555195795189853f91e326dd056e40bb0
-
-## TODO
-- Fix IE compatibility by using POST method when exporting/printing. #826
-- Enhance/Fix nested relations support. #789
-- Export Selected Rows Datatables Service Provider. #829 #850
+### FIXED
+- How to get full used query ? #1068
+- Is there a way to build the query (with filtering and sorting) but without execute it? #1234 
+- Fix orderColumn api where related tables are not joined. 
+- Fix nested with relation search and sort function.

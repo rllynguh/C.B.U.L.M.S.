@@ -1,4 +1,4 @@
-@extends('layout.tenantLayout')
+@extends('layout.tenantNav')
 <!--picture -->
 <div class="container">
   <div class="col-sm-6 col-md-4" style="padding: 10px 0 10px 0;">

@@ -24,31 +24,31 @@
     ],
     "autoload": {
         "psr-4": {
-          "Collective\\Html\\": "src/"
+            "Collective\\Html\\": "src/"
         },
         "files": [
-          "src/helpers.php"
+            "src/helpers.php"
         ]
     },
     "require": {
-        "php": ">=5.6.4",
-        "illuminate/http": "~5.4.0",
-        "illuminate/routing": "~5.4.0",
-        "illuminate/session": "~5.4.0",
-        "illuminate/support": "~5.4.0"
+        "php": ">=7.0",
+        "illuminate/http": "~5.5.0",
+        "illuminate/routing": "~5.5.0",
+        "illuminate/session": "~5.5.0",
+        "illuminate/support": "~5.5.0"
     },
     "require-dev": {
-        "illuminate/database": "~5.4.0",
-        "illuminate/view": "~5.4.0",
         "mockery/mockery": "^0.9.4",
-        "phpunit/phpunit": "~4.8.35 || ~5.7"
+        "orchestra/database": "~3.5.0",
+        "orchestra/testbench": "~3.5.0",
+        "phpunit/phpunit": "~6.0"
     },
     "replace": {
         "laravelcollective/html": "*"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.4-dev"
+            "dev-master": "5.5-dev"
         }
     },
     "config": {

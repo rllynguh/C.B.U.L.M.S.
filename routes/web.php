@@ -26,8 +26,9 @@ Route::get('test/floors/{id}',['uses' => 'maintenanceBuildingController@getFloor
 Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits', 'as' =>'test.getUnits']);
 Route::get('test/parkAreas/{id}',['uses' => 'maintenanceBuildingController@getParkAreas', 'as' =>'test.getParkAreas']);
 Route::resource('test','maintenanceBuildingController');
-Route::group(['prefix' => 'tenant/'],function(){
+Route::group(['prefix' => 'tenantt/'],function(){
 	Route::get('/', function () {return view('tenant.index');});
+	Route::resource("registration","registrationController");
 	Route::get('/home', function () {return view('tenant.login');});
 	Route::get('/profile', function () {return view('tenant.profile');});
 	Route::get('/soa', function () {return view('tenant.soa');});
@@ -216,6 +217,5 @@ Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRa
 
 
 
-Route::resource("registration","registrationController");
 
 
