@@ -43,7 +43,7 @@ $(document).ready(function()
           "</tr>";
         });
         content+="</tbody></table>";
-        content+="Total: ₱ " + data[1].cost + "     Balance: ₱ " + data[1].balance;  
+        content+="Total: ₱ " + data[1].cost + "     Balance: ₱ " + data[2];  
         $('#divCollect').append(content);
       }
       else

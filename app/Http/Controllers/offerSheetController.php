@@ -146,7 +146,7 @@ class offerSheetController extends Controller
     ->where('registration_headers.id','=',$id)
     ->first();
     $result=DB::table('registration_details')
-    ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,Concat("₱ ",price*size) as rate,offer_sheet_details.id as offer_detail,registration_details.id as  regi_detail'))
+    ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,price*size as rate,offer_sheet_details.id as offer_detail,registration_details.id as  regi_detail'))
     ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
     ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
     ->leftJoin('units as offered_unit', function($join)
@@ -177,7 +177,7 @@ class offerSheetController extends Controller
       <input type='hidden' name='offer_id[]' id='offer$data->id' value='$data->unit_id'>";
     })
     ->editColumn('rate', function ($data) {
-      return "<div id='rate$data->id'>$data->rate</div>";
+      return "<div id='rate$data->id'>₱ ".number_format($data->rate,2 )."</div>";
     })
     ->addColumn('choose', function ($data) {
       return "<button id='btnChoose' type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float' value='$data->id'><i class='mdi-content-add'></i></button>";

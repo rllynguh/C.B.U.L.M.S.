@@ -109,19 +109,19 @@
 										{{$unit->code}}
 									</td>
 									<td>
-										{{$unit->size}} sqm
+										{{$unit->size}}
 									</td>
 									<td>
-										₱ {{$unit->rate }} 
+										{{$unit->rate }} 
 									</td>
 									<td>
-										₱ {{$unit->price }} 
+										{{$unit->price }} 
 									</td>
 								</tr>
 								@endforeach
 							</tbody>
 						</table>
-						Total: ₱ {{$total}}
+						Total: ₱ {{number_format($total,2)}}
 					</fieldset>
 
 					<h3>Net Monthly Rent</h3>
@@ -136,23 +136,23 @@
 							<tbody id="myList">
 								<tr>
 									<td class="align-center">Base Rent</td>
-									<td class="align-center">₱ {{$total}}</td>
+									<td class="align-center">₱ {{number_format($total,2)}}</td>
 								</tr>
 								<tr>
 									<td class="align-center">Add: {{$utilities->vat_rate}}% VAT</td>
-									<td class="align-center">₱ {{$vat}}</td>
+									<td class="align-center">₱ {{number_format($vat,2)}}</td>
 								</tr>
 								<tr>
 									<td class="align-center">Sub-Total</td>
-									<td class="align-center">₱ {{$subtotal}}</td>
+									<td class="align-center">₱ {{number_format($subtotal,2)}}</td>
 								</tr>
 								<tr>
 									<td class="align-center">Less: {{$utilities->ewt_rate}}% EWT</td>
-									<td class="align-center">₱ {{$ewt}}</td>
+									<td class="align-center">₱ {{number_format($ewt,2)}}</td>
 								</tr>
 								<tr>
 									<td class="align-center">Net Rent</td>
-									<td class="align-center">₱ {{$final}}</td>
+									<td class="align-center">₱ {{number_format($final,2)}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -173,7 +173,7 @@
 										Advance Rent({{$utilities->advance_rent_rate}} month(s) Rent)
 									</td>
 									<td>
-										₱ {{$advancerent}}
+										₱ {{number_format($advancerent,2)}}
 									</td>
 								</tr>
 								<tr>
@@ -181,7 +181,7 @@
 										Security Deposit({{$utilities->security_deposit_rate}} month(s) base Rent - Reservation Fee if any)
 									</td>
 									<td>
-										₱ {{$securitydeposit}}
+										₱ {{number_format($securitydeposit,2)}}
 									</td>
 								</tr>
 								<tr>
@@ -189,7 +189,7 @@
 										Common User Service Area Rate({{$utilities->cusa_rate}} * area) 
 									</td>
 									<td>
-										₱ {{$cusa}}
+										₱ {{number_format($cusa,2)}}
 									</td>
 								</tr>
 								<tr>
@@ -197,7 +197,7 @@
 										Vetting Fee ({{$utilities->vetting_fee}} * area exclusive of vat)
 									</td>
 									<td>
-										₱ {{$vettingfee}}
+										₱ {{number_format($vettingfee,2)}}
 									</td>
 								</tr>
 								<tr>
@@ -205,7 +205,7 @@
 										Fit out deposit ({{$utilities->fit_out_deposit}} * rent)
 									</td>
 									<td>
-										₱ {{$fitout}}
+										₱ {{number_format($fitout,2)}}
 									</td>
 								</tr>
 							</tbody>
