@@ -38,22 +38,22 @@ class collectionController extends Controller
     }
     public function data()
     {
-        $bill=db::table('billing_headers')
+        $bills=db::table('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
         ->havingRaw('cost>coalesce(sum(payments.payment),0)')
         ->groupby('billing_headers.id')
         ->select(db::raw('billing_headers.code,billing_headers.id,cost,coalesce(sum(payments.payment),0) as amount_paid'))
         ->get();
 
-        return Datatables::of($bill)
+        return Datatables::of($bills)
         ->addColumn('action', function ($data) {
             return '<button id="btnCollection" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
         })
         ->editColumn('cost',function ($data) {
-            return $data = '₱ '.$data->cost;
+            return $data = '₱ '.number_format($data->cost,2);
         })
         ->editColumn('amount_paid',function ($data) {
-            return $data = '₱ '.$data->amount_paid;
+            return $data = '₱ '.number_format($data->amount_paid,2);
         })
         ->setRowId(function ($data) {
             return $data = 'id'.$data->id;
@@ -88,6 +88,7 @@ class collectionController extends Controller
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
         ->select('billing_items.description','price')
         ->get();
+
         $full_name=Auth::user()->first_name." ".Auth::user()->last_name;
         $summary=db::table('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
@@ -146,12 +147,18 @@ class collectionController extends Controller
         ->where('billing_headers.id',$id)
         ->get()
         ;
+        foreach ($bill_items as &$bill_item) {
+            # code...
+            $bill_item->price=number_format($bill_item->price,2);
+        }
         $summary=db::table('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
         ->select(DB::raw('cost,cost - coalesce(sum(payment),0) as balance'))
         ->where('billing_headers.id',$id)
         ->first();
-        return response::json([$bill_items,$summary]);
+        $summary->cost=number_format($summary->cost,2);
+        $balance=number_format($summary->balance,2);
+        return response::json([$bill_items,$summary,$balance]);
     }
 
     /**

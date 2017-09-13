@@ -38,12 +38,12 @@ NOW, THEREFORE, the LESSOR and the LESSEE agree as follows: <br>
 
 
 3.	RESERVATION FEE.<br>
-The LESSEE upon receipt of the Notice of Award from the LESSOR confirming its rights to lease the <br>premises and its acceptance thereto over the leased premises shall pay the RESERVATION FEE in the <br>amount of PESOS: {{$res_fee}}, which shall be valid for thirty <br>(30) days and shall be non-refundable. In the event that the lease proceeds, the Reservation Fee <br>shall be applied to/deducted from the Security Deposit due. <br>
+The LESSEE upon receipt of the Notice of Award from the LESSOR confirming its rights to lease the <br>premises and its acceptance thereto over the leased premises shall pay the RESERVATION FEE in the <br>amount of PESOS: {{number_format($res_fee,2)}}, which shall be valid for thirty <br>(30) days and shall be non-refundable. In the event that the lease proceeds, the Reservation Fee <br>shall be applied to/deducted from the Security Deposit due. <br>
 <br>
 
 4.	NET MONTHLY RENT.<br>
 <br><br>
-4.1.	The NET Rent per month for Year 1 of the Lease Term {{$contract->start_of_contract}} <br>to {{$contract->end_of_contract}}) is PESOS: {{$request->net_rent}} <br> inclusive of 12% Value Added Tax and less Withholding Tax, computed as follows:<br>
+4.1.	The NET Rent per month for Year 1 of the Lease Term {{$contract->start_of_contract}} <br>to {{$contract->end_of_contract}}) is PESOS: {{number_format($request->net_rent,2)}} <br> inclusive of 12% Value Added Tax and less Withholding Tax, computed as follows:<br>
 
 <table>
 	<tr>
@@ -56,12 +56,12 @@ The LESSEE upon receipt of the Notice of Award from the LESSOR confirming its ri
 			{{$billing_detail->description}}
 		</td>
 		<td>
-			{{$billing_detail->price}}
+			{{number_format($billing_detail->price,2)}}
 		</td>
 	</tr>
 	@endforeach
 </table>
-Total : {{$cost}}
+Total : {{number_format($cost,2)}}
 
 
 
@@ -84,7 +84,7 @@ The LESSEE shall issue TWELVE (12) post-dated checks (PDC) in the amount of the 
 			{{$unit->code}}
 		</td>
 		<td>
-			{{$unit->price}}
+			{{number_format($unit->price,2)}}
 		</td>
 	</tr>
 	@endforeach
@@ -100,14 +100,14 @@ YEAR 5	9 PDCs		Due by ___________, 2020. The checks should be dated on the 16th 
 
 5.	ADVANCE RENT.<br><br>
 
-5.1	The LESSEE agrees to pay the LESSOR upon signing of this contract a dated check in the sum <br>equivalent to PESOS: PHP {{$request->advance_rent}} and 00/100 (Php 000,000.00), representing three <br>(3) months’ rent as ADVANCE RENT, which shall be applied to the last three (3) months of the lease <br>term. <br><br>
+5.1	The LESSEE agrees to pay the LESSOR upon signing of this contract a dated check in the sum <br>equivalent to PESOS: PHP {{number_format($request->advance_rent,2)}} and 00/100 (Php 000,000.00), representing three <br>(3) months’ rent as ADVANCE RENT, which shall be applied to the last three (3) months of the lease <br>term. <br><br>
 
 5.2	In case of pre-termination, the Advance Rent referred to in the preceding paragraph shall be <br>forfeited in favor of the LESSOR and shall be treated as liquidated damages.<br><br>
 
 
 6.	SECURITY DEPOSIT.
 
-6.1.	 The LESSEE agrees to issue the LESSOR upon signing of this contract a dated check in the sum<br> equivalent to PESOS: PHP {{$request->security_deposit}}, representing three (3) months’ base rent of <br>the first year of lease as SECURITY DEPOSIT for the performance of LESSEE’s obligations under this <br>lease contract. <br><br>
+6.1.	 The LESSEE agrees to issue the LESSOR upon signing of this contract a dated check in the sum<br> equivalent to PESOS: PHP {{number_format($request->security_deposit,2)}}, representing three (3) months’ base rent of <br>the first year of lease as SECURITY DEPOSIT for the performance of LESSEE’s obligations under this <br>lease contract. <br><br>
 
 6.2.	The SECURITY DEPOSIT shall serve as security deposit for damage to the leased premises, <br>unpaid bills for public utilities, unpaid rents and other fees due that might be due the LESSOR or <br>any public utility. It shall be returned to the LESSEE without interest, and less whatever expenses<br> chargeable against it within sixty (60) days from expiration or termination of the lease. In case the <br>amount of security deposit is insufficient, the LESSEE shall remain liable for such unpaid amount <br>plus interest.<br><br>
 
@@ -116,7 +116,7 @@ YEAR 5	9 PDCs		Due by ___________, 2020. The checks should be dated on the 16th 
 
 7.	COMMON AREA CHARGES (CUSA).<br><br>
 
-The LESSEE shall pay the LESSOR a monthly charge of PESOS:  (Php60.00/70.00/80.00) per square meter <br>multiplied by the total floor area leasable, plus VAT, less 2% EWT or a total of PESOS:  PHP {{$request->cusa}} and 00/100 (Php00,000.00) per month upon the effectivity of this contract for the<br> common area expenses on security, maintenance, insurance of the common area, janitorial, light, <br>water, garbage collection fee, garden and parking maintenance, and other expenses for the common <br>areas. The LESSEE shall issue checks every fifth (5th) day of the month for the duration of the <br>lease. The CUSA may be subject to periodic review and may increase from time to time, provided that <br>the LESSOR shall notify the LESSEE of such increase, not less than thirty (30) days prior to its <br>effectivity. <br>
+The LESSEE shall pay the LESSOR a monthly charge of PESOS:  (Php60.00/70.00/80.00) per square meter <br>multiplied by the total floor area leasable, plus VAT, less 2% EWT or a total of PESOS:  PHP {{number_format($request->cusa,2)}} and 00/100 (Php00,000.00) per month upon the effectivity of this contract for the<br> common area expenses on security, maintenance, insurance of the common area, janitorial, light, <br>water, garbage collection fee, garden and parking maintenance, and other expenses for the common <br>areas. The LESSEE shall issue checks every fifth (5th) day of the month for the duration of the <br>lease. The CUSA may be subject to periodic review and may increase from time to time, provided that <br>the LESSOR shall notify the LESSEE of such increase, not less than thirty (30) days prior to its <br>effectivity. <br>
 
 8.	ESCALATION CLAUSE.<br>
 

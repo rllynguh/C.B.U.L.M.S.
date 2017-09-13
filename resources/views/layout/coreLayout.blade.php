@@ -424,6 +424,13 @@
       {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
       {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
       {!!Html::script('js/admin.js')!!}
+      {!!Html::script("plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js")!!}
+      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.flash.min.js")!!}
+      {!!Html::script("plugins/jquery-datatable/extensions/export/jszip.min.js")!!}
+      {!!Html::script("plugins/jquery-datatable/extensions/export/pdfmake.min.js")!!}
+      {!!Html::script("plugins/jquery-datatable/extensions/export/vfs_fonts.js")!!}
+      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.html5.min.js")!!}
+      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.print.min.js")!!}
 
     </body>
     </html>

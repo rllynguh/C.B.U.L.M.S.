@@ -74,7 +74,7 @@
         </h2>
       </div>
       <div class="body">
-        <table class="table table-hover dataTable" id="myTable">
+        <table class="table table-bordered table-striped" id="myTable">
           <thead>
             <tr>
               <th class="align-center">Bank</th>

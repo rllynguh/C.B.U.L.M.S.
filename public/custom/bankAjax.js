@@ -11,7 +11,11 @@ $(document).ready(function()
     {data: 'description', name: 'description'},
     {data: 'is_active', name: 'is_active', searchable: false},
     {data: 'action', name: 'action', orderable: false, searchable: false}
-    ]
+    ],
+    // dom: 'Bfrtip',
+    //   buttons: [
+    //   'copy', 'csv', 'excel', 'pdf', 'print'
+    //   ]
   });
 
   //show add modal
