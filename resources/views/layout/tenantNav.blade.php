@@ -7,33 +7,22 @@
   <meta name="keywords" content="Creative, Onepage, Parallax, HTML5, Bootstrap, Popular, custom, personal, portfolio" /> 
   <meta name="author" content=""> 
   <title>Majent | Tenant Portal</title> 
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/tenant/prettyPhoto.css" rel="stylesheet"> 
-  <link href="../css/tenant/font-awesome.min.css" rel="stylesheet"> 
-  <link href="../css/tenant/animate.css" rel="stylesheet"> 
-  <link href="../css/tenant/main.css" rel="stylesheet">
-  <link href="../css/tenant/responsive.css" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+  {!!Html::style("lib/DataTables/datatables.css")!!}  
+  {!!Html::style("plugins/sweetalert/sweetalert.css")!!}
+  {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
+  {!!Html::style("plugins/node-waves/waves.css")!!}
+  {!!Html::style("plugins/animate-css/animate.min.css")!!}
+  {!!Html::style("plugins/waitMe/waitMe.min.css")!!}
+  {!!Html::style("css/parsleyStyle.css")!!}
+  {!!Html::style("css/themes/all-themes.css")!!}
+  {!!Html::style("plugins/materialize-css/css/style.min.css")!!}
   @yield('styles')
-  <!--[if lt IE 9]> <script src="js/html5shiv.js"></script> 
-  <script src="js/respond.min.js"></script> <![endif]--> 
-</head><!--/head-->
+</head>
 <body>
-<!--  <div class="preloader">
-    <div class="preloder-wrap">
-      <div class="preloder-inner"> 
-        <div class="ball"></div> 
-        <div class="ball"></div> 
-        <div class="ball"></div> 
-        <div class="ball"></div> 
-        <div class="ball"></div> 
-        <div class="ball"></div> 
-        <div class="ball"></div>
-      </div>
-    </div>
-  </div><!--/.preloader-->
   <header id="navigation"> 
     <div class="navbar navbar-inverse navbar-fixed-top" role="banner"> 
-      <div class="container"> 
+      <div class="container-fluid"> 
         <div class="navbar-header"> 
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
             <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
@@ -51,15 +40,26 @@
           </ul> 
         </div> 
       </div> 
-    </div><!--/navbar--> 
-  </header> <!--/#navigation--> 
-
+    </div>
+  </header>
 @yield('content')
-  <script type="text/javascript" src="../js/tenant/jquery.js"></script> 
-  <script type="text/javascript" src="../js/tenant/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../js/tenant/smoothscroll.js"></script> 
-  <script type="text/javascript" src="../js/tenant/jquery.isotope.min.js"></script>
-  <script type="text/javascript" src="../js/tenant/jquery.prettyPhoto.js"></script> 
-  <script type="text/javascript" src="../js/tenant/jquery.parallax.js"></script> 
-  <script type="text/javascript" src="../js/tenant/main.js"></script> 
+  {!!Html::script("lib/DataTables/datatables.js")!!}
+  {!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
+  {!!Html::script("plugins/bootstrap-select/js/bootstrap-select.min.js")!!} 
+  {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!}
+  {!!Html::script("js/pages/forms/form-wizard.js")!!}
+  {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
+  {!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
+  {!!Html::script('plugins/jquery/parsley.min.js')!!}
+  {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
+  {!!Html::script('plugins/node-waves/waves.js')!!}
+  {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
+  {!!Html::script('js/pages/cards/basic.js')!!}
+  {!!Html::script('js/notify/notify.min.js')!!}
+  {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
+  {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
+  {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
+  {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+  {!!Html::script('js/admin.js')!!} 
+  {!!Html::script('js/demo.js')!!} 
 @yield('scripts')
