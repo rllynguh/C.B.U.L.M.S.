@@ -372,6 +372,12 @@
               <span>Queries</span>
             </a>
             <ul class="ml-menu">
+              <li>
+                <a href="" id="registrationQuery" class="waves-yellow">
+                  <i class="mdi-hardware-keyboard-arrow-right"></i>
+                  <span>Registration</span>
+                </a>
+              </li>
             </ul>
           </li>
           <!--END OF QUERIES-->
@@ -406,6 +412,29 @@
           @endif
           @endforeach
         </div> <!-- end .flash-message -->
+        <div class="modal fade" id="modalQuery" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content modal-col-green">
+              {{  Form::open(array('route' => 'registrationQuery.index'))}}
+
+              <div class="modal-header">
+                <h1 id="label" class="modal-title align-center p-b-15">Query<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+              </div>
+              <div class="modal-body">
+                <div class="form-group p-l-30">
+                  <div class="form-line">
+                    {{Form::select('status', array('0' => 'Pending', '1' => 'Active', '2' => 'Rejected'))}}
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" value="add"><i class="mdi-content-save"></i><span id="lblButton"> Submit</span></button>
+              </div>
+              {{Form::close()}}
+            </div>
+
+          </div>
+        </div>
         @yield('content')
       </section>
       {!!Html::script("plugins/jquery/jquery.min.js")!!}
@@ -424,6 +453,7 @@
       {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
       {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
       {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+      {!!Html::script("custom/queryAjax.js")!!}
       {!!Html::script('js/admin.js')!!}
       {!!Html::script("plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js")!!}
       {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.flash.min.js")!!}
