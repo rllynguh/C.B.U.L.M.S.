@@ -43,6 +43,7 @@
     </div>
   </header>
 @yield('content')
+
   {!!Html::script("lib/DataTables/datatables.js")!!}
   {!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
   {!!Html::script("plugins/bootstrap-select/js/bootstrap-select.min.js")!!} 
@@ -63,3 +64,5 @@
   {!!Html::script('js/admin.js')!!} 
   {!!Html::script('js/demo.js')!!} 
 @yield('scripts')
+</body>
+</html>

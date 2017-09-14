@@ -9,27 +9,21 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-$buildings = DB::table('buildings as b')
-        ->join('building_types as btype', 'btype.id', '=','b.building_type_id')
-        ->select('b.id','b.description','b.num_of_floor','b.code','btype.description as type')->get();
-        return view('maintenance.test',compact('buildings'));
 */
-
-Route::get('/', function () {
-	return view('welcome');
-})->middleware('auth');
+Route::view('/','welcome')->middleware('auth');
 Route::get('test-manage','maintenanceBuildingController@manageItemAjax');
 Route::get('test/floors/{id}',['uses' => 'maintenanceBuildingController@getFloors', 'as' =>'test.getFloors']);
 Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits', 'as' =>'test.getUnits']);
 Route::get('test/parkAreas/{id}',['uses' => 'maintenanceBuildingController@getParkAreas', 'as' =>'test.getParkAreas']);
 Route::resource('test','maintenanceBuildingController');
 Route::group(['prefix' => 'tenant/'],function(){
-	Route::get('/', function () {return view('tenant.index');});
-	Route::get("/dashboard",function(){return view('tenant.dashboard');});
-	Route::resource("registration","registrationController");
+	Route::view('/','tenant.index');
 	Route::get('/home', function () {return view('tenant.login');});
 	Route::get('/profile', function () {return view('tenant.profile');});
 	Route::get('/soa', function () {return view('tenant.soa');});
+	Route::get("/dashboard",function(){return view('tenant.dashboard');});
+	Route::resource("registration","registrationController");
+	
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
 	Route::get('/transaction/offerSheetApproval/get/data', ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
 	Route::get('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);

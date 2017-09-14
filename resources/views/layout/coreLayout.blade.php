@@ -8,6 +8,7 @@
   user-scalable=no" name="viewport">
   <title>Majent | Lease Management System</title>
   <link rel="icon" href="images/icon1.ico">
+  {!!Html::style("lib/DataTables/datatables.css")!!}
   {!!Html::style("plugins/sweetalert/sweetalert.css")!!}
   {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
   {!!Html::style("plugins/node-waves/waves.css")!!}
@@ -15,7 +16,7 @@
   {!!Html::style("css/style.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
-  {!!Html::style("lib/DataTables/datatables.css")!!}
+  
   @yield("styles")
 </head>
 
