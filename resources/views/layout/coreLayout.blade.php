@@ -8,7 +8,6 @@
   user-scalable=no" name="viewport">
   <title>Majent | Lease Management System</title>
   <link rel="icon" href="images/icon1.ico">
-  {!!Html::style("plugins/sweetalert/sweetalert.css")!!}
   {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.css")!!}
@@ -373,9 +372,15 @@
             </a>
             <ul class="ml-menu">
               <li>
-                <a href="" id="registrationQuery" class="waves-yellow">
+                <a href="{{route('registrationQuery.index')}}" id="registrationQuery" class="waves-yellow">
                   <i class="mdi-hardware-keyboard-arrow-right"></i>
                   <span>Registration</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route('offerSheetQuery.index')}}" id="registrationQuery" class="waves-yellow">
+                  <i class="mdi-hardware-keyboard-arrow-right"></i>
+                  <span>Offer Sheet</span>
                 </a>
               </li>
             </ul>
@@ -412,32 +417,11 @@
           @endif
           @endforeach
         </div> <!-- end .flash-message -->
-        <div class="modal fade" id="modalQuery" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content modal-col-green">
-              {{  Form::open(array('route' => 'registrationQuery.index'))}}
-
-              <div class="modal-header">
-                <h1 id="label" class="modal-title align-center p-b-15">Query<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
-              </div>
-              <div class="modal-body">
-                <div class="form-group p-l-30">
-                  <div class="form-line">
-                    {{Form::select('status', array('0' => 'Pending', '1' => 'Active', '2' => 'Rejected'))}}
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" value="add"><i class="mdi-content-save"></i><span id="lblButton"> Submit</span></button>
-              </div>
-              {{Form::close()}}
-            </div>
-
-          </div>
-        </div>
         @yield('content')
       </section>
       {!!Html::script("plugins/jquery/jquery.min.js")!!}
+      {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
+      {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
       @yield('scripts')
       {!!Html::script("js/pages/forms/form-wizard.js")!!}
       {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
@@ -446,22 +430,11 @@
       {!!Html::script('plugins/jquery/parsley.min.js')!!}
       {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
       {!!Html::script('plugins/node-waves/waves.js')!!}
-      {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
       {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
       {!!Html::script('js/notify/notify.min.js')!!}
-      {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
       {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
-      {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
       {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-      {!!Html::script("custom/queryAjax.js")!!}
       {!!Html::script('js/admin.js')!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.flash.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/jszip.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/pdfmake.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/vfs_fonts.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.html5.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.print.min.js")!!}
 
     </body>
 

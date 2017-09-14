@@ -15,17 +15,15 @@ $(document).ready(function()
     ajax: {
       url: dataurl,
       data: function(d) {
-        d.status = $('#status').val(),
-        d.business=$('#business').val(),
-        d.city=$('#city').val()
+        d.status = $('#status').val()
       }
     },
     columns: [
-    {data: 'regi_code'},
-    {data: 'tenant_description'},
-    {data: 'business_type_description'},
-    {data: 'regi_count'},
-    {data: 'date_issued'},
+    {data: 'code'},
+    {data: 'tenant'},
+    {data: 'full_name'},
+    {data: 'unit_offered'},
+    {data: 'date_issued'}
     ],
     dom: 'Bfrtip',
     buttons: [
@@ -33,12 +31,6 @@ $(document).ready(function()
     ]
   });
   $("#status").change(function(data){
-    table.draw();
-  });
-  $("#business").change(function(data){
-    table.draw();
-  });
-  $("#city").change(function(data){
     table.draw();
   });
 });

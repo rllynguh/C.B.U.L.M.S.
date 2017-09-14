@@ -146,8 +146,11 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/collection","collectionController");
 	Route::get('/transaction/move-collection/get/data', ['uses' => 'collectionController@data', 'as' => 'collection.getData']);
 
-	Route::post('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
+	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
 	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
+
+	Route::get('/query/offerSheet', ['uses' => 'offerSheetQueryController@index', 'as' => 'offerSheetQuery.index']);
+	Route::get('/query/offerSheet/get/data', ['uses' => 'offerSheetQueryController@data', 'as' => 'offerSheetQuery.getData']);
 });
 
 

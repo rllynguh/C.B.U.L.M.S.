@@ -4,6 +4,7 @@
 <div class="container-fluid">
   <div class="body">
     <div class="block-header">
+      <h2 class="align-center">OFFER SHEETS</h2>
     </div>
     
   </div>
@@ -11,8 +12,8 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="header align-center">
-          <h2 id="header">
-            LIST OF REGISTRATION 
+          <h2>
+            LIST OF OFFER SHEETS
           </h2>
           <div class="form-group">
             <div class="col-sm-4">
@@ -21,29 +22,17 @@
                 {{Form::select('status',array('0' => 'Pending', '1' => 'Active', '2' => 'Rejected'),null,['id'=>'status','class'=>'form-control align-center'])}}
               </div>
             </div>
-            <div class="col-sm-4">
-              <label>Business</label>                
-              <div class="form-line">
-                {{Form::select('business',$business,null,['id'=>'business','class'=>'form-control align-center'])}}
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <label>Location</label>                
-              <div class="form-line">
-                {{Form::select('city',$city,null,['id'=>'city','class'=>'form-control align-center'])}}
-              </div>
-            </div>
           </div>
         </div>
         <div class="body">
           <table class="table table-hover dataTable" id="myTable">
             <thead>
               <tr>
-                <th class="align-center">REGISTRATION CODE</th>
-                <th class="align-center">Client</th>
-                <th class="align-center">Business</th>
-                <th class="align-center">Unit requested</th>
-                <th class="align-center">Date of Registration</th>
+                <th class="align-center">OFFER SHEET CODE</th>
+                <th class="align-center">CLIENT</th>
+                <th class="align-center">LESSOR</th>
+                <th class="align-center">UNIT(S) OFFERED</th>
+                <th class="align-center">DATE ISSUED</th>
               </tr>
             </thead>
             <tbody id="myList">
@@ -56,7 +45,7 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/registrationQueryAjax.js")!!}
+{!!Html::script("custom/offerSheetQueryAjax.js")!!}
 {!!Html::script("plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js")!!}
 {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.flash.min.js")!!}
 {!!Html::script("plugins/jquery-datatable/extensions/export/jszip.min.js")!!}
@@ -65,6 +54,6 @@
 {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.html5.min.js")!!}
 {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.print.min.js")!!}
 <script type="text/javascript">
-  var dataurl="{!!route('registrationQuery.getData')!!}" ;
+  var dataurl="{!!route('offerSheetQuery.getData')!!}" ;
 </script>
 @endsection
