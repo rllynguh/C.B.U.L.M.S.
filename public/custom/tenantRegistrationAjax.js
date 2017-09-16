@@ -98,4 +98,89 @@ $(document).ready(function()
  $("#repr_province").change(function(data){
   getReprCity();
 });
+ var form = $('#wizard_with_validation').show();
+ form.steps({
+  headerTag: 'h3',
+  bodyTag: 'fieldset',
+  transitionEffect: 'slideLeft',
+  onInit: function (event, currentIndex) {
+    $.AdminBSB.input.activate();
+
+            //Set tab width
+            var $tab = $(event.currentTarget).find('ul[role="tablist"] li');
+            var tabCount = $tab.length;
+            $tab.css('width', (100 / tabCount) + '%');
+
+            //set button waves effect
+            setButtonWavesEffect(event);
+          },
+          onStepChanging: function (event, currentIndex, newIndex) {
+            if (currentIndex > newIndex) { return true; }
+
+            if (currentIndex < newIndex) {
+              form.find('.body:eq(' + newIndex + ') label.error').remove();
+              form.find('.body:eq(' + newIndex + ') .error').removeClass('error');
+            }
+
+            form.validate().settings.ignore = ':disabled,:hidden';
+            return form.valid();
+          },
+          onStepChanged: function (event, currentIndex, priorIndex) {
+            if(currentIndex==4)
+            {
+              console.log('dad');
+              $("#dispCompany").text($('#tenant').val());
+              $("#dispBusiness").text($('#busitype').find(":selected").text());
+              $("#dispCompAddress").text($('#tena_number').val() + " " + $('#tena_street').val() + " " + $('#tena_street').val() + ", " +
+                $('#tena_barangay').val() + " " + $('#tena_city').find(":selected").text() + ", " + $('#tena_province').find(":selected").text());
+              $("#dispName").text($('#fname').val() + 
+                " " + $('#mname').val() + " " + $('#lname').val());
+              $("#dispPosition").text($('#position').find(":selected").text());
+              $("#dispCell").text($('#cellno').val());
+              $("#dispTel").text($('#telno').val());
+              $("#dispEmail").text($('#email').val());
+              $("#dispRepAddress").text($('#repr_number').val() +
+                " " + $('#repr_street').val() + " " + $('#repr_barangay').val() +
+                $('#repr_street').val() + " " + $('#repr_city').find(":selected").text() + ", " + $('#repr_province').find(":selected").text());
+              $("#dispRequest").text();
+              $("#dispDuration").text($('#duration').val());
+              $("#dispRemarks").text($('#header_remarks').val());
+            }
+            setButtonWavesEffect(event);
+          },
+          onFinishing: function (event, currentIndex) {
+            form.validate().settings.ignore = ':disabled';
+            return form.valid();
+          },
+          onFinished: function (event, currentIndex) {
+            var form = $(this);
+
+            // Submit form input
+
+            form.submit();
+          }
+        });
+
+ form.validate({
+  highlight: function (input) {
+    $(input).parents('.form-line').addClass('error');
+  },
+  unhighlight: function (input) {
+    $(input).parents('.form-line').removeClass('error');
+  },
+  errorPlacement: function (error, element) {
+    $(element).parents('.form-group').append(error);
+  },
+  rules: {
+    'confirm': {
+      equalTo: '#password'
+    }
+  }
+});
+ console.log($('#busitype').find(":selected").text());
 })
+
+function setButtonWavesEffect(event) {
+  $(event.currentTarget).find('[role="menu"] li a').removeClass('waves-effect');
+  $(event.currentTarget).find('[role="menu"] li:not(.disabled) a').addClass('waves-effect');
+}

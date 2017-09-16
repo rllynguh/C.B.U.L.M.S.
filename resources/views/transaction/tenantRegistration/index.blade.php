@@ -1,4 +1,3 @@
- {!!Html::style("plugins/sweetalert/sweetalert.css")!!}
  {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
  {!!Html::style("plugins/node-waves/waves.css")!!}
  {!!Html::style("plugins/animate-css/animate.css")!!}
@@ -34,7 +33,7 @@
  							<div class="col-sm-12 col-md-12 col-xs-12 nopadding">
  								<h2 class="card-inside-title p-b-20">Company Details
  									<small>[*] indicates field is required.</small></h2>
- 									<div class="form-group ">
+ 									<div>
  										<!-- COMPANY NAME -->
  										<div class="col-sm-6 col-md-6 col-xs-6">
  											<div class="form-line">
@@ -42,15 +41,17 @@
  													'class' => ''
  													]) 
  												}}
- 												{{ Form::text('tenant', null, [
- 													'id' => 'tenant',
- 													'class' => 'form-control form-line',
- 													'maxlength' => '25',
- 													'required' => 'required',
- 													'data-parsley-pattern' => '^[a-zA-Z. ]+$',
- 													'autocomplete' => 'off'
- 													]) 
- 												}}
+ 												<div class="form-group ">
+ 													{{ Form::text('tenant', null, [
+ 														'id' => 'tenant',
+ 														'class' => 'form-control form-line',
+ 														'maxlength' => '25',
+ 														'required' => 'required',
+ 														'data-parsley-pattern' => '^[a-zA-Z. ]+$',
+ 														'autocomplete' => 'off'
+ 														]) 
+ 													}}
+ 												</div>
  											</div>
  										</div>
 
@@ -61,11 +62,13 @@
  													'class' => 'control-label'
  													]) 
  												}}
- 												{{ Form::select('busitype',$busitype, null, [
- 													'id' => 'busitype',
- 													'required' => 'required',
- 													'class' => 'form-control form-line align'])
- 												}}
+ 												<div class="form-group ">
+ 													{{ Form::select('busitype',$busitype, null, [
+ 														'id' => 'busitype',
+ 														'required' => 'required',
+ 														'class' => 'form-control form-line align'])
+ 													}}
+ 												</div>
  											</div>
  										</div>
  									</div>
@@ -73,7 +76,7 @@
 
  								<div class="col-sm-12 col-md-12 col-xs-12 nopadding">
  									<h2 class="card-inside-title p-t-20 p-b-10">Company Address</h2>
- 									<div class="form-group">
+ 									<div>
  										<!-- ADDRESS # -->
  										<div class="col-sm-4 col-md-4 col-xs-4">
  											<div class="form-line">
@@ -81,15 +84,17 @@
  													'class' => 'control-label'
  													]) 
  												}}
- 												{{ Form::number('tena_number', null, [
- 													'id' => 'tena_number',
- 													'class' => 'form-control form-line',
- 													'maxlength' => '4',
- 													'required' => 'required',
- 													'autocomplete' => 'off',
- 													'data-parsley-type' => 'number'
- 													]) 
- 												}}
+ 												<div class="form-group ">
+ 													{{ Form::number('tena_number', null, [
+ 														'id' => 'tena_number',
+ 														'class' => 'form-control form-line',
+ 														'maxlength' => '4',
+ 														'required' => 'required',
+ 														'autocomplete' => 'off',
+ 														'data-parsley-type' => 'number'
+ 														]) 
+ 													}}
+ 												</div>
  											</div>
  										</div>
 
@@ -100,15 +105,17 @@
  													'class' => 'control-label'
  													]) 
  												}}
- 												{{ Form::text('tena_street', null, [
- 													'id' => 'tena_street',
- 													'class' => 'form-control form-line',
- 													'maxlength' => '25',
- 													'required' => 'required',
- 													'autocomplete' => 'off',
- 													'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$'
- 													]) 
- 												}}
+ 												<div class="form-group ">
+ 													{{ Form::text('tena_street', null, [
+ 														'id' => 'tena_street',
+ 														'class' => 'form-control form-line',
+ 														'maxlength' => '25',
+ 														'required' => 'required',
+ 														'autocomplete' => 'off',
+ 														'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$'
+ 														]) 
+ 													}}
+ 												</div>
  											</div>
  										</div>
 
@@ -119,15 +126,17 @@
  													'class' => 'control-label'
  													]) 
  												}}
- 												{{ Form::text('tena_barangay', null, [
- 													'id' => 'tena_barangay',
- 													'class' => 'form-control form-line',
- 													'maxlength' => '25',
- 													'required' => 'required',
- 													'autocomplete' => 'off',
- 													'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$'
- 													]) 
- 												}}
+ 												<div class="form-group ">
+ 													{{ Form::text('tena_barangay', null, [
+ 														'id' => 'tena_barangay',
+ 														'class' => 'form-control form-line',
+ 														'maxlength' => '25',
+ 														'required' => 'required',
+ 														'autocomplete' => 'off',
+ 														'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$'
+ 														]) 
+ 													}}
+ 												</div>
  											</div>
  										</div>
 
@@ -135,7 +144,7 @@
  								</div>
 
  								<div class="col-sm-12 col-md-12 col-xs-12 nopadding">
- 									<div class="form-group">
+ 									<div>
  										<!-- PROVINCE -->
  										<div class="col-sm-6 col-md-6 col-xs-6">
  											<div class="form-line">
@@ -143,10 +152,12 @@
  													'class' => 'control-label'
  													]) 
  												}}
- 												{{ Form::select('tena_province', $tenaprov,null, [
- 													'id' => 'tena_province',
- 													'class' => 'form-control form-line'])
- 												}}
+ 												<div class="form-group ">
+ 													{{ Form::select('tena_province', $tenaprov,null, [
+ 														'id' => 'tena_province',
+ 														'class' => 'form-control form-line'])
+ 													}}
+ 												</div>
  											</div>
  										</div>
 
@@ -157,11 +168,13 @@
  													'class' => 'control-label'
  													]) 
  												}}
- 												{{ Form::select('tena_city', [
- 													], null, [
- 													'id' => 'tena_city',
- 													'class' => 'form-control form-line'])
- 												}}
+ 												<div class="form-group ">
+ 													{{ Form::select('tena_city', [
+ 														], null, [
+ 														'id' => 'tena_city',
+ 														'class' => 'form-control form-line'])
+ 													}}
+ 												</div>
  											</div>
  										</div>
  									</div>
@@ -175,7 +188,7 @@
  								<div class="col-sm-12 col-md-12 col-xs-12 nopadding">
  									<h2 class="card-inside-title p-b-20">Representative Details
  										<small>[*] indicates field is required</small></h2>
- 										<div class="form-group">
+ 										<div>
  											<!-- REP NAME fname-->
  											<div class="col-sm-4 col-md-4 col-xs-4">
  												<div class="form-line">
@@ -183,15 +196,17 @@
  														'class' => ''
  														])
  													}}
- 													{{ Form::text('fname', null, [
- 														'id' => 'fname',
- 														'class' => 'form-control form-line',
- 														'maxlength' => '25',
- 														'required' => 'required',
- 														'autocomplete' => 'off',
- 														'data-parsley-pattern' => '^[a-zA-Z. ]+$'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::text('fname', null, [
+ 															'id' => 'fname',
+ 															'class' => 'form-control form-line',
+ 															'maxlength' => '25',
+ 															'required' => 'required',
+ 															'autocomplete' => 'off',
+ 															'data-parsley-pattern' => '^[a-zA-Z. ]+$'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
 
@@ -202,15 +217,17 @@
  														'class' => ''
  														])
  													}}
- 													{{ Form::text('mname', null, [
- 														'id' => 'mname',
- 														'class' => 'form-control form-line',
- 														'maxlength' => '25',
- 														'required' => 'required',
- 														'autocomplete' => 'off',
- 														'data-parsley-pattern' => '^[a-zA-Z. ]+$'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::text('mname', null, [
+ 															'id' => 'mname',
+ 															'class' => 'form-control form-line',
+ 															'maxlength' => '25',
+ 															'required' => 'required',
+ 															'autocomplete' => 'off',
+ 															'data-parsley-pattern' => '^[a-zA-Z. ]+$'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
 
@@ -221,22 +238,24 @@
  														'class' => ''
  														])
  													}}
- 													{{ Form::text('lname', null, [
- 														'id' => 'lname',
- 														'class' => 'form-control form-line',
- 														'maxlength' => '25',
- 														'required' => 'required',
- 														'autocomplete' => 'off',
- 														'data-parsley-pattern' => '^[a-zA-Z. ]+$'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::text('lname', null, [
+ 															'id' => 'lname',
+ 															'class' => 'form-control form-line',
+ 															'maxlength' => '25',
+ 															'required' => 'required',
+ 															'autocomplete' => 'off',
+ 															'data-parsley-pattern' => '^[a-zA-Z. ]+$'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
  										</div>
  									</div>
 
  									<div class="col-sm-12 col-md-12 col-xs-12">
- 										<div class="form-group">
+ 										<div>
  											<!-- POSITION -->
  											<div class="col-sm-6 col-md-6 col-xs-6">
  												<div class="form-line">
@@ -244,10 +263,12 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::select('position', $posi, null, [
- 														'id' => 'position',
- 														'class' => 'form-control form-line'])
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::select('position', $posi, null, [
+ 															'id' => 'position',
+ 															'class' => 'form-control form-line'])
+ 														}}
+ 													</div>
  												</div>
  											</div>
 
@@ -270,7 +291,7 @@
  									<!-- CONTACT DETAILS START -->
  									<div class="col-sm-12 col-md-12 col-xs-12 nopadding">
  										<h2 class="card-inside-title p-b-10">Contact Details</h2>
- 										<div class="form-group">
+ 										<div>
  											<!-- Cellphone # -->
  											<div class="col-sm-4 col-md-4 col-xs-4">
  												<div class="form-line">
@@ -278,15 +299,17 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::text('cellno', null, [
- 														'id' => 'cellno',
- 														'class' => 'mobile-phone-number form-control form-line',
- 														'maxlength' => '25',
- 														'required' => 'required',
- 														'data-parsley-type' => 'number',
- 														'autocomplete' => 'off'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::text('cellno', null, [
+ 															'id' => 'cellno',
+ 															'class' => 'mobile-phone-number form-control form-line',
+ 															'maxlength' => '25',
+ 															'required' => 'required',
+ 															'data-parsley-type' => 'number',
+ 															'autocomplete' => 'off'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
 
@@ -297,15 +320,17 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::text('telno', null, [
- 														'id' => 'telno',
- 														'class' => 'telephone-number form-control form-line',
- 														'maxlength' => '25',
- 														'required' => 'required',
- 														'data-parsley-pattern' => '^[a-zA-Z. ]+$',
- 														'autocomplete' => 'off'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::text('telno', null, [
+ 															'id' => 'telno',
+ 															'class' => 'telephone-number form-control form-line',
+ 															'maxlength' => '25',
+ 															'required' => 'required',
+ 															'data-parsley-pattern' => '^[a-zA-Z. ]+$',
+ 															'autocomplete' => 'off'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
 
@@ -316,15 +341,17 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::text('email', null, [
- 														'id' => 'email',
- 														'class' => 'form-control form-line email',
- 														'maxlength' => '25',
- 														'required' => 'required',
- 														'data-parsley-pattern' => '^[a-zA-Z. ]+$',
- 														'autocomplete' => 'off'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::text('email', null, [
+ 															'id' => 'email',
+ 															'class' => 'form-control form-line email',
+ 															'maxlength' => '25',
+ 															'required' => 'required',
+ 															'data-parsley-pattern' => '^[a-zA-Z. ]+$',
+ 															'autocomplete' => 'off'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
  										</div>
@@ -334,7 +361,7 @@
  									<!-- REP ADDRESS START -->
  									<div class="col-sm-12 col-md-12 col-xs-12 m-t-10 nopadding">
  										<h2 class="card-inside-title p-b-10">Representative Address</h2>
- 										<div class="form-group">
+ 										<div>
  											<!-- Address # -->
  											<div class="col-sm-4 col-md-4 col-xs-4">
  												<div class="form-line">
@@ -342,15 +369,17 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::number('repr_number', null, [
- 														'id' => 'repr_number',
- 														'class' => 'form-control form-line',
- 														'maxlength' => '4',
- 														'required' => 'required',
- 														'autocomplete' => 'off',
- 														'data-parsley-type' => 'number'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::number('repr_number', null, [
+ 															'id' => 'repr_number',
+ 															'class' => 'form-control form-line',
+ 															'maxlength' => '4',
+ 															'required' => 'required',
+ 															'autocomplete' => 'off',
+ 															'data-parsley-type' => 'number'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
 
@@ -361,15 +390,17 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::text('repr_street', null, [
- 														'id' => 'repr_street',
- 														'class' => 'form-control form-line',
- 														'maxlength' => '25',
- 														'required' => 'required',
- 														'autocomplete' => 'off',
- 														'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::text('repr_street', null, [
+ 															'id' => 'repr_street',
+ 															'class' => 'form-control form-line',
+ 															'maxlength' => '25',
+ 															'required' => 'required',
+ 															'autocomplete' => 'off',
+ 															'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
 
@@ -380,15 +411,17 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::text('repr_barangay', null, [
- 														'id' => 'repr_barangay',
- 														'class' => 'form-control form-line',
- 														'maxlength' => '25',
- 														'required' => 'required',
- 														'autocomplete' => 'off',
- 														'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$'
- 														]) 
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::text('repr_barangay', null, [
+ 															'id' => 'repr_barangay',
+ 															'class' => 'form-control form-line',
+ 															'maxlength' => '25',
+ 															'required' => 'required',
+ 															'autocomplete' => 'off',
+ 															'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$'
+ 															]) 
+ 														}}
+ 													</div>
  												</div>
  											</div>
  										</div>
@@ -396,7 +429,7 @@
 
  									<!-- PROVINCE AND CITY -->
  									<div class="col-sm-12 col-md-12 col-xs-12 nopadding">
- 										<div class="form-group">
+ 										<div>
  											<!-- PROVINCE -->
  											<div class="col-sm-6 col-md-6 col-xs-6">
  												<div class="form-line">
@@ -404,10 +437,12 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::select('repr_province', $reprprov, null, [
- 														'id' => 'repr_province',
- 														'class' => 'form-control form-line'])
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::select('repr_province', $reprprov, null, [
+ 															'id' => 'repr_province',
+ 															'class' => 'form-control form-line'])
+ 														}}
+ 													</div>
  												</div>
  											</div>
 
@@ -418,11 +453,13 @@
  														'class' => 'control-label'
  														]) 
  													}}
- 													{{ Form::select('repr_city', [
- 														], null, [
- 														'id' => 'repr_city',
- 														'class' => 'form-control form-line'])
- 													}}
+ 													<div class="form-group ">
+ 														{{ Form::select('repr_city', [
+ 															], null, [
+ 															'id' => 'repr_city',
+ 															'class' => 'form-control form-line'])
+ 														}}
+ 													</div>
  												</div>
  											</div>
  										</div>
@@ -528,6 +565,31 @@
  									</div>
  								</div>
  							</fieldset>
+ 							<h3>Summary</h3>
+ 							<fieldset>
+ 								<label>Company: </label>
+ 								<label id="dispCompany"></label>  <label>Business: </label><label id="dispBusiness"></label>  <br>
+ 								<label>Address: </label>
+ 								<label id="dispCompAddress"></label> <br>
+ 								<label>Name: </label>
+ 								<label id="dispName"></label> <br>
+ 								<label>Position: </label>
+ 								<label id="dispPosition"></label> <br>
+ 								<label>Cellphone: </label>
+ 								<label id="dispCell"></label> <br>
+ 								<label>Telephone Number: </label>
+ 								<label id="dispTel"></label> <br>
+ 								<label>Email: </label>
+ 								<label id="dispEmail"></label> <br>
+ 								<label>Address: </label>
+ 								<label id="dispRepAddress"></label> <br>
+ 								<label>Request: </label>
+ 								<label id="dispRequest"></label> <br>
+ 								<label>Duration: </label>
+ 								<label id="dispDuration"></label> <br>
+ 								<label>Remarks: </label>
+ 								<label id="dispRemarks"></label> <br>
+ 							</fieldset>
  							{{-- {{Form::submit('GO')}} --}}
  							{{Form::close()}}
 
@@ -536,14 +598,13 @@
  				</div>
  			</div>
  			{!!Html::script("plugins/jquery/jquery.min.js")!!}
- 			{!!Html::script("js/pages/forms/form-wizard.js")!!}
  			{!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
  			{!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
  			{!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
  			{!!Html::script('plugins/jquery/parsley.min.js')!!}
  			{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
  			{!!Html::script('plugins/node-waves/waves.js')!!}
- 			{!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
+ 			{!!Html::script("custom/tenantRegistrationAjax.js")!!}
  			{!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
  			{!!Html::script('js/notify/notify.min.js')!!}
  			{!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
@@ -551,7 +612,6 @@
  			{!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
  			{!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
  			{!!Html::script('js/admin.js')!!}
- 			{!!Html::script("custom/tenantRegistrationAjax.js")!!}
  			<script type="text/javascript">
  				buil_type_url="{{route("custom.getBuildingType")}}";
  				prov_url="{{route("custom.getProvince")}}";
