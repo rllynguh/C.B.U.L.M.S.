@@ -1,4 +1,4 @@
-@extends('layout.coreLayout')
+@extends('layout.tenantNav')
 @section('content')
 <meta name="_token" content="{!! csrf_token() !!}" />
 <div class="container-fluid">

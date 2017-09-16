@@ -1,4 +1,4 @@
-@extends('layout.coreLayout')
+@extends('layout.tenantNav')
 @section('content')
 <meta name="_token" content="{!! csrf_token() !!}" />
 <div class="container-fluid">
@@ -12,17 +12,18 @@
       <div class="card">
         <div class="header align-center">
           <h2>
-            CONTRACTS 
+            Registration Forfeit 
           </h2>
         </div>
         <div class="body">
           <table class="table table-hover dataTable" id="myTable">
             <thead>
               <tr>
-                <th class="align-center">Contract</th>
-                <th class="align-center">Lessor</th>
-                <th class="align-center">Number of Units</th>
-                <th class="align-center">Date Issued</th>
+                <th class="align-center">Registration Code</th>
+                <th class="align-center">Duuration Preferred</th>
+                <th class="align-center">Unit requested</th>
+                <th class="align-center">Date Requested</th>
+                <th class="align-center">Remarks</th>
                 <th class="align-center">Action</th>
               </tr>
             </thead>
@@ -36,9 +37,9 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/contractViewAjax.js")!!}
+{!!Html::script("custom/registrationForfeitAjax.js")!!}
 <script type="text/javascript">
-  var dataurl="{!!route('contract.getData')!!}" ;
-  var url="{!!route('contract.index')!!}" ;
+  var dataurl="{!!route('registrationForfeit.getData')!!}" ;
+  var url="{!!route('registrationForfeit.index')!!}" ;
 </script>
 @endsection

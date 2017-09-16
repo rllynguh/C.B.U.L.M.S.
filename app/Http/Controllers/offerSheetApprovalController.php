@@ -57,7 +57,7 @@ class offerSheetApprovalController extends Controller
     }
     public function index()
     {
-      return view('transaction.offerSheetApproval.index');
+      return view('tenant.offerSheetApproval.index');
     }
 
     /**
@@ -131,7 +131,7 @@ class offerSheetApprovalController extends Controller
      ->join('users','offer_sheet_headers.user_id','users.id')
      ->select(DB::Raw('offer_sheet_headers.tenant_remarks,offer_sheet_headers.code, offer_sheet_headers.id, CONCAT(users.first_name," ",users.last_name) as name'))
      ->first();
-     return view('transaction.offerSheetApproval.show')
+     return view('tenant.offerSheetApproval.show')
      ->withResult($result);
    }
    public function showData($id)

@@ -17,8 +17,9 @@ Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits'
 Route::get('test/parkAreas/{id}',['uses' => 'maintenanceBuildingController@getParkAreas', 'as' =>'test.getParkAreas']);
 Route::resource('test','maintenanceBuildingController');
 Route::group(['prefix' => 'tenant/'],function(){
-	Route::view('/','tenant.index');
-	Route::get('/home', function () {return view('tenant.login');});
+	Route::view('/test','tenant.unitMerge');
+	Route::view('/','tenant.index')->name('tenant.home');
+	Route::get('/login', function () {return view('tenant.login');});
 	Route::get('/profile', function () {return view('tenant.profile');});
 	Route::get('/soa', function () {return view('tenant.soa');});
 	Route::get("/dashboard",function(){return view('tenant.dashboard');});

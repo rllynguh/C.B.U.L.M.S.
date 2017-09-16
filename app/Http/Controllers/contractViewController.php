@@ -21,7 +21,7 @@ class contractViewController extends Controller
     {
         //
 
-     return view('transaction.contractView.index');
+     return view('tenant.contractView.index');
  }
  public function data()
  {
@@ -105,7 +105,7 @@ public function show($id)
     ->where('current_contracts.id',$id)
     ->first()
     ;
-    return view('transaction.contractView.show')
+    return view('tenant.contractView.show')
     ->withCurrentcontract($current_contract);
 }
 

@@ -14,9 +14,11 @@
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.min.css")!!}
   {!!Html::style("plugins/waitMe/waitMe.min.css")!!}
+  {!!Html::style("lib/jquery-ui-1.12.1/jquery-ui.min.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
   {!!Html::style("plugins/materialize-css/css/style.min.css")!!}
+
   @yield('styles')
 </head>
 <body>
@@ -31,38 +33,50 @@
         </div> 
         <div class="collapse navbar-collapse"> 
           <ul class="nav navbar-nav navbar-right"> 
-            <li class="scroll active"><a href="#navigation">Home</a></li> 
+            <li class="scroll active"><a href="{{route('tenant.home')}}">Home</a></li> 
             <li class="scroll"><a href="#about-us">Profiles</a></li> 
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transactions <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{route('offerSheetApproval.index')}}">Offer Sheet Approval</a></li>
+                <li><a href="{{route('registrationForfeit.index')}}">Registration Forfeit</a></li>
+                <li><a href="{{route('contract.index')}}">View Contracts</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
             <li class="scroll"><a href="#services">Documents</a></li> 
             <li class="scroll"><a href="#our-team">Statement of Account</a></li> 
             <li class="scroll"><a href="#clients">Notifications</a></li>
-          
           </ul> 
         </div> 
       </div> 
     </div>
   </header>
+  <br><br><br><br>
 @yield('content')
-
   {!!Html::script("lib/DataTables/datatables.js")!!}
   {!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
   {!!Html::script("plugins/bootstrap-select/js/bootstrap-select.min.js")!!} 
-  {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!}
   {!!Html::script("js/pages/forms/form-wizard.js")!!}
+  {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
+  {!!Html::script('js/pages/cards/basic.js')!!}
+  {!!Html::script('js/notify/notify.min.js')!!}
+  {!!Html::script('js/admin.js')!!} 
+  {!!Html::script('js/demo.js')!!} 
   {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
   {!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
   {!!Html::script('plugins/jquery/parsley.min.js')!!}
   {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
   {!!Html::script('plugins/node-waves/waves.js')!!}
   {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
-  {!!Html::script('js/pages/cards/basic.js')!!}
-  {!!Html::script('js/notify/notify.min.js')!!}
   {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
   {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
-  {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-  {!!Html::script('js/admin.js')!!} 
-  {!!Html::script('js/demo.js')!!} 
+  {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!}
+
 @yield('scripts')
 </body>
 </html>

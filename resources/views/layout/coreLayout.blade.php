@@ -223,12 +223,6 @@
             </a>
             <ul class="ml-menu">
               <li>
-                <a href="{{ route('registration.index')}}" class="waves-yellow">
-                  <i class="mdi-action-assignment-ind"></i>
-                  <span>Registration</span>
-                </a>
-              </li>
-              <li>
                 <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
                   <i class="mdi-action-assignment-turned-in"></i>
                   <span>Registration Approval</span>
@@ -238,18 +232,6 @@
                 <a href="{{route('offersheets.index')}}" class="waves-yellow">
                   <i class="mdi-image-switch-camera"></i>
                   <span>Offer Sheets</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{route('registrationForfeit.index')}}" class=" waves-yellow">
-                  <i class="mdi-action-delete"></i>
-                  <span>Registration Forfeit</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{route('offerSheetApproval.index')}}" class=" waves-yellow">
-                  <i class="mdi-action-thumbs-up-down"></i>
-                  <span>Offer Sheets Approval</span>
                 </a>
               </li>
               <li>
@@ -292,21 +274,12 @@
                       <span>New Contract</span>
                     </a>
                   </li>
-
-                  <li>
-                    <a href="{{route('contract.index')}}" class="waves-yellow">
-                      <i class="mdi-hardware-keyboard-arrow-right"></i>
-                      <span>View Contract</span>
-                    </a>
-                  </li>
-
                   <li>
                     <a href="/extendTable" class="waves-yellow">
                       <i class="mdi-hardware-keyboard-arrow-right"></i>
                       <span>Extension and Renewal</span>
                     </a>
                   </li>
-
                   <li>
                     <a href="/terminateTable" class="waves-yellow">
                       <i class="mdi-hardware-keyboard-arrow-right"></i>

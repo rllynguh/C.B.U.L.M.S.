@@ -25,7 +25,7 @@ class registrationForfeitController extends Controller
     public function index()
     {
         //
-        return view('transaction.registrationForfeit.index');
+        return view('tenant.registrationForfeit.index');
     }
     public function data()
     {
@@ -153,7 +153,7 @@ class registrationForfeitController extends Controller
       ->select(DB::Raw('registration_headers.date_issued,registration_headers.tenant_remarks,registration_headers.id,registration_headers.code,registration_headers.status'))
       ->where('registration_headers.id','=',$id)
       ->first();
-      return view('transaction.registrationForfeit.show')
+      return view('tenant.registrationForfeit.show')
       ->withResult($result)
       ;
   }
