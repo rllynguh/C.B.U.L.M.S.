@@ -1,6 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-
+<html>
 
 
 KNOW ALL MEN BY THESE PRESENTS:
@@ -126,5 +126,6 @@ The LESSEE shall pay the LESSOR a monthly charge of PESOS:  (Php60.00/70.00/80.0
 Here are the terms<br>
 @foreach($contents as $content)
 {{$content->description}}
+</html>
 @endforeach
 

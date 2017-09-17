@@ -10,7 +10,6 @@
   <link rel="icon" href="images/icon1.ico">
   {!!Html::style("lib/DataTables/datatables.css")!!}
   {!!Html::style("plugins/sweetalert/sweetalert.css")!!}
-  {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.css")!!}
   {!!Html::style("css/style.css")!!}
@@ -346,6 +345,18 @@
               <span>Queries</span>
             </a>
             <ul class="ml-menu">
+              <li>
+                <a href="{{route('registrationQuery.index')}}" id="registrationQuery" class="waves-yellow">
+                  <i class="mdi-hardware-keyboard-arrow-right"></i>
+                  <span>Registration</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{route('offerSheetQuery.index')}}" id="registrationQuery" class="waves-yellow">
+                  <i class="mdi-hardware-keyboard-arrow-right"></i>
+                  <span>Offer Sheet</span>
+                </a>
+              </li>
             </ul>
           </li>
           <!--END OF QUERIES-->
@@ -381,8 +392,14 @@
         </div> <!-- end .flash-message -->
         @yield('content')
       </section>
+<<<<<<< HEAD
       {!!Html::script("lib/DataTables/datatables.js")!!}
       {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!}
+=======
+      {!!Html::script("plugins/jquery/jquery.min.js")!!}
+      {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
+      {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
+>>>>>>> 270ed09bcead418d32110414d2e3dee6dcbb300d
       @yield('scripts')
       {!!Html::script("js/pages/forms/form-wizard.js")!!}
       {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
@@ -391,20 +408,11 @@
       {!!Html::script('plugins/jquery/parsley.min.js')!!}
       {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
       {!!Html::script('plugins/node-waves/waves.js')!!}
-      {!!Html::script('plugins/sweetalert/sweetalert.min.js')!!}
       {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
       {!!Html::script('js/notify/notify.min.js')!!}
       {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
-      {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
       {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
       {!!Html::script('js/admin.js')!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.flash.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/jszip.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/pdfmake.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/vfs_fonts.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.html5.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/extensions/export/buttons.print.min.js")!!}
 
     </body>
     </html>
