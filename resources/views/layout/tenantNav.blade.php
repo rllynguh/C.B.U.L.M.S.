@@ -42,9 +42,7 @@
                 <li><a href="{{route('registrationForfeit.index')}}">Registration Forfeit</a></li>
                 <li><a href="{{route('contract.index')}}">View Contracts</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><a href="{{route('tenant.test')}}">Merge units</a></li>
               </ul>
             </li>
             <li class="scroll"><a href="#services">Documents</a></li> 
