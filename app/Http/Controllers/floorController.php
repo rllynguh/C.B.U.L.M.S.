@@ -180,6 +180,19 @@ class floorController extends Controller
     {
         //
       $result = DB::table('floors')
+      ->select('buildings.*','floors.*')
+      ->join('buildings','floors.building_id','=','buildings.id')
+      ->where('floors.id','=',$id)
+      ->groupBy('floors.id')
+      ->orderBy('floors.id')
+      ->first();
+      return Response::json($result);
+    }
+
+    public function getPrice($id)
+    {
+        //
+      $result = DB::table('floors')
       ->select('unit_prices.date_as_of','unit_prices.price','units.*','buildings.*','floors.*',DB::raw('COUNT(units.id) as current,AVG(unit_prices.price) as avg_price'))
       ->leftJoin('units','floors.id','=','units.floor_id')
       ->leftJoin("unit_prices","units.id","unit_prices.unit_id")

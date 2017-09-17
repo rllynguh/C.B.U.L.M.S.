@@ -43,13 +43,14 @@
                   <div class="form-group p-l-30">
                     <h5 class="card-inside-title">Set price for all the units on this floor to:</h5>
                     <div class="form-line m-b-30">
-                      {{ Form::number('txtAllPrice',null,[
+                      {{ Form::text('txtAllPrice',null,[
                         'id'=> 'txtAllPrice',
                         'class' => 'form-control text-center',
+                        'data-parsley-type' => 'number',
                         'autocomplete' => 'off',
-                        'required' => 'required',
                         'min' => '100',
                         'max' => '1000',
+                        'required' => 'required',
                         ])
                       }}
                     </div>

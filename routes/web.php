@@ -94,6 +94,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('floor/get/data', ['uses' => 'floorController@data', 'as' => 'floors.getData']);
 	Route::post('maintenance/floors/storeunit',['uses' => 'floorController@storeUnit', 'as' => 'floor.storeunit']);
 	Route::post('maintenance/floors/storePrice', ['uses' => 'floorController@storePrice', 'as' => 'floors.storePrice']);
+	Route::get('maintenance/floors/get/price/{id}', ['uses' => 'floorController@getPrice', 'as' => 'floors.getPrice']);
 
 
 	Route::resource("maintenance/units","unitController");

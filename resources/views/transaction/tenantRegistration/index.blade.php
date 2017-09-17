@@ -280,7 +280,8 @@
  														]) 
  													}}
  													{{ Form::file('picture', [
- 														'required' => 'required'
+ 														'required' => 'required',
+ 														'id' => 'picture'
  														]) 
  													}}
  												</div>
@@ -478,7 +479,7 @@
  											<div class="input-group">
  												<label class="control-label">Building Type*</label>
  												<div class="form-line">
- 													<select class="form-control form-line" id="builtype" name="builtype[]"></select>
+ 													<select class="form-control form-line" id="builtype1" name="builtype[]"></select>
  												</div>
  											</div>
  										</div>
@@ -488,7 +489,7 @@
  										<div class="form-group">
  											<label class="control-label">Floor #*</label>
  											<div class="form-line">
- 												<select class="form-control form-line" id="floor" name="floor[]"></select>
+ 												<select class="form-control form-line" id="floor1" name="floor[]"></select>
  											</div>
  										</div>
  									</div>
@@ -498,7 +499,7 @@
  											<div class="input-group">
  												<label class="control-label">Unit Type*</label>
  												<div class="form-line">
- 													<select class="form-control form-line" id="utype" name="utype[]">
+ 													<select class="form-control form-line" id="utype1" name="utype[]">
  														<option value="0">Raw</option>
  														<option value="1">Shell</option>
  													</select>
@@ -511,7 +512,7 @@
  										<div class="form-group">
  											<label class="control-label">Size*</label>
  											<div class="form-line">
- 												<select class="form-control form-line" id="size" name="size[]"></select>
+ 												<select class="form-control form-line" id="size1" name="size[]"></select>
  											</div>
 
  										</div>
@@ -521,7 +522,7 @@
  										<div class="form-group">
  											<label class="control-label">Remarks*</label>
  											<div class="form-line">
- 												<textarea class="form-control form-line" id="remarks" name="remarks[]" value=""></textarea>
+ 												<textarea class="form-control form-line" id="remarks1" name="remarks[]" value=""></textarea>
  											</div>
  										</div>
  										<div class="input-group-btn">
@@ -567,28 +568,52 @@
  							</fieldset>
  							<h3>Summary</h3>
  							<fieldset>
- 								<label>Company: </label>
- 								<label id="dispCompany"></label>  <label>Business: </label><label id="dispBusiness"></label>  <br>
- 								<label>Address: </label>
- 								<label id="dispCompAddress"></label> <br>
- 								<label>Name: </label>
- 								<label id="dispName"></label> <br>
- 								<label>Position: </label>
- 								<label id="dispPosition"></label> <br>
- 								<label>Cellphone: </label>
- 								<label id="dispCell"></label> <br>
- 								<label>Telephone Number: </label>
- 								<label id="dispTel"></label> <br>
- 								<label>Email: </label>
- 								<label id="dispEmail"></label> <br>
- 								<label>Address: </label>
- 								<label id="dispRepAddress"></label> <br>
- 								<label>Request: </label>
- 								<label id="dispRequest"></label> <br>
- 								<label>Duration: </label>
- 								<label id="dispDuration"></label> <br>
- 								<label>Remarks: </label>
- 								<label id="dispRemarks"></label> <br>
+ 								<div class="col-sm-6">
+ 									<div class="thumbnail">
+ 										<img id='preview' class="img-circle" height="100" width="100">
+ 										<div class="caption">
+ 											<h3 id="dispName"></h3>
+ 											<h6 id="dispPosition"></h6>
+ 											<div>
+ 												<p id="dispCompany"></p> 
+ 												<p id="dispBusiness"></p>  
+ 												<p id="dispCompAddress"></p> 
+ 												<p id="dispCell"></p> 
+ 												<p id="dispTel"></p> 
+ 												<p id="dispEmail"></p> 
+ 												<p id="dispRepAddress"></p> 
+ 											</div>
+ 										</div>
+ 									</div>
+ 								</div>
+ 								{{-- <div class="col-sm-6">
+ 									<img id='preview' height="150" width="150">
+ 								</div> --}}
+ 								{{-- <div class="col-sm-6">
+ 									<label>Company: </label>
+ 									<label id="dispCompany"></label>  <label>Business: </label><label id="dispBusiness"></label>  <br>
+ 									<label>Address: </label>
+ 									<label id="dispCompAddress"></label> <br>
+ 									<label>Name: </label>
+ 									<label id="dispName"></label> <br>
+ 									<label>Position: </label>
+ 									<label id="dispPosition"></label> <br>
+ 									<label>Cellphone: </label>
+ 									<label id="dispCell"></label> <br>
+ 									<label>Telephone Number: </label>
+ 									<label id="dispTel"></label> <br>
+ 									<label>Email: </label>
+ 									<label id="dispEmail"></label> <br>
+ 									<label>Address: </label>
+ 									<label id="dispRepAddress"></label> <br>
+ 								</div> --}}
+ 								<div class="col-sm-6">
+ 									<label>Duration: </label>
+ 									<label id="dispDuration"></label> <br>
+ 									<label>Remarks: </label>
+ 									<label id="dispRemarks"></label> <br>
+ 									<div id="dispRequest"></div> <br>
+ 								</div>
  							</fieldset>
  							{{-- {{Form::submit('GO')}} --}}
  							{{Form::close()}}
