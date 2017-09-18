@@ -9,6 +9,7 @@
   <title>Majent | Lease Management System</title>
   <link rel="icon" href="images/icon1.ico">
   {!!Html::style("lib/DataTables/datatables.css")!!}
+  {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
   {!!Html::style("plugins/sweetalert/sweetalert.css")!!}
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.css")!!}
@@ -392,14 +393,9 @@
         </div> <!-- end .flash-message -->
         @yield('content')
       </section>
-<<<<<<< HEAD
       {!!Html::script("lib/DataTables/datatables.js")!!}
       {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!}
-=======
-      {!!Html::script("plugins/jquery/jquery.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
       {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
->>>>>>> 270ed09bcead418d32110414d2e3dee6dcbb300d
       @yield('scripts')
       {!!Html::script("js/pages/forms/form-wizard.js")!!}
       {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}

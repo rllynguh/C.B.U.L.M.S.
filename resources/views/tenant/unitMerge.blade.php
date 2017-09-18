@@ -3,14 +3,22 @@
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 	<div class="accordion" id="sortable1">
 		<h4> Units Owned </h4>
-    <div class="s_panel">
-         <h3>Unit 1</h3>
-        <div>Unit details</div>
+    @forelse ($units as $unit)
+        <div class="s_panel">
+         <h3>{{$unit->unit_code}}</h3>
+        <div>
+            <b>Unit Type</b>: {{$unit->unit_type}}<br>
+            <b>Floor #</b>:{{$unit->unit_floorNum}}
+         </div>
     </div>
+    @empty
+    <h3> No units under contract
+    @endforelse
     <div class="s_panel">
          <h3>Unit 2</h3>
         <div>Unit details </div>
     </div>
+
 </div>
 </div>
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
