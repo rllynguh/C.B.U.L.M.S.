@@ -138,8 +138,40 @@
                 </ul>
             </div>
             <div class="tab-pane" role="tabpanel" id="step3">
-                <h3>Step 3</h3>
-                <p>This is step 3</p>
+                <h3>Remarks</h3>
+                            <fieldset>
+                                <div class="panel-body">
+
+                                    <div class="col-sm-12 nopadding">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                {{ Form::label('duration', 'Desired Duration of Contract*', [
+                                                    'class' => 'control-label'
+                                                    ]) 
+                                                }}
+                                                {{ Form::number('duration', null, [
+                                                    'id' => 'duration',
+                                                    'class' => 'form-control form-line',
+                                                    'max' => '3',
+                                                    'required' => 'required',
+                                                    'autocomplete' => 'off',
+                                                    'data-parsley-type' => 'number',
+                                                    'required' => ''
+                                                    ]) 
+                                                }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 nopadding">
+                                        <div class="form-group">
+                                            <label class="control-label">Remarks*</label>
+                                            <div class="form-line">
+                                                <textarea required="" class="form-control form-line" id="header_remarks" name="header_remarks" value=""></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
                 <ul class="list-inline pull-right">
                     <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
                     <li><button type="button" class="btn btn-default next-step">Skip</button></li>
