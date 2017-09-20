@@ -121,6 +121,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('floor/get/data', ['uses' => 'floorController@data', 'as' => 'floors.getData']);
 	Route::post('maintenance/floors/storeunit',['uses' => 'floorController@storeUnit', 'as' => 'floor.storeunit']);
 	Route::post('maintenance/floors/storePrice', ['uses' => 'floorController@storePrice', 'as' => 'floors.storePrice']);
+	Route::get('maintenance/floors/get/price/{id}', ['uses' => 'floorController@getPrice', 'as' => 'floors.getPrice']);
 
 
 	Route::resource("maintenance/units","unitController");
@@ -139,7 +140,6 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/registrationApproval","registrationApprovalController");
 	Route::get('/transaction/registrationApproval/get/data', ['uses' => 'registrationApprovalController@data', 'as' => 'registrationApproval.getData']);
-	Route::get('/transaction/registrationApproval/get/showData/{id}', ['uses' => 'registrationApprovalController@showData', 'as' => 'registrationApproval.showData']);
 
 
 	Route::resource("/transaction/offersheets","offerSheetController");

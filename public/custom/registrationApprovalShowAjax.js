@@ -40,11 +40,16 @@ $(document).ready(function()
           remarks="";
         else
           remarks=data.detail_remarks;
-        info="Registration Detail: " + data.description + "<br>" +
-        "Size ranging from: " + data.size_range + "<br>" +
-        "Unit Type: " + type + "<br>" +
-        "Floor: " + data.floor + "<br>" +
-        "Client's Remarks: " + remarks; + "<br>"
+        status="<large class='label label-danger'>Rejected</large>";
+        if($('#status'+myId).hasClass('bg-blue'))
+          status="<large class='label label-info'>Accepted</large>";
+        info="<b>Registration Detail: </b>" + myId + "<br>" +
+        "<b>Building Type: </b>" + data.description + "<br>" +
+        "<b>Size ranging from: </b>" + data.size_range + "<br>" +
+        "<b>Unit Type: </b>" + type + "<br>" +
+        "<b>Floor: </b>" + data.floor + "<br>" +
+        "<b>Client's Remarks: </b>" + remarks + "<br>" +
+        "<b>Status: </b>" + status + "<br>"
         ;
         $('#regi_info').append(info);
       }); 
@@ -66,6 +71,11 @@ $(document).ready(function()
     { 
       $("#remarks"+myId).val($("#detail_remarks").val());
       $("#regi"+myId).val('0');
+      $('#status'+myId).removeClass('bg-red');
+      $('#status'+myId).addClass('bg-blue');
+      $('#lblStatus'+myId).empty();
+      $('#lblStatus'+myId).append('Accepted');
+
     }
     $('#modalChoose').modal('hide');
   });
@@ -82,6 +92,10 @@ $(document).ready(function()
   { 
     $("#remarks"+myId).val($("#detail_remarks").val())
     $("#regi"+myId).val('1');
+    $('#status'+myId).removeClass('bg-blue');
+    $('#status'+myId).addClass('bg-red');
+    $('#lblStatus'+myId).empty();
+    $('#lblStatus'+myId).append('Rejected');
   }
   $('#modalChoose').modal('hide');
 });
