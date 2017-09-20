@@ -417,7 +417,23 @@
           @endif
           @endforeach
         </div> <!-- end .flash-message -->
-        @yield('content')
+        <div class="container-fluid">
+          <div class="body">
+            <div class="block-header">
+            </div>
+
+          </div>
+          <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="card">
+                <div class="header align-center">
+                  @yield('breadcrumbs')
+                </div>
+                @yield('content')
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
       {!!Html::script("plugins/jquery/jquery.min.js")!!}
       {!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}

@@ -113,7 +113,6 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/registrationApproval","registrationApprovalController");
 	Route::get('/transaction/registrationApproval/get/data', ['uses' => 'registrationApprovalController@data', 'as' => 'registrationApproval.getData']);
-	Route::get('/transaction/registrationApproval/get/showData/{id}', ['uses' => 'registrationApprovalController@showData', 'as' => 'registrationApproval.showData']);
 
 
 	Route::resource("/transaction/offersheets","offerSheetController");
