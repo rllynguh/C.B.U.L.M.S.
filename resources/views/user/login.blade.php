@@ -34,7 +34,7 @@
                 <div class="msg">Sign in to start your session</div>
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <i class="material-icons">person</i>
+                        <i class="account_circle"></i>
                     </span>
                     <div class="form-line">
                         <input type="text" class="form-control" name="email" placeholder="Username" required autofocus>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <i class="material-icons">lock</i>
+                        <i class="lock"></i>
                     </span>
                     <div class="form-line">
                         <input type="password" class="form-control" name="password" placeholder="Password" required>
