@@ -9,15 +9,16 @@
 @endsection
 @section('content')
 <div class="body">
+	<i class="mdi-navigation-close"></i>
 	{{Form::open([
 		'id' => 'wizard_with_validation',
 		'route' => 'offersheets.store'
 		])}}
 		<div class="modal fade" id="modalChoose" tabindex="-1" role="dialog">
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content modal-col-green">
 					<div class="modal-header">
-						<h1 id="label" class="modal-title align-center p-b-15">Choose from these units<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+						<h1 id="label" class="modal-title align-center p-b-15">CHOOSE FROM THESE UNITS<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
 					</div>
 					<div class="modal-body">
 						<div id='divOptions'>
@@ -25,6 +26,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
+						<button id='btnSelect' type='button' class='btn bg-brown btn-lg waves-effect  waves-float col-lg-12 col-md-12 col-sm-12' >SELECT</button>
 						<input type="hidden" id="myId" value="0">
 					</div>
 				</div>
@@ -67,20 +69,22 @@
 			@if($x%3==0)
 			<div>
 				@endif
-				<div class="thumbnail col-sm-4">
-					<div class="caption">
-						<h3>Registration Detail # {{$results[$x]->id}}</h3>
+				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+					<div class="thumbnail">
+						<div class="caption">
+							<h3>Registration Detail # {{$results[$x]->id}}</h3>
 
-						<b>Unit: </b><span id='regi{{$results[$x]->id}}'>{{$results[$x]->unit_code}}</span><br>
-						<b>Building type: </b> <span id='buildingType{{$results[$x]->id}}'>{{$results[$x]->description}}</span><br>
-						<b>Unit type: </b><span id='unitType{{$results[$x]->id}}'>{{$results[$x]->unit_type}}</span><br>
-						<b>Size: </b><span>{{$results[$x]->size_range}}</span><br>
-						<b>Desired Floor: </b><span id='floor{{$results[$x]->id}}'>{{$results[$x]->floor}}</span><br>
-						<b>Price: </b><span id='rate{{$results[$x]->id}}'>{{$results[$x]->rate}}</span><br>
-						<input type='hidden' name='detail_id[]' value='{{$results[$x]->id}}'>
-						<input type='hidden' name='offer_id[]' id='offer{{$results[$x]->id}}' value='{{$results[$x]->unit_id}}'>
+							<b>Unit: </b><span id='regi{{$results[$x]->id}}'>{{$results[$x]->unit_code}}</span><br>
+							<b>Building type: </b> <span id='buildingType{{$results[$x]->id}}'>{{$results[$x]->description}}</span><br>
+							<b>Unit type: </b><span id='unitType{{$results[$x]->id}}'>{{$results[$x]->unit_type}}</span><br>
+							<b>Size: </b><span>{{$results[$x]->size_range}}</span><br>
+							<b>Desired Floor: </b><span id='floor{{$results[$x]->id}}'>{{$results[$x]->floor}}</span><br>
+							<b>Price: </b><span id='rate{{$results[$x]->id}}'>{{$results[$x]->rate}}</span><br>
+							<input type='hidden' name='detail_id[]' value='{{$results[$x]->id}}'>
+							<input type='hidden' name='offer_id[]' id='offer{{$results[$x]->id}}' value='{{$results[$x]->unit_id}}'>
 
-						<button id='btnChoose' type='button' class='btn bg-green btn-lg waves-effect  waves-float' value='{{$results[$x]->id}}'><i class='mdi-content-add'></i>Choose Unit</button>
+							<button id='btnChoose' type='button' class='btn bg-light-green btn-lg waves-effect  waves-float' value='{{$results[$x]->id}}'><i class='mdi-content-add'></i>Choose Unit</button>
+						</div>
 					</div>
 				</div>
 				@if($x%3!=0)

@@ -34,17 +34,14 @@ class offerSheetController extends Controller
         'registration_headers.code as regi_code,'.
         'tenants.description as tenant_description,'.
         'business_types.description as business_type_description,'.  
-        'count(distinctrow registration_details.id) as regi_count,offer_sheet_details.status as detail_status,offer_sheet_headers.status as header_status,offer_sheet_details.registration_detail_id,offer_sheet_headers.id as offer_id,offer_sheet_details.id as offer_detail,registration_details.id as regi_detail'
+        'count(distinctrow registration_details.id) as regi_count,registration_details.id as regi_detail'
         ))
       ->join('tenants','registration_headers.tenant_id','tenants.id')
       ->join('business_types','tenants.business_type_id','business_types.id')
       ->join('users','tenants.user_id','users.id')
       ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
-      ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-      ->leftJoin('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
-      // ->havingRaw('(offer_sheet_details.status=(SELECT status from offer_sheet_details where id=(select max(id) from offer_sheet_details where registration_detail_id=offer_sheet_details.registration_detail_id) limit 1) and offer_sheet_details.status=2) or (offer_sheet_headers.status=(Select status from offer_sheet_headers where id =(Select offer_sheet_header_id from offer_sheet_details where id=(select max(id) from offer_sheet_details where registration_detail_id=offer_sheet_details.registration_detail_id) limit 1)limit 1)and offer_sheet_headers.status=2) or offer_sheet_headers.id is null')
-      ->havingRaw('(registration_details.id=(SELECT registration_detail_id from offer_sheet_details where status=2)) or offer_sheet_headers.id is null')
       ->where('registration_headers.status','1')
+      ->whereRaw('registration_details.id not in (Select registration_detail_id from offer_sheet_details)')
       ->where('registration_details.is_rejected','0')
       ->where('registration_details.is_forfeited','0')
       ->groupBy('registration_headers.id')
@@ -149,9 +146,8 @@ class offerSheetController extends Controller
     $tenant->date_issued=$myDate;
 
     $results=DB::table('registration_details')
-    ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,price*size as rate,offer_sheet_details.id as offer_detail,registration_details.id as  regi_detail'))
-    ->leftJoin('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-    ->leftjoin('registration_headers','registration_details.registration_header_id','registration_headers.id')
+    ->select(DB::Raw('offered_unit.id as unit_id, offered_unit.code as unit_code,ordered_building_type.description,CONCAT(registration_details.size_from,"-",registration_details.size_to) as size_range,registration_details.*,price*size as rate,registration_details.id as  regi_detail'))
+    ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
     ->leftJoin('units as offered_unit', function($join)
     {
      $join->on('registration_details.unit_type', '=', 'offered_unit.type');
@@ -168,12 +164,12 @@ class offerSheetController extends Controller
     ->where('registration_details.is_forfeited','0')
     ->leftjoin('building_types as ordered_building_type','registration_details.building_type_id','ordered_building_type.id')
     ->leftjoin('floors as ordered_floor','registration_details.floor','ordered_floor.number')
-    ->havingRaw('(registration_details.id=(SELECT registration_detail_id from offer_sheet_details where id=offer_detail) and (Select max(id) from offer_sheet_details where registration_detail_id=registration_details.id) and (SELECT status from offer_sheet_details where id=offer_detail limit 1)=2) or offer_sheet_details.id is null')
     ->groupBy('registration_details.id')
     ->orderBy('registration_details.id')
     ->where('registration_headers.status','1')
     ->where('registration_headers.id',$id)
     ->get();
+    
     foreach ($results as &$result) {
      $value='Raw';
      if($result->unit_type==1)
@@ -222,7 +218,10 @@ public function showOptions($id)
     ->join('floors','units.floor_id','floors.id')
     ->join('buildings','floors.building_id','buildings.id','units.type')
     ->join('building_types','buildings.building_type_id','building_types.id')
-    ->select('building_types.description','floors.number','units.type as ordered_unit_type')
+    ->join('addresses','buildings.address_id','addresses.id')
+    ->join('cities','addresses.city_id','cities.id')
+    ->join('provinces','cities.province_id','provinces.id')
+    ->select('building_types.description','floors.number','units.type as ordered_unit_type','buildings.description as building',DB::Raw('Concat(cities.description, ", ", provinces.description) as address'))
     ->where('units.id',$result->unit_id)
     ->first();
     $offered_unit_type='Raw';
@@ -234,6 +233,8 @@ public function showOptions($id)
     $result->ordered_unit_type=$ordered_unit_type;
     $result->offered_building_type=$addQuery->description;
     $result->offered_floor=$addQuery->number;
+    $result->building=$addQuery->building;
+    $result->address=$addQuery->address;
     $result->offered_unit_type=$offered_unit_type;
   }
 
