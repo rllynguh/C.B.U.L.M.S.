@@ -2,9 +2,8 @@
 @section('content')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
-  <li><a href="{{url('/tenant')}}"><i class="mdi-action-home"></i> Home</a></li>
-  <li><a><i class="mdi-action-swap-horiz"></i> Transaction</a></li>
-  <li><a href="{{route("offerSheetApproval.index")}}"><i class="mdi-action-thumbs-up-down"></i> Offer Sheet Approval</a></li>
+  <li><a> Transaction</a></li>
+  <li><a href="{{route("offerSheetApproval.index")}}"> Offer Sheet Approval</a></li>
 </ol>
 @endsection
 <div class="body">

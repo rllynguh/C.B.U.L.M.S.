@@ -1,9 +1,8 @@
 @extends('layout.coreLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
-	<li><a href="{{url('/admin')}}"><i class="mdi-action-home"></i> Home</a></li>
-	<li><a><i class="mdi-action-swap-horiz"></i> Transaction</a></li>
-	<li><a href="{{route("offersheets.index")}}"><i class="mdi-image-switch-camera"></i> Offer Sheets</a></li>
+	<li><a> Transaction</a></li>
+	<li><a href="{{route("offersheets.index")}}"> Offer Sheets</a></li>
 	<li><a href="{{route("offersheets.show",$tenant->id)}}"> {{$tenant->code}}</a></li>
 </ol>
 @endsection
@@ -80,10 +79,13 @@
 							<b>Size: </b><span>{{$results[$x]->size_range}}</span><br>
 							<b>Desired Floor: </b><span id='floor{{$results[$x]->id}}'>{{$results[$x]->floor}}</span><br>
 							<b>Price: </b><span id='rate{{$results[$x]->id}}'>{{$results[$x]->rate}}</span><br>
+							<b>Remarks: </b><span>{{$results[$x]->tenant_remarks}}</span><br>
+
 							<input type='hidden' name='detail_id[]' value='{{$results[$x]->id}}'>
 							<input type='hidden' name='offer_id[]' id='offer{{$results[$x]->id}}' value='{{$results[$x]->unit_id}}'>
-
-							<button id='btnChoose' type='button' class='btn bg-light-green btn-lg waves-effect  waves-float' value='{{$results[$x]->id}}'><i class='mdi-content-add'></i>Choose Unit</button>
+							<div class="align-right">
+								<button id='btnChoose' type='button' class='btn bg-light-green btn-lg waves-effect  waves-float' value='{{$results[$x]->id}}'><i class='mdi-content-add'></i>Choose Unit</button>
+							</div>
 						</div>
 					</div>
 				</div>

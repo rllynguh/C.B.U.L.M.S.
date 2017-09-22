@@ -1,10 +1,9 @@
 @extends('layout.coreLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
-  <li><a href="{{url('/admin')}}"><i class="mdi-action-home"></i> Home</a></li>
-  <li><a><i class="mdi-action-swap-horiz"></i> Transaction</a></li>
-  <li><a><i class="mdi-action-payment"></i> Billing and Collection</a></li>
-  <li><a>Collection</a></li>
+  <li><a> Transaction</a></li>
+  <li><a> Billing and Collection</a></li>
+  <li><a href="{{route('collection.index')}}">Collection</a></li>
 </ol>
 @endsection
 @section('content')

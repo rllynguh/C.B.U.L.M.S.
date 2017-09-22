@@ -169,12 +169,13 @@ Route::group(['prefix' => 'tenant/'], function () {
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
 	Route::get('/transaction/offerSheetApproval/get/data', ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
 	Route::get('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
-	Route::get('/transaction/offerSheetApproval/show2/{id}', ['uses' => 'offerSheetApprovalController@show2', 'as' => 'offerSheetApproval.show2']);
 
 
 	Route::resource("/transaction/registrationForfeit","registrationForfeitController");
 	Route::get('/transaction/registrationForfeit/get/data', ['uses' => 'registrationForfeitController@data', 'as' => 'registrationForfeit.getData']);
 	Route::get('/transaction/registrationForfeit/get/showData/{id}', ['uses' => 'registrationForfeitController@showData', 'as' => 'registrationForfeit.showData']);
+	Route::get('/transaction/registrationForfeit/show2/{id}', ['uses' => 'registrationForfeitController@show2', 'as' => 'registrationForfeit.show2']);
+
 
 	Route::resource("/transaction/contract","contractViewController");
 	Route::get('/transaction/contract/get/data', ['uses' => 'contractViewController@data', 'as' => 'contract.getData']);

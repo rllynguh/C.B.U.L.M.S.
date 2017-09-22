@@ -1,9 +1,8 @@
 @extends('layout.coreLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
-	<li><a href="{{url('/tenant')}}"><i class="mdi-action-home"></i> Home</a></li>
-	<li><a><i class="mdi-action-swap-horiz"></i> Transaction</a></li>
-	<li><a><i class="mdi-action-exit-to-app"></i> Move in</a></li>
+	<li><a> Transaction</a></li>
+	<li><a href="{{route('move-in.index')}}"> Move in</a></li>
 	<li><a href="{{route('move-in.show',$contract->id)}}"> {{$contract->code}}</a></li>
 </ol>
 @endsection

@@ -1,11 +1,10 @@
 @extends('layout.coreLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
-  <li><a href="{{url('/admin')}}"><i class="mdi-action-home"></i> Home</a></li>
-  <li><a><i class="mdi-action-swap-horiz"></i> Transaction</a></li>
-  <li><a><i class="mdi-file-folder-open"></i> Requirement
+  <li><a> Transaction</a></li>
+  <li><a> Requirement
   </a></li>
-  <li><a href="{{route("registrationApproval.index")}}"><i class="mdi-action-thumbs-up-down"></i> Requirements Assigning</a></li>
+  <li><a href="{{route("registrationApproval.index")}}"> Requirements Assigning</a></li>
 </ol>
 @endsection
 @section('content')
