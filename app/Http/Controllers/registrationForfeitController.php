@@ -47,13 +47,21 @@ class registrationForfeitController extends Controller
       ->where('registration_headers.status','!=',2)
       ->where('users.id',Auth::user()->id)
       ->whereRaw('(offer_sheet_headers.status is null or offer_sheet_headers.status = 0)')
+      ->where('registration_details.is_forfeited',0)
+      ->where('registration_details.is_rejected','!=',1)
       ->groupBy('registration_headers.id')
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
-        return "<a href=".route('registrationForfeit.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>
-        <a href=".route('registrationForfeit.show2',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>";
+        return "<a href=".route('registrationForfeit.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>";
       })
+      ->editColumn('date_issued',function($data)
+      {
+        $time = strtotime($data->date_issued);
+        $myDate = date( 'M d,Y', $time );
+        return $myDate;
+      }
+      )
       ->setRowId(function ($data) {
         return $data = 'id'.$data->id;
       }) 
@@ -71,16 +79,40 @@ class registrationForfeitController extends Controller
     {
         //
     }
-    public function show2()
+    public function show($id)
     {
-     $result=DB::table('registration_headers')
-     ->select(DB::Raw('registration_headers.date_issued,registration_headers.tenant_remarks,registration_headers.id,registration_headers.code,registration_headers.status'))
-     ->where('registration_headers.id','=',$id)
-     ->first();
-     return view('transaction.registrationForfeit.show')
-     ->withResult($result)
-     ;
-   }
+      $registration=DB::table('registration_headers')
+      ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
+      ->select(DB::Raw('registration_headers.code as regi_code, registration_headers.id,registration_headers.date_issued as regi_date,count(distinctrow registration_details.id ) as unit_count'))
+      ->where('registration_headers.id',$id)
+      ->where('registration_details.is_forfeited',0)
+      ->where('registration_details.is_rejected','!=',1)
+      ->first();
+      $time = strtotime($registration->regi_date);
+      $myDate = date( 'M d,Y', $time );
+      $registration->regi_date=$myDate;
+
+      $results=DB::table('registration_details')
+      ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
+      ->join('building_types','building_types.id','registration_details.building_type_id')
+      ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.*,building_types.description, registration_details.id as detail_id'))
+      ->where('registration_headers.id','=',$id)
+      ->where('registration_details.is_forfeited','=',0)
+      ->where('registration_details.is_rejected','!=',1)
+      ->get();
+      foreach ($results as &$result) {
+       $value='Raw';
+       if($result->unit_type==1)
+        $value='Shell';
+      $result->unit_type=$value;
+    }
+
+    return view('transaction.registrationForfeit.show')
+    ->withRegistration($registration)
+    ->withResults($results)
+    ;
+
+  }
 
     /**
      * Store a newly created resource in storage.
@@ -129,45 +161,6 @@ class registrationForfeitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showData($id)
-    {
-      $result=DB::table('registration_details')
-      ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
-      ->join('building_types','building_types.id','registration_details.building_type_id')
-      ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.*,building_types.description, registration_details.id as detail_id'))
-      ->where('registration_headers.id','=',$id)
-      ->where('registration_details.is_forfeited','=',0)
-      ->where('registration_headers.status','!=',2)
-      ->get();
-      return Datatables::of($result)
-      ->addColumn('action', function ($data) {
-        return " <button type='button' id='btnChoose' class='btn bg-blue btn-circle waves-effect waves-circle waves-float btnChoose' value='$data->detail_id'><i class='mdi-action-visibility'></i></button>
-        <input type='hidden' value='$data->detail_id' name='regi_id[]'>
-        <input type='hidden' name='regi_is_active[]' id='regi$data->detail_id'value='0'>";
-      })
-      ->addColumn('unit_type', function ($data) {
-        $value='Raw';
-        if($data->unit_type==1)
-          $value='Shell';
-        return $value;
-      })
-      ->setRowId(function ($data) {
-        return $data = 'id'.$data->id;
-      }) 
-      ->rawColumns(['action'])
-      ->make(true)
-      ;
-    }
-    public function show($id)
-    {
-      $result=DB::table('registration_headers')
-      ->select(DB::Raw('registration_headers.date_issued,registration_headers.tenant_remarks,registration_headers.id,registration_headers.code,registration_headers.status'))
-      ->where('registration_headers.id','=',$id)
-      ->first();
-      return view('transaction.registrationForfeit.show')
-      ->withResult($result)
-      ;
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -178,16 +171,7 @@ class registrationForfeitController extends Controller
     public function edit($id)
     {
         //
-     $result=DB::table('registration_details')
-     ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
-     ->join('building_types','building_types.id','registration_details.building_type_id')
-     ->select(DB::Raw('registration_headers.tenant_remarks as header_remarks,CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.floor,registration_details.unit_type,building_types.description, registration_details.id as detail_id,registration_details.tenant_remarks as detail_remarks'))
-     ->where('registration_details.id','=',$id)
-     ->where('registration_details.is_forfeited','=',0)
-     ->where('registration_headers.status','!=',2)
-     ->first();
-     return response::json($result);
-   }
+    }
 
     /**
      * Update the specified resource in storage.
@@ -199,6 +183,7 @@ class registrationForfeitController extends Controller
     public function update(Request $request, $id)
     {
         //
+
     }
 
     /**

@@ -20,73 +20,35 @@ $(document).ready(function()
   $(this).on('click', '.btnChoose',function(e)
   { 
     myId=$(this).val();
-    if($(this).val()=='header')
+    if($(this).hasClass('bg-orange'))//currently active
     {
-      $("#detail_remarks").val($("#header_remarks").val());
-      info="Remarks: " + header_remarks;
-      $('#regi_info').append(info);
-    }
-    else
-    {  
-      $("#detail_remarks").val($("#remarks"+myId).val());
-      $.get(mainUrl + '/' + $(this).val() + '/edit', function (data) 
-      {
-        console.log(data);
-        if(data.unit_type==0)
-          type='Raw';
-        else
-          type='Shell';
-        if(data.detail_remarks==null)
-          remarks="";
-        else
-          remarks=data.detail_remarks;
-        info="Registration Detail: " + data.detail_id + "<br>" +
-        "Building Type: " + data.description + "<br>" +
-        "Size ranging from: " + data.size_range + "<br>" +
-        "Unit Type: " + type + "<br>" +
-        "Floor: " + data.floor + "<br>" +
-        "Client's Remarks: " + remarks; + "<br>"
-        ;
-        $('#regi_info').append(info);
-      }); 
-    }
-    setTimeout(function(){
       $('#modalChoose').modal('show');
-    }, 1000);
-  });
-
-
-  $(this).on('click', '#btnForfeit',function(e)
-  { 
-    if(myId=="header")
+    }
+    else//currently forfeited
     {
-      $("#header_is_active").val('1');
+      $("#regi"+myId).val('0');
+      $('#status'+myId).removeClass('bg-red');
+      $('#status'+myId).addClass('bg-orange');
+      $('#lblStatus'+myId).text('Active');
+      $(this).text('FORFEIT');
     }
-    else
-    { 
-      $("#regi"+myId).val('1');
-    }
-    $('#modalChoose').modal('hide');
   });
 
 
-  $(this).on('click', '#btnCancel',function(e)
+  $(this).on('click', '#btnForfeit',function(e) //forfeits a registration detail
   { 
-   if(myId=="header")
-   {
-    $("#header_is_active").val('0');
-  }
-  else
-  { 
-    $("#regi"+myId).val('0');
-  }
-  $('#modalChoose').modal('hide');
-});
+    $("#regi"+myId).val('1');
+    $('#status'+myId).removeClass('bg-orange');
+    $('#status'+myId).addClass('bg-red');
+    $('#lblStatus'+myId).text('Forfeited');
+    $('#modalChoose').modal('hide');
+    $('#status'+myId).text('UNDO'); 
+  });
+
 
 
   $(document).on('hidden.bs.modal','#modalChoose', function () 
   { 
-    $("#regi_info").empty();
     $("#detail_remarks").val("");
   });
 

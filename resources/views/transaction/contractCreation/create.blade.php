@@ -86,10 +86,10 @@
 			<table class="table table-hover dataTable" id="myTable">
 				<thead>
 					<tr>
-						<th class="align-center">Unit</th>
-						<th class="align-center">Area</th>
-						<th class="align-center">Rate per sqm</th>			
-						<th class="align-center">Price</th>	
+						<th class="align-center">UNIT</th>
+						<th class="align-center">AREA</th>
+						<th class="align-center">RATE PER SQM</th>			
+						<th class="align-center">PRICE</th>	
 					</tr>
 				</thead>
 				<tbody id="myList">
@@ -119,8 +119,8 @@
 			<table class="table table-hover" id="myTable">
 				<thead>
 					<tr>
-						<th class="align-center">Year 1</th>
-						<th class="align-center">Monthly Rent</th>
+						<th class="align-center">YEAR 1</th>
+						<th class="align-center">MONTHLY RENT</th>
 					</tr>
 				</thead>
 				<tbody id="myList">
@@ -153,8 +153,8 @@
 			<table class="table table-hover dataTable" id="myTable">
 				<thead>
 					<tr>
-						<th class="align-center">Description</th>
-						<th class="align-center">Rate</th>
+						<th class="align-center">DESCRIPTION</th>
+						<th class="align-center">RATE</th>
 					</tr>
 				</thead>
 				<tbody id="myList">
@@ -217,20 +217,53 @@
 			Finalization
 		</h3>
 		<fieldset>
-			Contract Duration
-			{{ Form::number('txtDuration',null,[
-				'class' => 'form-control text-center',
-				'data-rule' => 'quantity',
-				'autocomplete' => 'off',
-				'min' => '1',
-				'max' => '5',
-				'required' => 'required',
-				])
-			}}
-			Contract starting date
-			<input name="startDate" type="date">
-			Billing Date
-			<input name="billingDate" type="date">
+			<div class="col-sm-3">	</div>
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="header bg-light-green">
+						Registration
+					</div>	
+					<div class="body">
+						<div>
+							<div>		
+								<div class="form-group">
+									<div class="form-line">
+										<h5 class="card-inside-title">Number of Units</h5>
+										{{ Form::number('txtDuration',null,[
+											'class' => 'form-control text-center max-digits-2',
+											'data-rule' => 'quantity',
+											'autocomplete' => 'off',
+											'min' => '1',
+											'max' => '5',
+											'required' => 'required',
+											])
+										}}
+									</div>
+								</div>
+							</div>
+							<div>
+								<div class="col-sm-6">
+									Contract starting date<br>	
+									<div class="form-group">
+										<div class="form-line">
+											<input name="startDate" type="text" class="datepicker form-control" placeholder="Please choose a date...">
+										</div>
+									</div>
+								</div>		
+								<div class="{{-- col-sm-6 --}}">
+									Billing Date<br>
+									<div class="form-group">
+										<div class="form-line">
+											<input name="billingDate" type="text" class="datepicker form-control" placeholder="Please choose a date...">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">	</div>
+			</div>
 		</fieldset>
 		{{Form::close()}}
 

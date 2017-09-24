@@ -15,6 +15,7 @@
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
   {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}
+  {!!Html::style("plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css")!!}
   @yield("styles")
 </head>
 
@@ -451,6 +452,8 @@
       {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
       {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
       {!!Html::script('js/admin.js')!!}
+      {!!Html::script("plugins/momentjs/moment.js")!!}
+      {!!Html::script("plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js")!!}
 
     </body>
 

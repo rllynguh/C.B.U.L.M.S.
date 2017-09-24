@@ -7,30 +7,30 @@
 </ol>
 @endsection
 @section('content')
+<div class="modal fade" id="modalChoose" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content modal-col-green">
+			<div class="modal-header">
+				<h1 id="label" class="modal-title align-center p-b-15">CHOOSE FROM THESE UNITS<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+			</div>
+			<div class="modal-body">
+				<div id='divOptions'>
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id='btnSelect' type='button' class='btn bg-brown btn-lg waves-effect  waves-float col-lg-12 col-md-12 col-sm-12' >SELECT</button>
+				<input type="hidden" id="myId" value="0">
+			</div>
+		</div>
+	</div>
+</div>
 <div class="body">
 	<i class="mdi-navigation-close"></i>
 	{{Form::open([
 		'id' => 'wizard_with_validation',
 		'route' => 'offersheets.store'
 		])}}
-		<div class="modal fade" id="modalChoose" tabindex="-1" role="dialog">
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content modal-col-green">
-					<div class="modal-header">
-						<h1 id="label" class="modal-title align-center p-b-15">CHOOSE FROM THESE UNITS<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
-					</div>
-					<div class="modal-body">
-						<div id='divOptions'>
-
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button id='btnSelect' type='button' class='btn bg-brown btn-lg waves-effect  waves-float col-lg-12 col-md-12 col-sm-12' >SELECT</button>
-						<input type="hidden" id="myId" value="0">
-					</div>
-				</div>
-			</div>
-		</div>
 		<h3>Tenant Information</h3>
 		<fieldset>
 			<div class="col-sm-6">

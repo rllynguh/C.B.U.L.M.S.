@@ -11,10 +11,10 @@
     <thead>
       <tr>
         <th class="align-center">REGISTRATION CODE</th>
-        <th class="align-center">Client</th>
-        <th class="align-center">Business</th>
-        <th class="align-center">Unit requested</th>
-        <th class="align-center">Action</th>
+        <th class="align-center">CLIENT</th>
+        <th class="align-center">BUSINESS</th>
+        <th class="align-center">UNIT REQUESTED</th>
+        <th class="align-center">ACTION</th>
       </tr>
     </thead>
     <tbody id="myList">
