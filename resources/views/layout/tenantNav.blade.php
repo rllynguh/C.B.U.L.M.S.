@@ -73,6 +73,8 @@
   {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
   {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+  {!!Html::script("plugins/momentjs/moment.js")!!}
+  {!!Html::script("plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js")!!}
   {!!Html::script("js/tenant/custom.js")!!}
 
 @yield('scripts')
