@@ -38,6 +38,12 @@
 @endsection
 @section('scripts')
 <script>
+    var dataurl="{!!route('offerSheetApproval.getData')!!}" ;
+  var url="{!!route('offerSheetApproval.index')!!}" ;
+  urlbtype="{{route("custom.getBuildingType")}}";
+  buil_type_url="{{route("custom.getBuildingType")}}";
+  floor_url="{{route("custom.getFloor")}}";
+  range_url="{{route("custom.getRange")}}";
 $( function() {
 	$('.accordion').accordion({
         collapsible: true,

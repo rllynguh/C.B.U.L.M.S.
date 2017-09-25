@@ -103,8 +103,7 @@ public function show($id)
     ->join('users','user_id','users.id')
     ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
     ->where('current_contracts.id',$id)
-    ->first()
-    ;
+    ->first();
     return view('tenant.contractView.show')
     ->withCurrentcontract($current_contract);
 }

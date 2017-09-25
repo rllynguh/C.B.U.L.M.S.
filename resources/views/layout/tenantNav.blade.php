@@ -43,6 +43,7 @@
                 <li role="separator" class="divider"></li>
                 <li><a href="{{route('tenant.requestUnit')}}">Request New Units</a></li>
                 <li><a href="{{route('tenant.test')}}">Merge units</a></li>
+                <li><a href="{{route('tenant.terminateContract')}}">Terminate Contract</a></li>
               </ul>
             </li>
             <li class="scroll"><a href="#services">Documents</a></li> 

@@ -339,17 +339,17 @@
   <div class="card">
     <div class="header align-center">
       <h2>
-        LIST OF BUILDINGS
+        LIST OF CONTRACTS
       </h2>
     </div>
     <div class="body">
       <table class="table table-hover dataTable" id="myTable">
         <thead>
           <tr>
-            <th class="align-center">Building ID</th>
-            <th class="align-center">Building  Name</th>
-            <th class="align-center">Location</th>
-            <th class="align-center">Status</th>
+            <th class="align-center">Contract</th>
+            <th class="align-center">Lessor</th>
+            <th class="align-center">Number of Units</th>
+            <th class="align-center">Date Issued</th>
             <th class="align-center">Action</th>
           </tr>
         </thead>

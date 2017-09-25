@@ -29,5 +29,9 @@
 <script type="text/javascript">
   var dataurl="{!!route('contract.getData')!!}" ;
   var url="{!!route('contract.index')!!}" ;
+  urlbtype="{{route("custom.getBuildingType")}}";
+  buil_type_url="{{route("custom.getBuildingType")}}";
+  floor_url="{{route("custom.getFloor")}}";
+  range_url="{{route("custom.getRange")}}";
 </script>
 @endsection
