@@ -8,6 +8,7 @@ $(document).ready(function()
 		}
 	})
 	myId="";
+	value="";
 	$(this).on('click', '#btnChoose',function(e)
 	{
 		myId=$(this).val();
@@ -18,38 +19,53 @@ $(document).ready(function()
 			$("#modalChoose").modal("show");
 			ctr=0;
 			$.each( data, function( index, value ){
-				if(ctr%3==0)
+				main_mode='light-green';
+				if((!(value.size>=value.size_from && value.size<=value.size_to))||
+					(value.offered_building_type!=value.ordered_building_type) ||
+					(value.offered_floor!=value.ordered_floor) ||
+					(value.offered_unit_type!=value.ordered_unit_type)
+					)
+					main_mode='orange';
+				if(ctr%2==0)
 					options+='<div>'
-				mode='warning';
-				if(value.size>=value.size_from && value.size<=value.size_to)
-					mode='success';
-				building_type_mode='warning';
-				if(value.offered_building_type==value.ordered_building_type)
-					building_type_mode='success';
-				floor_mode='warning';
-				if(value.offered_floor==value.ordered_floor)
-					floor_mode='success';
-				unit_type_mode='warning';
-				if(value.offered_building_type==value.ordered_building_type)
-					unit_type_mode='success';
-				building_type="<b>Building Type : </b><small id='myBuildingType"+ value.unit_id +"' class='label label-" + building_type_mode + "'>"+ value.offered_building_type +" </small>";
-				floor="<b>Floor : </b><small id='myFloor"+ value.unit_id +"' class='label label-" + floor_mode + "'>"+ value.offered_floor +" </small>";
-				size="<b>Size : </b><small id='mySize"+ value.unit_id +"' class='label label-" + mode + "'>"+ value.offered_exact_size +" </small>";
-				unit_type="<b>Unit Type : </b><small id='myUnitType"+ value.unit_id +"' class='label label-" + unit_type_mode + "'>"+ value.offered_unit_type +" </small>";
-				rate="<b>Price: </b><small id='myRate"+ value.unit_id +"' class='label label-success'>"+ value.rate +"</small>";
+				building_type="<span class='align-right' id='myBuildingType"+ value.unit_id  + "'>"+ value.offered_building_type +" </span>";
+				floor="<span class='align-right' id='myFloor"+ value.unit_id +"'>"+ value.offered_floor +" </span>";
+				size="<span class='align-right' id='mySize"+ value.unit_id +"'>"+ value.offered_exact_size +" </span>";
+				unit_type="<span class='align-right' id='myUnitType"+ value.unit_id +"'>"+ value.offered_unit_type +" </span>";
+				rate="<span class='align-right' id='myRate"+ value.unit_id +"'>"+ value.rate +"</span>";
+				building="<span class='align-right'>"+ value.building +"</span>";
+				address="<span class='align-right'>"+ value.address +"</span>";
+
 				options+=
-				'<div class="thumbnail col-sm-4">' +
-				'<div class="caption">' +
+				'<div class="col-sm-6">' +
+				'<div class="card">' +
+				'<div class="header bg-'+main_mode+'">' +
 				"<input type='radio' id='"+ value.unit_offered +"' class='myRadio' class='radio-col-yellow type='radio' name='unit_option' value='"+ value.unit_id +"'>" +
 				"<label for='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'>" + value.unit_offered+ "</label> <br>" +
+				'</div>' +
+				'<div class="body">' +
+				'<div id="labels" class="col-sm-6">' +
+				'<b>Building Type: </b><br>' +
+				'<b>Building Name: </b><br>' +
+				'<b>Address: </b><br>' +
+				'<b>Unit Type : </b><br>' +
+				'<b>Floor : </b><br>' +
+				'<b>Size : </b><br>' +
+				'<b>Price: </b><br>' +
+				'</div>' +
+				'<div id="details" class="align-right" >' +
 				building_type + " <br>" +
+				building + " <br>" +
+				address + " <br>" +
 				unit_type + " <br>" +
 				floor + " <br>" +
 				size + " <br>" +
 				rate + " <br>" +
 				'</div>'+
+				'</div>'+
+				'</div>' +
 				'</div>';
-				if(ctr%3!=0)
+				if(ctr%2!=0)
 					options+='</div>';
 				ctr++;
 			});
@@ -59,6 +75,9 @@ $(document).ready(function()
 	$(this).on('click', '.myRadio',function(e)
 	{
 		value=$(this).val();
+	});
+	$(this).on('click', '#btnSelect',function(e)
+	{
 		name=$('#unit'+value).text();
 		$('#offer'+myId).val(value);
 		$('#regi'+myId).text(name);

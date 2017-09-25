@@ -1,9 +1,9 @@
 @extends('layout.tenantNav')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
-  <li><a href="{{url('/tenant')}}"><i class="mdi-action-home"></i> Home</a></li>
-  <li><a><i class="mdi-action-swap-horiz"></i> Transaction</a></li>
-  <li><a href="{{route("registrationForfeit.index")}}"><i class="mdi-action-delete"></i> Regisration Forfeit</a></li>
+  <li><a href="{{url('/tenant')}}"> Home</a></li>
+  <li><a> Transaction</a></li>
+  <li><a href="{{route("registrationForfeit.index")}}"> Regisration Forfeit</a></li>
 </ol>
 @endsection
 @section('content')
@@ -12,7 +12,7 @@
     <thead>
       <tr>
         <th class="align-center">Registration Code</th>
-        <th class="align-center">Duuration Preferred</th>
+        <th class="align-center">Duration Preferred</th>
         <th class="align-center">Unit requested</th>
         <th class="align-center">Date Requested</th>
         <th class="align-center">Remarks</th>

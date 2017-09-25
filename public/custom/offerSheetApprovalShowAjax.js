@@ -1,25 +1,6 @@
 $(document).ready(function()
 { 
   myId="";
-  $.ajaxSetup(
-  {
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-    }
-  })
-  var table = $('#myTable').DataTable({
-    responsive: true,
-    processing: true,
-    serverSide: true,
-    ajax: dataurl,
-    columns: [
-    {data: 'regi_id'},
-    {data: 'offer_id'},
-    {data: 'unit_code'},
-    {data: 'rate'},
-    {data: 'action'}
-    ]
-  });
 
   $(this).on('click', '.btnChoose',function(e)
   { 
@@ -36,21 +17,19 @@ $(document).ready(function()
       $.get(mainUrl + '/' + $(this).val() + '/edit', function (data) 
       {
         console.log(data);
-        if(data.unit_type==0)
-          type='Raw';
-        else
-          type='Shell';
-        if(data.detail_remarks==null)
-          remarks="";
-        else
-          remarks=data.detail_remarks;
-        info="Offer Sheet Detail: " + data.offer_id + "<br>" +
-        "Size offered: " + data.unit_size + "<br>" +
-        "Unit Type: " + type + "<br>" +
-        "Floor: " + data.floor + "<br>" +
-        "Lessor's Remarks: " + remarks; + "<br>"
-        ;
-        $('#myInfo').append(info);
+        $('#unit_code').text(data.unit_code);
+        $('#half_address').text(data.half_address);
+        $('#city_province').text(data.city_province);
+        $('#rate').text(data.rate);
+        $('#unit_img').attr('src', dir+"/"+data.picture);
+        $('#ordered_building_type').text(data.ordered_building_type);
+        $('#offered_building_type').text(data.offered_building_type);
+        $('#ordered_unit_type').text(data.ordered_unit_type);
+        $('#offered_unit_type').text(data.offered_unit_type);
+        $('#ordered_size_range').text(data.ordered_size_range);
+        $('#offered_size').text(data.offered_size);
+        $('#ordered_floor').text(data.ordered_floor);
+        $('#offered_floor').text(data.offered_floor);
       }); 
     }
     setTimeout(function(){
@@ -70,6 +49,9 @@ $(document).ready(function()
     { 
       $("#remarks"+myId).val($("#modal_remarks").val());
       $("#offer"+myId).val('1');
+      $('#lblStatus'+myId).text('Accepted');
+      $('#status'+myId).removeClass('bg-orange');
+      $('#status'+myId).addClass('bg-ligh-green');
     }
     $('#modalChoose').modal('hide');
   });
@@ -86,6 +68,9 @@ $(document).ready(function()
   { 
     $("#remarks"+myId).val($("#modal_remarks").val())
     $("#offer"+myId).val('2');
+    $('#lblStatus'+myId).text('Rejected');
+    $('#status'+myId).removeClass('bg-ligh-green');
+    $('#status'+myId).addClass('bg-orange');
   }
   $('#modalChoose').modal('hide');
 });

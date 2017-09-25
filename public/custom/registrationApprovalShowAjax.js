@@ -20,85 +20,33 @@ $(document).ready(function()
   $(this).on('click', '.btnChoose',function(e)
   { 
     myId=$(this).val();
-    if($(this).val()=='header')
-    {
-      $("#detail_remarks").val($("#header_remarks").val());
-      info="Client's Remarks: " + header_remarks;
-      $('#regi_info').append(info);
-    }
-    else
-    {  
-      $("#detail_remarks").val($("#remarks"+myId).val());
-      $.get(mainUrl + '/' + $(this).val() + '/edit', function (data) 
-      {
-        console.log(data);
-        if(data.unit_type==0)
-          type='Raw';
-        else
-          type='Shell';
-        if(data.detail_remarks==null)
-          remarks="";
-        else
-          remarks=data.detail_remarks;
-        status="<large class='label label-danger'>Rejected</large>";
-        if($('#status'+myId).hasClass('bg-blue'))
-          status="<large class='label label-info'>Accepted</large>";
-        info="<b>Registration Detail: </b>" + myId + "<br>" +
-        "<b>Building Type: </b>" + data.description + "<br>" +
-        "<b>Size ranging from: </b>" + data.size_range + "<br>" +
-        "<b>Unit Type: </b>" + type + "<br>" +
-        "<b>Floor: </b>" + data.floor + "<br>" +
-        "<b>Client's Remarks: </b>" + remarks + "<br>" +
-        "<b>Status: </b>" + status + "<br>"
-        ;
-        $('#regi_info').append(info);
-      }); 
-    }
-    setTimeout(function(){
-      $('#modalChoose').modal('show');
-    }, 1000);
+    $("#detail_remarks").val($("#remarks"+myId).val());
+    $('#modalChoose').modal('show');
   });
 
 
   $(this).on('click', '#btnAccept',function(e)
   { 
-    if(myId=="header")
-    {
-      $("#header_remarks").val($("#detail_remarks").val());
-      $("#header_is_active").val('1');
-    }
-    else
-    { 
-      $("#remarks"+myId).val($("#detail_remarks").val());
-      $("#regi"+myId).val('0');
-      $('#status'+myId).removeClass('bg-red');
-      $('#status'+myId).addClass('bg-blue');
-      $('#lblStatus'+myId).empty();
-      $('#lblStatus'+myId).append('Accepted');
-
-    }
+    $("#remarks"+myId).val($("#detail_remarks").val());
+    $("#regi"+myId).val('0');
+    $('#status'+myId).removeClass('bg-orange');
+    $('#status'+myId).addClass('bg-light-green');
+    $('#lblStatus'+myId).empty();
+    $('#lblStatus'+myId).append('Accepted');
     $('#modalChoose').modal('hide');
   });
 
 
   $(this).on('click', '#btnReject',function(e)
   { 
-   if(myId=="header")
-   {
-    $("#header_remarks").val($("#detail_remarks").val());
-    $("#header_is_active").val('2');
-  }
-  else
-  { 
     $("#remarks"+myId).val($("#detail_remarks").val())
     $("#regi"+myId).val('1');
-    $('#status'+myId).removeClass('bg-blue');
-    $('#status'+myId).addClass('bg-red');
+    $('#status'+myId).removeClass('bg-light-green');
+    $('#status'+myId).addClass('bg-orange');
     $('#lblStatus'+myId).empty();
     $('#lblStatus'+myId).append('Rejected');
-  }
-  $('#modalChoose').modal('hide');
-});
+    $('#modalChoose').modal('hide');
+  });
 
 
   $(document).on('hidden.bs.modal','#modalChoose', function () 

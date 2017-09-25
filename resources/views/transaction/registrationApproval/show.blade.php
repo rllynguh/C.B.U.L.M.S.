@@ -2,47 +2,39 @@
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
 
-	<li><a href="{{url('/admin')}}"><i class="mdi-action-home"></i> Home</a></li>
-	<li><a><i class="mdi-action-swap-horiz"></i> Transaction</a></li>
-	<li><a href="{{route("registrationApproval.index")}}"><i class="mdi-action-assignment-turned-in"></i> Registration Approval</a></li>
+	<li><a> Transaction</a></li>
+	<li><a href="{{route("registrationApproval.index")}}"> Registration Approval</a></li>
 	<li><a href="javascript:void(0);"> {{$tenant->code}}</a></li>
 
 </ol>
 @endsection
 @section('content')
+<div class="modal fade" id="modalChoose" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content modal-col-green">
+			<div class="modal-header">
+				<h1 id="label" class="modal-title align-center p-b-15">REGISTRATION APPROVAL<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+			</div>
+			<div class="modal-body">
+				<p class="align-center"> Do you want to accept this unit registration?</p>
+				
+				<div id='regi_info'>
+					{{-- used in javascript. don't delete --}}
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type='button' id='btnAccept' class='btn bg-light-green waves-effect waves-float'>ACCEPT</button>
+				<button type='button' id='btnReject' class='btn bg-orange waves-effect waves-float'>REJECT</button>
+			</div>
+		</div>
+
+	</div>
+</div>
 <div class="body">
 	{{Form::open([
 		'id' => 'wizard_with_validation',
 		'route' => 'registrationApproval.store'
 		])}}
-		<div class="modal fade" id="modalChoose" tabindex="-1" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content modal-col-green">
-					<div class="modal-header">
-						<h1 id="label" class="modal-title align-center p-b-15">What would you like to do with this item?<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
-					</div>
-					<div class="modal-body">
-						<b>Representative: </b>{{$tenant->name}}
-						<br>
-						<b>Company: </b>{{$tenant->tenant}}
-						<div id='regi_info'>
-							{{-- used in javascript. don't delete --}}
-						</div>
-						<div><b>Remarks: </b></div>
-					</div>
-					<div class="modal-footer">
-						<div class="form-group">
-							<div class="form-line">
-								<textarea id='detail_remarks' placeholder="Remarks" rows="1" class="form-control no-resize auto-growth" style="overflow: hidden; word-wrap: break-word; height: 46px;"></textarea>
-							</div>
-						</div>
-						<button type='button' id='btnAccept' class='btn bg-blue waves-effect waves-float'>Accept</button>
-						<button type='button' id='btnReject' class='btn bg-brown waves-effect waves-float'>Reject</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
 		<input type="hidden" value="{{$tenant->id}}" name="myId">
 		<input type='hidden' name='header_is_active' id='header_is_active' value="1">
 		<h3>Tenant Information</h3>
@@ -78,38 +70,46 @@
 
 		<h3>Unit(s) Requested</h3>
 		<fieldset>
-			@for($x=0;$x<count($results);$x++)
-			@if($x%3==0)
-			<div>
-				@endif
-				<div class="thumbnail col-sm-4">
-					<div class="caption">
-						<h3>Registration Detail # {{$results[$x]->id}}</h3>
+			<div class="col-sm-12">
+				@for($x=0;$x<count($results);$x++)
+				@if($x%3==0)
+				<div>
+					@endif
+					<div class="col-sm-4">
+						<div class="thumbnail">
+							<div class="caption">
+								<h3>Registration Detail # {{$results[$x]->id}}</h3>
 
-						<b>Desired Building type: </b> {{$results[$x]->description}}<br>
-						<b>Desired Unit type: </b>{{$results[$x]->unit_type}}<br>
-						<b>Desired Size: </b>{{$results[$x]->size_range}}<br>
-						<b>Desired Floor: </b>{{$results[$x]->floor}}<br>
-						<b>Status: </b><span id='lblStatus{{$results[$x]->id}}'>Accepted</span><br>
-
-						<button type='button' id='status{{$results[$x]->id}}' class='btn bg-blue btn-lg waves-effect waves-float btnChoose' value='{{$results[$x]->detail_id}}'><i class='mdi-action-visibility'></i> Show Details</button>
-						<input type='hidden' value='{{$results[$x]->detail_id}}' name='regi_id[]'>
-						<input type='hidden' name='regi_is_active[]' id='regi{{$results[$x]->detail_id}}'value='0'><input id='remarks{{$results[$x]->detail_id}}' type='hidden' name='detail_remarks[]'>
+								<b>Desired Building type: </b> {{$results[$x]->description}}<br>
+								<b>Desired Unit type: </b>{{$results[$x]->unit_type}}<br>
+								<b>Desired Size: </b>{{$results[$x]->size_range}}<br>
+								<b>Desired Floor: </b>{{$results[$x]->floor}}<br>
+								<b>Status: </b><span id='lblStatus{{$results[$x]->id}}'>Accepted</span><br>
+								<div class="align-right">
+									<button type='button' id='status{{$results[$x]->id}}' class='btn bg-light-green btn-lg waves-effect waves-float btnChoose' value='{{$results[$x]->detail_id}}'>APPROVAL</button>
+								</div>
+								<input type='hidden' value='{{$results[$x]->detail_id}}' name='regi_id[]'>
+								<input type='hidden' name='regi_is_active[]' id='regi{{$results[$x]->detail_id}}'value='0'><input id='remarks{{$results[$x]->detail_id}}' type='hidden' name='detail_remarks[]'>
+							</div>
+						</div>
 					</div>
+					@if($x%3!=0)
 				</div>
-				@if($x%3!=0)
-			</div>
-			@endif
-			<div>
-				@endfor
-			</fieldset>
-			<h3>Finalization</h3>
-			<fieldset>
-				Remarks:
-				<div class="form-group">
-					<div class="form-line">
-						<textarea name='header_remarks' rows="1" class="form-control no-resize auto-growth" style="overflow: hidden; word-wrap: break-word; height: 46px;"></textarea>
+				@endif
+				<div>
+					@endfor
+				</div>
+				<div class="col-sm-12">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-10">
+						<div class="form-group align-left">
+							<div class="form-line">
+								<label>Remarks</label>
+								<textarea name='header_remarks' rows="1" class="form-control no-resize auto-growth" style="overflow: hidden; word-wrap: break-word; height: 46px;"></textarea>
+							</div>
+						</div>
 					</div>
+					<div class="col-sm-1"></div>
 				</div>
 			</fieldset>
 			{{Form::close()}}

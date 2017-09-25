@@ -177,20 +177,6 @@ class registrationApprovalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-      $result=DB::table('registration_details')
-      ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
-      ->join('building_types','building_types.id','registration_details.building_type_id')
-      ->select(DB::Raw('registration_headers.tenant_remarks as header_remarks,CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.floor,registration_details.unit_type,building_types.description, registration_details.id as detail_id,registration_details.tenant_remarks as detail_remarks'))
-      ->where('registration_details.id','=',$id)
-      ->where('registration_headers.status','0')
-      ->where('registration_headers.is_forfeited','0')
-      ->where('registration_details.is_forfeited','0')
-      ->first();
-      return response::json($result);
-    }
 
     /**
      * Update the specified resource in storage.
