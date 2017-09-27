@@ -1,31 +1,19 @@
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Log In | Majent CBULMS</title>
 
-<meta charset="UTF-8">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-<title>Log In | Menarco CBULMS</title>
-<!-- Favicon-->
-<link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-
-<!-- Bootstrap Core Css -->
-<link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
-
-<!-- Waves Effect Css -->
-<link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
-
-<!-- Animation Css -->
-<link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
-
-<!-- Custom Css -->
-<link href="../../css/style.css" rel="stylesheet">
+    {{Html::style('plugins/bootstrap/css/bootstrap.css')}}
+    {{Html::style('plugins/node-waves/waves.css')}}
+    {{Html::style('plugins/animate-css/animate.css')}}
+    {{Html::style('css/style.css')}}
 </head>
 
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);">Menarco<b>CBULMS</b></a>
+            <a href="javascript:void(0);">Majent<b>CBULMS</b></a>
             <small>Admin BootStrap Based - Material Design</small>
         </div>
         <div class="card">
@@ -34,7 +22,7 @@
                 <div class="msg">Sign in to start your session</div>
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <i class="account_circle"></i>
+                        <i class="mdi-social-person"></i>
                     </span>
                     <div class="form-line">
                         <input type="text" class="form-control" name="email" placeholder="Username" required autofocus>
@@ -42,7 +30,7 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-addon">
-                        <i class="lock"></i>
+                        <i class="mdi-action-lock"></i>
                     </span>
                     <div class="form-line">
                         <input type="password" class="form-control" name="password" placeholder="Password" required>
@@ -69,18 +57,10 @@
             </div>
         </div>
     </div>
-
-    <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
-
-    <!-- Validation Plugin Js -->
-    <script src="../../plugins/jquery-validation/jquery.validate.js"></script>
+    {{Html::script('plugins/jquery/jquery.min.js')}}
+    {{Html::script('plugins/bootstrap/js/bootstrap.js')}}
+    {{Html::script('plugins/node-waves/waves.js')}}
+    {{Html::script('plugins/jquery-validation/jquery.validate.js')}}
 
 </body>
 

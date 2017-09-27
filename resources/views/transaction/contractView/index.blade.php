@@ -11,11 +11,11 @@
   <table class="table table-hover dataTable" id="myTable">
     <thead>
       <tr>
-        <th class="align-center">Contract</th>
-        <th class="align-center">Lessor</th>
-        <th class="align-center">Number of Units</th>
-        <th class="align-center">Date Issued</th>
-        <th class="align-center">Action</th>
+        <th class="align-center">CONTRACT</th>
+        <th class="align-center">LESSOR</th>
+        <th class="align-center">NUMBER OF UNITS</th>
+        <th class="align-center">DATE ISSUED</th>
+        <th class="align-center">ACTION</th>
       </tr>
     </thead>
     <tbody id="myList">

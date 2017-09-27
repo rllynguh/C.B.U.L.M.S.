@@ -12,10 +12,8 @@
       <tr>
         <th class="align-center">OFFER SHEET CODE</th>
         <th class="align-center">REGISTRATION CODE</th>
-        <th class="align-center">LESSOR</th>
-        <th class="align-center">Date PROPOSED</th>
         <th class="align-center">UNITS OFFERED</th>
-        <th class="align-center">Action</th>
+        <th class="align-center">ACTION</th>
       </tr>
     </thead>
     <tbody id="myList">
