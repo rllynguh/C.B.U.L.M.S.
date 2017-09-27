@@ -40,6 +40,9 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	Route::resource("/transaction/contract","contractViewController");
 	Route::get('/transaction/contract/get/data', ['uses' => 'contractViewController@data', 'as' => 'contract.getData']);
+
+	Route::get("contract/view",['uses' => 'contractAmmendmentController@index'])->name('tenant.contractView');
+	Route::get("contract/data",['uses' => 'contractAmmendmentController@data'])->name('tenant.contractData');
 });
 
 

@@ -16,6 +16,9 @@
   {!!Html::style("lib/jquery-ui-1.12.1/jquery-ui.min.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
+  {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}
+  {!!Html::style("plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css")!!}
+  
   <!--!Html::style("plugins/materialize-css/css/style.min.css")!!}
 -->
   @yield('styles')
@@ -39,8 +42,9 @@
               <ul class="dropdown-menu">
                 <li><a href="{{route('offerSheetApproval.index')}}">Offer Sheet Approval</a></li>
                 <li><a href="{{route('registrationForfeit.index')}}">Registration Forfeit</a></li>
-                <li><a href="{{route('contract.index')}}">View Contracts</a></li>
+                <li><a href="{{route('contract.index')}}">View Unaccepted Contracts</a></li>
                 <li role="separator" class="divider"></li>
+                <li><a href="{{route('tenant.contractView')}}">Manage Ongoing Contracts</a></li>
                 <li><a href="{{route('tenant.requestUnit')}}">Request New Units</a></li>
                 <li><a href="{{route('tenant.test')}}">Merge units</a></li>
                 <li><a href="{{route('tenant.terminateContract')}}">Terminate Contract</a></li>

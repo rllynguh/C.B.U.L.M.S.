@@ -8,8 +8,8 @@
   user-scalable=no" name="viewport">
   <title>Majent | Lease Management System</title>
   <link rel="icon" href="images/icon1.ico">
-  {!!Html::style("lib/DataTables/datatables.css")!!}
   {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
+  {!!Html::style("plugins/DataTables/datatables.css")!!}
   {!!Html::style("plugins/sweetalert/sweetalert.css")!!}
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.css")!!}
@@ -410,7 +410,8 @@
           </div>
         </div>
       </section>
-      {!!Html::script("lib/DataTables/datatables.js")!!}
+      {!!Html::script("plugins/jquery/jquery.min.js")!!}
+      {!!Html::script("plugins/DataTables/datatables.js")!!}
       {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!}
       {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
       @yield('scripts')

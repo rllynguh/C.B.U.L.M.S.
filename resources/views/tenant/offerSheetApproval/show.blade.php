@@ -223,5 +223,9 @@
 				dataurl='{{route('offerSheetApproval.index')}}/get/showData/{{$results->id}}';
 				header_remarks="{{$results->tenant_remarks}}";
 				dir='{{ asset('images/units/')}}';
+				urlbtype="{{route("custom.getBuildingType")}}";
+				buil_type_url="{{route("custom.getBuildingType")}}";
+				floor_url="{{route("custom.getFloor")}}";
+				range_url="{{route("custom.getRange")}}";
 			</script>
 			@endsection

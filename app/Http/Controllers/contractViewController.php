@@ -40,7 +40,9 @@ class contractViewController extends Controller
     ->get();
     return Datatables::of($contracts)
     ->addColumn('action', function ($data) {
-        return "<a href=".route('contract.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>";
+        return "<a href=".route('contract.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>
+            
+        ";
     })
     ->setRowId(function ($data) {
         return $data = 'id'.$data->id;
