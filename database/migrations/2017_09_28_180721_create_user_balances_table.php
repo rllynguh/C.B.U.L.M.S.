@@ -14,7 +14,8 @@ class CreateUserBalancesTable extends Migration {
 	{
 		Schema::create('user_balances', function(Blueprint $table)
 		{
-			$table->integer('user_id')->primary();
+			$table->integer('id', true);
+			$table->integer('user_id')->index('user_balance');
 			$table->date('date_as_of');
 			$table->float('balance', 10, 0);
 		});

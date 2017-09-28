@@ -367,6 +367,14 @@
 </ul>
 </li>
 <li class="
+{{Request::path() == 'admin/transaction/pdcCollection' ? 'active' : ''}}
+">
+<a href="{{route('pdcCollection.index')}}" class="waves-yellow">
+  <i class="mdi-maps-local-atm"></i>
+  <span>PDC Collection</span>
+</a>
+</li>
+<li class="
 {{Request::path() == 'admin/transaction/move-in' ? 'active' : ''}}
 
 ">

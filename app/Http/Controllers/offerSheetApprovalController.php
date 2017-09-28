@@ -46,9 +46,6 @@ class offerSheetApprovalController extends Controller
         return "<a href=".route('offerSheetApproval.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>
         ";
       })
-      ->setRowId(function ($data) {
-        return $data = 'id'.$data->id;
-      })
       ->rawColumns(['action'])
       ->make(true);
     }

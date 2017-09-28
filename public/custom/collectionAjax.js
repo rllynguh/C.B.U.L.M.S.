@@ -1,6 +1,8 @@
 $(document).ready(function()
 { 
-  balance=0; 
+  balance=0;
+  beforeInput=''; 
+  pdcValue=0;
   // for computation 
   xhrPool=[];
   $.ajaxSetup(
@@ -28,6 +30,16 @@ $(document).ready(function()
     $(this).attr('disabled','disabled');
     $.get(showUrl, function (data) 
     {
+      pdcValue=data[1].pdc_amount;
+      $('#user').val(data[1].user_id);
+      select='<SELECT id="mode" class="form-control" name="mode"><option value="0">Cash</option>';
+      if(data[1].pdc_id!==undefined)
+      { 
+        $('#pdc_id').val(data[1].pdc_id);
+        select+='<option value="1">PDC</option>';
+      }
+      select+="</SELECT>";
+      $('#idSelect').html(select);
       setTimeout(function(){
         $("#btnCollection").removeAttr('disabled');
       }, 1000);
@@ -44,7 +56,7 @@ $(document).ready(function()
         });
         content+="</tbody></table>";
         content+="Total: ₱ " + data[1].cost + "     Balance: ₱ " + data[2];  
-        $('#divCollect').append(content);
+        $('#divCollect').html(content);
       }
       else
        $.notify("No Items can be collected", "error");
@@ -53,7 +65,10 @@ $(document).ready(function()
 
 
   $(document).on('hidden.bs.modal','#modalCollection', function () {
-    $("#divCollect").empty();
+    $('#frmCollection').trigger('reset');
+    $('#pdc_id').val('')
+    $('#idOption').html('');
+    $('#txtAmount').removeAttr('readonly')
   });
 
 
@@ -77,8 +92,11 @@ $(document).ready(function()
           console.log(data);
           table.draw(); 
           console.log(balance); 
+          $('#modalCollection').modal('hide');
           if(parseFloat($('#txtAmount').val()) > parseFloat(balance))
           {
+            $('#modalBalance').modal('show');
+            $('#balance').val((parseFloat($('#txtAmount').val()) - parseFloat(balance)));
             $.notify("Payment Successfully collected. Change is ₱ " + (parseFloat($('#txtAmount').val()) - parseFloat(balance)) + ".", "success",
             {
               timer:1000
@@ -98,6 +116,51 @@ $(document).ready(function()
     });
     }}
     );
+
+
+
+  $('#btnBalance').on('click',function(e)
+  {
+
+    e.preventDefault(); 
+    var my_url = url + "/1";
+    var type="PUT";
+    var formData = $('#frmBalance').serialize();
+    $.ajax({
+      beforeSend: function (jqXHR, settings) {
+        xhrPool.push(jqXHR);
+      },
+      type: type,
+      url: my_url,
+      data: formData,
+      success: function (data) {
+        table.draw(); 
+        $('#modalBalance').modal('hide');
+        $('#frmBalance').trigger('reset');
+      },
+      error: function (data) {
+        console.log('Error:', data.responseText);
+      }
+    });
+  }
+  );
+
+
+
+  $(this).on('change', '#mode',function(e){
+    if($('#mode').val()==0)
+    {
+      $('#txtAmount').val(beforeInput);
+      $('#txtAmount').removeAttr('readonly')
+      $('#pdc_id').val('');
+    }
+    else
+    { 
+      beforeInput=$('#txtAmount').val();
+      $('#txtAmount').val(pdcValue);
+      $('#txtAmount').attr('readonly','')
+    }
+  });
 
 
   function successPrompt(){

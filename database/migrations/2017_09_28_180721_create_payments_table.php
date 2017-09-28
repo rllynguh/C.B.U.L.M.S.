@@ -16,8 +16,8 @@ class CreatePaymentsTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('billing_header_id')->index('bill_header_idx');
-			$table->integer('bank_id')->index('str_bank_idx');
 			$table->string('code', 45);
+			$table->integer('mode')->comment('0-cash 1-pdc');
 			$table->date('date_issued');
 			$table->date('date_collected');
 			$table->integer('user_id')->index('user_id_header_idx');

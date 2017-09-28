@@ -7,6 +7,37 @@
 </ol>
 @endsection
 @section('content')
+<!--Delete MODAL-->
+<div class="modal fade" id="modalBalance" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content modal-col-green">
+      <div class="modal-header">
+        <h2 class="modal-title align-center p-b-15 p-l-35">DELETE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h2>
+      </div>
+      <div class="modal-body align-center">
+        <p>What would you like to do with your change?</p>
+      </div>
+      <div class="modal-footer align-center">
+        <button id="btnCancel" class="btn btn-lg bg-orange waves-effect waves-white col-md-12 col-sm-12"><i class="mdi-action-delete"></i> KEEP IT</button>
+        {{ Form::open([
+          'id' => 'frmBalance', 'class' => 'form-horizontal'
+          ])
+        }}
+        {{ Form::hidden('balance',null,[
+          'id' => 'balance'
+          ])
+        }}
+        {{ Form::hidden('user',null,[
+          'id' => 'user'
+          ])
+        }}
+        <button id="btnBalance" type="submit" class="btn btn-lg bg-orange waves-effect waves-white col-md-12 col-sm-12"><i class="mdi-action-delete"></i> ADD TO YOUR ACCOUNT</button>
+        {{Form::close()}}
+      </div>
+    </div>
+  </div>
+</div>
+<!--Delete MODAL-->
 <div class="body">
   {{-- modal collection starts here --}}
   <div class="modal fade" id="modalCollection" tabindex="-1" role="dialog">
@@ -20,6 +51,10 @@
           'id' => 'myId'
           ])
         }}
+        {{ Form::hidden('pdc_id',null,[
+          'id' => 'pdc_id'
+          ])
+        }}
         <div class="modal-header">
           <h1  class="modal-title align-center p-b-15"><span>Collect Payment</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
         </div>
@@ -31,13 +66,8 @@
              <div class="col-sm-6">
               Bank
             </div>
-            <div class="form-line col-sm-6">
+            <div class="form-line col-sm-6" id='idSelect'>
 
-              {{ Form::select('bank',$banks, null, [
-                'id' => 'bank',
-                'required' => 'required',
-                'class' => 'form-control align-center'])
-              }}
             </div>
             <div class="col-sm-6">
               Date Collected
