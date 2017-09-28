@@ -14,101 +14,64 @@
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.min.css")!!}
   {!!Html::style("plugins/waitMe/waitMe.min.css")!!}
-  {!!Html::style("lib/jquery-ui-1.12.1/jquery-ui.min.css")!!}
+  {!!Html::style("plugins/jquery-ui-1.12.1/jquery-ui.min.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
   {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}
   {!!Html::style("plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css")!!}
-  
+  {!!Html::style("css/tenant/custom.css")!!}
   <!--!Html::style("plugins/materialize-css/css/style.min.css")!!}
 -->
   @yield('styles')
 </head>
 <body>
-  <nav class="navbar is-transparent">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="http://bulma.io">
-      <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-    </a>
-
-    <a class="navbar-item is-hidden-desktop" href="https://github.com/jgthms/bulma" target="_blank">
-      <span class="icon" style="color: #333;">
-        <i class="fa fa-lg fa-github"></i>
-      </span>
-    </a>
-
-    <a class="navbar-item is-hidden-desktop" href="https://twitter.com/jgthms" target="_blank">
-      <span class="icon" style="color: #55acee;">
-        <i class="fa fa-lg fa-twitter"></i>
-      </span>
-    </a>
-
-    <div class="navbar-burger burger" data-target="navMenuTransparentExample">
-      <span></span>
-      <span></span>
-      <span></span>
+<header id="navigation"> 
+    <div class="navbar navbar-inverse navbar-fixed-top" role="banner"> 
+      <div class="container-fluid"> 
+        <div class="navbar-header"> 
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
+            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
+          </button> 
+          <a class="navbar-brand" href="index.html"><h1><img src="images/logo.png" alt=""></h1></a> 
+        </div> 
+        <div class="collapse navbar-collapse"> 
+          <ul class="nav navbar-nav navbar-right"> 
+            <li class="scroll active"><a href="{{route('tenant.home')}}">Home</a></li> 
+            <li class="scroll"><a href="#about-us">Profiles</a></li> 
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transactions <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{route('offerSheetApproval.index')}}">Offer Sheet Approval</a></li>
+                <li><a href="{{route('registrationForfeit.index')}}">Registration Forfeit</a></li>
+                <li><a href="{{route('contract.index')}}">View Unaccepted Contracts</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{route('tenant.contractView')}}">Manage Ongoing Contracts</a></li>
+                <li><a href="{{route('tenant.requestUnit')}}">Request New Units</a></li>
+                <li><a href="{{route('tenant.test')}}">Merge units</a></li>
+                <li><a href="{{route('tenant.terminateContract')}}">Terminate Contract</a></li>
+              </ul>
+            </li>
+            <li class="scroll"><a href="#services">Documents</a></li> 
+            <li class="scroll"><a href="#our-team">Statement of Account</a></li> 
+            @auth
+            <li class="scroll"><a href="#clients">Notifications</a></li>
+            @else
+            <li class="scroll"><a href="#clients">Login</a></li>
+            @endauth
+            
+          </ul> 
+        </div> 
+      </div> 
     </div>
-  </div>
-
-  <div id="navMenuTransparentExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" href="{{route('tenant.home')}}">Home</a>
-      <a class="navbar-item" href="{{route('tenant.home')}}">Profiles</a>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link  is-active ">
-          Transactions
-        </a>
-        <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="{{route('tenant.home')}}">Home</a>
-          <a class = "navbar-item" href="{{route('offerSheetApproval.index')}}">Offer Sheet Approval</a>
-          <a class = "navbar-item" href="{{route('registrationForfeit.index')}}">Registration Forfeit</a>
-          <a class = "navbar-item" href="{{route('contract.index')}}">View Unaccepted Contracts</a>
-          <hr class="navbar-divider">
-          <a class = "navbar-item" href="{{route('tenant.contractView')}}">Manage Ongoing Contracts</a>
-          <a class = "navbar-item" href="{{route('tenant.requestUnit')}}">Request New Units</a>
-          <a class = "navbar-item" href="{{route('tenant.test')}}">Merge units</a>
-          <a class = "navbar-item" href="{{route('tenant.terminateContract')}}">Terminate Contract</a>          
-          <hr class="navbar-divider">
-        </div>
-      </div>
-    <a class = "navbar-item" href="#services">Documents</a> 
-    <a class = "navbar-item" href="#our-team">Statement of Account</a> 
-    <a class = "navbar-item" href="#clients">Notifications</a>
-    </div>
-
-    <div class="navbar-end">
-      <a class="navbar-item is-hidden-desktop-only" href="https://github.com/jgthms/bulma" target="_blank">
-        <span class="icon" style="color: #333;">
-          <i class="fa fa-lg fa-github"></i>
-        </span>
-      </a>
-      <a class="navbar-item is-hidden-desktop-only" href="https://twitter.com/jgthms" target="_blank">
-        <span class="icon" style="color: #55acee;">
-          <i class="fa fa-lg fa-twitter"></i>
-        </span>
-      </a>
-      <div class="navbar-item">
-        <div class="field is-grouped">
-          <p class="control">
-            <a class="button is-primary" href="https://github.com/jgthms/bulma/archive/0.5.3.zip">
-              <span class="icon">
-                <i class="fa fa-download"></i>
-              </span>
-              <span>Download</span>
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
-
-
-@yield('content')
+  </header>
+  <br><br><br><br>
+<div id = "app">
+  @yield('content')
+</div>
   <script src="{{ asset('js/app.js') }}"></script>
   {!!Html::script("plugins/DataTables/datatables.min.js")!!}
   {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
-  {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
+  {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
   {!!Html::script("js/pages/forms/form-wizard.js")!!}
   {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
   {!!Html::script('js/pages/cards/basic.js')!!}

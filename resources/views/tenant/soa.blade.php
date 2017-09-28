@@ -1,4 +1,4 @@
-@extends('layout.tenantNav')
+@extends('layouts.tenantLayout')
 <div class="about-us">
 			<div class="row">
 				<div class="col-sm-6 col-md-8">

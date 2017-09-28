@@ -107,7 +107,7 @@ class registrationForfeitController extends Controller
       $result->unit_type=$value;
     }
 
-    return view('transaction.registrationForfeit.show')
+    return view('tenant.registrationForfeit.show')
     ->withRegistration($registration)
     ->withResults($results)
     ;

@@ -1,4 +1,4 @@
-@extends('layout.tenantNav')
+@extends('layouts.tenantLayout')
 @section('content')
 @auth
 <section class="content">

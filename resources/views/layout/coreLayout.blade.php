@@ -412,7 +412,7 @@
       </section>
       {!!Html::script("plugins/jquery/jquery.min.js")!!}
       {!!Html::script("plugins/DataTables/datatables.js")!!}
-      {!!Html::script("lib/jquery-ui-1.12.1/jquery-ui.min.js")!!}
+      {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!}
       {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
       @yield('scripts')
       {!!Html::script("js/pages/forms/form-wizard.js")!!}
