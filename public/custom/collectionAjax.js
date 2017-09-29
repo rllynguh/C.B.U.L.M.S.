@@ -33,7 +33,7 @@ $(document).ready(function()
       pdcValue=data[1].pdc_amount;
       $('#user').val(data[1].user_id);
       select='<SELECT id="mode" class="form-control" name="mode"><option value="0">Cash</option>';
-      if(data[1].pdc_id!==undefined)
+      if(data[1].pdc_id!==undefined && data[1].forPDC==true && parseFloat(balance)==data[1].amount )
       { 
         $('#pdc_id').val(data[1].pdc_id);
         select+='<option value="1">PDC</option>';
@@ -80,6 +80,13 @@ $(document).ready(function()
       e.preventDefault(); 
       var my_url = url;
       var type="POST";
+      if(parseFloat($('#txtAmount').val()) > parseFloat(balance))
+      { 
+        $('#change').val((parseFloat($('#txtAmount').val()) - parseFloat(balance)));
+        console.log($('#change').val());
+      }
+      else
+        $('#change').val('');
       var formData = $('#frmCollection').serialize();
       $.ajax({
         beforeSend: function (jqXHR, settings) {
@@ -89,31 +96,31 @@ $(document).ready(function()
         url: my_url,
         data: formData,
         success: function (data) {
-          console.log(data);
           table.draw(); 
           console.log(balance); 
           $('#modalCollection').modal('hide');
           if(parseFloat($('#txtAmount').val()) > parseFloat(balance))
           {
+            console.log(data);
+            $('#modalCollection').modal('hide');
+            $('#txtChange').text(data);
             $('#modalBalance').modal('show');
             $('#balance').val((parseFloat($('#txtAmount').val()) - parseFloat(balance)));
-            $.notify("Payment Successfully collected. Change is ₱ " + (parseFloat($('#txtAmount').val()) - parseFloat(balance)) + ".", "success",
+          }
+          else
+          { 
+            $.notify("Payment Successfully collected.", "success",
             {
               timer:1000
             });
+            $('#modalCollection').modal('hide');
           }
-          else
-           $.notify("Payment Successfully collected.", "success",
-           {
-            timer:1000
-          });
-         $('#frmCollection').trigger('reset');
-         $('#modalCollection').modal('hide');
-       },
-       error: function (data) {
-        console.log('Error:', data.responseText);
-      }
-    });
+          $('#frmCollection').trigger('reset');
+        },
+        error: function (data) {
+          console.log('Error:', data.responseText);
+        }
+      });
     }}
     );
 
@@ -137,6 +144,10 @@ $(document).ready(function()
         table.draw(); 
         $('#modalBalance').modal('hide');
         $('#frmBalance').trigger('reset');
+        $.notify("Your Change has been successfully transferred to your account.", "success",
+        {
+          timer:1000
+        });
       },
       error: function (data) {
         console.log('Error:', data.responseText);

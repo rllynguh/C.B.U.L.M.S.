@@ -134,7 +134,7 @@ class collectionController extends Controller
     //     DB::rollBack();
     //     return response::json($e);
     // }
-
+        return response::json(number_format($request->change,2));
     }
 
     /**
@@ -146,13 +146,6 @@ class collectionController extends Controller
     public function show($id)
     {
         //
-        $pdc=DB::TABLE('post_dated_checks')
-        ->JOIN('current_contracts','post_dated_checks.current_contract_id','current_contracts.id')
-        ->JOIN('billing_headers','current_contracts.id','billing_headers.current_contract_id')
-        ->WHERE('billing_headers.id',$id)
-        ->WHERE('is_consumed',0)
-        ->SELECT('post_dated_checks.code','post_dated_checks.id','amount')
-        ->FIRST();
 
         $bill_items=DB::table('billing_headers')
         ->join('billing_details','billing_headers.id','billing_details.billing_header_id')
@@ -161,10 +154,24 @@ class collectionController extends Controller
         ->where('billing_headers.id',$id)
         ->get()
         ;
+        //validate if bill item has rent and cusa in it to be sure that it can be paid with pdc
+        $forPDC=false;
         foreach ($bill_items as &$bill_item) {
             # code...
+            if($bill_item->description=='Rent')
+                $forPDC=true;
             $bill_item->price=number_format($bill_item->price,2);
         }
+
+// query to check if the user still has pdc
+        $pdc=DB::TABLE('post_dated_checks')
+        ->JOIN('current_contracts','post_dated_checks.current_contract_id','current_contracts.id')
+        ->JOIN('billing_headers','current_contracts.id','billing_headers.current_contract_id')
+        ->WHERE('billing_headers.id',$id)
+        ->WHERE('is_consumed',0)
+        ->SELECT('post_dated_checks.code','post_dated_checks.id','amount')
+        ->FIRST();
+
         $summary=db::table('billing_headers')
         ->join('current_contracts','billing_headers.current_contract_id','current_contracts.id')
         ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
@@ -174,8 +181,9 @@ class collectionController extends Controller
         ->select(DB::raw('cost,cost - coalesce(sum(payment),0) as balance,tenants.user_id'))
         ->where('billing_headers.id',$id)
         ->first();
-        $summary->cost=number_format($summary->cost,2);
-        if(!is_null($pdc))
+        $summary->cost=number_format($summary->cost,2); //for formating to peso sign
+        $summary->forPDC=$forPDC;
+        if(!is_null($pdc)) //check if the user still has pdc
         {
             $summary->pdc_amount=$pdc->amount;
             $summary->pdc_id=$pdc->id;
@@ -207,10 +215,20 @@ class collectionController extends Controller
     {
         //
         //for handling balances
+        $current_balance=DB::TABLE('user_balances')
+        ->SELECT('balance')
+        ->WHERE('user_id',$request->user)
+        ->ORDERBY('id','desc')
+        ->FIRST();
+        if(!IS_NULL($current_balance))
+            $prev_balance=$current_balance->balance;
+        else
+            $prev_balance=0;
+        $final_balance=$prev_balance+$request->balance;
         $balance=new UserBalance;
         $balance->user_id=$request->user;
         $balance->date_as_of=Carbon::now(Config::get('app.timezone'));
-        $balance->balance=$request->balance;
+        $balance->balance=$final_balance;
         $balance->save();
 
     }

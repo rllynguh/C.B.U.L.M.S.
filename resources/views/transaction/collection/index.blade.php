@@ -7,37 +7,38 @@
 </ol>
 @endsection
 @section('content')
-<!--Delete MODAL-->
+<!--CHANGE MODAL-->
 <div class="modal fade" id="modalBalance" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content modal-col-green">
       <div class="modal-header">
-        <h2 class="modal-title align-center p-b-15 p-l-35">DELETE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h2>
+        <h2 class="modal-title align-center p-b-15 p-l-35">COLLECTION<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h2>
       </div>
       <div class="modal-body align-center">
+        Your Change:₱  <span id='txtChange'></span>
         <p>What would you like to do with your change?</p>
       </div>
       <div class="modal-footer align-center">
-        <button id="btnCancel" class="btn btn-lg bg-orange waves-effect waves-white col-md-12 col-sm-12"><i class="mdi-action-delete"></i> KEEP IT</button>
-        {{ Form::open([
-          'id' => 'frmBalance', 'class' => 'form-horizontal'
-          ])
-        }}
-        {{ Form::hidden('balance',null,[
-          'id' => 'balance'
-          ])
-        }}
-        {{ Form::hidden('user',null,[
-          'id' => 'user'
-          ])
-        }}
-        <button id="btnBalance" type="submit" class="btn btn-lg bg-orange waves-effect waves-white col-md-12 col-sm-12"><i class="mdi-action-delete"></i> ADD TO YOUR ACCOUNT</button>
-        {{Form::close()}}
-      </div>
+       {{ Form::open([
+        'id' => 'frmBalance', 'class' => 'form-horizontal'
+        ])
+      }}
+      {{ Form::hidden('balance',null,[
+        'id' => 'balance'
+        ])
+      }}
+      {{ Form::hidden('user',null,[
+        'id' => 'user'
+        ])
+      }}
+      <a class="btn btn-lg bg-orange waves-effect waves-white" data-dismiss="modal">KEEP IT</a>
+      <button id="btnBalance" type="submit" class="btn btn-lg bg-light-green waves-effect waves-white"> ADD TO YOUR ACCOUNT</button>
+      {{Form::close()}}
     </div>
   </div>
 </div>
-<!--Delete MODAL-->
+</div>
+<!--CHANGE MODAL-->
 <div class="body">
   {{-- modal collection starts here --}}
   <div class="modal fade" id="modalCollection" tabindex="-1" role="dialog">
@@ -45,6 +46,10 @@
       <div class="modal-content modal-col-green">
         {{ Form::open([
           'id' => 'frmCollection', 'class' => 'form-horizontal'
+          ])
+        }}
+        {{ Form::hidden('change',null,[
+          'id' => 'change'
           ])
         }}
         {{ Form::hidden('myId',null,[

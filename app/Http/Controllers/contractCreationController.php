@@ -150,8 +150,7 @@ class contractCreationController extends Controller
           $sc= new smartCounter();
           $code=$sc->increment($code);
 
-
-          $cost=$request->net_rent + $request->advance_rent + $request->cusa + $request->security_deposit + $request->vetting_fee + $request->fit_out;
+          $cost=$request->advance_rent  + $request->security_deposit + $request->vetting_fee + $request->fit_out;
           $billing_header=new BillingHeader();
           $billing_header->user_id=Auth::user()->id;
           $billing_header->code=$code;
@@ -159,18 +158,6 @@ class contractCreationController extends Controller
           $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
           $billing_header->cost=$cost;
           $billing_header->save();
-
-          $rent=DB::table('billing_items')
-          ->select('id')
-          ->where('description','Rent')
-          ->first()->id
-          ;
-          $billing_detail=new BillingDetail();
-          $billing_detail->billing_header_id=$billing_header->id;
-          $billing_detail->billing_item_id=$rent;
-          $billing_detail->description="The net rent value.";
-          $billing_detail->price=$request->net_rent;
-          $billing_detail->save();
 
           $advance_rent=DB::table('billing_items')
           ->select('id')
@@ -184,17 +171,6 @@ class contractCreationController extends Controller
           $billing_detail->price=$request->advance_rent;
           $billing_detail->save();
 
-          $cusa=DB::table('billing_items')
-          ->select('id')
-          ->where('description','CUSA Fee')
-          ->first()->id
-          ;
-          $billing_detail=new BillingDetail();
-          $billing_detail->billing_header_id=$billing_header->id;
-          $billing_detail->billing_item_id=$cusa;
-          $billing_detail->description="$utilities->cusa_rate /sqm, plus VAT less 2% withholding tax, per month";
-          $billing_detail->price=$request->cusa;
-          $billing_detail->save();
 
           $security_deposit=DB::table('billing_items')
           ->select('id')
@@ -230,6 +206,53 @@ class contractCreationController extends Controller
           $billing_detail->billing_item_id=$fit_out;
           $billing_detail->description="Fit out Deposit. $utilities->fit_out_deposit month(s) rent";
           $billing_detail->price=$request->fit_out;
+          $billing_detail->save();
+
+
+          $latest=DB::table("billing_headers")
+          ->select("billing_headers.*")
+          ->orderBy('code',"DESC")
+          ->first();
+          $code="BILL001";
+          if(!is_null($latest))
+            $code=$latest->code;
+          $sc= new smartCounter();
+          $code=$sc->increment($code);
+
+
+          $cost=$request->net_rent + $request->cusa; //ihiwalay ung pangpdc sa cash. ung pdc, rent at cusa lang
+          $billing_header=new BillingHeader();
+          $billing_header->user_id=Auth::user()->id;
+          $billing_header->code=$code;
+          $billing_header->current_contract_id=$current_contract->id;
+          $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
+          $billing_header->cost=$cost;
+          $billing_header->save();
+
+
+          $rent=DB::table('billing_items')
+          ->select('id')
+          ->where('description','Rent')
+          ->first()->id
+          ;
+          $billing_detail=new BillingDetail();
+          $billing_detail->billing_header_id=$billing_header->id;
+          $billing_detail->billing_item_id=$rent;
+          $billing_detail->description="The net rent value.";
+          $billing_detail->price=$request->net_rent;
+          $billing_detail->save();
+
+
+          $cusa=DB::table('billing_items')
+          ->select('id')
+          ->where('description','CUSA Fee')
+          ->first()->id
+          ;
+          $billing_detail=new BillingDetail();
+          $billing_detail->billing_header_id=$billing_header->id;
+          $billing_detail->billing_item_id=$cusa;
+          $billing_detail->description="$utilities->cusa_rate /sqm, plus VAT less 2% withholding tax, per month";
+          $billing_detail->price=$request->cusa;
           $billing_detail->save();
 
 
