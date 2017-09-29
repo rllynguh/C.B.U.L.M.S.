@@ -10,6 +10,11 @@ use App\RegistrationDetail;
 
 class reservationFeeCollectionController extends Controller
 {
+   public function __construct()
+   {
+    $this->middleware('admin');
+    $this->middleware('auth');
+}
     /**
      * Display a listing of the resource.
      *
@@ -84,15 +89,15 @@ class reservationFeeCollectionController extends Controller
             {
                 $regi_detail_update=RegistrationDetail::find($regi_detail->id);
                 if(($regi_detail_update->is_rejected==0) && ($regi_detail_update->is_forfeited==0))
-                 { $regi_detail_update->is_reserved=1;
-                     $regi_detail_update->save();
-                 }
-             }
-             db::commit();
-             return response::json('yas');
-         }
-         catch(\Exception $e)
-         {
+                   { $regi_detail_update->is_reserved=1;
+                       $regi_detail_update->save();
+                   }
+               }
+               db::commit();
+               return response::json('yas');
+           }
+           catch(\Exception $e)
+           {
             db::rollback();
             dd($e);
         }

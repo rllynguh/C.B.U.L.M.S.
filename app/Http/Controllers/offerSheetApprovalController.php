@@ -38,22 +38,13 @@ class offerSheetApprovalController extends Controller
       ->where('registration_headers.status','1')
       ->join('users','registration_headers.user_id','users.id')
       ->where('offer_sheet_headers.status','0')
-      ->select(DB::Raw('offer_sheet_headers.id, registration_headers.code as regi_code,offer_sheet_headers.code as offer_code,CONCAT(users.first_name," ",users.last_name) as name,offer_sheet_headers.date_issued as date, COUNT(offer_sheet_details.id) as regi_count'))
+      ->select(DB::Raw('offer_sheet_headers.id, registration_headers.code as regi_code,offer_sheet_headers.code as offer_code, COUNT(offer_sheet_details.id) as regi_count'))
       ->groupBy('registration_headers.id')
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
         return "<a href=".route('offerSheetApproval.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>
         ";
-      })
-      ->editColumn('date', function ($data) {
-       $time = strtotime($data->date);
-       $myDate = date( 'M d, Y', $time );
-       $date=$myDate;
-       return $date;
-     })
-      ->setRowId(function ($data) {
-        return $data = 'id'.$data->id;
       })
       ->rawColumns(['action'])
       ->make(true);

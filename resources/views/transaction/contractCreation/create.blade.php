@@ -228,7 +228,7 @@
 							<div>		
 								<div class="form-group">
 									<div class="form-line">
-										<h5 class="card-inside-title">Number of Units</h5>
+										<h5 class="card-inside-title">Contract Duration(Years)</h5>
 										{{ Form::number('txtDuration',null,[
 											'class' => 'form-control text-center max-digits-2',
 											'data-rule' => 'quantity',
@@ -242,19 +242,19 @@
 								</div>
 							</div>
 							<div>
-								<div class="col-sm-6">
-									Contract starting date<br>	
+								<div class="{{-- col-sm-6 --}}">
+									Contract Starting Date<br>
 									<div class="form-group">
 										<div class="form-line">
-											<input name="startDate" type="text" class="datepicker form-control" placeholder="Please choose a date...">
+											<input name="startDate" type="date" class=" form-control" placeholder="Please choose a date...">
 										</div>
 									</div>
-								</div>		
+								</div>	
 								<div class="{{-- col-sm-6 --}}">
 									Billing Date<br>
 									<div class="form-group">
 										<div class="form-line">
-											<input name="billingDate" type="text" class="datepicker form-control" placeholder="Please choose a date...">
+											<input name="billingDate" type="date" class=" form-control" placeholder="Please choose a date...">
 										</div>
 									</div>
 								</div>

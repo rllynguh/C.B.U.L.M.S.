@@ -14,8 +14,8 @@ use Auth;
 
 class moveInController extends Controller
 {
-   public function __construct()
-   {
+ public function __construct()
+ {
     $this->middleware('admin');
     $this->middleware('auth');
 }
@@ -130,16 +130,36 @@ class moveInController extends Controller
         ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
         ->join('registration_headers','contract_headers.registration_header_id','registration_headers.id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
+        ->join('users','tenants.user_id','users.id')
+        ->join('representatives','users.id','representatives.user_id')
+        ->join('representative_positions','representatives.representative_position_id','representative_positions.id')
+        ->join('addresses','representatives.address_id','addresses.id')
+        ->join('cities','addresses.city_id','cities.id')
+        ->join('provinces','cities.province_id','provinces.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
         ->where('current_contracts.id',$id)
-        ->select(DB::raw('current_contracts.id,tenants.description as tenant,business_types.description as business_type,contract_headers.code, CONCAT(year(current_contracts.end_of_contract) - year(current_contracts.start_of_contract)," year(s)") as duration'))
+        ->select('current_contracts.id','tenants.description as tenant','business_types.description as business','tenants.code',DB::raw('CONCAT(year(current_contracts.end_of_contract) - year(current_contracts.start_of_contract)) as duration'),DB::Raw('Concat(addresses.number," ",addresses.street," ",addresses.district," ",cities.description, ", ", provinces.description) as address'),'representative_positions.description as position','contract_headers.code as contract_header_code',DB::RAW('concat(first_name," ", last_name) as name'),'users.picture')
         ->first();
         $units=DB::table('units')
         ->join('contract_details','units.id','contract_details.unit_id')
+        ->join('floors','units.floor_id','floors.id')
+        ->join('buildings','floors.building_id','buildings.id')
+        ->join('building_types','buildings.building_type_id','building_types.id')
+        ->join('addresses','buildings.address_id','addresses.id')
+        ->join('cities','addresses.city_id','cities.id')
+        ->join('provinces','cities.province_id','provinces.id')
         ->where('current_contract_id',$id)
         ->whereRaw('contract_details.id not in (Select contract_detail_id from move_in_details)')
-        ->select('contract_details.id','units.code')
+        ->select('contract_details.id','units.code',DB::RAW('Concat(cities.description, ", ", provinces.description) as address'),'buildings.description as building','floors.number as floor','building_types.description as building_type','units.size as unit_size','units.type as unit_type')
         ->get();
+        foreach ($units as &$unit) {
+            # code...
+            $value='Raw';
+            if($unit->unit_type==1)
+                $value='Shell';
+            $unit->unit_type=$value;
+            $unit->unit_size=number_format($unit->unit_size,2)." sqm"; 
+        }
         return view('transaction.moveIn.show')
         ->withContract($contract)
         ->withUnits($units);

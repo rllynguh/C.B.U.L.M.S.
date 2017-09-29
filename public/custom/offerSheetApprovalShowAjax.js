@@ -22,6 +22,7 @@ $(document).ready(function()
         $('#city_province').text(data.city_province);
         $('#rate').text(data.rate);
         $('#unit_img').attr('src', dir+"/"+data.picture);
+        $('#building').text(data.building);
         $('#ordered_building_type').text(data.ordered_building_type);
         $('#offered_building_type').text(data.offered_building_type);
         $('#ordered_unit_type').text(data.ordered_unit_type);

@@ -103,340 +103,423 @@
           </a>
         </li>
         <!--MAINTENANCE-->
-        <li>
+        <li 
+        class="{{strpos(Request::path(),'maintenance') ? 'active' : ''}}">
+        <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+          <i class="mdi-action-settings"></i>
+          <span>Maintenance</span>
+        </a>
+        <ul class="ml-menu">
+          <li class="
+          {{Request::path() == 'admin/maintenance/buildingtypes' ? 'active' : ''}}
+          {{Request::path() == 'admin/maintenance/buildings' ? 'active' : ''}}
+          {{Request::path() == 'admin/maintenance/floors' ? 'active' : ''}}
+          {{Request::path() == 'admin/maintenance/units' ? 'active' : ''}}
+          ">
           <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-            <i class="mdi-action-settings"></i>
-            <span>Maintenance</span>
+            <i class="mdi-communication-business"></i>
+            <span>Building</span>
           </a>
           <ul class="ml-menu">
-            <li>
-              <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                <i class="mdi-communication-business"></i>
-                <span>Building</span>
-              </a>
-              <ul class="ml-menu">
-                <li>
-                  <a href="{{route('buildingtypes.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Building Type</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="{{route('buildings.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Buildings</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{route('floors.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Floors</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{route('units.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Units</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                <i class="mdi-maps-directions-car"></i>
-                <span>Parking</span>
-              </a>
-              <ul class="ml-menu">
-                <li>
-                  <a href="{{route('parkareas.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Parking Area</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="{{route('parkspaces.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Parking Space</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                <i class="mdi-editor-attach-money"></i>
-                <span>Rates</span>
-              </a>
-              <ul class="ml-menu">
-                <li>
-                  <a href="{{route('marketrates.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Market Rates</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="{{route('parkrates.index')}}" class="waves-yellow">
-                    <i class="mdi-hardware-keyboard-arrow-right"></i>
-                    <span>Parking Space Lease Rate</span>
-                    <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
-                      <i class="mdi-navigation-chevron-right"></i>
-                      <span>Requirement Assigning</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="{{route("banks.index")}}" class="waves-yellow">
-                  <i class="mdi-action-account-balance-wallet"></i>
-                  <span>Banks</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{route("businesstypes.index")}}" class="waves-yellow">
-                  <i class="mdi-action-wallet-travel"></i>
-                  <span>Business Type</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{route("requirements.index")}}" class="waves-yellow">
-                  <i class="mdi-file-folder-open"></i>
-                  <span>Requirements</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{route("repr-positions.index")}}" class="waves-yellow">
-                  <i class="mdi-social-person-outline"></i>
-                  <span>Representative Position</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!--END OF MAINTENANCE-->
-
-          <!--TRANSACTIONS-->
-          <li>
-            <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-              <i class="mdi-action-swap-horiz"></i>
-              <span>Transactions</span>
-            </a>
-            <ul class="ml-menu">
-
-              <li>
-                <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
-                  <i class="mdi-action-assignment-turned-in"></i>
-                  <span>Registration Approval</span>
-                </a>
-              </li>
-
-              <li>
-                <a href="{{ route('unitRequests.index')}}" class="waves-yellow">
-                  <i class="mdi-action-assignment-ind"></i>
-                  <span>Unit Requests</span>
-                </a>
-              </li>
-
-              <li>
-                <a href="{{route('offersheets.index')}}" class="waves-yellow">
-                  <i class="mdi-image-switch-camera"></i>
-                  <span>Offer Sheets</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
-                  <i class="mdi-maps-local-atm"></i>
-                  <span>Reservation Fee Collection</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                  <i class="mdi-file-folder-open"></i>
-                  <span>Requirements</span>
-                </a>
-                <ul class="ml-menu">
-                  <li>
-                    <li>
-                      <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
-                        <i class="mdi-action-thumbs-up-down"></i>
-                        <span>Requirement Assigning</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{route('requirementValidation.index')}}" class="waves-yellow">
-                        <i class="mdi-content-inbox"></i>
-                        <span>Requirement Validation</span>
-                      </a>
-                    </li>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                  <i class="mdi-action-assignment"></i>
-                  <span>Contracts</span>
-                </a>
-                <ul class="ml-menu">
-                  <li>
-                    <a href="{{route("contract-create.index")}}" class="waves-yellow">
-                      <i class="mdi-hardware-keyboard-arrow-right"></i>
-                      <span>New Contract</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/extendTable" class="waves-yellow">
-                      <i class="mdi-hardware-keyboard-arrow-right"></i>
-                      <span>Extension and Renewal</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/terminateTable" class="waves-yellow">
-                      <i class="mdi-hardware-keyboard-arrow-right"></i>
-                      <span>Contract Termination</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/addammend" class="waves-yellow">
-                      <i class="mdi-hardware-keyboard-arrow-right"></i>
-                      <span>Addendum and Ammendment</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="{{route('move-in.index')}}" class="waves-yellow">
-                  <i class="mdi-action-exit-to-app"></i>
-                  <span>Move In</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-                  <i class="mdi-action-payment"></i>
-                  <span>Billing and Collection</span>
-                </a>
-                <ul class="ml-menu">
-                  <li>
-                    <a href="/billingTable" class="waves-yellow">
-                      <i class="mdi-hardware-keyboard-arrow-right"></i>
-                      <span>Billing</span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a href="{{route('collection.index')}}" class="waves-yellow">
-                      <i class="mdi-hardware-keyboard-arrow-right"></i>
-                      <span>Collection</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <!--END OF TRANSACTIONS-->
-
-          <!--REPORTS-->
-          <li>
-            <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-              <i class="mdi-action-assessment"></i>
-              <span>Reports</span>
-            </a>
-            <ul class="ml-menu">
-              <li>
-                <a href="{{-- {{route('registrationReport.index')}} --}}">Registration</a>
-              </li>
-            </ul>
-          </li>
-          <!--END OF REPORTS-->
-
-          <!--QUERIES-->
-          <li>
-            <a href="javascript:void(0);" class="menu-toggle">
-              <i class="mdi-action-find-in-page"></i>
-              <span>Queries</span>
-            </a>
-            <ul class="ml-menu">
-              <li>
-                <a href="{{route('registrationQuery.index')}}" id="registrationQuery" class="waves-yellow">
-                  <i class="mdi-hardware-keyboard-arrow-right"></i>
-                  <span>Registration</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{route('offerSheetQuery.index')}}" id="registrationQuery" class="waves-yellow">
-                  <i class="mdi-hardware-keyboard-arrow-right"></i>
-                  <span>Offer Sheet</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <!--END OF QUERIES-->
-
-          <!--Utilities-->
-          <li>
-            <a href="{!! route('utilities.index') !!}" >
-              <i class="mdi-image-tune"></i>
-              <span>Utilities</span>
-            </a>
-          </li>
-          <!--END OF UTILITIES-->
-          <li>
-            <a href="{!! route('users.index') !!}" >
-              <i class="mdi-image-tune"></i>
-              <span>User Accounts</span>
+            <li class="{{Request::path() == 'admin/maintenance/buildingtypes' ? 'active' : ''}}
+            ">
+            <a href="{{route('buildingtypes.index')}}" class="waves-yellow">
+              <span>Building Type</span>
             </a>
           </li>
 
-          <!-- #Menu -->
-        </aside>
+          <li class="{{Request::path() == 'admin/maintenance/buildings' ? 'active' : ''}}">
+            <a href="{{route('buildings.index')}}" class="waves-yellow">
+              <span>Buildings</span>
+            </a>
+          </li>
+          <li class="{{Request::path() == 'admin/maintenance/floors' ? 'active' : ''}}"> 
+            <a href="{{route('floors.index')}}" class="waves-yellow">
+              <span>Floors</span>
+            </a>
+          </li>
+          <li class="{{Request::path() == 'admin/maintenance/units' ? 'active' : ''}}">
+            <a href="{{route('units.index')}}" class="waves-yellow">
+              <span>Units</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="
+      {{Request::path() == 'admin/maintenance/parkareas' ? 'active' : ''}}
+      {{Request::path() == 'admin/maintenance/parkspaces' ? 'active' : ''}}
+      ">
+      <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+        <i class="mdi-maps-directions-car"></i>
+        <span>Parking</span>
+      </a>
+      <ul class="ml-menu">
+        <li class="
+        {{Request::path() == 'admin/maintenance/parkareas' ? 'active' : ''}}
+        ">
+        <a href="{{route('parkareas.index')}}" class="waves-yellow">
+          <span>Parking Area</span>
+        </a>
+      </li>
 
-        <!-- #END# Left Sidebar -->
-      </section>
-      <section class="content">
-        <div class="flash-message">
-          @foreach (['red', 'green'] as $color)
-          @if(Session::has($color))
+      <li class="
+      {{Request::path() == 'admin/maintenance/parkspaces' ? 'active' : ''}}
+      ">
+      <a href="{{route('parkspaces.index')}}" class="waves-yellow">
+        <span>Parking Space</span>
+      </a>
+    </li>
+  </ul>
+</li>
+<li class="
+{{strpos(Request::path(),'rate') ? 'active' : '' ? 'active' : ''}}
+">
+<a href="javascript:void(0);" class="menu-toggle waves-yellow">
+  <i class="mdi-editor-attach-money"></i>
+  <span>Rates</span>
+</a>
+<ul class="ml-menu">
+  <li class="
+  {{Request::path() == 'admin/maintenance/marketrates' ? 'active' : ''}}
+  ">
+  <a href="{{route('marketrates.index')}}" class="waves-yellow">
+    <span>Market Rates</span>
+  </a>
+</li>
 
-          <p class="alert bg-{{ $color }}">{{ Session::get($color) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-          @endif
-          @endforeach
-        </div> <!-- end .flash-message -->
-        <div class="container-fluid">
-          <div class="body">
-            <div class="block-header">
-            </div>
+<li class="
+{{Request::path() == 'admin/maintenance/parkrates' ? 'active' : ''}}
+">
+<a href="{{route('parkrates.index')}}" class="waves-yellow">
+  <span>Parking Rates</span>
+</a>
+</li>
+</ul>
+</li>
+<li class="
+{{Request::path() == 'admin/maintenance/banks' ? 'active' : ''}}
+">
+<a href="{{route("banks.index")}}" class="waves-yellow">
+  <i class="mdi-action-account-balance-wallet"></i>
+  <span>Banks</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/maintenance/content' ? 'active' : ''}}
+">
+<a href="{{route("content.index")}}" class="waves-yellow">
+  <i class="mdi-content-content-paste"></i>
+  <span>Contract Content</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/maintenance/businesstypes' ? 'active' : ''}}
+">
+<a href="{{route("businesstypes.index")}}" class="waves-yellow">
+  <i class="mdi-action-wallet-travel"></i>
+  <span>Business Type</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/maintenance/requirements' ? 'active' : ''}}
+">
+<a href="{{route("requirements.index")}}" class="waves-yellow">
+  <i class="mdi-file-folder-open"></i>
+  <span>Requirements</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/maintenance/repr-positions' ? 'active' : ''}}
+">
+<a href="{{route("repr-positions.index")}}" class="waves-yellow">
+  <i class="mdi-social-person-outline"></i>
+  <span>Representative Position</span>
+</a>
+</li>
+</ul>
+</li>
+<!--END OF MAINTENANCE-->
 
-          </div>
-          <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="card">
-                <div class="header align-center">
-                  @yield('breadcrumbs')
-                </div>
-                @yield('content')
-              </div>
-            </div>
-          </div>
+<!--TRANSACTIONS-->
+<li class="{{strpos(Request::path(),'transaction') ? 'active' : ''}}" >
+  <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+    <i class="mdi-action-swap-horiz"></i>
+    <span>Transactions</span>
+  </a>
+  <ul class="ml-menu">
+    <li class="
+    {{Request::path() == 'admin/transaction/registration' ? 'active' : ''}}
+    ">
+    <a href="{{ route('registration.index')}}" class="waves-yellow">
+      <i class="mdi-action-assignment-ind"></i>
+      <span>Registration</span>
+    </a>
+  </li>
+  <li class="
+  {{strpos(Request::path(),'/transaction/registrationApproval') ? 'active' : ''}}
+  ">
+  <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
+    <i class="mdi-action-assignment-turned-in"></i>
+    <span>Registration Approval</span>
+  </a>
+</li>
+     
+
+<li class="
+{{strpos(Request::path(),'transaction/unitRequests') ? 'active' : ''}}
+">
+<a href="{{route('unitRequests.index')}}" class="waves-yellow">
+  <i class="mdi-action-assignment-ind"></i>
+  <span>Unit Requests</span>
+</a>
+</li>
+
+<li class="
+{{strpos(Request::path(),'transaction/offersheets') ? 'active' : ''}}
+">
+<a href="{{route('offersheets.index')}}" class="waves-yellow">
+  <i class="mdi-image-switch-camera"></i>
+  <span>Offer Sheets</span>
+</a>
+</li>
+<li class="
+{{strpos(Request::path(),'transaction/registrationForfeit') ? 'active' : ''}}
+
+">
+<a href="{{route('registrationForfeit.index')}}" class=" waves-yellow">
+  <i class="mdi-action-delete"></i>
+  <span>Registration Forfeit</span>
+</a>
+</li>
+<li class="
+{{strpos(Request::path(),'transaction/offerSheetApproval') ? 'active' : ''}}
+">
+<a href="{{route('offerSheetApproval.index')}}" class=" waves-yellow">
+  <i class="mdi-action-thumbs-up-down"></i>
+  <span>Offer Sheets Approval</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/transaction/reservationFeeCollection' ? 'active' : ''}}
+">
+<a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
+  <i class="mdi-maps-local-atm"></i>
+  <span>Reservation Fee Collection</span>
+</a>
+</li>
+<li class="
+{{strpos(Request::path(),'admin/transaction/requirementAssigning') ? 'active' : ''}}
+{{strpos(Request::path(),'admin/transaction/requirementValidation') ? 'active' : ''}}
+">
+<a href="javascript:void(0);" class="menu-toggle waves-yellow">
+  <i class="mdi-file-folder-open"></i>
+  <span>Requirements</span>
+</a>
+<ul class="ml-menu">
+  <li class="
+  {{Request::path() == 'admin/transaction/requirementAssigning' ? 'active' : ''}}
+
+  ">
+  <a href="{{route('requirementAssigning.index')}}" class=" waves-yellow">
+    <i class="mdi-action-thumbs-up-down"></i>
+    <span>Requirement Assigning</span>
+  </a>
+</li>
+<li class="
+{{Request::path() == 'admin/transaction/requirementValidation' ? 'active' : ''}}
+">
+<a href="{{route('requirementValidation.index')}}" class="waves-yellow">
+  <i class="mdi-content-inbox"></i>
+  <span>Requirement Validation</span>
+</a>
+</li>
+</ul>
+</li>
+<li class="
+{{Request::path() == 'admin/transaction/contract-create' ? 'active' : ''}}
+{{strpos(Request::path(),'transaction/contract') ? 'active' : ''}}
+">
+<a href="javascript:void(0);" class="menu-toggle waves-yellow">
+  <i class="mdi-action-assignment"></i>
+  <span>Contracts</span>
+</a>
+<ul class="ml-menu">
+  <li class="
+  {{Request::path() == 'admin/transaction/contract-create' ? 'active' : ''}}
+  ">
+  <a href="{{route("contract-create.index")}}" class="waves-yellow">
+    <span>New Contract</span>
+  </a>
+</li>
+
+<li class="
+{{strpos(Request::path(),'transaction/contract') ? 'active' : ''}}
+">
+<a href="{{route('contract.index')}}" class="waves-yellow">
+  <span>View Contract</span>
+</a>
+</li>
+
+<li>
+  <a href="/extendTable" class="waves-yellow">
+    <span>Extension and Renewal</span>
+  </a>
+</li>
+
+<li>
+  <a href="/terminateTable" class="waves-yellow">
+    <span>Contract Termination</span>
+  </a>
+</li>
+<li>
+  <a href="/addammend" class="waves-yellow">
+    <span>Addendum and Ammendment</span>
+  </a>
+</li>
+</ul>
+</li>
+<li class="
+{{Request::path() == 'admin/transaction/pdcCollection' ? 'active' : ''}}
+">
+<a href="{{route('pdcCollection.index')}}" class="waves-yellow">
+  <i class="mdi-maps-local-atm"></i>
+  <span>PDC Collection</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/transaction/move-in' ? 'active' : ''}}
+
+">
+<a href="{{route('move-in.index')}}" class="waves-yellow">
+  <i class="mdi-action-exit-to-app"></i>
+  <span>Move In</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/transaction/collection' ? 'active' : ''}}
+">
+<a href="javascript:void(0);" class="menu-toggle waves-yellow">
+  <i class="mdi-action-payment"></i>
+  <span>Billing and Collection</span>
+</a>
+<ul class="ml-menu">
+  <li>
+    <a href="/billingTable" class="waves-yellow">
+      <span>Billing</span>
+    </a>
+  </li>
+
+  <li class="
+  {{Request::path() == 'admin/transaction/collection' ? 'active' : ''}}
+  ">
+  <a href="{{route('collection.index')}}" class="waves-yellow">
+    <span>Collection</span>
+  </a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<!--END OF TRANSACTIONS-->
+
+<!--REPORTS-->
+<li>
+  <a href="javascript:void(0);" class="menu-toggle waves-yellow">
+    <i class="mdi-action-assessment"></i>
+    <span>Reports</span>
+  </a>
+  <ul class="ml-menu">
+    <li>
+      <a href="{{-- {{route('registrationReport.index')}} --}}">Registration</a>
+    </li>
+  </ul>
+</li>
+<!--END OF REPORTS-->
+
+<!--QUERIES-->
+<li class="{{strpos(Request::path(),'query') ? 'active' : ''}}">
+  <a href="javascript:void(0);" class="menu-toggle">
+    <i class="mdi-action-find-in-page"></i>
+    <span>Queries</span>
+  </a>
+  <ul class="ml-menu">
+    <li class="
+    {{Request::path() == 'admin/query/registrationQuery' ? 'active' : ''}}
+    ">
+    <a href="{{route('registrationQuery.index')}}" class="waves-yellow">
+      <span>Registration</span>
+    </a>
+  </li>
+  <li class="
+  {{Request::path() == 'admin/query/offerSheetQuery' ? 'active' : ''}}
+  ">
+  <a href="{{route('offerSheetQuery.index')}}" class="waves-yellow">
+    <span>Offer Sheet</span>
+  </a>
+</li>
+</ul>
+</li>
+<!--END OF QUERIES-->
+
+<!--Utilities-->
+<li>
+  <a href="{!! route('utilities.index') !!}" >
+    <i class="mdi-image-tune"></i>
+    <span>Utilities</span>
+  </a>
+</li>
+<!--END OF UTILITIES-->
+<li>
+  <a href="{!! route('users.index') !!}" >
+    <i class="mdi-image-tune"></i>
+    <span>User Accounts</span>
+  </a>
+</li>
+
+</aside>
+
+<!-- #END# Left Sidebar -->
+</section>
+
+<section class="content">
+  <div class="flash-message">
+    @foreach (['red', 'green'] as $color)
+    @if(Session::has($color))
+    <p class="alert bg-{{ $color }}">{{ Session::get($color) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+    @endif
+    @endforeach
+  </div> <!-- end .flash-message -->
+
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="header align-center">
+          @yield('breadcrumbs')
         </div>
-      </section>
-      {!!Html::script("plugins/jquery/jquery.min.js")!!}
-      {!!Html::script("plugins/DataTables/datatables.js")!!}
-      {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!}
-      {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
-      @yield('scripts')
-      {!!Html::script("js/pages/forms/form-wizard.js")!!}
-      {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
-      {!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
-      {!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
-      {!!Html::script('plugins/jquery/parsley.min.js')!!}
-      {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
-      {!!Html::script('plugins/node-waves/waves.js')!!}
-      {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
-      {!!Html::script('js/notify/notify.min.js')!!}
-      {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
-      {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-      {!!Html::script('js/admin.js')!!}
-      {!!Html::script("plugins/momentjs/moment.js")!!}
-      {!!Html::script("plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js")!!}
+        @yield('content')
+      </div>
+    </div>
+  </div>
+</section>
+{!!Html::script("plugins/jquery/jquery.min.js")!!}
+{!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
+{!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
+@yield('scripts')
+{!!Html::script("js/pages/forms/form-wizard.js")!!}
+{!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
+{!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
+{!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
+{!!Html::script('plugins/jquery/parsley.min.js')!!}
+{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
+{!!Html::script('plugins/node-waves/waves.js')!!}
+{!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
+{!!Html::script('js/notify/notify.min.js')!!}
+{!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
+{!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+{!!Html::script('js/admin.js')!!}
+{!!Html::script("plugins/momentjs/moment.js")!!}
+{!!Html::script("plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js")!!}
 
-    </body>
-    </html>
+</body>
+
+</html>

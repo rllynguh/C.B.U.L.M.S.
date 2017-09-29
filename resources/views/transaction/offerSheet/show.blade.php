@@ -84,7 +84,7 @@
 							<input type='hidden' name='detail_id[]' value='{{$results[$x]->id}}'>
 							<input type='hidden' name='offer_id[]' id='offer{{$results[$x]->id}}' value='{{$results[$x]->unit_id}}'>
 							<div class="align-right">
-								<button id='btnChoose' type='button' class='btn bg-light-green btn-lg waves-effect  waves-float' value='{{$results[$x]->id}}'><i class='mdi-content-add'></i>Choose Unit</button>
+								<button id='btnChoose' type='button' class='btn bg-light-green btn-lg waves-effect  waves-float' value='{{$results[$x]->id}}'><i class='mdi-content-add'></i>CHOOSE UNIT</button>
 							</div>
 						</div>
 					</div>

@@ -22,7 +22,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">  
+				<div class="col-sm-6">
+					<h3>Building	</h3>
+					<center><h4 id='building'>building Herer woooo</h4></center>  
 					<h3>Address	</h3>
 					<center><h4 id='half_address'>Address Herer woooo</h4></center>
 					<center><h4 id='city_province'>Address Herer woooo</h4></center>
