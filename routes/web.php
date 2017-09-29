@@ -17,11 +17,11 @@ Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits'
 Route::get('test/parkAreas/{id}',['uses' => 'maintenanceBuildingController@getParkAreas', 'as' =>'test.getParkAreas']);
 Route::resource('test','maintenanceBuildingController');
 Route::group(['prefix' => 'tenant/'],function(){
-	Route::get('/test',['uses' => 'mergeUnitsController@index'])->name('tenant.test');
-	Route::get('/requestUnit',['uses' => 'requestUnitsController@index'])->name('tenant.requestUnit');
-	Route::post('/requestUnit2',['uses' => 'requestUnitsController@store'])->name('tenant.requestUnitStore');
-	Route::get('/TerminateContract',['uses' => 'terminateContractController@index'])->name('tenant.terminateContract');
-	Route::get('/test1',['uses' => 'mergeUnitsController@getShit'])->name('tenant.test1');
+	Route::get('/test','mergeUnitsController@index')->name('tenant.test');
+	Route::get('/requestUnit','requestUnitsController@index')->name('tenant.requestUnit');
+	Route::post('/requestUnit2','requestUnitsController@store')->name('tenant.requestUnitStore');
+	Route::get('/TerminateContract','terminateContractController@index')->name('tenant.terminateContract');
+	Route::get('/test1','mergeUnitsController@getShit')->name('tenant.test1');
 	Route::view('/','tenant.index')->name('tenant.home');
 	Route::get('/login', function () {return view('tenant.login');});
 	Route::get('/profile', function () {return view('tenant.profile');});
@@ -30,19 +30,19 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::resource("registration","registrationController");
 	
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
-	Route::get('/transaction/offerSheetApproval/get/data',  ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
-	Route::get('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
+	Route::get('/transaction/offerSheetApproval/get/data','offerSheetApprovalController@data')->name('offerSheetApproval.getData');
+	Route::get('/transaction/offerSheetApproval/get/showData/{id}','offerSheetApprovalController@showData')->name('offerSheetApproval.showData');
 
 
 	Route::resource("/transaction/registrationForfeit","registrationForfeitController");
-	Route::get('/transaction/registrationForfeit/get/data', ['uses' => 'registrationForfeitController@data', 'as' => 'registrationForfeit.getData']);
-	Route::get('/transaction/registrationForfeit/get/showData/{id}', ['uses' => 'registrationForfeitController@showData', 'as' => 'registrationForfeit.showData']);
+	Route::get('/transaction/registrationForfeit/get/data','registrationForfeitController@data')->name('registrationForfeit.getData');
+	Route::get('/transaction/registrationForfeit/get/showData/{id}', 'registrationForfeitController@showData')->name('registrationForfeit.showData');
 
 	Route::resource("/transaction/contract","contractViewController");
-	Route::get('/transaction/contract/get/data', ['uses' => 'contractViewController@data', 'as' => 'contract.getData']);
+	Route::get('/transaction/contract/get/data','contractViewController@data')->name('contract.getData');
 
-	Route::get("contract/view",['uses' => 'contractAmmendmentController@index'])->name('tenant.contractView');
-	Route::get("contract/data",['uses' => 'contractAmmendmentController@data'])->name('tenant.contractData');
+	Route::get("contract/view",'contractAmmendmentController@index')->name('tenant.contractView');
+	Route::get("contract/data",'contractAmmendmentController@data')->name('tenant.contractData');
 });
 
 

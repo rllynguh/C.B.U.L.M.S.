@@ -38,6 +38,7 @@ class requestUnitsController extends Controller
           $regi_header->date_issued=Carbon::now(Config::get('app.timezone'));
           $regi_header->tenant_remarks=$request->header_remarks;
           $regi_header->duration_preferred=$request->duration;
+          $regi_header->is_existing_tenant = '1';
           $regi_header->save();
           for($x=0;$x<count($request->builtype); $x++)
           { 

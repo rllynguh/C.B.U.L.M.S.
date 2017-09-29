@@ -10,7 +10,6 @@
   <link rel="icon" href="images/icon1.ico">
   {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
   {!!Html::style("plugins/DataTables/datatables.css")!!}
-  {!!Html::style("plugins/sweetalert/sweetalert.css")!!}
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.css")!!}
   {!!Html::style("css/style.css")!!}
@@ -233,7 +232,7 @@
 
               <li>
                 <a href="{{ route('unitRequests.index')}}" class="waves-yellow">
-                  <i class="mdi-action-assignment-turned-in"></i>
+                  <i class="mdi-action-assignment-ind"></i>
                   <span>Unit Requests</span>
                 </a>
               </li>
