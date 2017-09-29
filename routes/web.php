@@ -30,7 +30,7 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::resource("registration","registrationController");
 	
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
-	Route::get('/transaction/offerSheetApproval/get/data', ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
+	Route::get('/transaction/offerSheetApproval/get/data',  ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
 	Route::get('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
 
 
@@ -145,11 +145,15 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/registrationApproval","registrationApprovalController");
 	Route::get('/transaction/registrationApproval/get/data', ['uses' => 'registrationApprovalController@data', 'as' => 'registrationApproval.getData']);
 
+	Route::get("/transaction/unitRequests","registrationApprovalController@unitRequests")->name('unitRequests.index');
+	Route::get('/transaction/unitRequests/get/data','registrationApprovalController@data_existing_tenant')->name('unitRequests.getData');
 
 	Route::resource("/transaction/offersheets","offerSheetController");
 	Route::get('/transaction/offersheets/get/data', ['uses' => 'offerSheetController@data', 'as' => 'offerSheets.getData']);
 	Route::get('/transaction/offersheets/showOptions/{id}', ['uses' => 'offerSheetController@showOptions', 'as' => 'offerSheets.showOptions']);
 	Route::post('/transaction/offersheets/get/showData/{id}', ['uses' => 'offerSheetController@showData', 'as' => 'offerSheets.showData']);
+
+	
 
 
 	Route::resource("/transaction/requirementAssigning","requirementAssigningController");

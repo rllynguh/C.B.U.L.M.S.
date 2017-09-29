@@ -223,12 +223,21 @@
               <span>Transactions</span>
             </a>
             <ul class="ml-menu">
+
               <li>
                 <a href="{{ route('registrationApproval.index')}}" class="waves-yellow">
                   <i class="mdi-action-assignment-turned-in"></i>
                   <span>Registration Approval</span>
                 </a>
               </li>
+
+              <li>
+                <a href="{{ route('unitRequests.index')}}" class="waves-yellow">
+                  <i class="mdi-action-assignment-turned-in"></i>
+                  <span>Unit Requests</span>
+                </a>
+              </li>
+
               <li>
                 <a href="{{route('offersheets.index')}}" class="waves-yellow">
                   <i class="mdi-image-switch-camera"></i>
