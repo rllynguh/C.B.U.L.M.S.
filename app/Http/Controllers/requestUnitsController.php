@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Config;
 use App\RegistrationHeader;
 use App\RegistrationDetail;
+use App\RegistrationRequirement;
 class requestUnitsController extends Controller
 {
     public function index(){
@@ -51,14 +52,17 @@ class requestUnitsController extends Controller
             $regi_detail->tenant_remarks=$request->remarks[$x];
             $regi_detail->save();
           }
+          $businessType = DB::table('tenants')
+          ->select('business_type_id as typeid')
+          ->where('user_id',Auth::id())
+          ->first();
           $requirements=DB::table('business_type_requirements')
           ->select('requirements.id')
           ->join('requirements','business_type_requirements.requirement_id','requirements.id')
           ->where('requirements.is_active',1)
-          ->where('business_type_requirements.business_type_id',$request->busitype)
+          ->where('business_type_requirements.business_type_id',$businessType->typeid)
           ->get();
           foreach ($requirements as $requirement) {
-          # code...
             $regi_require=new RegistrationRequirement();
             $regi_require->registration_header_id=$regi_header->id;
             $regi_require->requirement_id=$requirement->id;

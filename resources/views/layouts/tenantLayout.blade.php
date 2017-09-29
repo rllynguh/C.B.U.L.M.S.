@@ -65,7 +65,7 @@
     </div>
   </header>
   <br><br><br><br>
-<div id = "app">
+<div id = "appa">
   @yield('content')
 </div>
   <script src="{{ asset('js/app.js') }}"></script>
@@ -89,7 +89,6 @@
   {!!Html::script("plugins/momentjs/moment.js")!!}
   {!!Html::script("plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js")!!}
   {!!Html::script("js/tenant/custom.js")!!}
-
 @yield('scripts')
 </body>
 </html>

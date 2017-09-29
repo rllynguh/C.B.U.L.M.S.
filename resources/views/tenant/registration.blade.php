@@ -4,7 +4,7 @@
  {!!Html::style("css/style.css")!!}
  {!!Html::style("css/parsleyStyle.css")!!}
  {!!Html::style("css/themes/all-themes.css")!!}
-
+{!!Html::style("plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css")!!}
  <div class="row clearfix">
  	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
  		<div class="card">
@@ -601,17 +601,20 @@
  			{!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
  			{!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
  			{!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
+ 			{!!Html::script("plugins/momentjs/moment.js")!!}
+ 			{!!Html::script("plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js")!!}
+ 			 {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
  			{!!Html::script('plugins/jquery/parsley.min.js')!!}
  			{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
  			{!!Html::script('plugins/node-waves/waves.js')!!}
- 			{!!Html::script("custom/tenantRegistrationAjax.js")!!}
- 			{!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
  			{!!Html::script('js/notify/notify.min.js')!!}
  			{!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
  			{!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
  			{!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
  			{!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
  			{!!Html::script('js/admin.js')!!}
+ 			{!!Html::script("custom/tenantRegistrationAjax.js")!!}
+
  			<script type="text/javascript">
  				buil_type_url="{{route("custom.getBuildingType")}}";
  				prov_url="{{route("custom.getProvince")}}";
