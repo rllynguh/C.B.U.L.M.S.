@@ -26,6 +26,7 @@ class CreateRegistrationHeadersTable extends Migration {
 1-  accepted
 2 - rejected');
 			$table->integer('is_forfeited')->default(0)->comment('if customer forfeits his transaction');
+			$table->string('pdf', 60)->nullable();
 		});
 	}
 
