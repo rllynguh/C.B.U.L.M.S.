@@ -20,71 +20,33 @@ $(document).ready(function()
   $(this).on('click', '.btnChoose',function(e)
   { 
     myId=$(this).val();
-    if($(this).val()=='header')
-    {
-      $("#detail_remarks").val($("#header_remarks").val());
-      info="Client's Remarks: " + header_remarks;
-      $('#regi_info').append(info);
-    }
-    else
-    {  
-      $("#detail_remarks").val($("#remarks"+myId).val());
-      $.get(mainUrl + '/' + $(this).val() + '/edit', function (data) 
-      {
-        console.log(data);
-        if(data.unit_type==0)
-          type='Raw';
-        else
-          type='Shell';
-        if(data.detail_remarks==null)
-          remarks="";
-        else
-          remarks=data.detail_remarks;
-        info="Registration Detail: " + data.description + "<br>" +
-        "Size ranging from: " + data.size_range + "<br>" +
-        "Unit Type: " + type + "<br>" +
-        "Floor: " + data.floor + "<br>" +
-        "Client's Remarks: " + remarks; + "<br>"
-        ;
-        $('#regi_info').append(info);
-      }); 
-    }
-    setTimeout(function(){
-      $('#modalChoose').modal('show');
-    }, 1000);
+    $("#detail_remarks").val($("#remarks"+myId).val());
+    $('#modalChoose').modal('show');
   });
 
 
   $(this).on('click', '#btnAccept',function(e)
   { 
-    if(myId=="header")
-    {
-      $("#header_remarks").val($("#detail_remarks").val());
-      $("#header_is_active").val('1');
-    }
-    else
-    { 
-      $("#remarks"+myId).val($("#detail_remarks").val());
-      $("#regi"+myId).val('0');
-    }
+    $("#remarks"+myId).val($("#detail_remarks").val());
+    $("#regi"+myId).val('0');
+    $('#status'+myId).removeClass('bg-orange');
+    $('#status'+myId).addClass('bg-light-green');
+    $('#lblStatus'+myId).empty();
+    $('#lblStatus'+myId).append('Accepted');
     $('#modalChoose').modal('hide');
   });
 
 
   $(this).on('click', '#btnReject',function(e)
   { 
-   if(myId=="header")
-   {
-    $("#header_remarks").val($("#detail_remarks").val());
-    $("#header_is_active").val('2');
-  }
-  else
-  { 
     $("#remarks"+myId).val($("#detail_remarks").val())
     $("#regi"+myId).val('1');
-  }
-  $('#modalChoose').modal('hide');
-});
+    $('#status'+myId).removeClass('bg-light-green');
+    $('#status'+myId).addClass('bg-orange');
+    $('#lblStatus'+myId).empty();
+    $('#lblStatus'+myId).append('Rejected');
+    $('#modalChoose').modal('hide');
+  });
 
 
   $(document).on('hidden.bs.modal','#modalChoose', function () 

@@ -126,50 +126,50 @@ class registrationApprovalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-      public function showData($id)
+
+      public function show($id)
       {
-       $result=DB::table('registration_details')
-       ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
-       ->join('building_types','building_types.id','registration_details.building_type_id')
-       ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.*,building_types.description, registration_details.id as detail_id'))
-       ->where('registration_headers.id','=',$id)
-       ->where('registration_headers.status','0')
-       ->where('registration_headers.is_forfeited','0')
-       ->where('registration_details.is_forfeited','=',0)
-       ->get();
-       return Datatables::of($result)
-       ->addColumn('action', function ($data) {
-        return " <button type='button' id='btnChoose' class='btn bg-blue btn-circle waves-effect waves-circle waves-float btnChoose' value='$data->detail_id'><i class='mdi-action-visibility'></i></button>
-        <input type='hidden' value='$data->detail_id' name='regi_id[]'>
-        <input type='hidden' name='regi_is_active[]' id='regi$data->detail_id'value='0'><input id='remarks$data->detail_id' type='hidden' name='detail_remarks[]'>";
-      })
-       ->addColumn('unit_type', function ($data) {
-        $value='Raw';
-        if($data->unit_type==1)
-          $value='Shell';
-        return $value;
-      })
-       ->setRowId(function ($data) {
-        return $data = 'id'.$data->id;
-      }) 
-       ->rawColumns(['action'])
-       ->make(true)
-       ;
-     }
-     public function show($id)
-     {
         //
-      $tenant=DB::table('registration_headers')
-      ->join('tenants','registration_headers.tenant_id','tenants.id')
-      ->join('users','users.id','tenants.user_id')
-      ->select(DB::Raw('registration_headers.tenant_remarks,registration_headers.id,tenants.description,registration_headers.code, concat(first_name," ", last_name) as name'))
-      ->where('registration_headers.status','0')
-      ->where('registration_headers.is_forfeited','0')
-      ->where('registration_headers.id','=',$id)
-      ->first();
+        $tenant=DB::table('registration_headers')
+        ->join('tenants','registration_headers.tenant_id','tenants.id')
+        ->join('users','users.id','tenants.user_id')
+        ->join('representatives','users.id','representatives.user_id')
+        ->join('representative_positions','representatives.representative_position_id','representative_positions.id')
+        ->join('addresses','tenants.address_id','addresses.id')
+        ->join('cities','addresses.city_id','cities.id')
+        ->join('provinces','cities.province_id','provinces.id')
+        ->join('business_types','tenants.business_type_id','business_types.id')
+        ->select(DB::Raw('registration_headers.tenant_remarks,registration_headers.id,tenants.description as tenant,registration_headers.code, concat(first_name," ", last_name) as name,representative_positions.description as position,business_types.description as business,Concat(addresses.number," ",addresses.street," ",addresses.district," ",cities.description, ", ", provinces.description) as address,cell_num,picture,registration_headers.date_issued,tenant_remarks,duration_preferred,users.picture'))
+        ->where('registration_headers.status','0')
+        ->where('registration_headers.is_forfeited','0')
+        ->where('registration_headers.id','=',$id)
+        ->first();
+        $time = strtotime($tenant->date_issued);
+        $myDate = date( 'M d,Y', $time );
+        $tenant->date_issued=$myDate;
+
+        $results=DB::table('registration_details')
+        ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
+        ->join('building_types','building_types.id','registration_details.building_type_id')
+        ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.*,building_types.description, registration_details.id as detail_id'))
+        ->where('registration_headers.id','=',$id)
+        ->where('registration_headers.status','0')
+        ->where('registration_headers.is_forfeited','0')
+        ->where('registration_details.is_forfeited','=',0)
+        ->get();
+        foreach ($results as &$result) {
+         $value='Raw';
+         if($result->unit_type==1)
+          $value='Shell';
+        $result->unit_type=$value;
+      }
+
       return view('transaction.registrationApproval.show')
+      ->withResults($results)
       ->withTenant($tenant);
+      dd($myDate);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -177,20 +177,6 @@ class registrationApprovalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-      $result=DB::table('registration_details')
-      ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
-      ->join('building_types','building_types.id','registration_details.building_type_id')
-      ->select(DB::Raw('registration_headers.tenant_remarks as header_remarks,CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.floor,registration_details.unit_type,building_types.description, registration_details.id as detail_id,registration_details.tenant_remarks as detail_remarks'))
-      ->where('registration_details.id','=',$id)
-      ->where('registration_headers.status','0')
-      ->where('registration_headers.is_forfeited','0')
-      ->where('registration_details.is_forfeited','0')
-      ->first();
-      return response::json($result);
-    }
 
     /**
      * Update the specified resource in storage.

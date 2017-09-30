@@ -1,5 +1,12 @@
 $(document).ready(function()
 {
+  $.ajaxSetup(
+  {
+    headers: 
+    {
+      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+    }
+  });
   //for house keeping
   getBuilding();
 
@@ -89,13 +96,6 @@ $(document).ready(function()
     {
       myId=$("#myId").val();
       my_url=url;
-      $.ajaxSetup(
-      {
-        headers: 
-        {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      });
       e.preventDefault(); 
       var formData = $("#myForm").serialize();
     type = "PUT"; //for updating existing resource
@@ -136,13 +136,6 @@ $(document).ready(function()
     //for soft deleting park area
     $('#myList').on('change', '#IsActive',function(e)
     { 
-      $.ajaxSetup(
-      {
-        headers: 
-        {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      });
       e.preventDefault(); 
       var id = $(this).val();
       $.ajax(
@@ -182,12 +175,6 @@ $(document).ready(function()
       setTimeout(function(){
         $("#btnSaveParkSpace").removeAttr('disabled');
       }, 1000);
-      $.ajaxSetup(
-      {
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      })
       e.preventDefault(); 
 
       var formData = $("#frmParkSpace").serialize();

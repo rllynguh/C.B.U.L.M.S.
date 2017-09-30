@@ -10,6 +10,11 @@ use App\RegistrationDetail;
 
 class reservationFeeCollectionController extends Controller
 {
+   public function __construct()
+   {
+    $this->middleware('admin');
+    $this->middleware('auth');
+}
     /**
      * Display a listing of the resource.
      *
@@ -124,7 +129,7 @@ class reservationFeeCollectionController extends Controller
         ->join('units','offer_sheet_details.unit_id','units.id')
         ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
-        ->select(DB::raw("(SUM(price * size)*$reservation->fee) as fee,$reservation->fee as month"))
+        ->select(DB::raw("SUM(price * size) as fee,$reservation->fee as month"))
         ->where('registration_headers.id',$id)
         ->where('offer_sheet_headers.status',1)
         ->where('offer_sheet_details.status',1)
@@ -135,13 +140,51 @@ class reservationFeeCollectionController extends Controller
         ->where('registration_headers.id',$id)
         ->first();
 
+        $units=DB::table('registration_details')
+        ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+        ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+        ->join('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
+        ->join('units','offer_sheet_details.unit_id','units.id')
+        ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+        ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
+        ->select(DB::raw('units.code,(price * size) as price,size'))
+        ->where('registration_headers.id',$id)
+        ->where('offer_sheet_headers.status',1)
+        ->where('offer_sheet_details.status',1)
+        ->where('registration_details.is_rejected',0)
+        ->where('registration_details.is_forfeited',0)
+        ->where('registration_headers.status',1)
+        ->where('registration_headers.is_forfeited',0)
+        ->where('registration_headers.id',$id)
+        ->get();
+        foreach ($units as &$unit) {
+            # code...
+            $unit->price="₱ ".number_format($unit->price,2);
+            $unit->size=number_format($unit->size,2);
+        }
         $total=$regi_detail->fee;
         $vat=$total*($utilities->vat_rate/100);
         $subtotal=$vat+$total;
         $ewt=$total*($utilities->ewt_rate/100);
-        $final=$subtotal-$ewt;
+        $net_rent=($subtotal-$ewt);
+        $final=$net_rent*$reservation->fee;
+        $final="₱ ".number_format( $final,2 );
+        $net_rent="₱ ".number_format( $net_rent,2 );
+        $subtotal="₱ ".number_format($subtotal,2);
+        $vat="₱ ".number_format($vat,2);
+        $ewt="₱ ".number_format($ewt,2);
+        $regi_detail->fee="₱ ".number_format($regi_detail->fee,2);
+        $utilities->vat_rate.=" %";
+        $utilities->ewt_rate.=" %";
+        return response::json(
+            [$final,$units,$regi_detail,
+            //0     //1    //2
+            $ewt,$vat,$subtotal,
+            //3   //4  //5
+            $utilities,$net_rent]
+            //6         //7
+            );
 
-        return response::json($final);
     }
 
     /**

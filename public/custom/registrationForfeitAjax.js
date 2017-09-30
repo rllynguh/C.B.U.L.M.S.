@@ -9,12 +9,12 @@ $(document).ready(function()
     ajax: dataurl,
     columns: [
     {data: 'code'},
-    {data: 'regi_count'},
     {data: 'duration_preferred'},
+    {data: 'regi_count'},
     {data: 'date_issued'},
     {data: 'tenant_remarks'},
     {data: 'action'},
     ]
-  });
+});
   
 });

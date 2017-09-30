@@ -10,8 +10,8 @@ use App\RegistrationRequirement;
 
 class requirementValidationController extends Controller
 {
- public function __construct()
- {
+   public function __construct()
+   {
     $this->middleware('admin');
     $this->middleware('auth');
 }
@@ -30,7 +30,7 @@ class requirementValidationController extends Controller
     public function data()
     {
         $result=DB::table('registration_headers')
-        ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,count(registration_requirements.status) as req_total,count(case when registration_requirements.status = 1 then 1 else null end) as fulfilled,count(Case when registration_requirements.pdf is not null then 1 else null end ) as submitted,count(Distinctrow registration_details.id) as unit_count '))
+        ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,count(registration_requirements.is_fulfilled) as req_total,count(case when registration_requirements.is_fulfilled = 1 then 1 else null end) as fulfilled,count(Distinctrow registration_details.id) as unit_count '))
         ->join('registration_requirements','registration_headers.id','registration_requirements.registration_header_id')
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
@@ -46,18 +46,12 @@ class requirementValidationController extends Controller
         ->where('offer_sheet_details.status','1')
         ->where('offer_sheet_headers.status','1')
         ->groupby('registration_headers.id')
-        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id) and count( registration_requirements.id)>count( Case when registration_requirements.status =1 then 1 else null end )')
+        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id) and count( registration_requirements.id)>count( Case when registration_requirements.is_fulfilled =1 then 1 else null end )')
         ->get()
         ;   
         return Datatables::of($result)
         ->addColumn('action', function ($data) {
-            return '<button id="btnShowPendingRequirements" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.route('requirementValidation.showPendingRequirements',$data->id).'"><i class="mdi-content-add"></i></button>';
-        })
-        ->editColumn('submitted', function ($data) {
-            return $data->submitted/$data->unit_count;
-        })
-        ->editColumn('submitted', function ($data) {
-            return $data->submitted/$data->unit_count;
+            return '<button id="btnShowPendingRequirements" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button>';
         })
         ->addColumn('progress', function ($data) {
             $fulfilled=($data->fulfilled/$data->unit_count);
@@ -96,21 +90,7 @@ public function create()
 public function store(Request $request)
 {
         //
-    db::begintransaction();
-    try
-    {
-        $registration_requirement=RegistrationRequirement::find($request->myId);
-        $registration_requirement->status=$request->decision;
-        $registration_requirement->admin_remarks=$request->modal_remarks;
-        $registration_requirement->save();
-        db::commit();
-        $request->session()->flash('green', 'Requirement Validated.');
-    }
-    catch(\Exception $e)
-    {
-        db::rollback();
-        dd($e);
-    }
+
 }
 
 /**
@@ -122,21 +102,7 @@ public function store(Request $request)
 public function show($id)
 {
         //
-    $registration_requirement=DB::table('registration_requirements')
-    ->join('requirements','registration_requirements.requirement_id','requirements.id')
-    ->join('registration_headers','registration_requirements.registration_header_id','registration_headers.id')
-    ->join('tenants','registration_headers.tenant_id','tenants.id')
-    ->where('requirements.is_active',1)
-    ->where('registration_requirements.id',$id)
-    ->select(DB::Raw('pdf,requirements.description as requirement,tenants.description as tenant,registration_headers.code'))
-    ->first()
-    ;
-    $pdf="docs/$registration_requirement->pdf";
-    return view('transaction.requirementValidation.show')
-    ->withPdf($pdf)
-    ->withId($id)
-    ->withRequirement($registration_requirement)
-    ;
+
 }
 
 /**
@@ -148,6 +114,14 @@ public function show($id)
 public function edit($id)
 {
         //
+   $requirements=DB::table('requirements')
+   ->join('registration_requirements','requirements.id','registration_requirements.requirement_id')
+   ->where('requirements.is_active',1)
+   ->select('registration_requirements.id','requirements.description','is_fulfilled')
+   ->where('registration_requirements.registration_header_id',$id)
+   ->get();
+
+   return response::json($requirements);
 }
 
 /**
@@ -160,7 +134,39 @@ public function edit($id)
 public function update(Request $request, $id)
 {
         //
+    db::begintransaction();
+    try
+    {
+        $requirements=DB::table('registration_requirements')
+        ->where('registration_header_id',$id)
+        ->select('id')
+        ->get();
+        if(count($request->checkboxReq)==0)
+            $request->checkboxReq=[];
+        foreach ($requirements as $requirement) {
+            if(in_array($requirement->id, $request->checkboxReq))
+            {
+                $registration_requirement=RegistrationRequirement::find($requirement->id);
+                $registration_requirement->is_fulfilled=1;
+            }
+            else
+            {
+                $registration_requirement=RegistrationRequirement::find($requirement->id);
+                $registration_requirement->is_fulfilled=0;
+            }
+            $registration_requirement->save();
+        }
+        db::commit();
+        return response::json('yepp');
+        $request->session()->flash('green', 'Requirement Validated.');
+    }
+    catch(\Exception $e)
+    {
+       db::rollback();
+       return($e);
+   }
 }
+
 
 /**
      * Remove the specified resource from storage.
@@ -176,15 +182,5 @@ public function destroy($id)
 public function showPendingRequirements($id)
 {
         //
-    $requirements=DB::table('requirements')
-    ->join('registration_requirements','requirements.id','registration_requirements.requirement_id')
-    ->where('requirements.is_active',1)
-    ->select('registration_requirements.id','requirements.description')
-    ->where('registration_requirements.registration_header_id',$id)
-    ->where('registration_requirements.status','!=',1)
-    ->where('registration_requirements.pdf','!=',null)
-    ->get();
-
-    return response::json($requirements);
 }
 }

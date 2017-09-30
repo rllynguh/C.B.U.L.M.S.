@@ -27,8 +27,21 @@ $(document).ready(function()
   $(this).on('click', '#btnReserve',function(e)
   { 
    id=$(this).val();
+   content="";
    $.get(url + '/' + id, function (data) {
-    $('#divRes').append("Reservation fee: ₱ " +data);
+    content="<table class='table table-hover dataTable'><thead><tr><th class='align-center'>Unit</th><th class='align-center'>Area</th><th class='align-center'>Price</th> </tr></thead><tbody>"
+    $.each( data[1], function( index, value ){
+      content+="<tr><td>" + value.code  + "</td> <td>" + value.size  + " sqm</td> <td> " + value.price  + "</td></tr>";
+    });
+    content+="</tbody></table>";
+    content+="<table class='table table-hover dataTable'><thead><tr><th class='align-center'>Particular</th><th class='align-center'>Amount</th></tr></thead><tbody>"
+    content+="<tr><td class='align-center'>Base Rent</td> <td class='align-center'>" + data[2].fee  + "</td></tr> <tr><td class='align-center'>+" + data[6].vat_rate + " vat</td>";
+    content+="<td class='align-center'>" +  data[4] + "</td></tr>";
+    content+="<tr class='align-center'><td>Sub-total</td><td>" + data[5] + "</td></tr>";
+    content+="<tr><td class='align-center'>- " + data[6].ewt_rate + " Expanded Witholding Tax</td><td class='align-center'>" + data[3] + "</td></tr>";
+    content+="<tr><td class='align-center'>Net Rent</td><td class='align-center'>" + data[7] + "</td></tr></tbody></table>";
+    content+="Reservation fee(Net Rent * " + data[2].month + " month(s)): " +data[0];
+    $('#divRes').append(content);
     $("#myId").val(id);
     $('#modalReserve').modal('show');
   });

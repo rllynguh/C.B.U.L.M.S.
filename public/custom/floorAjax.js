@@ -278,7 +278,8 @@ $(document).ready(function()
   $(this).on('click', '#btnPrice',function()
   {
     $("#floor_id").val($(this).val());
-    $.get(url + '/' + $(this).val() + '/edit', function (data) {
+    $.get(url + '/get/price/' + $(this).val() , function (data) {
+      console.log(data);
       output="Building: " + data.description +
       "<Br>Floor: " + data.number + 
       "<br>Number of units: " + data.num_of_unit +
@@ -287,6 +288,7 @@ $(document).ready(function()
       $('#info').append(output);
       $("#modalPrice").modal("show");
     });
+
   });
 
 

@@ -94,6 +94,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('floor/get/data', ['uses' => 'floorController@data', 'as' => 'floors.getData']);
 	Route::post('maintenance/floors/storeunit',['uses' => 'floorController@storeUnit', 'as' => 'floor.storeunit']);
 	Route::post('maintenance/floors/storePrice', ['uses' => 'floorController@storePrice', 'as' => 'floors.storePrice']);
+	Route::get('maintenance/floors/get/price/{id}', ['uses' => 'floorController@getPrice', 'as' => 'floors.getPrice']);
 
 
 	Route::resource("maintenance/units","unitController");
@@ -112,7 +113,6 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/registrationApproval","registrationApprovalController");
 	Route::get('/transaction/registrationApproval/get/data', ['uses' => 'registrationApprovalController@data', 'as' => 'registrationApproval.getData']);
-	Route::get('/transaction/registrationApproval/get/showData/{id}', ['uses' => 'registrationApprovalController@showData', 'as' => 'registrationApproval.showData']);
 
 
 	Route::resource("/transaction/offersheets","offerSheetController");
@@ -132,11 +132,12 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/requirementValidation","requirementValidationController");
 	Route::get('/transaction/requirementValidation/get/data', ['uses' => 'requirementValidationController@data', 'as' => 'requirementValidation.getData']);
-	Route::get('/transaction/requirementValidation/showPendingReqirements/{id}', ['uses' => 'requirementValidationController@showPendingRequirements', 'as' => 'requirementValidation.showPendingRequirements']);	
 
 	Route::resource("/transaction/contract-create","contractCreationController");
 	Route::get('/transaction/contract-create/get/data', ['uses' => 'contractCreationController@data', 'as' => 'contract-create.getData']);
-	Route::get('/transaction/contract-create/get/createData/{id}', ['uses' => 'contractCreationController@createData', 'as' => 'contract-create.createData']);
+
+	Route::resource("/transaction/pdcCollection","pdcCollectionController");
+	Route::get('/transaction/pdcCollection/get/data', ['uses' => 'pdcCollectionController@data', 'as' => 'pdcCollection.getData']);
 
 
 	Route::resource("/transaction/reservationFeeCollection","reservationFeeCollectionController");
@@ -147,6 +148,12 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/collection","collectionController");
 	Route::get('/transaction/move-collection/get/data', ['uses' => 'collectionController@data', 'as' => 'collection.getData']);
+
+	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
+	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
+
+	Route::get('/query/offerSheet', ['uses' => 'offerSheetQueryController@index', 'as' => 'offerSheetQuery.index']);
+	Route::get('/query/offerSheet/get/data', ['uses' => 'offerSheetQueryController@data', 'as' => 'offerSheetQuery.getData']);
 });
 
 
@@ -171,11 +178,6 @@ Route::group(['prefix' => 'tenant/'], function () {
 	Route::get('/transaction/registrationForfeit/get/data', ['uses' => 'registrationForfeitController@data', 'as' => 'registrationForfeit.getData']);
 	Route::get('/transaction/registrationForfeit/get/showData/{id}', ['uses' => 'registrationForfeitController@showData', 'as' => 'registrationForfeit.showData']);
 
-
-	Route::resource("/transaction/requirementSubmission","requirementSubmissionController");
-	Route::get('/transaction/requirementSubmission/get/data', ['uses' => 'requirementSubmissionController@data', 'as' => 'requirementSubmission.getData']);
-	Route::get('/transaction/requirementSubmission/showReqirements/{id}', ['uses' => 'requirementSubmissionController@showRequirements', 'as' => 'requirementSubmission.showRequirements']);
-	Route::get('/transaction/requirementSubmission/showPendingReqirements/{id}', ['uses' => 'requirementSubmissionController@showPendingRequirements', 'as' => 'requirementSubmission.showPendingRequirements']);
 
 	Route::resource("/transaction/contract","contractViewController");
 	Route::get('/transaction/contract/get/data', ['uses' => 'contractViewController@data', 'as' => 'contract.getData']);

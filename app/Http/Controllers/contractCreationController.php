@@ -43,7 +43,7 @@ class contractCreationController extends Controller
       ->where('registration_details.is_forfeited','0')
       ->where('registration_details.is_rejected','0')
       ->where('offer_sheet_details.status','1')
-      ->where('registration_requirements.status','1')
+      ->where('registration_requirements.is_fulfilled','1')
       ->whereRaw('registration_headers.id not in (Select registration_header_id from contract_headers)')
       ->groupby('registration_headers.id')
       ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id)')
@@ -150,8 +150,7 @@ class contractCreationController extends Controller
           $sc= new smartCounter();
           $code=$sc->increment($code);
 
-
-          $cost=$request->net_rent + $request->advance_rent + $request->cusa + $request->security_deposit + $request->vetting_fee + $request->fit_out;
+          $cost=$request->advance_rent  + $request->security_deposit + $request->vetting_fee + $request->fit_out;
           $billing_header=new BillingHeader();
           $billing_header->user_id=Auth::user()->id;
           $billing_header->code=$code;
@@ -159,18 +158,6 @@ class contractCreationController extends Controller
           $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
           $billing_header->cost=$cost;
           $billing_header->save();
-
-          $rent=DB::table('billing_items')
-          ->select('id')
-          ->where('description','Rent')
-          ->first()->id
-          ;
-          $billing_detail=new BillingDetail();
-          $billing_detail->billing_header_id=$billing_header->id;
-          $billing_detail->billing_item_id=$rent;
-          $billing_detail->description="The net rent value.";
-          $billing_detail->price=$request->net_rent;
-          $billing_detail->save();
 
           $advance_rent=DB::table('billing_items')
           ->select('id')
@@ -184,17 +171,6 @@ class contractCreationController extends Controller
           $billing_detail->price=$request->advance_rent;
           $billing_detail->save();
 
-          $cusa=DB::table('billing_items')
-          ->select('id')
-          ->where('description','CUSA Fee')
-          ->first()->id
-          ;
-          $billing_detail=new BillingDetail();
-          $billing_detail->billing_header_id=$billing_header->id;
-          $billing_detail->billing_item_id=$cusa;
-          $billing_detail->description="$utilities->cusa_rate /sqm, plus VAT less 2% withholding tax, per month";
-          $billing_detail->price=$request->cusa;
-          $billing_detail->save();
 
           $security_deposit=DB::table('billing_items')
           ->select('id')
@@ -233,6 +209,53 @@ class contractCreationController extends Controller
           $billing_detail->save();
 
 
+          $latest=DB::table("billing_headers")
+          ->select("billing_headers.*")
+          ->orderBy('code',"DESC")
+          ->first();
+          $code="BILL001";
+          if(!is_null($latest))
+            $code=$latest->code;
+          $sc= new smartCounter();
+          $code=$sc->increment($code);
+
+
+          $cost=$request->net_rent + $request->cusa; //ihiwalay ung pangpdc sa cash. ung pdc, rent at cusa lang
+          $billing_header=new BillingHeader();
+          $billing_header->user_id=Auth::user()->id;
+          $billing_header->code=$code;
+          $billing_header->current_contract_id=$current_contract->id;
+          $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
+          $billing_header->cost=$cost;
+          $billing_header->save();
+
+
+          $rent=DB::table('billing_items')
+          ->select('id')
+          ->where('description','Rent')
+          ->first()->id
+          ;
+          $billing_detail=new BillingDetail();
+          $billing_detail->billing_header_id=$billing_header->id;
+          $billing_detail->billing_item_id=$rent;
+          $billing_detail->description="The net rent value.";
+          $billing_detail->price=$request->net_rent;
+          $billing_detail->save();
+
+
+          $cusa=DB::table('billing_items')
+          ->select('id')
+          ->where('description','CUSA Fee')
+          ->first()->id
+          ;
+          $billing_detail=new BillingDetail();
+          $billing_detail->billing_header_id=$billing_header->id;
+          $billing_detail->billing_item_id=$cusa;
+          $billing_detail->description="$utilities->cusa_rate /sqm, plus VAT less 2% withholding tax, per month";
+          $billing_detail->price=$request->cusa;
+          $billing_detail->save();
+
+
           foreach ($request->contents as $content) {
             $contract_content=new ContractContent();
             $contract_content->contract_header_id=$contract_header->id;
@@ -250,13 +273,13 @@ class contractCreationController extends Controller
           $units=db::table('units')
           ->join('contract_details','units.id','contract_details.unit_id')
           ->where('current_contract_id',$current_contract->id)
-          ->select(DB::raw('code,CONCAT("PHP ",price * size) as price'))
+          ->select(DB::raw('code,price * size as price'))
           ->get();
 
           $billing_details=DB::table('billing_details')
           ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
           ->where('billing_headers.current_contract_id',$current_contract->id)
-          ->select(DB::RAW('description,CONCAT("PHP ",price) as price'))
+          ->select(DB::RAW('description,price'))
           ->get()
           ;
           $contents=DB::table('contents')
@@ -265,7 +288,6 @@ class contractCreationController extends Controller
           ->select('description')
           ->where('current_contracts.id',$current_contract->id)
           ->get();
-          $cost="PHP $cost";
 
           $res_fee=$utilities->reservation_fee * $request->net_rent;
           $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents','cost','request','utilities','full_name','res_fee'));
@@ -294,47 +316,6 @@ class contractCreationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function createData($id)
-     {
-
-       $tenant=DB::table('registration_headers')
-       ->where('registration_headers.id',$id)
-       ->join('tenants','registration_headers.tenant_id','tenants.id')
-       ->join('business_types','tenants.business_type_id','business_types.id')
-       ->select('registration_headers.code','tenants.description as tenant','business_types.description as business_type')
-       ->first()
-       ;
-       $units=DB::table('registration_headers')
-       ->where('registration_headers.id',$id)
-       ->where('registration_headers.status','1')
-       ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
-       ->where('registration_details.is_rejected','0')
-       ->where('registration_details.is_forfeited','0')
-       ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-       ->where('offer_sheet_details.status','1')
-       ->join('units','offer_sheet_details.unit_id','units.id')
-       ->join('floors','units.floor_id','floors.id')
-       ->join('buildings','floors.building_id','buildings.id')
-       ->join('addresses','buildings.address_id','addresses.id')
-       ->join('cities','addresses.city_id','cities.id')
-       ->leftJoin("market_rates","cities.id","market_rates.city_id")
-       ->groupBy("cities.id")
-       ->whereRaw("market_rates.date_as_of=(SELECT MAX(date_as_of) from market_rates where city_id=cities.id) or isnull(market_rates.date_as_of)")
-       ->select(DB::raw("units.id,units.code,COALESCE(market_rates.rate,0) as rate"))
-       ->orderBy("cities.description")
-       ->get();
-       return Datatables::of($units)
-       ->editColumn('rate', function ($data) {
-        return "$data->rate sqm";
-      })
-       ->setRowId(function ($data) {
-        return $data = 'id'.$data->id;
-      }) 
-       ->rawColumns(['rate'])
-       ->make(true)
-       ;
-
-     }
      public function show($id)
      {
         //
@@ -371,20 +352,27 @@ class contractCreationController extends Controller
        ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)");
        $units=$result->Select(DB::Raw("units.size,units.id,units.code,unit_prices.price as rate,unit_prices.price * units.size as price"))
        ->get();
-       $subquery=$result->Select(DB::Raw("sum(unit_prices.price * units.size) as total,sum(units.size) as area,is_reserved"))->first();
-       $contents=DB::table('contents')
-       ->where('is_active',1)
-       ->select('id','description')
-       ->get()
-       ;
-       $area=$subquery->area;
-       $total=$subquery->total;
-       $vat=$total*($utilities->vat_rate/100);
-       $subtotal=$vat+$total;
-       $ewt=$total*($utilities->ewt_rate/100);
-       $final=$subtotal-$ewt;
-       $advance_rent=$utilities->advance_rent_rate*$final;
-       if($subquery->is_reserved==1)
+       foreach ($units as &$unit) {
+            # code...
+        $unit->price="₱".number_format($unit->price,2);
+        $unit->size=number_format($unit->size,2)." sqm";
+        $unit->rate="₱".number_format($unit->rate,2);
+
+      }
+      $subquery=$result->Select(DB::Raw("sum(unit_prices.price * units.size) as total,sum(units.size) as area,is_reserved"))->first();
+      $contents=DB::table('contents')
+      ->where('is_active',1)
+      ->select('id','description')
+      ->get()
+      ;
+      $area=$subquery->area;
+      $total=$subquery->total;
+      $vat=$total*($utilities->vat_rate/100);
+      $subtotal=$vat+$total;
+      $ewt=$total*($utilities->ewt_rate/100);
+      $final=$subtotal-$ewt;
+      $advance_rent=$utilities->advance_rent_rate*$final;
+      if($subquery->is_reserved==1)
         $security_deposit=($utilities->security_deposit_rate*$total) - ($final* $utilities->reservation_fee);
       else
         $security_deposit=$utilities->security_deposit_rate*$total;

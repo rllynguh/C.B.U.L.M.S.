@@ -9,8 +9,6 @@ $(document).ready(function()
     columns: [
     {data: 'regi_code'},
     {data: 'offer_code'},
-    {data: 'name'},
-    {data: 'date'},
     {data: 'regi_count'},
     {data: 'action'}
     ]

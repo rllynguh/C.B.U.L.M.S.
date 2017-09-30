@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Config;
 use Auth;
 use PDF;
+use App\UserBalance;
+use App\PostDatedCheck;
 
 
 class collectionController extends Controller
@@ -28,32 +30,27 @@ class collectionController extends Controller
     public function index()
     {
         //
-        $banks=DB::table('banks')
-        ->where('banks.is_active',1)
-        ->select('id','description')
-        ->pluck('description','id');
 
-        return view('transaction.collection.index')
-        ->withBanks($banks);
+        return view('transaction.collection.index');
     }
     public function data()
     {
-        $bill=db::table('billing_headers')
+        $bills=db::table('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
         ->havingRaw('cost>coalesce(sum(payments.payment),0)')
         ->groupby('billing_headers.id')
         ->select(db::raw('billing_headers.code,billing_headers.id,cost,coalesce(sum(payments.payment),0) as amount_paid'))
         ->get();
 
-        return Datatables::of($bill)
+        return Datatables::of($bills)
         ->addColumn('action', function ($data) {
             return '<button id="btnCollection" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
         })
         ->editColumn('cost',function ($data) {
-            return $data = '₱ '.$data->cost;
+            return $data = '₱ '.number_format($data->cost,2);
         })
         ->editColumn('amount_paid',function ($data) {
-            return $data = '₱ '.$data->amount_paid;
+            return $data = '₱ '.number_format($data->amount_paid,2);
         })
         ->setRowId(function ($data) {
             return $data = 'id'.$data->id;
@@ -88,10 +85,11 @@ class collectionController extends Controller
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
         ->select('billing_items.description','price')
         ->get();
+
+        $full_name=Auth::user()->first_name." ".Auth::user()->last_name;
         $summary=db::table('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
-        ->select(DB::Raw('cost,(cost - COALESCE(sum(payment),0)) as balance, COALESCE(sum(payment),0) as payment, CONCAT(first_name," ",last_name) as full_name'))
-        ->join('users','payments.user_id','users.id')
+        ->select(DB::Raw('cost,(cost - COALESCE(sum(payment),0)) as balance, COALESCE(sum(payment),0) as payment'))
         ->groupby('billing_headers.id')
         ->where('billing_headers.id',$request->myId)
         ->first();
@@ -106,14 +104,23 @@ class collectionController extends Controller
         $pk=$sc->increment($pk);
         $payment=new Payment();
         $payment->billing_header_id=$request->myId;
-        $payment->bank_id=$request->bank;
+        $payment->mode=$request->mode;
         $payment->code=$pk;
         $payment->date_issued=Carbon::now(Config::get('app.timezone'));
         $payment->date_collected=$request->dateCollected;
         $payment->user_id=Auth::user()->id;
         $payment->payment=$request->txtAmount;
         $payment->save();
-        $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment'));
+
+        if(!is_null($request->pdc_id))
+        {
+            $pdc=PostDatedCheck::FINDORFAIL($request->pdc_id);
+            $pdc->is_consumed=1;
+            $pdc->payment_id=$payment->id;
+            $pdc->save();
+        }
+
+        $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment','full_name'));
         $date_issued=date_format($payment->date_issued,"Y-m-d");
         $pdfName="$payment->code($date_issued).pdf";
         $location=public_path("docs/$pdfName");
@@ -127,7 +134,7 @@ class collectionController extends Controller
     //     DB::rollBack();
     //     return response::json($e);
     // }
-
+        return response::json(number_format($request->change,2));
     }
 
     /**
@@ -139,6 +146,7 @@ class collectionController extends Controller
     public function show($id)
     {
         //
+
         $bill_items=DB::table('billing_headers')
         ->join('billing_details','billing_headers.id','billing_details.billing_header_id')
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
@@ -146,12 +154,43 @@ class collectionController extends Controller
         ->where('billing_headers.id',$id)
         ->get()
         ;
+        //validate if bill item has rent and cusa in it to be sure that it can be paid with pdc
+        $forPDC=false;
+        foreach ($bill_items as &$bill_item) {
+            # code...
+            if($bill_item->description=='Rent')
+                $forPDC=true;
+            $bill_item->price=number_format($bill_item->price,2);
+        }
+
+// query to check if the user still has pdc
+        $pdc=DB::TABLE('post_dated_checks')
+        ->JOIN('current_contracts','post_dated_checks.current_contract_id','current_contracts.id')
+        ->JOIN('billing_headers','current_contracts.id','billing_headers.current_contract_id')
+        ->WHERE('billing_headers.id',$id)
+        ->WHERE('is_consumed',0)
+        ->SELECT('post_dated_checks.code','post_dated_checks.id','amount')
+        ->FIRST();
+
         $summary=db::table('billing_headers')
+        ->join('current_contracts','billing_headers.current_contract_id','current_contracts.id')
+        ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
+        ->join('registration_headers','contract_headers.registration_header_id','registration_headers.id')
+        ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
-        ->select(DB::raw('cost,cost - coalesce(sum(payment),0) as balance'))
+        ->select(DB::raw('cost,cost - coalesce(sum(payment),0) as balance,tenants.user_id'))
         ->where('billing_headers.id',$id)
         ->first();
-        return response::json([$bill_items,$summary]);
+        $summary->cost=number_format($summary->cost,2); //for formating to peso sign
+        $summary->forPDC=$forPDC;
+        if(!is_null($pdc)) //check if the user still has pdc
+        {
+            $summary->pdc_amount=$pdc->amount;
+            $summary->pdc_id=$pdc->id;
+            $summary->pdc_code=$pdc->code;
+        }
+        $balance=number_format($summary->balance,2);
+        return response::json([$bill_items,$summary,$balance]);
     }
 
     /**
@@ -175,6 +214,23 @@ class collectionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        //for handling balances
+        $current_balance=DB::TABLE('user_balances')
+        ->SELECT('balance')
+        ->WHERE('user_id',$request->user)
+        ->ORDERBY('id','desc')
+        ->FIRST();
+        if(!IS_NULL($current_balance))
+            $prev_balance=$current_balance->balance;
+        else
+            $prev_balance=0;
+        $final_balance=$prev_balance+$request->balance;
+        $balance=new UserBalance;
+        $balance->user_id=$request->user;
+        $balance->date_as_of=Carbon::now(Config::get('app.timezone'));
+        $balance->balance=$final_balance;
+        $balance->save();
+
     }
 
     /**

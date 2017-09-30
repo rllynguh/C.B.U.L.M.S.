@@ -1,38 +1,26 @@
 @extends('layout.coreLayout')
 @section('content')
-<meta name="_token" content="{!! csrf_token() !!}" />
-<div class="container-fluid">
-  <div class="body">
-    <div class="block-header">
-    </div>
-    
-  </div>
-  <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="card">
-        <div class="header align-center">
-          <h2>
-            CONTRACTS 
-          </h2>
-        </div>
-        <div class="body">
-          <table class="table table-hover dataTable" id="myTable">
-            <thead>
-              <tr>
-                <th class="align-center">Contract</th>
-                <th class="align-center">Lessor</th>
-                <th class="align-center">Number of Units</th>
-                <th class="align-center">Date Issued</th>
-                <th class="align-center">Action</th>
-              </tr>
-            </thead>
-            <tbody id="myList">
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+@section('breadcrumbs')
+<ol class="breadcrumb breadcrumb-col-brown">
+  <li><a> Transaction</a></li>
+  <li><a> Contracts</a></li>
+  <li><a href="{{route("contract.index")}}"> View Contract</a></li>
+</ol>
+@endsection
+<div class="body">
+  <table class="table table-hover dataTable" id="myTable">
+    <thead>
+      <tr>
+        <th class="align-center">CONTRACT</th>
+        <th class="align-center">LESSOR</th>
+        <th class="align-center">NUMBER OF UNITS</th>
+        <th class="align-center">DATE ISSUED</th>
+        <th class="align-center">ACTION</th>
+      </tr>
+    </thead>
+    <tbody id="myList">
+    </tbody>
+  </table>
 </div>
 @endsection
 @section('scripts')

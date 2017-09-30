@@ -1,18 +1,24 @@
 
 $(document).ready(function()
 { 
-  xhrPool=[];
-  var table = $('#myTable').DataTable({
-    responsive: true,
-    processing: true,
-    serverSide: true,
-    ajax: dataurl,
-    columns: [
-    {data: 'description', name: 'description'},
-    {data: 'is_active', name: 'is_active', searchable: false},
-    {data: 'action', name: 'action', orderable: false, searchable: false}
-    ]
-  });
+ $.ajaxSetup(
+ {
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+  }
+})
+ xhrPool=[];
+ var table = $('#myTable').DataTable({
+  responsive: true,
+  processing: true,
+  serverSide: true,
+  ajax: dataurl,
+  columns: [
+  {data: 'description', name: 'description'},
+  {data: 'is_active', name: 'is_active', searchable: false},
+  {data: 'action', name: 'action', orderable: false, searchable: false}
+  ]
+});
 
   //show add modal
   $('#btnAddModal').on('click',function(e)
@@ -49,12 +55,6 @@ $(document).ready(function()
   {
     if($('#myForm').parsley().isValid())
     {
-      $.ajaxSetup(
-      {
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-      })
 
       e.preventDefault(); 
       var my_url = url;
