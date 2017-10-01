@@ -41,6 +41,7 @@ class mergeUnitsController extends Controller
     	->join('units','units.id','contract_details.unit_id')
     	->select('units.code as unit_code','units.type as unit_type','units.floor_id as unit_floorid')
     	->get();
+        return response()->json($result);
     	dd($result);
     }
 }

@@ -40,53 +40,36 @@
     <span class="glyphicon glyphicon-chevron-right"></span>
   </a>
 </div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
 
-<!--MODAL-->
-<div class="modal fade" id="buttonModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-          <div class="modal-content modal-col-green">
-            {{ Form::open([
-              'id' => 'myForm', 'class' => 'form-horizontal'
-              ])
-            }}
-            <div class="modal-header">
-              <h1 id='label' class="modal-title align-center p-b-15">LOGIN<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
-            </div>
-            <div class="modal-body">
-              <div class="form-group p-l-30 p-b-10">
-                <div class="col-sm-12 col-md-12">
-                  <div class="form-line">
-                    <h5 class="card-inside-title">Username</h5>
-                    {{ Form::text('username',null,[
-                      'id'=> 'username', 'required' => 'required',
-                      'class' => 'form-control'])}}
-                  </div>
-                </div>
-                </div>
-                <div class="form-group p-l-30 p-b-10">
-                <div class="col-sm-12 col-md-12">
-                  <div class="form-line">
-                    <h5 class="card-inside-title">Password</h5>
-                    {{ Form::text('password',null,[
-                      'id'=> 'password', 'required' => 'required',
-                      'class' => 'form-control'])}}
-                  </div>
-                </div>               
-              </div>
-            </div>
-            
-         
-          <div class="modal-footer">
-          
-           <button type="submit" class="btn btn-SM bg-brown waves-effect waves-white col-md-12 col-sm-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id='lblButton'> SAVE</span></button>
-
-           {{ Form::hidden(null,null,[
-            'id'=> 'myId'
-            ])
-          }}
-        
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 style="color:red;"><span class="glyphicon glyphicon-lock"></span> Login</h4>
         </div>
-        {{Form::close()}}
+        <div class="modal-body">
+          <form role="form">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" value="" checked>Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          <p>Not a member? <a href="#">Sign Up</a></p>
+          <p>Forgot <a href="#">Password?</a></p>
+        </div>
       </div>
     </div>
   </div>

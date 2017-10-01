@@ -34,7 +34,7 @@ class contractAmmendmentController extends Controller
 		->get();
 		return Datatables::of($contracts)
 		->addColumn('action', function ($data) {
-		return "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal'>View Details</button>
+		return "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#contractDetailsModal' id = 'btnShowContractDetails'>View Details</button>
 		    <button type='button' class='btn btn-primary'>Alter Contract</button>
 		";
 		})
@@ -44,4 +44,5 @@ class contractAmmendmentController extends Controller
 		->rawColumns(['action'])
 		->make(true);
 	}
+
 }

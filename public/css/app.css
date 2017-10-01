@@ -11787,3 +11787,8 @@ button.close {
   padding-right: 100px !important;
 }
 
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}
+
