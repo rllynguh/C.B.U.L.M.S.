@@ -14,6 +14,15 @@ $(document).ready(function()
         {data: 'action'},
         ]
     });
+   $.fn.editable.defaults.mode = 'inline';
+   $('#test').editable({
+    type: 'text',
+    title: 'Enter username',
+    success: function(response, newValue) {
+        userModel.set('username', newValue); //update backbone model
+    }
+});
+   //$("#tabs").tabs();
    $("#btnShowContractDetails").click(setModal());
 });
 
@@ -28,7 +37,8 @@ function setModal(){
         success: function(data) {  
          $.each(data, function(key,value) {
             list +=  "<li><a href='#tabs-" + (key+1) + "'>"+ value.unit_code + "</a></li>";
-            content+="<div id = 'tabs-"+(key+1)+"'><div><b>Unit Type:</b>"+ value.unit_type +"<br><b>Floor #</b>"+value.unit_floorNum+"<br></div></div>";
+            content+="<div id = 'tabs-"+(key+1)+"'><div><b>Unit Type:</b>"+ value.unit_type 
+            +"<br><b>Floor #</b>"+value.unit_floorNum+"<br></div></div>";
                 //console.log(value.unit_code);
                 console.log(key);
             });

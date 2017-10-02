@@ -37,6 +37,7 @@ class mergeUnitsController extends Controller
         ->where('tenants.user_id',Auth::id())
         ->join('registration_headers','registration_headers.tenant_id','tenants.id')
         ->join ('contract_headers','registration_headers.id','contract_headers.registration_header_id')
+        ->join('current_contracts','contract_headers.id','current_contracts.contract_header_id')
         ->join('contract_details','contract_headers.id','contract_details.current_contract_id')
         ->join('units','units.id','contract_details.unit_id')
         ->join('floors','units.floor_id','floors.id')

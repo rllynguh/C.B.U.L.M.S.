@@ -15,6 +15,7 @@
   {!!Html::style("plugins/animate-css/animate.min.css")!!}
   {!!Html::style("plugins/waitMe/waitMe.min.css")!!}
   {!!Html::style("plugins/jquery-ui-1.12.1/jquery-ui.min.css")!!}
+  {!!Html::style("plugins/bootstrap3-editable/bootstrap3-editable/css/bootstrap-editable.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
   {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}
@@ -88,6 +89,7 @@
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
   {!!Html::script("plugins/momentjs/moment.js")!!}
   {!!Html::script("plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js")!!}
+  {!!Html::script("plugins/bootstrap3-editable/bootstrap3-editable/js/bootstrap-editable.min.js")!!}
   {!!Html::script("js/tenant/custom.js")!!}
 @yield('scripts')
 </body>

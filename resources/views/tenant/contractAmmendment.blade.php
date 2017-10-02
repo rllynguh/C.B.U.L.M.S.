@@ -35,4 +35,7 @@
   range_url="{{route("custom.getRange")}}";
 </script>
 
+
+@endsection
+@section('styles')
 @endsection
