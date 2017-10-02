@@ -18,14 +18,25 @@ $(document).ready(function()
 });
 
 function setModal(){
+    var list = "<ul>";
+    var content = "";
+    var i = 1;
     $.ajax({
-        url: test,
+        url: urlUnits,
         type: 'GET',
         dataType: 'json',
         success: function(data) {  
          $.each(data, function(key,value) {
-                console.log(value.unit_code);
+            list +=  "<li><a href='#tabs-" + (key+1) + "'>"+ value.unit_code + "</a></li>";
+            content+="<div id = 'tabs-"+(key+1)+"'><div><b>Unit Type:</b>"+ value.unit_type +"<br><b>Floor #</b>"+value.unit_floorNum+"<br></div></div>";
+                //console.log(value.unit_code);
+                console.log(key);
             });
+         list += "</ul>";
+         $("#tabs").html(list+content);
+         $("#tabs").tabs();
+         console.log(list);
+         console.log(content);
         },
         error: function(xhr,textStatus,err)
         {

@@ -20,6 +20,7 @@
       </div> <!-- end of .card -->
     </div>
    @include('partials.tenant._contractDetailsModal')
+
 @endsection
 
 @section('scripts')
@@ -27,7 +28,7 @@
 <script type="text/javascript">
   var dataurl="{!!route('tenant.contractData')!!}" ;
   var url="{!!route('contract.index')!!}" ;
-  var test = "{!!route('tenant.test1')!!}";
+  var urlUnits = "{!!route('tenant.getUnits')!!}";
   urlbtype="{{route("custom.getBuildingType")}}";
   buil_type_url="{{route("custom.getBuildingType")}}";
   floor_url="{{route("custom.getFloor")}}";
