@@ -125,9 +125,7 @@ class pdcCollectionController extends Controller
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
         ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
         ->SELECT('price','billing_items.description')
-        ->WHERE('billing_items.description','Cusa Fee')
-        ->OrWHERE('billing_items.description','Rent')
-        ->WHERE('billing_headers.current_contract_id',$id)
+        ->WHERERAW("billing_headers.current_contract_id=$id and (billing_items.description='Cusa Fee' or billing_items.description = 'Rent')")
         ->get();
         $count=DB::TABLE('post_dated_checks')
         ->SELECT(DB::RAW('12 - (count(distinctrow post_dated_checks.id)) as pdc_count'))
@@ -147,37 +145,37 @@ class pdcCollectionController extends Controller
         return response::json([$bill_details,$result]);
     }
 
-    /**
+        /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+        public function edit($id)
+        {
         //
-    }
+        }
 
-    /**
+        /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+        public function update(Request $request, $id)
+        {
         //
-    }
+        }
 
-    /**
+        /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+        public function destroy($id)
+        {
         //
+        }
     }
-}
