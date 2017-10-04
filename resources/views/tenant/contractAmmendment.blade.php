@@ -13,7 +13,7 @@
                 <th class="align-center">Action</th>
               </tr>
             </thead>
-            <tbody id = "myList">
+            <tbody id = "body">
             </tbody>
           </table>
         </div>
