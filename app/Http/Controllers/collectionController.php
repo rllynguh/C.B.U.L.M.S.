@@ -115,7 +115,7 @@ class collectionController extends Controller
         if(!is_null($request->pdc_id))
         {
             $pdc=PostDatedCheck::FINDORFAIL($request->pdc_id);
-            $pdc->is_consumed=1;
+            $pdc->is_accepted=1;
             $pdc->payment_id=$payment->id;
             $pdc->save();
         }
@@ -168,7 +168,8 @@ class collectionController extends Controller
         ->JOIN('current_contracts','post_dated_checks.current_contract_id','current_contracts.id')
         ->JOIN('billing_headers','current_contracts.id','billing_headers.current_contract_id')
         ->WHERE('billing_headers.id',$id)
-        ->WHERE('is_consumed',0)
+        ->WHERE('is_accepted',0)
+        ->WHERE('post_dated_checks.status',1)
         ->SELECT('post_dated_checks.code','post_dated_checks.id','amount')
         ->FIRST();
 

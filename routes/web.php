@@ -138,7 +138,10 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/pdcCollection","pdcCollectionController");
 	Route::get('/transaction/pdcCollection/get/data', ['uses' => 'pdcCollectionController@data', 'as' => 'pdcCollection.getData']);
+	Route::get('/transaction/pdcCollection/updatePDC', ['uses' => 'pdcCollectionController@updatePDC', 'as' => 'pdcCollection.updatePDC']);
 
+	Route::resource("/transaction/pdcValidation","pdcValidationController");
+	Route::get('/transaction/pdcValidation/get/data', ['uses' => 'pdcValidationController@data', 'as' => 'pdcValidation.getData']);
 
 	Route::resource("/transaction/reservationFeeCollection","reservationFeeCollectionController");
 	Route::get('/transaction/reservationFeeCollection/get/data', ['uses' => 'reservationFeeCollectionController@data', 'as' => 'reservationFeeCollection.getData']);

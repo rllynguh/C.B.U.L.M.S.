@@ -138,92 +138,92 @@
 								@else
 								Unit	
 								@endif
-								Offered:</b>  <br>
-								<b>Offered by: </b>  <br>
-							</div>
-							<div class="align-right">
-								{{$results->regi_code}}   <br>
-								{{$results->regi_date}} <br>
-								{{$results->code}}	<br>
-								{{$results->offer_date}} 	 <br>
-								{{$results->unit_count}} <br>
-								{{$results->name}} <br>
-							</div>
+							Offered:</b>  <br>
+							<b>Offered by: </b>  <br>
+						</div>
+						<div class="align-right">
+							{{$results->regi_code}}   <br>
+							{{$results->regi_date}} <br>
+							{{$results->code}}	<br>
+							{{$results->offer_date}} 	 <br>
+							{{$results->unit_count}} <br>
+							{{$results->name}} <br>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-3"></div>
-
-			</fieldset>
-			<h3>Units Offered</h3>
-			<fieldset>
-				<div class="col-sm-12">
-					@foreach($units as $key=> $unit)
-					@if($key%3==0)
-					<div>
-						@endif
-						<div class="col-sm-4">
-							<div class="thumbnail">
-								<div class="caption">
-									<center><h3>{{$unit->code}}</h3></center>
-									<div class="col-sm-6 align-left">
-										<b>Building: </b><br>
-										<b>Address: </b><br><br>
-										<b>Unit type: </b><br>
-										<b>Size: </b><br>
-										<b>Floor: </b><br>
-										<b>Price: </b><br>
-										<b>Status: </b><br>
-									</div>
-									<div class="col-sm-6 align-right">
-										{{$unit->building}}<br>
-										{{$unit->address}}<br>
-										{{$unit->type}}<br>
-										{{$unit->size}}<br>
-										{{$unit->floor}}<br>
-										{{$unit->price}}<br>
-										<span id='lblStatus{{$unit->id}}'>Accepted</span><br>
-									</div>
-									<div class='align-right'>
-										<button type='button' id='status{{$unit->id}}' class='align-right btn bg-light-green btn-lg waves-effect waves-float btnChoose p-t-10' value='{{$unit->id}}'><i class='mdi-action-visibility'></i> Show Details</button>
-									</div>
-									<input type='hidden' value='{{$unit->id}}' name='offer_id[]'>
-									<input type='hidden' name='offer_is_active[]' id='offer{{$unit->id}}'value='1'><input id='remarks{{$unit->id}}' type='hidden' name='offer_remarks[]'>
-								</div>
-							</div>
-						</div>
-						@if($key%3!=0)
-					</div>
-					@endif
-					<div>
-						@endforeach
-					</div>
-					<div class="col-sm-12">
-						<div class="col-sm-1"></div>
-						<div class="col-sm-10">
-							<div class="form-group align-left">
-								<label>Remarks</label>
-								<div class="form-line">
-									<textarea name='header_remarks' rows="1" class="form-control no-resize auto-growth" style="overflow: hidden; word-wrap: break-word; height: 46px;"></textarea>
-									<input type='hidden' name='header_is_active' id='header_is_active' value="1">
-									<input type="hidden" value="{{$results->id}}" name="myId">
-
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-1"></div>
-
-					</div>
-				</fieldset>
-				{{Form::close()}}
 			</div>
-			@endsection
-			@section('scripts')
-			{!!Html::script("custom/offerSheetApprovalShowAjax.js")!!}
-			<script type="text/javascript">
-				mainUrl='{{route('offerSheetApproval.index')}}';
-				dataurl='{{route('offerSheetApproval.index')}}/get/showData/{{$results->id}}';
-				header_remarks="{{$results->tenant_remarks}}";
-				dir='{{ asset('images/units/')}}';
-			</script>
-			@endsection
+			<div class="col-sm-3"></div>
+
+		</fieldset>
+		<h3>Units Offered</h3>
+		<fieldset>
+			<div class="col-sm-12">
+				@foreach($units as $key=> $unit)
+				@if($key%3==0)
+				<div>
+					@endif
+					<div class="col-sm-4">
+						<div class="thumbnail">
+							<div class="caption">
+								<center><h3>{{$unit->code}}</h3></center>
+								<div class="col-sm-6 align-left">
+									<b>Building: </b><br>
+									<b>Address: </b><br><br>
+									<b>Unit type: </b><br>
+									<b>Size: </b><br>
+									<b>Floor: </b><br>
+									<b>Price: </b><br>
+									<b>Status: </b><br>
+								</div>
+								<div class="col-sm-6 align-right">
+									{{$unit->building}}<br>
+									{{$unit->address}}<br>
+									{{$unit->type}}<br>
+									{{$unit->size}}<br>
+									{{$unit->floor}}<br>
+									{{$unit->price}}<br>
+									<span id='lblStatus{{$unit->id}}'>Accepted</span><br>
+								</div>
+								<div class='align-right'>
+									<button type='button' id='status{{$unit->id}}' class='align-right btn bg-light-green btn-lg waves-effect waves-float btnChoose p-t-10' value='{{$unit->id}}'><i class='mdi-action-visibility'></i> SHOW DETAILS</button>
+								</div>
+								<input type='hidden' value='{{$unit->id}}' name='offer_id[]'>
+								<input type='hidden' name='offer_is_active[]' id='offer{{$unit->id}}'value='1'><input id='remarks{{$unit->id}}' type='hidden' name='offer_remarks[]'>
+							</div>
+						</div>
+					</div>
+					@if($key%3!=0)
+				</div>
+				@endif
+				<div>
+					@endforeach
+				</div>
+				<div class="col-sm-12">
+					<div class="col-sm-1"></div>
+					<div class="col-sm-10">
+						<div class="form-group align-left">
+							<label>Remarks</label>
+							<div class="form-line">
+								<textarea name='header_remarks' rows="1" class="form-control no-resize auto-growth" style="overflow: hidden; word-wrap: break-word; height: 46px;"></textarea>
+								<input type='hidden' name='header_is_active' id='header_is_active' value="1">
+								<input type="hidden" value="{{$results->id}}" name="myId">
+
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-1"></div>
+
+				</div>
+			</fieldset>
+			{{Form::close()}}
+		</div>
+		@endsection
+		@section('scripts')
+		{!!Html::script("custom/offerSheetApprovalShowAjax.js")!!}
+		<script type="text/javascript">
+			mainUrl='{{route('offerSheetApproval.index')}}';
+			dataurl='{{route('offerSheetApproval.index')}}/get/showData/{{$results->id}}';
+			header_remarks="{{$results->tenant_remarks}}";
+			dir='{{ asset('images/units/')}}';
+		</script>
+		@endsection

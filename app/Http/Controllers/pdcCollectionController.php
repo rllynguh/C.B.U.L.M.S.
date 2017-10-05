@@ -11,6 +11,7 @@ use App\PostDatedCheck;
 use Auth;
 use Config;
 use Carbon\Carbon;
+
 class pdcCollectionController extends Controller
 {
     public function __construct()
@@ -63,10 +64,10 @@ class pdcCollectionController extends Controller
             $percentage=($data->pdc_count/$total)*100;
             return "  <div class='progress'>
             <div class='progress-bar progress-bar-warning progress-bar-striped active' role='progressbar' aria-valuenow='$data->pdc_count' aria-valuemin='0' aria-valuemax='100' style='width: $percentage%;'>
-                <center>$data->pdc_count / $total</center>
+            <center>$data->pdc_count / $total</center>
             </div>
-        </div>";
-    })
+            </div>";
+        })
         ->rawColumns(['action','progress'])
         ->make(true);
     }
@@ -90,27 +91,53 @@ class pdcCollectionController extends Controller
     public function store(Request $request)
     {
         //
-        for($request->txtPDC;$request->txtPDC>0;$request->txtPDC--)
+     $count=DB::TABLE('post_dated_checks')
+     ->SELECT(DB::RAW('(count(distinctrow post_dated_checks.id)) as pdc_count'))
+     ->WHERE('current_contract_id',$request->myId)
+     ->FIRST()->pdc_count;
+     $bill_date=DB::TABLE('current_contracts')
+     ->SELECT(DB::RAW('date_of_billing'))
+     ->WHERE('id',$request->myId)
+     ->FIRST()->date_of_billing;
+     $pk="";
+     for($x=0;$x<$request->txtPDC;$x++)
+     {
+        if($x==0)
+            $pk=$request->txtCode;
+        else
         {
             $latest=DB::TABLE("post_dated_checks")
             ->SELECT('code')
             ->ORDERBY('code',"DESC")
+            ->where('current_contract_id',$request->myId)
             ->FIRST();
-            $pk="PDC001";
-            if(!is_null($latest))
-                $pk=$latest->code;
+            if($pk=="")
+                $pk='0-120-12-1';
             $sc= new smartCounter();
             $pk=$sc->increment($pk);  
-            $pdc=new PostDatedCheck();
-            $pdc->current_contract_id=$request->myId;
-            $pdc->code=$pk;
-            $pdc->bank_id=$request->bank;
-            $pdc->user_id=Auth::user()->id;
-            $pdc->amount=$request->amount;
-            $pdc->date_accepted=Carbon::now(Config::get('app.timezone'));
-            $pdc->save();
         }
+        $pdc=new PostDatedCheck();
+        $pdc->current_contract_id=$request->myId;
+        $pdc->code=$pk;
+        $pdc->bank_id=$request->bank;
+        $pdc->user_id=Auth::user()->id;
+        $pdc->for_date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($bill_date)) . " + ".($x+$count)." month"));
+        $pdc->amount=$request->amount;
+        $pdc->date_accepted=Carbon::now(Config::get('app.timezone'));
+        $pdc->save();
     }
+    $pdc=DB::table('post_dated_checks')
+    ->join('banks','post_dated_checks.bank_id','banks.id')
+    ->select('post_dated_checks.id','date_accepted','for_date','code','banks.description as bank')
+    ->where('current_contract_id',$request->myId)
+    ->get();
+    $amount=DB::table('post_dated_checks')
+    ->select('amount')
+    ->where('current_contract_id',$request->myId)
+    ->first()->amount;
+    $amount="₱ ".number_format($amount,2);
+    return response::json([$pdc,$amount]);
+}
 
     /**
      * Display the specified resource.
@@ -131,6 +158,18 @@ class pdcCollectionController extends Controller
         ->SELECT(DB::RAW('12 - (count(distinctrow post_dated_checks.id)) as pdc_count'))
         ->WHERE('current_contract_id',$id)
         ->FIRST();
+        $latestPDC=DB::TABLE('post_dated_checks')
+        ->SELECT('code')
+        ->ORDERBY('id','desc')
+        ->FIRST()
+        ;
+        if(!is_null($latestPDC))
+        {
+            $sc= new smartCounter();
+            $code=$sc->increment($latestPDC->code);  
+        }
+        else
+            $code='0-120-12-1';
         $total=0;
         foreach ($bill_details as $key => &$bill_detail) {
             $total+=$bill_detail->price;
@@ -140,8 +179,9 @@ class pdcCollectionController extends Controller
         $result = array('total' => $total,
             'totalDisplay' => $totalDisplay,
             'max' =>$count->pdc_count,
-            'id' => $id
-            );
+            'id' => $id,
+            'code'=> $code
+        );
         return response::json([$bill_details,$result]);
     }
 
@@ -166,6 +206,20 @@ class pdcCollectionController extends Controller
         public function update(Request $request, $id)
         {
         //
+            foreach ($request->codes as $key => $code) {
+                $pdc=PostDatedCheck::FINDORFAIL($request->ids[$key]);
+                $pdc->code=$code;
+                $pdc->save();
+            }
+        }
+        public function updatePDC(Request $request)
+        {
+        //
+            foreach ($request->codes as $key => $code) {
+                $pdc=PostDatedCheck::FINDORFAIL($request->ids[$key]);
+                $pdc->code=$code;
+                $pdc->save();
+            }
         }
 
         /**

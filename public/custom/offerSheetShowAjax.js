@@ -14,7 +14,6 @@ $(document).ready(function()
 		myId=$(this).val();
 		$.get(url + '/showOptions/' + myId, function (data) 
 		{
-			console.log(data);
 			options="";
 			$("#modalChoose").modal("show");
 			ctr=0;
@@ -28,6 +27,9 @@ $(document).ready(function()
 					main_mode='orange';
 				if(ctr%2==0)
 					options+='<div>'
+				checked='';
+				if(ctr==0)
+					checked='checked';
 				building_type="<span class='align-right' id='myBuildingType"+ value.unit_id  + "'>"+ value.offered_building_type +" </span>";
 				floor="<span class='align-right' id='myFloor"+ value.unit_id +"'>"+ value.offered_floor +" </span>";
 				size="<span class='align-right' id='mySize"+ value.unit_id +"'>"+ value.offered_exact_size +" </span>";
@@ -40,7 +42,7 @@ $(document).ready(function()
 				'<div class="col-sm-6">' +
 				'<div class="card">' +
 				'<div class="header bg-'+main_mode+'">' +
-				"<input type='radio' id='"+ value.unit_offered +"' class='myRadio' class='radio-col-yellow type='radio' name='unit_option' value='"+ value.unit_id +"'>" +
+				"<input type='radio'" + checked + " id='"+ value.unit_offered +"' class='myRadio' class='radio-col-yellow type='radio' name='unit_option' value='"+ value.unit_id +"'>" +
 				"<label for='"+ value.unit_offered +"' id='unit"+ value.unit_id +"'>" + value.unit_offered+ "</label> <br>" +
 				'</div>' +
 				'<div class="body">' +
@@ -70,6 +72,7 @@ $(document).ready(function()
 				ctr++;
 			});
 			$("#divOptions").append(options);
+			value=$('.myRadio').val();
 		});
 	});
 	$(this).on('click', '.myRadio',function(e)
@@ -78,13 +81,17 @@ $(document).ready(function()
 	});
 	$(this).on('click', '#btnSelect',function(e)
 	{
-		name=$('#unit'+value).text();
-		$('#offer'+myId).val(value);
-		$('#regi'+myId).text(name);
-		$('#rate'+myId).text($('#myRate'+value).text());
-		$('#buildingType'+myId).text($('#myBuildingType'+value).text());
-		$('#unitType'+myId).text($('#myUnitType'+value).text());
-		$("#modalChoose").modal("hide");
+		if($('.myRadio').is(':checked')) { 
+			name=$('#unit'+value).text();
+			$('#offer'+myId).val(value);
+			$('#regi'+myId).text(name);
+			$('#rate'+myId).text($('#myRate'+value).text());
+			$('#buildingType'+myId).text($('#myBuildingType'+value).text());
+			$('#unitType'+myId).text($('#myUnitType'+value).text());
+			$("#modalChoose").modal("hide");
+		}
+		else
+			$.notify("Please select a unit.", "error");
 	});
 	$(document).on('hidden.bs.modal','#modalChoose', function () 
 	{ 

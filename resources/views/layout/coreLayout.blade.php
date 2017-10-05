@@ -7,13 +7,14 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, 
   user-scalable=no" name="viewport">
   <title>Majent | Lease Management System</title>
-  <link rel="icon" href="images/icon1.ico">
+  <link rel="icon" {{ asset('images/icon1.ico') }}">
   {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
   {!!Html::style("plugins/node-waves/waves.css")!!}
   {!!Html::style("plugins/animate-css/animate.css")!!}
   {!!Html::style("css/style.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
+  {!!Html::style("css/minimal-pace.min.css")!!}
   {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}
   @yield("styles")
 </head>
@@ -323,7 +324,6 @@
 </ul>
 </li>
 <li class="
-{{Request::path() == 'admin/transaction/contract-create' ? 'active' : ''}}
 {{strpos(Request::path(),'transaction/contract') ? 'active' : ''}}
 ">
 <a href="javascript:void(0);" class="menu-toggle waves-yellow">
@@ -332,6 +332,7 @@
 </a>
 <ul class="ml-menu">
   <li class="
+  {{strpos(Request::path(),'transaction/contract') ? '' : ''}}
   {{Request::path() == 'admin/transaction/contract-create' ? 'active' : ''}}
   ">
   <a href="{{route("contract-create.index")}}" class="waves-yellow">
@@ -340,7 +341,8 @@
 </li>
 
 <li class="
-{{strpos(Request::path(),'transaction/contract') ? 'active' : ''}}
+{{Request::path() == 'tenant/transaction/contract' ? 'active' : ''}}
+{{strpos(Request::path(),'tenant/transaction/contract') ? 'active' : ''}}
 ">
 <a href="{{route('contract.index')}}" class="waves-yellow">
   <span>View Contract</span>
@@ -504,6 +506,7 @@
 {!!Html::script('js/notify/notify.min.js')!!}
 {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
 {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+{!!Html::script("plugins/pace-js/pace.min.js")!!}
 {!!Html::script('js/admin.js')!!}
 
 </body>
