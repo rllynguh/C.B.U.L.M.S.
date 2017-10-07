@@ -26,6 +26,8 @@ class CreateRegistrationHeadersTable extends Migration {
 1-  accepted
 2 - rejected');
 			$table->integer('is_forfeited')->default(0)->comment('if customer forfeits his transaction');
+			$table->integer('is_existing_tenant')->default(0)->comment('0 - registration is from new tenant
+				1 - registration is from existing tenant');
 			$table->string('pdf', 60)->nullable();
 		});
 	}

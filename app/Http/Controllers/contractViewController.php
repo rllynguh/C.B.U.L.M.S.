@@ -21,7 +21,7 @@ class contractViewController extends Controller
     {
         //
 
-     return view('transaction.contractView.index');
+     return view('tenant.contractView.index');
  }
  public function data()
  {
@@ -40,7 +40,9 @@ class contractViewController extends Controller
     ->get();
     return Datatables::of($contracts)
     ->addColumn('action', function ($data) {
-        return "<a href=".route('contract.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>";
+        return "<a href=".route('contract.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>
+            
+        ";
     })
     ->setRowId(function ($data) {
         return $data = 'id'.$data->id;
@@ -103,9 +105,8 @@ public function show($id)
     ->join('users','user_id','users.id')
     ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
     ->where('current_contracts.id',$id)
-    ->first()
-    ;
-    return view('transaction.contractView.show')
+    ->first();
+    return view('tenant.contractView.show')
     ->withCurrentcontract($current_contract);
 }
 

@@ -1,0 +1,40 @@
+{
+    "name": "orchestra/html",
+    "description": "HTML Component for Orchestra Platform",
+    "homepage": "http://orchestraplatform.com/docs/latest/components/html/",
+    "keywords": ["orchestra-platform", "orchestral", "laravel", "html", "form", "table"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com",
+            "homepage": "https://github.com/crynobone"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Orchestra\\Html\\" : "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "illuminate/translation": "~5.5.0",
+        "laravie/html": "~5.5.0",
+        "orchestra/contracts": "~3.5.0",
+        "orchestra/support": "~3.5.0"
+    },
+    "require-dev": {
+        "illuminate/database": "~5.5.0",
+        "mockery/mockery": "^0.9.4",
+        "phpunit/phpunit": "~6.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}

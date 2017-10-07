@@ -51,7 +51,7 @@ class offerSheetApprovalController extends Controller
     }
     public function index()
     {
-      return view('transaction.offerSheetApproval.index');
+      return view('tenant.offerSheetApproval.index');
     }
 
     /**
@@ -188,7 +188,7 @@ public function show($id)
 
   }
 
-  return view('transaction.offerSheetApproval.show')
+  return view('tenant.offerSheetApproval.show')
   ->withResults($results)
   ->withUnits($units);
 }
