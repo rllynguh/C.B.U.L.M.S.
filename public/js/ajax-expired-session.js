@@ -1,0 +1,1 @@
+$(document).ajaxError(function(n,t,e,o){"Unauthorized"==o&&swal({title:"Session Expired!",type:"warning",text:"<center>Please login again.</center>",html:!0,confirmButtonClass:"btn-success",confirmButtonText:"Login",closeOnConfirm:!0,allowOutsideClick:!1},function(n){n&&location.reload()})});try{$.fn.dataTable.ext.errMode="none"}catch(n){}

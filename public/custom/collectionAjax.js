@@ -33,7 +33,8 @@ $(document).ready(function()
       pdcValue=data[1].pdc_amount;
       $('#user').val(data[1].user_id);
       select='<SELECT id="mode" class="form-control" name="mode"><option value="0">Cash</option>';
-      if(data[1].pdc_id!==undefined && data[1].forPDC==true && parseFloat(balance)==data[1].amount )
+      console.log(balance);
+      if(data[1].pdc_id!==undefined && data[1].forPDC==true && parseFloat(data[1].balance)==parseFloat(data[1].pdc_amount) )
       { 
         $('#pdc_id').val(data[1].pdc_id);
         select+='<option value="1">PDC</option>';

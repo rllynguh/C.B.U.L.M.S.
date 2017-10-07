@@ -7,6 +7,9 @@ use Datatables;
 use Response;
 use DB;
 use App\RegistrationDetail;
+use PDF;
+use Auth;
+use App\RegistrationHeader;
 
 class reservationFeeCollectionController extends Controller
 {
@@ -93,11 +96,106 @@ class reservationFeeCollectionController extends Controller
                        $regi_detail_update->save();
                    }
                }
-               db::commit();
-               return response::json('yas');
-           }
-           catch(\Exception $e)
-           {
+
+
+             //get values of utilities
+               $utilities=DB::table('utilities')
+               ->whereRaw('date_as_of=(Select Max(date_as_of) from utilities)')
+               ->select('utilities.*')
+               ->first(); 
+
+             //get value or reservation
+               $reservation=DB::table('utilities')
+               ->select('reservation_fee as fee')
+               ->whereRaw("date_as_of=(SELECT MAX(date_as_of) from utilities) or isnull(date_as_of)")
+               ->first(); 
+
+             //get value of total rate of units
+               $summary=DB::table('registration_details')
+               ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+               ->join('tenants','registration_headers.tenant_id','tenants.id')
+               ->join('users','tenants.user_id','users.id')
+               ->join('addresses','tenants.address_id','addresses.id')
+               ->join('cities','addresses.city_id','cities.id')
+               ->join('provinces','cities.province_id','provinces.id')
+               ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+               ->join('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
+               ->join('units','offer_sheet_details.unit_id','units.id')
+               ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+               ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
+               ->select(DB::raw("SUM(price * size) as fee,$reservation->fee as month,last_name, first_name,Concat(addresses.number,' ',addresses.street,' ',addresses.district) as address,CONCAT(cities.description, ', ', provinces.description) as city_province"))
+               ->where('registration_headers.id',$request->myId)
+               ->where('offer_sheet_headers.status',1)
+               ->where('offer_sheet_details.status',1)
+               ->where('registration_details.is_rejected',0)
+               ->where('registration_details.is_forfeited',0)
+               ->where('registration_headers.status',1)
+               ->where('registration_headers.is_forfeited',0)
+               ->first();
+
+             //get units
+               $units=DB::table('registration_details')
+               ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+               ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+               ->join('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
+               ->join('units','offer_sheet_details.unit_id','units.id')
+               ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+               ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
+               ->select(DB::raw('units.code,(price * size) as price,size'))
+               ->where('registration_headers.id',$request->myId)
+               ->where('offer_sheet_headers.status',1)
+               ->where('offer_sheet_details.status',1)
+               ->where('registration_details.is_rejected',0)
+               ->where('registration_details.is_forfeited',0)
+               ->where('registration_headers.status',1)
+               ->where('registration_headers.is_forfeited',0)
+               ->get();
+               foreach ($units as &$unit) {
+                $unit->price="₱ ".number_format($unit->price,2);
+                $unit->size=number_format($unit->size,2)." sqm";
+            }
+            //get total value
+            $total=$summary->fee;
+            //get value of vat
+            $vat=$total*($utilities->vat_rate/100);
+            //subtotal
+            $subtotal=$vat+$total;
+            //get value of ewt
+            $ewt=$total*($utilities->ewt_rate/100);
+            //get value of net rent
+            $net_rent=($subtotal-$ewt);
+            //get value of final
+            $final=$net_rent*$reservation->fee;
+            $final="₱ ".number_format( $final,2 );
+            $net_rent="₱ ".number_format( $net_rent,2 );
+            $subtotal="₱ ".number_format($subtotal,2);
+            $vat="₱ ".number_format($vat,2);
+            $ewt="₱ ".number_format($ewt,2);
+            $summary->fee="₱ ".number_format($summary->fee,2);
+            $utilities->vat_rate.=" %";
+            $utilities->ewt_rate.=" %";
+
+            //summary to be passed on pdf
+            $summary->net_rent=$net_rent;
+            $summary->vat=$vat;
+            $summary->subtotal=$subtotal;
+            $summary->ewt=$ewt;
+            $summary->final = $final;
+            $summary->base_rent=$total;
+            $summary->admin=Auth::user()->first_name." ".Auth::user()->last_name;
+            ;
+            $regi_header=RegistrationHeader::find($request->myId);
+            $pdf=PDF::loadView('transaction.reservationFeeCollection.pdf',compact('units', 'summary'));
+            $pdfName="$regi_header->code(ReservationFeeCollection).pdf";
+            $location=public_path("docs/$pdfName");
+            $pdf->save($location);
+            $regi_header->pdf=$pdfName;
+            $regi_header->save();
+            db::commit();
+            return response::json('yas');
+        }
+        catch(\Exception $e)
+        {
             db::rollback();
             dd($e);
         }
@@ -137,7 +235,6 @@ class reservationFeeCollectionController extends Controller
         ->where('registration_details.is_forfeited',0)
         ->where('registration_headers.status',1)
         ->where('registration_headers.is_forfeited',0)
-        ->where('registration_headers.id',$id)
         ->first();
 
         $units=DB::table('registration_details')
