@@ -18,8 +18,7 @@
   {!!Html::style("plugins/bootstrap3-editable/bootstrap3-editable/css/bootstrap-editable.css")!!}
   {!!Html::style("css/parsleyStyle.css")!!}
   {!!Html::style("css/themes/all-themes.css")!!}
-  {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}
-  {!!Html::style("plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css")!!}
+  {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}!}
   {!!Html::style("css/tenant/custom.css")!!}
   <!--!Html::style("plugins/materialize-css/css/style.min.css")!!}
 -->
@@ -87,8 +86,6 @@
   {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
   {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-  {!!Html::script("plugins/momentjs/moment.js")!!}
-  {!!Html::script("plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js")!!}
   {!!Html::script("plugins/bootstrap3-editable/bootstrap3-editable/js/bootstrap-editable.min.js")!!}
   {!!Html::script("js/tenant/custom.js")!!}
 @yield('scripts')

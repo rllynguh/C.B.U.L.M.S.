@@ -21,7 +21,7 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::get('/requestUnit','requestUnitsController@index')->name('tenant.requestUnit');
 	Route::post('/requestUnit2','requestUnitsController@store')->name('tenant.requestUnitStore');
 	Route::get('/TerminateContract','terminateContractController@index')->name('tenant.terminateContract');
-	Route::get('/test1','mergeUnitsController@getShit')->name('tenant.getUnits');
+	Route::get('/test1','contractAmmendmentController@getUnits')->name('tenant.getUnits');
 	Route::view('/','tenant.index')->name('tenant.home');
 	Route::get('/login', function () {return view('tenant.login');});
 	Route::get('/profile', function () {return view('tenant.profile');});
