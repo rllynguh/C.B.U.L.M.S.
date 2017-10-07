@@ -37,8 +37,9 @@ class collectionController extends Controller
     {
         $bills=db::table('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
-        ->havingRaw('cost>coalesce(sum(payments.payment),0)')
-        ->groupby('billing_headers.id')
+        ->GROUPBY('billing_headers.id')
+        ->HAVINGRAW('cost>coalesce(sum(payments.payment),0)')
+        ->WHERERAW('MONTH(billing_headers.date_issued) = MONTH(CURRENT_DATE()) AND YEAR(billing_headers.date_issued) = YEAR(CURRENT_DATE())')
         ->select(db::raw('billing_headers.code,billing_headers.id,cost,coalesce(sum(payments.payment),0) as amount_paid'))
         ->get();
 

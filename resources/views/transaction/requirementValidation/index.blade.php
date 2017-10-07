@@ -46,7 +46,7 @@
   </div>
   @endsection
   @section('scripts')
-  {!!Html::script("custom/requirementValidationAjax.js")!!}
+  {!!Html::script("custom/requirementValidationAjax.min.js")!!}
   <script type="text/javascript">
     var dataurl="{!!route('requirementValidation.getData')!!}" ;
     var url="{!!route('requirementValidation.index')!!}" ;

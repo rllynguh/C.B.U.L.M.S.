@@ -8,14 +8,14 @@
   user-scalable=no" name="viewport">
   <title>Majent | Lease Management System</title>
   <link rel="icon" {{ asset('images/icon1.ico') }}">
-  {!!Html::style("plugins/bootstrap/css/bootstrap.css")!!}
-  {!!Html::style("plugins/node-waves/waves.css")!!}
-  {!!Html::style("plugins/animate-css/animate.css")!!}
-  {!!Html::style("css/style.css")!!}
-  {!!Html::style("css/parsleyStyle.css")!!}
-  {!!Html::style("css/themes/all-themes.css")!!}
+  {!!Html::style("plugins/bootstrap/css/bootstrap.min.css")!!}
+  {!!Html::style("plugins/node-waves/waves.min.css")!!}
+  {!!Html::style("plugins/animate-css/animate.min.css")!!}
+  {!!Html::style("css/style.min.css")!!}
+  {!!Html::style("css/parsleyStyle.min.css")!!}
+  {!!Html::style("css/themes/all-themes.min.css")!!}
   {!!Html::style("css/minimal-pace.min.css")!!}
-  {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}
+  {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css")!!}
   @yield("styles")
 </head>
 
@@ -296,8 +296,8 @@
 </a>
 </li>
 <li class="
-{{strpos(Request::path(),'admin/transaction/requirementAssigning') ? 'active' : ''}}
-{{strpos(Request::path(),'admin/transaction/requirementValidation') ? 'active' : ''}}
+{{Request::path() == 'admin/transaction/requirementAssigning' ? 'active' : ''}}
+{{Request::path() == 'admin/transaction/requirementValidation' ? 'active' : ''}}
 ">
 <a href="javascript:void(0);" class="menu-toggle waves-yellow">
   <i class="mdi-file-folder-open"></i>
@@ -373,6 +373,14 @@
 <a href="{{route('pdcCollection.index')}}" class="waves-yellow">
   <i class="mdi-maps-local-atm"></i>
   <span>PDC Collection</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/transaction/pdcValidation' ? 'active' : ''}}
+">
+<a href="{{route('pdcValidation.index')}}" class="waves-yellow">
+  <i class="mdi-maps-local-atm"></i>
+  <span>PDC Validation</span>
 </a>
 </li>
 <li class="
@@ -492,22 +500,21 @@
   </div>
 </section>
 {!!Html::script("plugins/jquery/jquery.min.js")!!}
-{!!Html::script("plugins/jquery-datatable/jquery.dataTables.js")!!}
-{!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
+{!!Html::script("plugins/jquery-datatable/jquery.dataTables.min.js")!!}
+{!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
 @yield('scripts')
-{!!Html::script("js/pages/forms/form-wizard.js")!!}
-{!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
-{!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
-{!!Html::script("plugins/bootstrap/js/bootstrap.js")!!}
+{!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
+{!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
+{!!Html::script("plugins/bootstrap/js/bootstrap.min.js")!!}
 {!!Html::script('plugins/jquery/parsley.min.js')!!}
-{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
-{!!Html::script('plugins/node-waves/waves.js')!!}
-{!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
+{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
+{!!Html::script('plugins/node-waves/waves.min.js')!!}
+{!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
 {!!Html::script('js/notify/notify.min.js')!!}
-{!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
+{!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
 {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
 {!!Html::script("plugins/pace-js/pace.min.js")!!}
-{!!Html::script('js/admin.js')!!}
+{!!Html::script('js/admin.min.js')!!}
 
 </body>
 

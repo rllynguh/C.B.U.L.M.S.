@@ -103,6 +103,7 @@
 
 			@endsection
 			@section('scripts')
+			{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
 			{!!Html::script("custom/registrationForfeitShowAjax.js")!!}
 			<script type="text/javascript">
 				mainUrl='{{route('registrationForfeit.index')}}';

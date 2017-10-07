@@ -151,7 +151,7 @@ class reservationFeeCollectionController extends Controller
                ->where('registration_headers.is_forfeited',0)
                ->get();
                foreach ($units as &$unit) {
-                $unit->price="₱ ".number_format($unit->price,2);
+                $unit->price="P ".number_format($unit->price,2);
                 $unit->size=number_format($unit->size,2)." sqm";
             }
             //get total value
@@ -166,12 +166,13 @@ class reservationFeeCollectionController extends Controller
             $net_rent=($subtotal-$ewt);
             //get value of final
             $final=$net_rent*$reservation->fee;
-            $final="₱ ".number_format( $final,2 );
-            $net_rent="₱ ".number_format( $net_rent,2 );
-            $subtotal="₱ ".number_format($subtotal,2);
-            $vat="₱ ".number_format($vat,2);
-            $ewt="₱ ".number_format($ewt,2);
-            $summary->fee="₱ ".number_format($summary->fee,2);
+            $final="P ".number_format( $final,2 );
+            $net_rent="P ".number_format( $net_rent,2 );
+            $subtotal="P ".number_format($subtotal,2);
+            $vat="P ".number_format($vat,2);
+            $ewt="P ".number_format($ewt,2);
+            $total="P ".number_format($total,2);
+            $summary->fee="P ".number_format($summary->fee,2);
             $utilities->vat_rate.=" %";
             $utilities->ewt_rate.=" %";
 
@@ -192,7 +193,6 @@ class reservationFeeCollectionController extends Controller
             $regi_header->pdf=$pdfName;
             $regi_header->save();
             db::commit();
-            return response::json('yas');
         }
         catch(\Exception $e)
         {
@@ -276,9 +276,9 @@ class reservationFeeCollectionController extends Controller
         return response::json(
             [$final,$units,$regi_detail,
             //0     //1    //2
-            $ewt,$vat,$subtotal,
+                $ewt,$vat,$subtotal,
             //3   //4  //5
-            $utilities,$net_rent]
+                $utilities,$net_rent]
             //6         //7
             );
 

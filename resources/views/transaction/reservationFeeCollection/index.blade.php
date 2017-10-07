@@ -10,11 +10,11 @@
 <div class="modal fade" id="modalReserve" tabindex="-1" role="dialog">
  {{ Form::open([
   'id' => 'frmReserve', 'class' => 'form-horizontal'
-  ])
+])
 }}
 {{ Form::hidden('myId',null,[
   'id'=> 'myId',
-  ])
+])
 }}
 <div class="modal-dialog" role="document">
   <div class="modal-content modal-col-green">
@@ -51,7 +51,7 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/reservationFeeCollectionAjax.js")!!}
+{!!Html::script("custom/reservationFeeCollectionAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('reservationFeeCollection.getData')!!}" ;
   var url="{!!route('reservationFeeCollection.index')!!}" ;

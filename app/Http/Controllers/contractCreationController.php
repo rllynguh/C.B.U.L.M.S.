@@ -209,23 +209,38 @@ class contractCreationController extends Controller
           $billing_detail->save();
 
 
-          $latest=DB::table("billing_headers")
-          ->select("billing_headers.*")
-          ->orderBy('code',"DESC")
-          ->first();
-          $code="BILL001";
-          if(!is_null($latest))
-            $code=$latest->code;
-          $sc= new smartCounter();
-          $code=$sc->increment($code);
-
-
+          
+          for($x=0;$x<$request->txtDuration;$x++)
+          {
+            for($y=0;$y<12;$y++)
+            {
+              $latest=DB::table("billing_headers")
+              ->select("billing_headers.*")
+              ->orderBy('code',"DESC")
+              ->first();
+              $code="BILL001";
+              if(!is_null($latest))
+                $code=$latest->code;
+              $sc= new smartCounter();
+              $code=$sc->increment($code);
+              if($x>0)
+                $netrent=$request->net_rent*(($utilities->escalation_rate/100)*$x);
+              else
+                $netrent=$request->net_rent;
+              $cost=$netrent + $request->cusa;
           $cost=$request->net_rent + $request->cusa; //ihiwalay ung pangpdc sa cash. ung pdc, rent at cusa lang
           $billing_header=new BillingHeader();
           $billing_header->user_id=Auth::user()->id;
           $billing_header->code=$code;
           $billing_header->current_contract_id=$current_contract->id;
-          $billing_header->date_issued=Carbon::now(Config::get('app.timezone'));
+          if($y==0)
+            $date_issued=Carbon::now(Config::get('app.timezone'));
+          else
+          {
+            $date_issued = date("Y-m-d", strtotime(date("Y-m-d",strtotime($date_issued)) . " + $x year"));
+            $date_issued = date("Y-m-d", strtotime(date("Y-m-d",strtotime($date_issued)) . " + $y month"));
+          }
+          $billing_header->date_issued=$date_issued;
           $billing_header->cost=$cost;
           $billing_header->save();
 
@@ -239,7 +254,7 @@ class contractCreationController extends Controller
           $billing_detail->billing_header_id=$billing_header->id;
           $billing_detail->billing_item_id=$rent;
           $billing_detail->description="The net rent value.";
-          $billing_detail->price=$request->net_rent;
+          $billing_detail->price=$netrent;
           $billing_detail->save();
 
 
@@ -254,62 +269,63 @@ class contractCreationController extends Controller
           $billing_detail->description="$utilities->cusa_rate /sqm, plus VAT less 2% withholding tax, per month";
           $billing_detail->price=$request->cusa;
           $billing_detail->save();
-
-
-          foreach ($request->contents as $content) {
-            $contract_content=new ContractContent();
-            $contract_content->contract_header_id=$contract_header->id;
-            $contract_content->content_id=$content;
-            $contract_content->save();
-          }
-
-          $contract=db::table('current_contracts')
-          ->join('users','current_contracts.user_id','users.id')
-          ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
-          ->where('current_contracts.id',$current_contract->id)
-          ->select(DB::raw('date_issued,start_of_contract,end_of_contract, Concat(first_name," ",last_name) as full_name,code'))
-          ->first();
-
-          $units=db::table('units')
-          ->join('contract_details','units.id','contract_details.unit_id')
-          ->where('current_contract_id',$current_contract->id)
-          ->select(DB::raw('code,price * size as price'))
-          ->get();
-
-          $billing_details=DB::table('billing_details')
-          ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
-          ->where('billing_headers.current_contract_id',$current_contract->id)
-          ->select(DB::RAW('description,price'))
-          ->get()
-          ;
-          $contents=DB::table('contents')
-          ->join('contract_contents','contents.id','contract_contents.content_id')
-          ->join('current_contracts','contract_contents.contract_header_id','current_contracts.id')
-          ->select('description')
-          ->where('current_contracts.id',$current_contract->id)
-          ->get();
-
-          $res_fee=$utilities->reservation_fee * $request->net_rent;
-          $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents','cost','request','utilities','full_name','res_fee'));
-          $date_issued=date_format($current_contract->date_issued,"Y-m-d");
-          $pdfName="$contract_header->code($date_issued).pdf";
-          $location=public_path("docs/$pdfName");
-          $pdf->save($location);
-          $current_contract->pdf=$pdfName;
-          $current_contract->save();
-
-          DB::commit();
-          $request->session()->flash('green', 'Contract successfully generated.');
-          return redirect(route('contract-create.index'));
         }
-        catch(\Exception $e)
-        {
-         DB::rollBack();
-         $request->session()->flash('red', 'Oooops something went wrong.');
-         dd($e);
-       }
+      }
 
-     }
+      foreach ($request->contents as $content) {
+        $contract_content=new ContractContent();
+        $contract_content->contract_header_id=$contract_header->id;
+        $contract_content->content_id=$content;
+        $contract_content->save();
+      }
+
+      $contract=db::table('current_contracts')
+      ->join('users','current_contracts.user_id','users.id')
+      ->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
+      ->where('current_contracts.id',$current_contract->id)
+      ->select(DB::raw('date_issued,start_of_contract,end_of_contract, Concat(first_name," ",last_name) as full_name,code'))
+      ->first();
+
+      $units=db::table('units')
+      ->join('contract_details','units.id','contract_details.unit_id')
+      ->where('current_contract_id',$current_contract->id)
+      ->select(DB::raw('code,price * size as price'))
+      ->get();
+
+      $billing_details=DB::table('billing_details')
+      ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
+      ->where('billing_headers.current_contract_id',$current_contract->id)
+      ->select(DB::RAW('description,price'))
+      ->get()
+      ;
+      $contents=DB::table('contents')
+      ->join('contract_contents','contents.id','contract_contents.content_id')
+      ->join('current_contracts','contract_contents.contract_header_id','current_contracts.id')
+      ->select('description')
+      ->where('current_contracts.id',$current_contract->id)
+      ->get();
+
+      $res_fee=$utilities->reservation_fee * $request->net_rent;
+      $pdf = PDF::loadView('transaction.contractCreation.pdf',compact('contract', 'units','billing_details','contents','cost','request','utilities','full_name','res_fee'));
+      $date_issued=date_format($current_contract->date_issued,"Y-m-d");
+      $pdfName="$contract_header->code($date_issued).pdf";
+      $location=public_path("docs/$pdfName");
+      $pdf->save($location);
+      $current_contract->pdf=$pdfName;
+      $current_contract->save();
+
+      DB::commit();
+      $request->session()->flash('green', 'Contract successfully generated.');
+      return redirect(route('contract-create.index'));
+    }
+    catch(\Exception $e)
+    {
+     DB::rollBack();
+     $request->session()->flash('red', 'Oooops something went wrong.');
+     dd($e);
+   }
+
+ }
      /**
      * Display the specified resource.
      *

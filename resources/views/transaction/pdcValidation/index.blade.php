@@ -7,94 +7,37 @@
 @endsection
 @section('content')
 {{-- modal pdc collection starts here --}}
-<div class="modal fade" id="modalPDCCollection" tabindex="-1" role="dialog">
+<div class="modal fade" id="modalPDCValidation" tabindex="-1" role="dialog">
  {{ Form::open([
-  'id' => 'frmPDC', 'class' => 'form-horizontal'
+  'id' => 'frmPDCValidation', 'class' => 'form-horizontal'
 ])
 }}
 {{ Form::hidden('myId',null,[
   'id'=> 'myId',
 ])
 }}
-{{ Form::hidden('amount',null,[
-  'id'=> 'amount',
+{{ Form::hidden('status',null,[
+  'id'=> 'status',
 ])
 }}
 <div class="modal-dialog" role="document">
-  <div class="modal-content modal-lg modal-col-green">
+  <div class="modal-content  modal-col-green">
     <div class="modal-header">
       <h1  class="modal-title align-center p-b-15"><span id='labelReq'>PDC COLLECTION</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
     </div>
     <div class="modal-body">
-      <div class="col-sm-6">
-        <center><h4>Post Dated Checks will cover these items:</h4></center>
-        <div id='divBill'>
-        </div>
-        <div class="col-sm-12">
-          <div class="col-sm-4">
-            <div class="form-group">
-              <div class="form-line">
-                <h5 class="card-inside-title">Number of PDC'S</h5>
-                {{ Form::number('txtPDC',null,[
-                  'id' => 'txtPDC',
-                  'class' => 'form-control text-center max-digits-2',
-                  'data-rule' => 'quantity',
-                  'autocomplete' => 'off',
-                  'min' => '1',
-                  'max' => '12',
-                  'required' => 'required',
-                ])
-              }}
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-line">
-            {{ Form::label('bank', 'Bank', [
-              'class' => 'control-label'
-            ]) 
-          }}
-          <div class="form-group ">
-            {{ Form::select('bank', $banks,null, [
-              'id' => 'bank',
-              'class' => 'form-control form-line'])
-            }}
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="form-group">
-          <div class="form-line">
-            <h5 class="card-inside-title">Code</h5>
-            {{ Form::text('txtCode',null,[
-              'id' => 'txtCode',
-              'class' => 'form-control text-center',
-              'autocomplete' => 'off',
-              'minlength' => '10',
-              'maxlength' => '40',
-              'required' => 'required',
-            ])
-          }}
-        </div>
-      </div>
+      <center><h4>What Would you like to do with this PDC?</h4></center>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-lg bg-brown waves-effect waves-white" id="btnAccept">Accept</button>
+      <button class="btn btn-lg bg-orange waves-effect waves-white" id="btnReject">Reject</button>
     </div>
   </div>
-</div>
-<div class="col-sm-6">
-  <div id='divTable'>
-  </div>
-</div>
-</div>
-<div class="modal-footer">
-  <input type='submit' class="btn btn-lg bg-brown waves-effect waves-white col-md-12" value="CONFIRM" id="btnSave">
-  <input type='hidden' class="btn btn-lg bg-brown waves-effect waves-white" value="SAVE CHANGES" id="btnSaveTable">
-</div>
-</div>
 </div>
 {{Form::close()}}
 </div>
 {{-- modal pdc collection ends here --}}
-<div class="body">
+<div id='divTable' class="body">
   <table class="table table-hover dataTable" id="myTable">
     <thead>
       <tr>

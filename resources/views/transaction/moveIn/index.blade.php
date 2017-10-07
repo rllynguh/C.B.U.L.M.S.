@@ -23,7 +23,7 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/moveInAjax.js")!!}
+{!!Html::script("custom/moveInAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('move-in.getData')!!}" ;
   var url="{!!route('move-in.index')!!}" ;

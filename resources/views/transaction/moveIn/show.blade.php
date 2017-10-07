@@ -50,7 +50,7 @@
 				<div class="col-sm-6">
 					<div class="card">
 						<div class="header bg-light-green">
-							<input id='unit{{$unit->id}}' type='checkbox' class="filled-in chk-col-blue" type='checkbox' name='units[]' value="{{$unit->id}} ">
+							<input id='unit{{$unit->id}}' required="" type='checkbox' class="filled-in chk-col-blue" type='checkbox' name='units[]' value="{{$unit->id}} ">
 							<label for='unit{{$unit->id}}'><h4>{{$unit->code}}</h4></label> <br>
 						</div>
 						<div class="body">
@@ -109,9 +109,12 @@
 			<div class="col-sm-3">	</div>
 		</fieldset>
 		{{ Form::hidden('id',$contract->id,[
-			])
-		}}
-		{{Form::close()}}
+		])
+	}}
+	{{Form::close()}}
 
-	</div>
-	@endsection
+</div>
+@endsection
+@section('scripts')
+{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
+@endsection

@@ -99,7 +99,8 @@
 		</div>
 		@endsection
 		@section('scripts')
-		{!!Html::script("custom/offerSheetShowAjax.js")!!}
+		{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
+		{!!Html::script("custom/offerSheetShowAjax.min.js")!!}
 		<script type="text/javascript">
 			url='{{route('offersheets.index')}}';
 			dataurl='{{route('offersheets.index')}}/get/showData/{{$tenant->id}}';

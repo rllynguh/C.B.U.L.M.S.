@@ -116,8 +116,9 @@
 		</div>
 		@endsection
 		@section('scripts')
+		{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
 		{!!Html::script("plugins/autosize/autosize.min.js")!!}
-		{!!Html::script("custom/registrationApprovalShowAjax.js")!!}
+		{!!Html::script("custom/registrationApprovalShowAjax.min.js")!!}
 		<script type="text/javascript">
 			mainUrl='{{route('registrationApproval.index')}}';
 			showUrl='{{route('registrationApproval.index')}}/get/showData/{{$tenant->id}}';

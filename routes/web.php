@@ -165,6 +165,7 @@ Route::group(['prefix' => 'admin/'], function () {
 
 Route::group(['prefix' => 'tenant/'], function () {
 
+	Route::get('/docs/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);
 
 	Route::get('/', function () {
 		return view('user.tenant.index');

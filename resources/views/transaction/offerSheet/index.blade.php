@@ -23,7 +23,7 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/offerSheetAjax.js")!!}
+{!!Html::script("custom/offerSheetAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('offerSheets.getData')!!}" ;
   var url="{!!route('offersheets.index')!!}" ;

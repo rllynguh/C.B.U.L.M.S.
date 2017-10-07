@@ -219,7 +219,8 @@
 		</div>
 		@endsection
 		@section('scripts')
-		{!!Html::script("custom/offerSheetApprovalShowAjax.js")!!}
+		{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
+		{!!Html::script("custom/offerSheetApprovalShowAjax.min.js")!!}
 		<script type="text/javascript">
 			mainUrl='{{route('offerSheetApproval.index')}}';
 			dataurl='{{route('offerSheetApproval.index')}}/get/showData/{{$results->id}}';

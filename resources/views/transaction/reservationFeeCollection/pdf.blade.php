@@ -2,22 +2,22 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>Student Report</title>
+	<title>Reservation Fee Receipt</title>
 	<style type="text/css">
-		table {
-			border-collapse: collapse;
-		}
+	table {
+		border-collapse: collapse;
+	}
 
-		table, th, td {
-			border: 1px solid black;
-			padding: 5px;
-		}
-		tr:nth-child(even) {background-color: #f2f2f2}
-		th {
-			background-color: #FCEC78;
-			color: black;
-		}
-	</style>
+	table, th, td {
+		border: 1px solid black;
+		padding: 5px;
+	}
+	tr:nth-child(even) {background-color: #f2f2f2}
+	th {
+		background-color: #FCEC78;
+		color: black;
+	}
+</style>
 </head>
 <body>
 	<center><b>MAJENT MANAGEMENT DEVELOPMENT CORPORATION</b><br>
@@ -65,7 +65,7 @@
 				<tbody>
 					<tr>
 						<td>Base Rent</td>
-						<td>{{$summary->net_rent}}</td>
+						<td>{{$summary->base_rent}}</td>
 					</tr>
 					<tr>
 						<td>+ 12% VAT</td>
@@ -81,7 +81,7 @@
 					</tr>
 					<tr>
 						<td>Net Rent</td>
-						<td>{{$summary->base_rent}}</td>
+						<td>{{$summary->net_rent}}</td>
 					</tr>
 				</tbody>
 			</table>
