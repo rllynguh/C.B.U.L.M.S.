@@ -4,10 +4,10 @@
     <title>Log In | Majent CBULMS</title>
 
 
-    {{Html::style('plugins/bootstrap/css/bootstrap.css')}}
-    {{Html::style('plugins/node-waves/waves.css')}}
-    {{Html::style('plugins/animate-css/animate.css')}}
-    {{Html::style('css/style.css')}}
+    {{Html::style('plugins/bootstrap/css/bootstrap.min.css')}}
+    {{Html::style('plugins/node-waves/waves.min.css')}}
+    {{Html::style('plugins/animate-css/animate.min.css')}}
+    {{Html::style('css/style.min.css')}}
 </head>
 
 <body class="login-page">
@@ -58,9 +58,9 @@
         </div>
     </div>
     {{Html::script('plugins/jquery/jquery.min.js')}}
-    {{Html::script('plugins/bootstrap/js/bootstrap.js')}}
-    {{Html::script('plugins/node-waves/waves.js')}}
-    {{Html::script('plugins/jquery-validation/jquery.validate.js')}}
+    {{Html::script('plugins/bootstrap/js/bootstrap.min.js')}}
+    {{Html::script('plugins/node-waves/waves.min.js')}}
+    {{Html::script('plugins/jquery-validation/jquery.validate.min.js')}}
 
 </body>
 

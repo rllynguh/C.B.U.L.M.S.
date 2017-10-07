@@ -1,4 +1,10 @@
 @extends('layout.coreLayout')
+@section('breadcrumbs')
+<ol class="breadcrumb breadcrumb-col-brown">
+  <li><a> Maintenance</a></li>
+  <li><a href="{{route('parkrates.index')}}"> Park Rates</a></li>
+</ol>
+@endsection
 @section('content')
 <div class="container-fluid">
   <div class="body">

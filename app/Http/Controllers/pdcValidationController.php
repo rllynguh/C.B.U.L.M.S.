@@ -7,6 +7,9 @@ use App\Bank;
 use DB;
 use Response;
 use Datatables;
+use App\PostDatedCheck;
+use App\CurrentContractPenalty;
+
 
 class pdcValidationController extends Controller
 {
@@ -30,19 +33,20 @@ class pdcValidationController extends Controller
     public function data()
     {
         $results=DB::TABLE('current_contracts')
-        ->LEFTJOIN('post_dated_checks','current_contracts.id','post_dated_checks.current_contract_id')
+        ->JOIN('post_dated_checks','current_contracts.id','post_dated_checks.current_contract_id')
         ->JOIN('contract_headers','current_contracts.contract_header_id','contract_headers.id')
         ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
         ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
-        ->SELECT('current_contracts.id','contract_headers.code','tenants.description','current_contracts.date_issued',DB::RAW('COUNT(distinctrow post_dated_checks.id) as pdc_count'))
+        ->SELECT('current_contracts.id','contract_headers.code','tenants.description','current_contracts.date_issued','post_dated_checks.id as pdc_id')
         ->WHERE('current_contracts.status',1)
         ->WHERE('post_dated_checks.status','0')
         ->WHERE('post_dated_checks.is_accepted','0')
+        ->WHERERAW('MONTH(post_dated_checks.for_date)=MONTH(CURRENT_DATE()) AND YEAR(post_dated_checks.for_date)=YEAR(CURRENT_DATE())')
         ->GROUPBY('current_contracts.id')
         ->GET();
         return Datatables::of($results)
         ->ADDCOLUMN('action', function ($data) {
-            return '<button id="btnPdc" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" value= "'.route('pdcCollection.show',$data->id).'"><i class="mdi-action-visibility"></i></button>';
+            return '<button id="btnShow" class="btn bg-light-green btn-circle waves-effect waves-circle waves-float" value= "'.$data->pdc_id.'"><i class="mdi-action-visibility"></i></button>';
         })
         ->SETROWID(function ($data) {
             return $data = 'id'.$data->id;
@@ -110,7 +114,12 @@ class pdcValidationController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $pdc=PostDatedCheck::FINDORFAIL($request->myId);
+        $pdc->status=$request->status;
+        $pdc->save();
     }
+
+
 
     /**
      * Remove the specified resource from storage.

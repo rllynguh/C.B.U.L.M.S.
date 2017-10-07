@@ -16,6 +16,9 @@ Route::get('test/floors/{id}',['uses' => 'maintenanceBuildingController@getFloor
 Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits', 'as' =>'test.getUnits']);
 Route::get('test/parkAreas/{id}',['uses' => 'maintenanceBuildingController@getParkAreas', 'as' =>'test.getParkAreas']);
 Route::resource('test','maintenanceBuildingController');
+
+
+
 Route::group(['prefix' => 'tenant/'],function(){
 	Route::get('/test','mergeUnitsController@index')->name('tenant.test');
 	Route::get('/requestUnit','requestUnitsController@index')->name('tenant.requestUnit');
@@ -43,6 +46,9 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	Route::get("contract/view",'contractAmmendmentController@index')->name('tenant.contractView');
 	Route::get("contract/data",'contractAmmendmentController@data')->name('tenant.contractData');
+
+	Route::get('/docs/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);
+
 });
 
 
@@ -173,7 +179,10 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/pdcCollection","pdcCollectionController");
 	Route::get('/transaction/pdcCollection/get/data', ['uses' => 'pdcCollectionController@data', 'as' => 'pdcCollection.getData']);
+	Route::get('/transaction/pdcCollection/updatePDC', ['uses' => 'pdcCollectionController@updatePDC', 'as' => 'pdcCollection.updatePDC']);
 
+	Route::resource("/transaction/pdcValidation","pdcValidationController");
+	Route::get('/transaction/pdcValidation/get/data', ['uses' => 'pdcValidationController@data', 'as' => 'pdcValidation.getData']);
 
 	Route::resource("/transaction/reservationFeeCollection","reservationFeeCollectionController");
 	Route::get('/transaction/reservationFeeCollection/get/data', ['uses' => 'reservationFeeCollectionController@data', 'as' => 'reservationFeeCollection.getData']);

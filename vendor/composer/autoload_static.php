@@ -15,9 +15,9 @@ class ComposerStaticInit3b4600a45985eb159a807608e1b881ee
         '65fec9ebcfbb3cbb4fd0d519687aea01' => __DIR__ . '/..' . '/danielstjules/stringy/src/Create.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
-        '6634e06a6730e5cce52201288dd274f9' => __DIR__ . '/..' . '/laravie/html/src/helpers.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        '6634e06a6730e5cce52201288dd274f9' => __DIR__ . '/..' . '/laravie/html/src/helpers.php',
         '0b47d6d4a00ca9112ba3953b49e7c9a4' => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src/helper.php',
     );
 
@@ -139,9 +139,9 @@ class ComposerStaticInit3b4600a45985eb159a807608e1b881ee
     public static $prefixDirsPsr4 = array (
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'Yajra\\DataTables\\' => 
         array (
@@ -477,6 +477,7 @@ class ComposerStaticInit3b4600a45985eb159a807608e1b881ee
         'App\\Http\\Controllers\\contractCreationController' => __DIR__ . '/../..' . '/app/Http/Controllers/contractCreationController.php',
         'App\\Http\\Controllers\\contractViewController' => __DIR__ . '/../..' . '/app/Http/Controllers/contractViewController.php',
         'App\\Http\\Controllers\\customController' => __DIR__ . '/../..' . '/app/Http/Controllers/customController.php',
+        'App\\Http\\Controllers\\documentController' => __DIR__ . '/../..' . '/app/Http/Controllers/documentController.php',
         'App\\Http\\Controllers\\floorController' => __DIR__ . '/../..' . '/app/Http/Controllers/floorController.php',
         'App\\Http\\Controllers\\maintenanceBuildingController' => __DIR__ . '/../..' . '/app/Http/Controllers/maintenanceBuildingController.php',
         'App\\Http\\Controllers\\marketRateController' => __DIR__ . '/../..' . '/app/Http/Controllers/marketRateController.php',

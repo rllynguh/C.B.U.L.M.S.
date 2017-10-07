@@ -12,11 +12,11 @@
 <div class="modal fade" id="modalRequirement" tabindex="-1" role="dialog">
  {{ Form::open([
   'id' => 'frmRequirement', 'class' => 'form-horizontal'
-  ])
+])
 }}
 {{ Form::hidden('idReg',null,[
   'id'=> 'idReg',
-  ])
+])
 }}
 <div class="modal-dialog" role="document">
   <div class="modal-content modal-col-green">
@@ -54,7 +54,7 @@
 
 @endsection
 @section('scripts')
-{!!Html::script("custom/requirementAssigningAjax.js")!!}
+{!!Html::script("custom/requirementAssigningAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('requirementAssigning.getData')!!}" ;
   var url="{!!route('requirementAssigning.index')!!}" ;

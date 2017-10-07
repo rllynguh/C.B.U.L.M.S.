@@ -176,8 +176,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Orchestra\Html\HtmlServiceProvider::class,
+        App\Providers\ViewComposerServiceProvider::class,
         ],
-
+    
     /*
     |--------------------------------------------------------------------------
     | Class Aliases

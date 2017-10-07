@@ -24,7 +24,7 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/contractCreationAjax.js")!!}
+{!!Html::script("custom/contractCreationAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('contract-create.getData')!!}" ;
   var url="{!!route('contract-create.index')!!}" ;

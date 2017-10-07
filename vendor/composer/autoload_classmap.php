@@ -42,6 +42,7 @@ return array(
     'App\\Http\\Controllers\\contractCreationController' => $baseDir . '/app/Http/Controllers/contractCreationController.php',
     'App\\Http\\Controllers\\contractViewController' => $baseDir . '/app/Http/Controllers/contractViewController.php',
     'App\\Http\\Controllers\\customController' => $baseDir . '/app/Http/Controllers/customController.php',
+    'App\\Http\\Controllers\\documentController' => $baseDir . '/app/Http/Controllers/documentController.php',
     'App\\Http\\Controllers\\floorController' => $baseDir . '/app/Http/Controllers/floorController.php',
     'App\\Http\\Controllers\\maintenanceBuildingController' => $baseDir . '/app/Http/Controllers/maintenanceBuildingController.php',
     'App\\Http\\Controllers\\marketRateController' => $baseDir . '/app/Http/Controllers/marketRateController.php',

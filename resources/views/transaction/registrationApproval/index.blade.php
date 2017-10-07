@@ -23,7 +23,7 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/registrationApprovalAjax.js")!!}
+{!!Html::script("custom/registrationApprovalAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route($test)!!}" ;
   var url="{!!route('registrationApproval.index')!!}" ;
