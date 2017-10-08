@@ -21,11 +21,11 @@
   {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css")!!}!}
   {!!Html::style("css/tenant/custom.css")!!}
   <!--!Html::style("plugins/materialize-css/css/style.min.css")!!}
--->
+  -->
   @yield('styles')
 </head>
 <body>
-<header id="navigation"> 
+  <header id="navigation"> 
     <div class="navbar navbar-inverse navbar-fixed-top" role="banner"> 
       <div class="container-fluid"> 
         <div class="navbar-header"> 
@@ -65,15 +65,15 @@
     </div>
   </header>
   <br><br><br><br>
-<div id = "appa">
-  @yield('content')
-</div>
+  <div id = "appa">
+    @yield('content')
+  </div>
   <script src="{{ asset('js/app.js') }}"></script>
   {!!Html::script("plugins/DataTables/datatables.min.js")!!}
   {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
   {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
-  {!!Html::script("js/pages/forms/form-wizard.js")!!}
-  {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
+  {!!Html::script("js/pages/forms/form-wizard.min.js")!!}
+  {!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
   {!!Html::script('js/pages/cards/basic.js')!!}
   {!!Html::script('js/notify/notify.min.js')!!}
   <!--{!!Html::script('js/admin.js')!!}  -->
@@ -88,6 +88,6 @@
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
   {!!Html::script("plugins/bootstrap3-editable/bootstrap3-editable/js/bootstrap-editable.min.js")!!}
   {!!Html::script("js/tenant/custom.js")!!}
-@yield('scripts')
+  @yield('scripts')
 </body>
 </html>

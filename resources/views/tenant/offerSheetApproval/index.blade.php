@@ -2,25 +2,25 @@
 @section('content')
 <meta name="_token" content="{!! csrf_token() !!}" />
 <div class="container">
-      <div class="card">
-        <div class="card-content body">
-          <table class="table row-border display compact table-hover dataTable table-striped ui celled is-narrow" id="myTable">
-            <thead>
-              <tr>
-                <th class="align-center">OFFER SHEET CODE</th>
-                <th class="align-center">REGISTRATION CODE</th>
-                <th class="align-center">LESSOR</th>
-                <th class="align-center">DATE PROPOSED</th>
-                <th class="align-center">UNITS OFFERED</th>
-                <th class="align-center">ACTION</th>
-              </tr>
-            </thead>
-            <tbody id = "myList">
-            </tbody>
-          </table>
-        </div>
-      </div> <!-- end of .card -->
+  <div class="card">
+    <div class="card-content body">
+      <table class="table row-border display compact table-hover dataTable table-striped ui celled is-narrow" id="myTable">
+        <thead>
+          <tr>
+            <th class="align-center">OFFER SHEET CODE</th>
+            <th class="align-center">REGISTRATION CODE</th>
+            <th class="align-center">LESSOR</th>
+            <th class="align-center">DATE PROPOSED</th>
+            <th class="align-center">UNITS OFFERED</th>
+            <th class="align-center">ACTION</th>
+          </tr>
+        </thead>
+        <tbody id = "myList">
+        </tbody>
+      </table>
     </div>
+  </div> <!-- end of .card -->
+</div>
 
 @endsection
 @section('scripts')
