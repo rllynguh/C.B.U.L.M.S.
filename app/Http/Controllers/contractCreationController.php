@@ -127,7 +127,7 @@ class contractCreationController extends Controller
           ->where('registration_header_id',$request->regi_id)
           ->join('unit_prices','units.id','unit_prices.unit_id')
           ->whereRaw('date_as_of=(SELECT Max(date_as_of) from unit_prices where unit_id=units.id)')
-          ->select('units.id','price')
+          ->select('units.id',DB::RAW(''))
           ->where('offer_sheet_details.status',1)
           ->where('registration_details.is_forfeited',0)
           ->where('registration_details.is_rejected',0)
