@@ -54,15 +54,6 @@ function setModal(){
          $("#contractDetailsTable").html(details);
          $("#tabs").html(list+content);
          $("#tabs").tabs();
-         $('#test').editable({
-            type: 'text',
-            title: 'Enter username',
-            success: function(response, newValue) {
-               // userModel.set('username', newValue); //update backbone model
-            }
-        });
-         //console.log(list);
-         //console.log(content);
         },
         error: function(xhr,textStatus,err)
         {
@@ -76,21 +67,9 @@ function setModal(){
 }
 
 /*
-if(contractDetailsTable!=null){
-        contractDetailsTable.destroy();
-        $('#contractDetailsTable').empty();
-    }
-    contractDetailsTable= $('#contractDetailsModalTable').DataTable({
-        responsive: true,
-        processing: true,
-        serverSide: true,
-        ajax: dataurl,
-        columns: [
-        {data: 'code'},
-        {data: 'full_name'},
-        {data: 'unit_count'},
-        {data: 'date_issued'},
-        {data: 'action'},
-        ]
-    });
-    */
+$('#test').editable({
+            type: 'text',
+            title: 'Enter username',
+            success: function(response, newValue) {
+            }
+        });*/
