@@ -6,8 +6,9 @@
  {!!Html::style("css/themes/all-themes.min.css")!!}
 
  <div class="row clearfix">
- 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
- 		<div class="card">
+	<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+ 	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+ 		<div class="card m-t-20">
  			<div class="header">
  				<h2 class="align-center">TENANT REGISTRATION</h2>
  				<ul class="header-dropdown m-r--5">
@@ -644,3 +645,6 @@
  				floor_url="{{route("custom.getFloor")}}";
  				range_url="{{route("custom.getRange")}}";
  			</script>
+	<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+		
+	</div>
