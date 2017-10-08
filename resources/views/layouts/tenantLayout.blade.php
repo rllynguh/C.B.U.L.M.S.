@@ -11,14 +11,14 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   {!!Html::style("plugins/DataTables/datatables.min.css")!!}
-  {!!Html::style("plugins/node-waves/waves.css")!!}
+  {!!Html::style("plugins/node-waves/waves.min.css")!!}
   {!!Html::style("plugins/animate-css/animate.min.css")!!}
   {!!Html::style("plugins/waitMe/waitMe.min.css")!!}
   {!!Html::style("plugins/jquery-ui-1.12.1/jquery-ui.min.css")!!}
   {!!Html::style("plugins/bootstrap3-editable/bootstrap3-editable/css/bootstrap-editable.css")!!}
-  {!!Html::style("css/parsleyStyle.css")!!}
-  {!!Html::style("css/themes/all-themes.css")!!}
-  {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css")!!}!}
+  {!!Html::style("css/parsleyStyle.min.css")!!}
+  {!!Html::style("css/themes/all-themes.min.css")!!}
+  {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css")!!}!}
   {!!Html::style("css/tenant/custom.css")!!}
   <!--!Html::style("plugins/materialize-css/css/style.min.css")!!}
 -->
@@ -70,7 +70,7 @@
 </div>
   <script src="{{ asset('js/app.js') }}"></script>
   {!!Html::script("plugins/DataTables/datatables.min.js")!!}
-  {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js")!!}
+  {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
   {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
   {!!Html::script("js/pages/forms/form-wizard.js")!!}
   {!!Html::script('js/pages/forms/advanced-form-elements.js')!!}
@@ -78,13 +78,13 @@
   {!!Html::script('js/notify/notify.min.js')!!}
   <!--{!!Html::script('js/admin.js')!!}  -->
   {!!Html::script('js/demo.js')!!} 
-  {!!Html::script("plugins/jquery-steps/jquery.steps.js")!!}
-  {!!Html::script("plugins/jquery-validation/jquery.validate.js")!!}
+  {!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
+  {!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
   {!!Html::script('plugins/jquery/parsley.min.js')!!}
-  {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.js')!!}
-  {!!Html::script('plugins/node-waves/waves.js')!!}
+  {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
+  {!!Html::script('plugins/node-waves/waves.min.js')!!}
   {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
-  {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.js")!!}
+  {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
   {!!Html::script("plugins/bootstrap3-editable/bootstrap3-editable/js/bootstrap-editable.min.js")!!}
   {!!Html::script("js/tenant/custom.js")!!}

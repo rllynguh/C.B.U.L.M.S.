@@ -24,7 +24,7 @@
 
 @endsection
 @section('scripts')
-{!!Html::script("custom/offerSheetApprovalAjax.js")!!}
+{!!Html::script("custom/offerSheetApprovalAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('offerSheetApproval.getData')!!}" ;
   var url="{!!route('offerSheetApproval.index')!!}" ;
