@@ -34,25 +34,24 @@ class buildingController extends Controller
     	->join('cities','addresses.city_id',"cities.id")
     	->join('provinces','cities.province_id',"provinces.id")
     	->get();
-        return response()->json($result);
-    	return Datatables::of($result)
-    	->addColumn('action', function ($data) {
-    		return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>
-    		<button id="btnPrice" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value= "'.$data->id.'"><i class="mdi-editor-attach-money"></i></button>
-    		';
-    	})
-    	->editColumn('is_active', function ($data) {
-    		$checked = '';
-    		if($data->is_active==1){
-    			$checked = 'checked';
-    		}
-    		return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
-    	})
-    	->setRowId(function ($data) {
-    		return $data = 'id'.$data->id;
-    	})
-    	->rawColumns(['is_active','action'])
-    	->make(true);
+        return Datatables::of($result)
+        ->addColumn('action', function ($data) {
+          return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>
+          <button id="btnPrice" type="button" class="btn bg-brown btn-circle waves-effect waves-circle waves-float" value= "'.$data->id.'"><i class="mdi-editor-attach-money"></i></button>
+          ';
+      })
+        ->editColumn('is_active', function ($data) {
+          $checked = '';
+          if($data->is_active==1){
+           $checked = 'checked';
+       }
+       return '<div class="switch"><label>Off<input '.$checked.' type="checkbox" id="IsActive" value="'.$data->id.'"><span class="lever switch-col-blue"></span>On</label></div>';
+   })
+        ->setRowId(function ($data) {
+          return $data = 'id'.$data->id;
+      })
+        ->rawColumns(['is_active','action'])
+        ->make(true);
     }
 
     public function index()

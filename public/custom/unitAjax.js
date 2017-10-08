@@ -17,8 +17,8 @@ $(document).ready(function()
       type: "POST"
     },
     columns: [
-    {data: 'description', name: 'buildings.description'},
-    {data: 'floor_number', name: 'floors.number'},
+    {data: 'description', name: 'description'},
+    {data: 'floor_number', name: 'number'},
     {data: 'unit_code', name: ' units.code'},
     {data: 'type', name: 'units.type'},
     {data: 'size'},
