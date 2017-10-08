@@ -282,23 +282,6 @@
 </a>
 </li>
 <li class="
-{{strpos(Request::path(),'transaction/registrationForfeit') ? 'active' : ''}}
-
-">
-<a href="{{route('registrationForfeit.index')}}" class=" waves-yellow">
-  <i class="mdi-action-delete"></i>
-  <span>Registration Forfeit</span>
-</a>
-</li>
-<li class="
-{{strpos(Request::path(),'transaction/offerSheetApproval') ? 'active' : ''}}
-">
-<a href="{{route('offerSheetApproval.index')}}" class=" waves-yellow">
-  <i class="mdi-action-thumbs-up-down"></i>
-  <span>Offer Sheets Approval</span>
-</a>
-</li>
-<li class="
 {{Request::path() == 'admin/transaction/reservationFeeCollection' ? 'active' : ''}}
 ">
 <a href="{{route('reservationFeeCollection.index')}}" class="waves-yellow">
