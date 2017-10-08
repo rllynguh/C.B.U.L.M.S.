@@ -211,6 +211,7 @@
 							</div>
 						</div>
 					</div>
+<<<<<<< HEAD
 					<div class="col-sm-1"></div>
 
 				</div>
@@ -231,3 +232,22 @@
 			range_url="{{route("custom.getRange")}}";
 		</script>
 		@endsection
+=======
+				</fieldset>
+				{{Form::close()}}
+			</div>
+			@endsection
+			@section('scripts')
+			{!!Html::script("custom/offerSheetApprovalShowAjax.min.js")!!}
+			<script type="text/javascript">
+				mainUrl='{{route('offerSheetApproval.index')}}';
+				dataurl='{{route('offerSheetApproval.index')}}/get/showData/{{$results->id}}';
+				header_remarks="{{$results->tenant_remarks}}";
+				dir='{{ asset('images/units/')}}';
+				urlbtype="{{route("custom.getBuildingType")}}";
+				buil_type_url="{{route("custom.getBuildingType")}}";
+				floor_url="{{route("custom.getFloor")}}";
+				range_url="{{route("custom.getRange")}}";
+			</script>
+			@endsection
+>>>>>>> origin/master
