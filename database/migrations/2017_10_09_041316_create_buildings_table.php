@@ -21,7 +21,6 @@ class CreateBuildingsTable extends Migration {
 			$table->integer('num_of_floor');
 			$table->integer('address_id')->index('fk_builaddcode_idx');
 			$table->boolean('is_active')->default(1);
-			$table->timestamps();
 		});
 	}
 
