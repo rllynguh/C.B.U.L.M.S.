@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta name="_token" content="{!! csrf_token() !!}" />
+  <meta name="_token" content="{{ csrf_token() }}" />
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, 
   user-scalable=no" name="viewport">
   <title>Majent | Lease Management System</title>
@@ -262,6 +262,17 @@
     <span>Registration Approval</span>
   </a>
 </li>
+     
+
+<li class="
+{{strpos(Request::path(),'transaction/unitRequests') ? 'active' : ''}}
+">
+<a href="{{route('unitRequests.index')}}" class="waves-yellow">
+  <i class="mdi-action-assignment-ind"></i>
+  <span>Unit Requests</span>
+</a>
+</li>
+
 <li class="
 {{strpos(Request::path(),'transaction/offersheets') ? 'active' : ''}}
 ">
@@ -473,7 +484,6 @@
   </a>
 </li>
 
-<!-- #Menu -->
 </aside>
 
 <!-- #END# Left Sidebar -->

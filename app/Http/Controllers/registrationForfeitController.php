@@ -25,7 +25,7 @@ class registrationForfeitController extends Controller
     public function index()
     {
         //
-      return view('transaction.registrationForfeit.index');
+        return view('tenant.registrationForfeit.index');
     }
     public function data()
     {
@@ -107,7 +107,7 @@ class registrationForfeitController extends Controller
       $result->unit_type=$value;
     }
 
-    return view('transaction.registrationForfeit.show')
+    return view('tenant.registrationForfeit.show')
     ->withRegistration($registration)
     ->withResults($results)
     ;
@@ -154,14 +154,6 @@ class registrationForfeitController extends Controller
       dd($e);
     }
   }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
     /**
      * Show the form for editing the specified resource.
      *

@@ -42,7 +42,7 @@ class registrationController extends Controller
       ->orderBy('description')
       ->pluck('description','id')
       ;
-      return view("transaction.tenantRegistration.index")
+      return view("tenant.registration")
       ->withTenaprov($province)
       ->withReprprov($province)
       ->withBusitype($busitype)

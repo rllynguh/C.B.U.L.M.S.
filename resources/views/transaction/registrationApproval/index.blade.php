@@ -2,7 +2,7 @@
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
   <li><a> Transaction</a></li>
-  <li><a href="{{route("registrationApproval.index")}}"> Registration Approval</a></li>
+  <li><a href="{{route($route)}}"> {{$routeName}}</a></li>
 </ol>
 @endsection
 @section('content')
@@ -25,7 +25,7 @@
 @section('scripts')
 {!!Html::script("custom/registrationApprovalAjax.min.js")!!}
 <script type="text/javascript">
-  var dataurl="{!!route('registrationApproval.getData')!!}" ;
+  var dataurl="{!!route($test)!!}" ;
   var url="{!!route('registrationApproval.index')!!}" ;
 </script>
 @endsection

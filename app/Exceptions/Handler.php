@@ -1,7 +1,6 @@
 <?php
 namespace App\Exceptions;
 use Exception;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 class Handler extends ExceptionHandler
 {
@@ -18,6 +17,11 @@ class Handler extends ExceptionHandler
     \Illuminate\Session\TokenMismatchException::class,
     \Illuminate\Validation\ValidationException::class,
     ];
+
+    protected $dontFlash = [
+        'password',
+        'password_confirmation',
+     ];       
     /**
      * Report or log an exception.
      *
@@ -50,17 +54,9 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
     /**
-     * Convert an authentication exception into an unauthenticated response.
+     * Create a Symfony response for the given exception.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Auth\AuthenticationException  $exception
-     * @return \Illuminate\Http\Response
+     * @param  \Exception  $e
+     * @return mixed
      */
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
-        return redirect()->guest(route('login'));
-    }
 }

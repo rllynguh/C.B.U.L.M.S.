@@ -227,7 +227,7 @@ class reservationFeeCollectionController extends Controller
         ->join('units','offer_sheet_details.unit_id','units.id')
         ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
         ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
-        ->select(DB::raw("SUM(price * size) as fee,$reservation->fee as month"))
+        ->select(DB::raw('SUM(price * size) as fee,'.$reservation->fee.' as month'))
         ->where('registration_headers.id',$id)
         ->where('offer_sheet_headers.status',1)
         ->where('offer_sheet_details.status',1)

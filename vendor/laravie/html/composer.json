@@ -1,0 +1,58 @@
+{
+    "name": "laravie/html",
+    "description": "HTML and Form Builders for the Laravel Framework",
+    "license": "MIT",
+    "homepage": "https://github.com/laravie/html",
+    "keywords": ["laravel", "html", "form"],
+    "support": {
+        "issues": "https://github.com/laravie/html/issues",
+        "source": "https://github.com/laravie/html"
+    },
+    "authors": [
+        {
+            "name": "Mior Muhammad Zaki",
+            "email": "crynobone@gmail.com"
+        },
+        {
+            "name": "Adam Engebretson",
+            "email": "adam@laravelcollective.com"
+        },
+        {
+            "name": "Taylor Otwell",
+            "email": "taylorotwell@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Collective\\Html\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "require": {
+        "php": ">=7.0",
+        "illuminate/http": "~5.5.0",
+        "illuminate/routing": "~5.5.0",
+        "illuminate/session": "~5.5.0",
+        "illuminate/support": "~5.5.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^0.9.4",
+        "orchestra/database": "~3.5.0",
+        "orchestra/testbench": "~3.5.0",
+        "phpunit/phpunit": "~6.0"
+    },
+    "replace": {
+        "laravelcollective/html": "*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.5-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}

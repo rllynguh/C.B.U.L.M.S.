@@ -1,18 +1,12 @@
 <?php
 
-namespace Yajra\Datatables;
+namespace Yajra\DataTables;
 
 use Illuminate\Support\ServiceProvider;
-use League\Fractal\Manager;
-use League\Fractal\Serializer\DataArraySerializer;
+use Yajra\DataTables\Utilities\Config;
+use Yajra\DataTables\Utilities\Request;
 
-/**
- * Class DatatablesServiceProvider.
- *
- * @package Yajra\Datatables
- * @author  Arjay Angeles <aqangeles@gmail.com>
- */
-class DatatablesServiceProvider extends ServiceProvider
+class DataTablesServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -43,31 +37,19 @@ class DatatablesServiceProvider extends ServiceProvider
     public function register()
     {
         if ($this->isLumen()) {
-            require_once 'fallback.php';
+            require_once 'lumen.php';
         }
 
-        $this->app->singleton('datatables.fractal', function () {
-            $fractal = new Manager;
-            $config  = $this->app['config'];
-            $request = $this->app['request'];
-
-            $includesKey = $config->get('datatables.fractal.includes', 'include');
-            if ($request->get($includesKey)) {
-                $fractal->parseIncludes($request->get($includesKey));
-            }
-
-            $serializer = $config->get('datatables.fractal.serializer', DataArraySerializer::class);
-            $fractal->setSerializer(new $serializer);
-
-            return $fractal;
-        });
-
-        $this->app->alias('datatables', Datatables::class);
+        $this->app->alias('datatables', DataTables::class);
         $this->app->singleton('datatables', function () {
-            return new Datatables(new Request(app('request')));
+            return new DataTables;
         });
 
-        $this->registerAliases();
+        $this->app->singleton('datatables.request', function () {
+            return new Request;
+        });
+
+        $this->app->singleton('datatables.config', Config::class);
     }
 
     /**
@@ -81,23 +63,16 @@ class DatatablesServiceProvider extends ServiceProvider
     }
 
     /**
-     * Create aliases for the dependency.
-     */
-    protected function registerAliases()
-    {
-        if (class_exists('Illuminate\Foundation\AliasLoader')) {
-            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Datatables', \Yajra\Datatables\Facades\Datatables::class);
-        }
-    }
-
-    /**
      * Get the services provided by the provider.
      *
      * @return string[]
      */
     public function provides()
     {
-        return ['datatables', 'datatables.fractal'];
+        return [
+            'datatables',
+            'datatables.config',
+            'datatables.request',
+        ];
     }
 }

@@ -10,12 +10,49 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::view('/','welcome')->middleware('auth');
+Route::get('test-manage','maintenanceBuildingController@manageItemAjax');
+Route::get('test/floors/{id}',['uses' => 'maintenanceBuildingController@getFloors', 'as' =>'test.getFloors']);
+Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits', 'as' =>'test.getUnits']);
+Route::get('test/parkAreas/{id}',['uses' => 'maintenanceBuildingController@getParkAreas', 'as' =>'test.getParkAreas']);
+Route::resource('test','maintenanceBuildingController');
 
-Route::get('/', function () {
-	return view('welcome');
-})->middleware('auth');
+
+
+Route::group(['prefix' => 'tenant/'],function(){
+	Route::get('/test','mergeUnitsController@index')->name('tenant.test');
+	Route::get('/requestUnit','requestUnitsController@index')->name('tenant.requestUnit');
+	Route::post('/requestUnit2','requestUnitsController@store')->name('tenant.requestUnitStore');
+	Route::get('/TerminateContract','terminateContractController@index')->name('tenant.terminateContract');
+	Route::get('/test1','contractAmmendmentController@getUnits')->name('tenant.getUnits');
+	Route::view('/','tenant.index')->name('tenant.home');
+	Route::get('/login', function () {return view('tenant.login');});
+	Route::get('/profile', function () {return view('tenant.profile');});
+	Route::get('/soa', function () {return view('tenant.soa');});
+	Route::get("/dashboard",function(){return view('tenant.dashboard');});
+	Route::resource("registration","registrationController");
+	
+	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
+	Route::get('/transaction/offerSheetApproval/get/data','offerSheetApprovalController@data')->name('offerSheetApproval.getData');
+	Route::get('/transaction/offerSheetApproval/get/showData/{id}','offerSheetApprovalController@showData')->name('offerSheetApproval.showData');
+
+
+	Route::resource("/transaction/registrationForfeit","registrationForfeitController");
+	Route::get('/transaction/registrationForfeit/get/data','registrationForfeitController@data')->name('registrationForfeit.getData');
+	Route::get('/transaction/registrationForfeit/get/showData/{id}', 'registrationForfeitController@showData')->name('registrationForfeit.showData');
+
+	Route::resource("/transaction/contract","contractViewController");
+	Route::get('/transaction/contract/get/data','contractViewController@data')->name('contract.getData');
+
+	Route::get("contract/view",'contractAmmendmentController@index')->name('tenant.contractView');
+	Route::get("contract/data",'contractAmmendmentController@data')->name('tenant.contractData');
+
+	Route::get('/docs/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);
+
+});
+
+
 //temporary for when the template is only for admin
-
 
 Route::group(['prefix' => 'admin/'], function () {
 	Route::get('/', function () {
@@ -114,11 +151,15 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/registrationApproval","registrationApprovalController");
 	Route::get('/transaction/registrationApproval/get/data', ['uses' => 'registrationApprovalController@data', 'as' => 'registrationApproval.getData']);
 
+	Route::get("/transaction/unitRequests","registrationApprovalController@unitRequests")->name('unitRequests.index');
+	Route::get('/transaction/unitRequests/get/data','registrationApprovalController@data_existing_tenant')->name('unitRequests.getData');
 
 	Route::resource("/transaction/offersheets","offerSheetController");
 	Route::get('/transaction/offersheets/get/data', ['uses' => 'offerSheetController@data', 'as' => 'offerSheets.getData']);
 	Route::get('/transaction/offersheets/showOptions/{id}', ['uses' => 'offerSheetController@showOptions', 'as' => 'offerSheets.showOptions']);
 	Route::post('/transaction/offersheets/get/showData/{id}', ['uses' => 'offerSheetController@showData', 'as' => 'offerSheets.showData']);
+
+	
 
 
 	Route::resource("/transaction/requirementAssigning","requirementAssigningController");
@@ -161,34 +202,6 @@ Route::group(['prefix' => 'admin/'], function () {
 
 
 
-
-
-Route::group(['prefix' => 'tenant/'], function () {
-
-	Route::get('/docs/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);
-
-	Route::get('/', function () {
-		return view('user.tenant.index');
-	})->middleware('auth','tenant');
-
-
-
-	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
-	Route::get('/transaction/offerSheetApproval/get/data', ['uses' => 'offerSheetApprovalController@data', 'as' => 'offerSheetApproval.getData']);
-	Route::get('/transaction/offerSheetApproval/get/showData/{id}', ['uses' => 'offerSheetApprovalController@showData', 'as' => 'offerSheetApproval.showData']);
-
-
-	Route::resource("/transaction/registrationForfeit","registrationForfeitController");
-	Route::get('/transaction/registrationForfeit/get/data', ['uses' => 'registrationForfeitController@data', 'as' => 'registrationForfeit.getData']);
-	Route::get('/transaction/registrationForfeit/get/showData/{id}', ['uses' => 'registrationForfeitController@showData', 'as' => 'registrationForfeit.showData']);
-
-
-	Route::resource("/transaction/contract","contractViewController");
-	Route::get('/transaction/contract/get/data', ['uses' => 'contractViewController@data', 'as' => 'contract.getData']);
-});
-
-
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -204,6 +217,5 @@ Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRa
 
 
 
-Route::resource("registration","registrationController");
 
 

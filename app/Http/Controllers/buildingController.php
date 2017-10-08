@@ -34,6 +34,7 @@ class buildingController extends Controller
     	->join('cities','addresses.city_id',"cities.id")
     	->join('provinces','cities.province_id',"provinces.id")
     	->get();
+        return response()->json($result);
     	return Datatables::of($result)
     	->addColumn('action', function ($data) {
     		return '<button id="btnAddFloor" type="button" class="btn bg-green btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-content-add"></i></button> <button id="btnEdit" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button> <button type="button" class="btn bg-red btn-circle waves-effect waves-circle waves-float deleteRecord" value= "'.$data->id.'"><i class="mdi-action-delete"></i></button>
