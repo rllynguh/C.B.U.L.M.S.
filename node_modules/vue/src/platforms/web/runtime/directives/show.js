@@ -1,5 +1,6 @@
 /* @flow */
 
+import { isIE9 } from 'core/util/env'
 import { enter, leave } from '../modules/transition'
 
 // recursively search for possible transition defined inside the component root
@@ -15,7 +16,7 @@ export default {
     const transition = vnode.data && vnode.data.transition
     const originalDisplay = el.__vOriginalDisplay =
       el.style.display === 'none' ? '' : el.style.display
-    if (value && transition) {
+    if (value && transition && !isIE9) {
       vnode.data.show = true
       enter(vnode, () => {
         el.style.display = originalDisplay
@@ -30,7 +31,7 @@ export default {
     if (value === oldValue) return
     vnode = locateNode(vnode)
     const transition = vnode.data && vnode.data.transition
-    if (transition) {
+    if (transition && !isIE9) {
       vnode.data.show = true
       if (value) {
         enter(vnode, () => {

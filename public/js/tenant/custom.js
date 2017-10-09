@@ -65,6 +65,7 @@ var room = 1;
 var buil_option="";
 var floor_option="";
 var range_option="";
+var building_types={};
 function fields() {
 
   room++;
@@ -72,7 +73,8 @@ function fields() {
   var divtest = document.createElement("div");
   divtest.setAttribute("class", "form-group removeclass"+room);
   var rdiv = 'removeclass'+room;
-  divtest.innerHTML = '<div class="input-group-btn pull-right m-r--5 header-dropdown"><button class="btn btn-danger" type="button"  onclick="remove_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div><div class="col-sm-3 nopadding"> <div class=form-group> <div class=input-group> <label class=control-label>Building Type*</label> <div class=form-line> <select class="form-control form-line" id=builtype name=builtype[]>' + buil_option +'</select> </div> </div> </div> </div> <div class="col-sm-3 nopadding"> <div class=form-group> <label class=control-label>Floor #*</label> <div class=form-line> <select class="form-control form-line" id=floor name=floor[]>'+ floor_option +'</select> </div> </div> </div> <div class="col-sm-3 nopadding"> <div class=form-group> <div class=input-group> <label class=control-label>Unit Type*</label> <div class=form-line> <select class="form-control form-line" id=utype name=utype[]> <option value=0>Raw</option> <option value=1>Shell</option> </select> </div> </div> </div> </div> <div class="col-sm-3 nopadding"> <div class=form-group> <label class=control-label>Size*</label> <div class=form-line> <select class="form-control form-line" id=size name=size[]>'+ range_option +'</select> </div> </div> </div> <div class="col-sm-12 nopadding"> <div class=form-group> <label class=control-label>Remarks*</label> <div class=form-line> <textarea class="form-control form-line" id=remarks name=remarks[] value></textarea> </div> </div> </div>'
+  divtest.innerHTML = '<div class="input-group-btn pull-right m-r--5 header-dropdown"><button class="btn btn-danger" type="button"  onclick="remove_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div><div class = "row"><div class="col-sm-3 nopadding"> <div class=form-group> <div class=input-group> <label class=control-label>Building Type*</label> <div class=form-line> <select class="form-control form-line" id=builtype name=builtype[]>' + buil_option +'</select> </div> </div> </div> </div> <div class="col-sm-3 nopadding"> <div class=form-group> <label class=control-label>Floor #*</label> <div class=form-line> <select class="form-control form-line" id=floor name=floor[]>'+ floor_option +'</select> </div> </div> </div> <div class="col-sm-3 nopadding"> <div class=form-group> <div class=input-group> <label class=control-label>Unit Type*</label> <div class=form-line> <select class="form-control form-line" id=utype name=utype[]> <option value=0>Raw</option> <option value=1>Shell</option> </select> </div> </div> </div> </div> <div class="col-sm-3 nopadding"> <div class=form-group> <label class=control-label>Size*</label> <div class=form-line> <select class="form-control form-line" id=size name=size[]>'
+  + range_option +'</select> </div> </div> </div></div> <div class="col-sm-12 nopadding"> <div class=form-group> <label class=control-label>Remarks*</label> <div class=form-line> <textarea class="form-control form-line" id=remarks name=remarks[] value></textarea> </div> </div> </div>'
   //divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"><label class="control-label">Building Type*</label><select class="form-control form-line" id="builtype" name="builtype[]">' + buil_option +'</select></div></div></div>  <div class="col-sm-3 nopadding"><div class="form-group"><label class="control-label">Floor #*</label><select class="form-control form-line" id="floor" name="floor[]">'+ floor_option +'</select></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"><label class="control-label">Unit Type*</label><select class="form-control form-line" id="utype" name="utype[]"><option value="0">Raw</option><option value="1">Shell</option></select></div></div></div>  <div class="col-sm-3 nopadding"><div class="form-group"><label class="control-label">Size*</label><select class="form-control form-line" id="size" name="size[]">'+ range_option +'</select></div></div><div class="col-sm-12 nopadding"><div class="form-group"><label class="control-label">Remarks*</label><textarea class="form-control form-line" id="remarks" name="remarks[]" value="" ></textarea></div><div class="input-group-btn"><button class="btn btn-danger" type="button"  onclick="remove_fields('+ room +');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div><div class="clear"></div>';
   objTo.appendChild(divtest);
 }
@@ -97,6 +99,7 @@ function getBuildingType()
     {
       $('#builtype').append($('<option>', {value:value.id, text:value.description}));
       buil_option+=' <option value="' + value.id +'">' + value.description + '</option>';
+      building_types[value.id] = value.description;
     });
   });
 }

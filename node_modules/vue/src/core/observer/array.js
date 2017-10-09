@@ -23,12 +23,21 @@ export const arrayMethods = Object.create(arrayProto)
 .forEach(function (method) {
   // cache original method
   const original = arrayProto[method]
-  def(arrayMethods, method, function mutator (...args) {
+  def(arrayMethods, method, function mutator () {
+    // avoid leaking arguments:
+    // http://jsperf.com/closure-with-arguments
+    let i = arguments.length
+    const args = new Array(i)
+    while (i--) {
+      args[i] = arguments[i]
+    }
     const result = original.apply(this, args)
     const ob = this.__ob__
     let inserted
     switch (method) {
       case 'push':
+        inserted = args
+        break
       case 'unshift':
         inserted = args
         break

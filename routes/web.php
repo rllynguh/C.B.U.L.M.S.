@@ -21,7 +21,7 @@ Route::resource('test','maintenanceBuildingController');
 
 Route::group(['prefix' => 'tenant/'],function(){
 	// Data output testing
-	Route::get('/test1','contractAmmendmentController@getUnits')->name('tenant.getUnits');
+	Route::get('/test1/{id?}','contractAmmendmentController@getUnits')->name('tenant.getUnits');
 	Route::get('/test2','contractAmmendmentController@test');
 
 
@@ -57,6 +57,7 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::get('/transaction/contract/get/data','contractViewController@data')->name('contract.getData');
 
 	Route::get("contract/view",'contractAmmendmentController@index')->name('tenant.contractView');
+	Route::get("contract/view/{id}",'contractAmmendmentController@edit')->name('tenant.contractEdit');
 	Route::get("contract/data",'contractAmmendmentController@data')->name('tenant.contractData');
 
 	Route::get('/docs/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);
