@@ -163,7 +163,7 @@ class pdcCollectionController extends Controller
      ->join('billing_headers','billing_details.billing_header_id','billing_headers.id')
      ->SELECT('price','billing_items.description')
      ->WHERERAW("billing_headers.current_contract_id=$id and (billing_items.description='Cusa Fee' or billing_items.description = 'Rent')")
-     ->GROUPBY('billing_headers.id')
+     ->GROUPBY('billing_details.id')
      ->LIMIT('2')
      ->get();
 

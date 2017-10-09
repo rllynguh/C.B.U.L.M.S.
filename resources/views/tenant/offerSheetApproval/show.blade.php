@@ -1,4 +1,4 @@
-@extends('layouts.tenantLayout')
+@extends('layout.coreLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
 	<li><a> Transaction</a></li>
@@ -219,6 +219,8 @@
 		</div>
 		@endsection
 		@section('scripts')
+		{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
+		
 		{!!Html::script("custom/offerSheetApprovalShowAjax.min.js")!!}
 		<script type="text/javascript">
 			mainUrl='{{route('offerSheetApproval.index')}}';

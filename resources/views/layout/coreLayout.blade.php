@@ -262,7 +262,7 @@
     <span>Registration Approval</span>
   </a>
 </li>
-     
+
 
 <li class="
 {{strpos(Request::path(),'transaction/unitRequests') ? 'active' : ''}}

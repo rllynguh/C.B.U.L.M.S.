@@ -1,4 +1,4 @@
-@extends('layouts.tenantLayout')
+@extends('layout.coreLayout')
 @section('content')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
