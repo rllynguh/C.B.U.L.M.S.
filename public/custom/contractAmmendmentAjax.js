@@ -15,7 +15,7 @@ $(document).ready(function()
         ]
     });
    $.fn.editable.defaults.mode = 'inline';
-   $("#accordion").accordion({header: 'h3'});
+   $(".accordion").accordion({header: 'h3'});
    $("body").on("click", ".btnShowContractDetails", setModal);
    $("body").on("click", ".btnAlterContract", showEditModal);
    $( "#sortable1, #sortable2" ).sortable({
@@ -128,7 +128,7 @@ function setModal(){
          $("#header").html(header);
          $("#total_cost").html(total_cost);
          $("#contractDetailsTable").html(details);
-         $("#accordion").html(content);
+         $("#unitsDetail").html(content);
          $(".accordion").accordion("refresh");
         },
         error: function(xhr,textStatus,err)

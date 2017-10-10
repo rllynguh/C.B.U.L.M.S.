@@ -1,3 +1,4 @@
+<!-- Contract Ammendment Modal -->
 <div class="modal fade" id="modal-alter-contract">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -14,7 +15,6 @@
                                 <div id = "requests" class = "accordion">
                                     <h4> Units to requested </h4>
                                 </div>
-
                                 <div class="checkbox checkbox-primary">
                                     <input id="checkbox2" type="checkbox" checked="">
                                     <label class = "unselectable" for="checkbox2">
@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <div class = "accordion" id = "sortable1">
-                                <h4> Units to discarded </h4>
+                                <h4> Units to be kept </h4>
                             </div>
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -50,27 +50,25 @@
         </div>
     </div>
 </div>
+
+<!-- Unit Request Modal  -->
 <div class="modal fade" id="createRequest">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modal title</h4>
+                <h2 class="modal-title">Unit Request Specifications</h2>
             </div>
             <div class="modal-body">
                 <div class="card">
                     <div class="header">
-                        <h2>
-                        Unit Specifications
-                        </h2>
-                        <div class="input-group-btn pull-right m-r--5 header-dropdown">
-                            <button class="btn btn-success" type="button"  onclick="fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
-                        </div>
+                        <a href="#" class="btn btn-primary btn-primary" onclick="fields();"><span class="glyphicon glyphicon-plus"></span> Add unit</a>
                     </div>
                     <div class="body">
                         <form action="" method="POST" role="form" id = 'testform'>
                         <fieldset>
-                            <div class="panel-body">
+                            <div class="panel-body" id = "fields">
+                                <div class = removeclass1>
                                 <div class="col-sm-2 nopadding">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -109,7 +107,12 @@
                                 <select class="form-control form-line" id="size" name="size[]"></select>
                             </div>
                         </div>
+                       
                     </div>
+                     <div class="col-sm-2 nopadding">
+                        <br>
+                            <a href="#" onclick = "remove_fields(1);" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Unit</a>
+                        </div>
                     <div class="col-sm-12 nopadding">
                         <div class="form-group">
                             <label class="control-label">Remarks*</label>
@@ -117,10 +120,9 @@
                                 <textarea class="form-control form-line" id="remarks" name="remarks[]" value=""></textarea>
                             </div>
                         </div>
-                        
                     </div>
-                    <div id="fields"></div>
-                    <div class="clear"></div>
+
+                    </div>
                 </div>
             </fieldset>
         </form>
@@ -130,6 +132,7 @@
 <div class="modal-footer" id = "requestFooter">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
     <button type="button" class="btn btn-primary" id = "btnSubmitUnitRequest" onclick="addUnitRequest()">Save changes</button>
+
 </div>
 </div>
 </div>

@@ -13,7 +13,7 @@
                         <div class="row">
                             <h2>Units</h2>
                         </div>
-                        <div id="accordion">
+                        <div class="accordion" id = "unitsDetail">
                           
                       </div>
                     </div>
