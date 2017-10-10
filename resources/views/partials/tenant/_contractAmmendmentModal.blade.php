@@ -16,12 +16,13 @@
                                     <h4> Units to requested </h4>
                                 </div>
                                 <div class="checkbox checkbox-primary">
-                                    <input id="checkbox2" type="checkbox" checked="">
-                                    <label class = "unselectable" for="checkbox2">
+                                    <input id="durationToggle" type="checkbox">
+                                    <label class = "unselectable" for="durationToggle">
                                          Change Contract Duration
                                     </label>
                                 </div>
-                                <input type="date" name="" id="input" class="form-control" value="" required="required" title="">
+                                <label for="duration">Contract duration change:</label>
+                                <input id="duration" name="value">
                                 
                             </div>
                         </div>
@@ -40,19 +41,21 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                    <button type="button" class="btn btn-primary" data-toggle='modal' data-target= '#createRequestModal' >Edit Unit Requests</button>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-toggle='modal' data-target= '#createRequest' >Save changes</button>
+                <button type="submit" class="btn btn-primary" id = "btnAmmendmentSubmit">Submit</button>
+                
             </div>
+            </form>
         </div>
     </div>
 </div>
 
 <!-- Unit Request Modal  -->
-<div class="modal fade" id="createRequest">
+<div class="modal fade" id="createRequestModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

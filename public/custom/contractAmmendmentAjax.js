@@ -1,4 +1,6 @@
  var contractDetailsTable;
+ var duration = $("#duration");
+ const MAX_CHANGE = 12;
 $(document).ready(function()
 { 
    var table = $('#myTable').DataTable({
@@ -18,32 +20,42 @@ $(document).ready(function()
    $(".accordion").accordion({header: 'h3'});
    $("body").on("click", ".btnShowContractDetails", setModal);
    $("body").on("click", ".btnAlterContract", showEditModal);
+   $("#btnAmmendmentSubmit").click(function(e){
+    e.preventDefault();
+    submitRequest();
+   })
    $( "#sortable1, #sortable2" ).sortable({
       connectWith: ".accordion"
     });
 
-$( "#sortable1, #sortable2" ).disableSelection();
+    $( "#sortable1, #sortable2" ).disableSelection();
+    duration.spinner();
+    duration.spinner({
+      spin: function( event, ui ) {
+        if ( ui.value > MAX_CHANGE ) {
+          $( this ).spinner( "value", -MAX_CHANGE );
+          return false;
+        } else if ( ui.value < -MAX_CHANGE ) {
+          $( this ).spinner( "value", MAX_CHANGE );
+          return false;
+        }
+      }
+    });
+    duration.spinner("disable");
+    $("#durationToggle").change(function(){
+        if(this.checked){
+            duration.spinner("enable");
+        }else{
+            duration.spinner("disable");
+        }
+    });
 });
-/*
-0
-:
-{name: "builtype[]", value: "1"}
-1
-:
-{name: "floor[]", value: "1"}
-2
-:
-{name: "utype[]", value: "0"}
-3
-:
-{name: "size[]", value: "100|200"}
-4
-:
-{name: "remarks[]", value: ""}
-*/
+function submitRequest(){
+    console.log('test');
+}
 function addUnitRequest(){
     var data = $("#testform").serializeArray()
-    console.log(data);
+    //console.log(data);
     var requests = "<h4> Units to be requested </h4>";
     // splits the form data into the individual requests
     var i,j,temparray,chunk = 5;
@@ -52,16 +64,17 @@ function addUnitRequest(){
         //console.log(temparray);
         var type = (temparray[2].value == 0)?'Raw':'Shell';
         requests += "<div> <h3>Unit Request " + (chunk/5) 
-        + "</h3><div><b>Unit Type: </b> " + temparray[2].value 
+        + "</h3><div><b>Unit Type: </b> " + type
         +"<br><b>Building Type:</b>" +building_types[temparray[0].value]
         +"<br><b>Floor #</b>" + temparray[1].value
         +"<br><b>Size: </b>" + temparray[3].value
         +"<br><b>Remarks:</b>" + temparray[4].value
         +"</div></div>";
-        console.log(requests);
-        $("#requests").html(requests);
-        $(".accordion").accordion("refresh");
+        //console.log(requests);
     }
+    $("#requests").html(requests);
+    $(".accordion").accordion("refresh");
+    $("#createRequestModal").modal('hide');
 }
 function showEditModal(){
     $('.accordion').accordion({
@@ -106,7 +119,6 @@ function setModal(){
     var total_cost = "$";
     var id = $(this).attr('data-id');
     var num = 1;
-    //console.log(id);
     $.ajax({
         url: urlUnits + "/" + id,
         type: 'GET',
@@ -141,11 +153,3 @@ function setModal(){
         }
     })
 }
-
-/*
-$('#test').editable({
-            type: 'text',
-            title: 'Enter username',
-            success: function(response, newValue) {
-            }
-        });*/
