@@ -24,6 +24,13 @@ class customController extends Controller
 		->get();
 		return Response::json($result);
 	}
+	public function getBanks()
+	{
+		$result=DB::table("banks")
+		->select("banks.id",'banks.description')
+		->get();
+		return Response::json($result);
+	}
 	public function getMarketRate($id)
 	{
 		$result=DB::table("cities")

@@ -13,6 +13,7 @@ use Auth;
 use PDF;
 use App\UserBalance;
 use App\PostDatedCheck;
+use App\FundTransfer;
 
 
 class collectionController extends Controller
@@ -30,17 +31,20 @@ class collectionController extends Controller
     public function index()
     {
         //
-
-        return view('transaction.collection.index');
+        return view('transaction.collection.index1');
     }
     public function data()
     {
         $bills=db::table('billing_headers')
-        ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
+        ->JOIN('current_contracts','billing_headers.current_contract_id','current_contracts.id')
+        ->JOIN('contract_headers','current_contracts.contract_header_id','contract_headers.id')
+        ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
+        ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
+        ->LEFTJOIN('payments','billing_headers.id','payments.billing_header_id')
         ->GROUPBY('billing_headers.id')
         ->HAVINGRAW('cost>coalesce(sum(payments.payment),0)')
         ->WHERERAW('MONTH(billing_headers.date_issued) = MONTH(CURRENT_DATE()) AND YEAR(billing_headers.date_issued) = YEAR(CURRENT_DATE())')
-        ->select(db::raw('billing_headers.code,billing_headers.id,cost,coalesce(sum(payments.payment),0) as amount_paid'))
+        ->select(db::raw('billing_headers.code,billing_headers.id,cost,coalesce(sum(payments.payment),0) as amount_paid,tenants.description'))
         ->get();
 
         return Datatables::of($bills)
@@ -113,12 +117,19 @@ class collectionController extends Controller
         $payment->payment=$request->txtAmount;
         $payment->save();
 
-        if(!is_null($request->pdc_id))
+        if(!is_null($request->pdc_id)) //if paid via pdc
         {
             $pdc=PostDatedCheck::FINDORFAIL($request->pdc_id);
             $pdc->is_accepted=1;
             $pdc->payment_id=$payment->id;
             $pdc->save();
+        }
+          if(!is_null($request->bank)) //if paid via fund transfer
+          {
+            $fund_transfer=new FundTransfer();
+            $fund_transfer->bank_id=$request->bank;
+            $fund_transfer->payment_id=$payment->id;
+            $fund_transfer->save();
         }
 
         $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment','full_name'));
@@ -147,7 +158,6 @@ class collectionController extends Controller
     public function show($id)
     {
         //
-
         $bill_items=DB::table('billing_headers')
         ->join('billing_details','billing_headers.id','billing_details.billing_header_id')
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')

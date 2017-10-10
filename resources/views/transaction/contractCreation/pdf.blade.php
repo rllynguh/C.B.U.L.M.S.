@@ -187,6 +187,6 @@ MAJENT, a corporation duly organized and established under the Philippine laws <
 	Here are the other terms of the contract<br>
 	@foreach($contents as $content)
 	{{$content->description}}
-	</html>
 	@endforeach
+	</html>
 

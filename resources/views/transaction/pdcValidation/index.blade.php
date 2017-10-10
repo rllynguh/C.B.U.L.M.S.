@@ -23,10 +23,10 @@
 <div class="modal-dialog" role="document">
   <div class="modal-content  modal-col-green">
     <div class="modal-header">
-      <h1  class="modal-title align-center p-b-15"><span id='labelReq'>PDC COLLECTION</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+      <h1  class="modal-title align-center p-b-15"><span id='labelReq'>What Would you like to do with this PDC?</span><a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
     </div>
-    <div class="modal-body">
-      <center><h4>What Would you like to do with this PDC?</h4></center>
+    <div id='content' class="modal-body">
+
     </div>
     <div class="modal-footer">
       <button class="btn btn-lg bg-brown waves-effect waves-white" id="btnAccept">Accept</button>

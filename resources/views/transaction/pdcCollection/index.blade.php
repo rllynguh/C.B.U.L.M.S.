@@ -34,7 +34,7 @@
           <div class="col-sm-4">
             <div class="form-group">
               <div class="form-line">
-                <h5 class="card-inside-title">Number of PDC'S</h5>
+                <label class="card-inside-title">Number of PDC'S</label>
                 {{ Form::number('txtPDC',null,[
                   'id' => 'txtPDC',
                   'class' => 'form-control text-center max-digits-2',
