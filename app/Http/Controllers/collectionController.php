@@ -31,7 +31,7 @@ class collectionController extends Controller
     public function index()
     {
         //
-        return view('transaction.collection.index1');
+        return view('transaction.collection.index');
     }
     public function data()
     {

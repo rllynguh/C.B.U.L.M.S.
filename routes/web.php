@@ -208,8 +208,18 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
 	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
 
-	Route::get('/query/offerSheet', ['uses' => 'offerSheetQueryController@index', 'as' => 'offerSheetQuery.index']);
-	Route::get('/query/offerSheet/get/data', ['uses' => 'offerSheetQueryController@data', 'as' => 'offerSheetQuery.getData']);
+	Route::group(['prefix' => '/query'], function () {
+		Route::group(['prefix' => '/offerSheet'], function () {
+			Route::get('/', ['uses' => 'offerSheetQueryController@index', 'as' => 'offerSheetQuery.index']);
+			Route::get('/get/data', ['uses' => 'offerSheetQueryController@data', 'as' => 'offerSheetQuery.getData']);
+		});
+	});
+	Route::group(['prefix' => '/report'], function () {
+		Route::group(['prefix' => 'moveIn/'], function () {
+			Route::get('/', ['uses' => 'moveInReportController@index', 'as' => 'moveInReport.index']);
+			Route::post('/', ['uses' => 'moveInReportController@document', 'as' => 'moveInReport.document']);
+		});
+	});
 });
 
 
