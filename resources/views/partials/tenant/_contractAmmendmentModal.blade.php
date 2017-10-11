@@ -8,7 +8,6 @@
             </div>
             <div class="modal-body">
                 <form action="" role="form">
-                    <legend>Form title</legend>
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
@@ -22,8 +21,7 @@
                                     </label>
                                 </div>
                                 <label for="duration">Contract duration change:</label>
-                                <input id="duration" name="value">
-                                
+                                <input id="duration" name="value" readonly>
                             </div>
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
@@ -34,10 +32,6 @@
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <div class="accordion" id = "sortable2">
                                 <h4> Units to discarded </h4>
-                                <div class="s_panel">
-                                    <h3>Unit 3</h3>
-                                    <div>Unit details</div>
-                                </div>
                             </div>
                         </div>
                     </div>

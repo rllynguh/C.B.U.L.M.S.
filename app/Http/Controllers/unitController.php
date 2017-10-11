@@ -27,7 +27,7 @@ class unitController extends Controller
     public function data()
     {
       $result=DB::table("units")
-      ->select(DB::Raw('Coalesce(price * units.size,1) as price,buildings.description,floors.number as floor_number,units.code as unit_code,units.type,units.size,units.is_active,units.id'))
+      ->select(DB::Raw('Coalesce(price * units.size,1) as price,buildings.description as description,floors.number as floor_number,units.code as unit_code,units.type,units.size,units.is_active,units.id'))
       ->join("floors","units.floor_id","floors.id")
       ->join("buildings","floors.building_id","buildings.id")
       ->join("building_types","buildings.building_type_id","building_types.id")
@@ -96,7 +96,7 @@ class unitController extends Controller
         $result=DB::table("floors")
         ->where("floors.id",$request->comFloor)
         ->join("buildings","floors.building_id","buildings.id")
-        ->select("buildings.description","floors.number")
+        ->select("description","floors.number")
         ->first();
         $pk=strtoupper(substr($result->description, 0, 3)).strtoupper($result->number)."UNIT".strtoupper($uNum) ;
         $image = $request->file('picture');

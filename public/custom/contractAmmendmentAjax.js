@@ -25,24 +25,27 @@ $(document).ready(function()
     submitRequest();
    })
    $( "#sortable1, #sortable2" ).sortable({
-      connectWith: ".accordion"
+      connectWith: "#sortable1, #sortable2",
+      items: '.s_panel',
+      placeholder: "ui-state-highlight"
     });
 
-    $( "#sortable1, #sortable2" ).disableSelection();
+    $( "#sortable1, #sortable2, #requests" ).disableSelection();
     duration.spinner();
     duration.spinner({
       spin: function( event, ui ) {
         if ( ui.value > MAX_CHANGE ) {
-          $( this ).spinner( "value", -MAX_CHANGE );
+          duration.spinner( "value", -MAX_CHANGE );
           return false;
         } else if ( ui.value < -MAX_CHANGE ) {
-          $( this ).spinner( "value", MAX_CHANGE );
+          duration.spinner( "value", MAX_CHANGE );
           return false;
         }
       }
     });
     duration.spinner("disable");
     $("#durationToggle").change(function(){
+        duration.spinner("value",1);
         if(this.checked){
             duration.spinner("enable");
         }else{
@@ -51,26 +54,35 @@ $(document).ready(function()
     });
 });
 function submitRequest(){
-    console.log('test');
+    var data = $("#testform").serializeArray();
+    $("#sortable2").find(".s_panel").each(function(index,value){
+        console.log($(this).data("code"));
+    });  
 }
 function addUnitRequest(){
-    var data = $("#testform").serializeArray()
-    //console.log(data);
+    var data = $("#testform").serializeArray();
     var requests = "<h4> Units to be requested </h4>";
     // splits the form data into the individual requests
     var i,j,temparray,chunk = 5;
     for (i=0,j=data.length; i<j; i+=chunk) {
         temparray = data.slice(i,i+chunk);
         //console.log(temparray);
+        var num = ((i+chunk)/5);
         var type = (temparray[2].value == 0)?'Raw':'Shell';
-        requests += "<div> <h3>Unit Request " + (chunk/5) 
+        /*
+        var dataId = "data-request-num = '"+num+"'"
+        +"data-request-type = '"+type+"'"
+        +"data-request-floor-num = '"+temparray[1].value+"'"
+        +"data-request-size = '"+temparray[3].value+"'"
+        +"data-request-remarks = '"+temparray[4].value+"'";
+        */
+        requests += "<div class = 'requestStub'> <h3>Unit Request" + num
         + "</h3><div><b>Unit Type: </b> " + type
         +"<br><b>Building Type:</b>" +building_types[temparray[0].value]
         +"<br><b>Floor #</b>" + temparray[1].value
         +"<br><b>Size: </b>" + temparray[3].value
         +"<br><b>Remarks:</b>" + temparray[4].value
         +"</div></div>";
-        //console.log(requests);
     }
     $("#requests").html(requests);
     $(".accordion").accordion("refresh");
@@ -95,8 +107,11 @@ function showEditModal(){
         data: id,
         success: function(data) {  
          $.each(data, function(key,value) {
-            content+="<div class = 's_panel'>"+"<h3>"+ value.unit_code +"</h3><div><b>Unit Type:</b>: "+ value.unit_type 
-            +"<br><b>Floor #</b>"+value.unit_floorNum+"</div></div>";
+            content+="<div class = 's_panel' data-code = "+value.id+">"
+            +"<h3>"+ value.unit_code +"</h3>"
+            +"<div><b>Unit Type:</b>: "+ value.unit_type 
+            +"<br><b>Floor #</b>"
+            +value.unit_floorNum+"</div></div>";
             });
          $("#sortable1").html(content);
          $(".accordion").accordion("refresh");
