@@ -37,6 +37,16 @@ class TenantsTableSeeder extends Seeder
                 'address_id' => 36,
                 'is_active' => 1,
             ),
+            2 => 
+            array (
+                'id' => 13,
+                'code' => 'Tenant003',
+                'description' => 'hapibee',
+                'business_type_id' => 1,
+                'user_id' => 4,
+                'address_id' => 38,
+                'is_active' => 1,
+            ),
         ));
         
         

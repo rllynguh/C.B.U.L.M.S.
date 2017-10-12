@@ -57,6 +57,22 @@ class AddressesTableSeeder extends Seeder
                 'district' => 'Maligaya',
                 'city_id' => 1,
             ),
+            5 => 
+            array (
+                'id' => 37,
+                'number' => '6969',
+                'street' => '6969',
+                'district' => '6969',
+                'city_id' => 1,
+            ),
+            6 => 
+            array (
+                'id' => 38,
+                'number' => '6969',
+                'street' => '6969',
+                'district' => '6969',
+                'city_id' => 1,
+            ),
         ));
         
         

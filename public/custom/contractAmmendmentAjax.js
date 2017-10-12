@@ -69,9 +69,7 @@ function submitRequest(){
         type: 'POST',
         data: $.param(data),
         success: function(data) {
-            $.each(data,function(index, el) {
-                console.log(el.id);
-            });       
+            alert(data.status+"\n"+data.message);
         },
         error: function(xhr,textStatus,err)
         {

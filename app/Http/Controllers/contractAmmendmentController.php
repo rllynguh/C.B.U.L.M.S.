@@ -10,7 +10,8 @@ use Auth;
 use App\User;
 use PDF;
 use App\CurrentContract;
-
+use App\RegistrationDetail;
+use Exception;
 class contractAmmendmentController extends Controller
 {
 
@@ -82,15 +83,96 @@ class contractAmmendmentController extends Controller
     }
     public function storeRequest(Request $request){
     	//return $requests->contract_id;
-    	$result = DB::table("tenants")
-    	->where('tenants.user_id',Auth::id())
-    	->join('registration_headers','registration_headers.tenant_id','tenants.id')
-        ->join ('contract_headers','registration_headers.id','contract_headers.registration_header_id')
-        ->join('current_contracts','contract_headers.id','current_contracts.contract_header_id')
-        ->where('current_contracts.id',$request->contract_id)
-        ->select('current_contracts.id as id')
-        ->get();
-    	return response()->json($result);
+    	$returnData;
+    	DB::begintransaction();
+    	try{
+    		$result = DB::table("tenants")
+	    	->where('tenants.user_id',Auth::id())
+	    	->join('registration_headers','registration_headers.tenant_id','tenants.id')
+	        ->join ('contract_headers','registration_headers.id','contract_headers.registration_header_id')
+	        ->join('current_contracts','contract_headers.id','current_contracts.contract_header_id')
+	        ->where('current_contracts.id',$request->contract_id)
+	        ->select('current_contracts.id as id','registration_headers.id as registration_headers_id')
+	        ->first();
+	        $regi_id = $result->registration_headers_id;
+	        //check if valid contract
+	        if(!is_null($result)){
+	        	$returnData = array(
+				    'status' => 'okay',
+				    'message' => 'all fine'
+				);
+				$num = 1;
+				//check if user made a unit request
+				if(count($request->builtype)>0){
+					$header_query=DB::table("registration_headers")
+					->select("registration_headers.code")
+					->orderBy("id","desc")
+					->first();
+					$regi_header_pk="Registration";
+					if(!is_null($header_query))
+					$regi_header_pk=$header_query->code;
+					$sc= new smartCounter();
+					$regi_header_pk=$sc->increment($regi_header_pk);
+					$regi_header=new RegistrationHeader;
+					$regi_header->code=$regi_header_pk;
+					$tenant_id = DB::table("tenants")
+					->select("id as id")
+					->where("user_id",Auth::id())
+					->first();
+					$regi_header->tenant_id=$tenant_id->id;
+					$regi_header->date_issued=Carbon::now(Config::get('app.timezone'));
+					$regi_header->tenant_remarks=$request->header_remarks;
+					$regi_header->duration_preferred=$request->duration;
+					$regi_header->is_existing_tenant = '1';
+					$regi_header->save();
+					for($x=0;$x<count($request->builtype); $x++){ 
+						$num++;
+						$result=explode('|',$request->size[$x]);
+						$regi_detail=new RegistrationDetail;
+						$regi_detail->registration_header_id=    $regi_id;
+						$regi_detail->building_type_id=$request->builtype[$x];
+						$regi_detail->unit_type=$request->utype[$x];
+						$regi_detail->size_from=$result[0];
+						$regi_detail->size_to=$result[1];
+						$regi_detail->floor=$request->floor[$x];
+						$regi_detail->tenant_remarks=$request->remarks[$x];
+						$regi_detail->save();
+					}
+				}
+				
+		          if($num==1){
+			          $returnData = array(
+					   'status' => 'Error',
+					    'message' => 'Shit doesnt save'
+					  );
+		          }
+		          DB::commit();
+	        }else{
+	        	$returnData = array(
+				    'status' => 'Error',
+				    'message' => 'Invalid contract please try again'
+				);
+	        }
+    	}catch(Exception $e){
+    		DB::rollback();
+    		$var = $e->getMessage();
+    		$returnData = array(
+			    'status' => $var,
+			    'message' => $var
+			);
+    	}
+    	return response()->json($returnData);
     	//$request->session()->flash('green', 'Offer Sheet Successfully Generated!');
+    }
+    public function test(){
+    	$result = DB::table("tenants")
+	    	->where('tenants.user_id',Auth::id())
+	    	->join('registration_headers','registration_headers.tenant_id','tenants.id')
+	        ->join ('contract_headers','registration_headers.id','contract_headers.registration_header_id')
+	        ->join('current_contracts','contract_headers.id','current_contracts.contract_header_id')
+	        ->where('current_contracts.id',1)
+	        ->select('current_contracts.id as id','registration_headers.id as registration_headers_id')
+	        ->get();
+	        dd($result);
     }
 }
