@@ -27,6 +27,8 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	// end test
 
+	Route::resource("myAccount","myAccountController");
+
 
 
 
@@ -218,6 +220,10 @@ Route::group(['prefix' => 'admin/'], function () {
 		Route::group(['prefix' => 'moveIn/'], function () {
 			Route::get('/', ['uses' => 'moveInReportController@index', 'as' => 'moveInReport.index']);
 			Route::post('/', ['uses' => 'moveInReportController@document', 'as' => 'moveInReport.document']);
+		});
+		Route::group(['prefix' => 'collection/'], function () {
+			Route::get('/', ['uses' => 'collectionReportController@index', 'as' => 'collectionReport.index']);
+			Route::post('/', ['uses' => 'collectionReportController@document', 'as' => 'collectionReport.document']);
 		});
 	});
 });

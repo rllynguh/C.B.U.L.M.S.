@@ -414,16 +414,21 @@
 <!--END OF TRANSACTIONS-->
 
 <!--REPORTS-->
-<li>
+<li class="{{strpos(Request::path(),'report') ? 'active' : ''}}">
   <a href="javascript:void(0);" class="menu-toggle waves-yellow">
     <i class="mdi-action-assessment"></i>
     <span>Reports</span>
   </a>
   <ul class="ml-menu">
-    <li>
-      <a href="{{-- {{route('registrationReport.index')}} --}}">Registration</a>
-    </li>
-  </ul>
+    <li class="
+    {{Request::path() == 'admin/report/moveIn' ? 'active' : ''}}
+
+    ">
+    <a href="{{route('moveInReport.index')}}" class="waves-yellow">
+      <span>Move In</span>
+    </a>
+  </li>
+</ul>
 </li>
 <!--END OF REPORTS-->
 
