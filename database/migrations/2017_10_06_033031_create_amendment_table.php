@@ -16,23 +16,17 @@ class CreateAmendmentTable extends Migration
         Schema::create('amendment', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code', 45)->nullable();
-            $table->integer('contract_header_id');
+            $table->integer('contract_header_id')->unsigned();
             $table->integer('user_id')->nullable();
             $table->integer('duration_change')->default(0);
             $table->integer('status')->default(0)->comment('0 - unverified
 1-  accepted
 2 - rejected');
-            $table->text('tenant_remarks', 65535)->default('N/A');
-            $table->text('admin_remarks', 65535)->default('N/A');
+            $table->text('tenant_remarks', 65535)->nullable();
+            $table->text('admin_remarks', 65535)->nullable();
             $table->timestamps();
-            $table->foreign('user_id')
-          ->references('id')->on('users')
-          ->onDelete('restrict')
-          ->onUpdate('cascade');
-        });
-
-
-    }
+    });
+}
 
     /**
      * Reverse the migrations.

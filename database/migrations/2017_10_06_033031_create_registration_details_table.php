@@ -16,7 +16,7 @@ class CreateRegistrationDetailsTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('registration_header_id')->index('fk_regihCOde_idx')->nullable();
-			$table->integer('amendment_id')->nullable();
+			$table->integer('amendment_id')->unsigned()->nullable();
 			$table->integer('building_type_id');
 			$table->float('size_from', 10, 0);
 			$table->float('size_to', 10, 0);
@@ -30,10 +30,6 @@ class CreateRegistrationDetailsTable extends Migration {
 			$table->boolean('is_forfeited')->default(0);
 			$table->boolean('is_reserved')->default(0);
 			$table->boolean('is_amendment')->default(0);
-			$table->foreign('amendment_id')
-			->references('id')->on('amendment')
-			->onDelete('restrict')
-			->onUpdate('cascade');
 		});
 		
 	}

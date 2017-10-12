@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestTable extends Migration
+class CreateAmendmentForfeitTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateTestTable extends Migration
      */
     public function up()
     {
-        Schema::create('test', function (Blueprint $table) {
+        Schema::create('amendment_forfeit', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('amendment_id')->unsigned();
+            $table->integer('unit_id');
             $table->timestamps();
-        });
+        });  
     }
 
     /**
@@ -26,6 +28,6 @@ class CreateTestTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('test');
+        Schema::dropIfExists('amendment_forfeit');
     }
 }
