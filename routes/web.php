@@ -21,8 +21,8 @@ Route::resource('test','maintenanceBuildingController');
 
 Route::group(['prefix' => 'tenant/'],function(){
 	// Data output testing
-	Route::get('/test1/{id?}','contractAmmendmentController@getUnits')->name('tenant.getUnits');
-	Route::get('/test2','contractAmmendmentController@test');
+	Route::get('/test1/{id?}','contractAmendmentController@getUnits')->name('tenant.getUnits');
+	Route::get('/test2','contractAmendmentController@test');
 
 
 	// end test
@@ -56,10 +56,10 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::resource("/transaction/contract","contractViewController");
 	Route::get('/transaction/contract/get/data','contractViewController@data')->name('contract.getData');
 
-	Route::get("contract/view",'contractAmmendmentController@index')->name('tenant.contractView');
-	Route::get("contract/view/{id}",'contractAmmendmentController@edit')->name('tenant.contractEdit');
-	Route::get("contract/data",'contractAmmendmentController@data')->name('tenant.contractData');
-	Route::post("contract/ammendment",'contractAmmendmentController@storeRequest')->name('tenant.storeRequest');
+	Route::get("contract/view",'contractAmendmentController@index')->name('tenant.contractView');
+	Route::get("contract/view/{id}",'contractAmendmentController@edit')->name('tenant.contractEdit');
+	Route::get("contract/data",'contractAmendmentController@data')->name('tenant.contractData');
+	Route::post("contract/amendment",'contractAmendmentController@storeRequest')->name('tenant.storeRequest');
 
 	Route::get('/docs/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);
 

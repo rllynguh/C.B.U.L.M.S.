@@ -20,11 +20,11 @@
       </div> <!-- end of .card -->
     </div>
    @include('partials.tenant._contractDetailsModal')
-   @include('partials.tenant._contractAmmendmentModal')
+   @include('partials.tenant._contractAmendmentModal')
 @endsection
 
 @section('scripts')
-{!!Html::script("custom/contractAmmendmentAjax.js")!!}
+{!!Html::script("custom/contractAmendmentAjax.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('tenant.contractData')!!}" ;
   var url="{!!route('contract.index')!!}" ;

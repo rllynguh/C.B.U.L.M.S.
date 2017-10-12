@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAmmendmentTable extends Migration
+class CreateAmendmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateAmmendmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('ammendment', function (Blueprint $table) {
+        Schema::create('amendment', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code', 45)->nullable();
             $table->integer('contract_header_id');
             $table->integer('user_id');
             $table->integer('duration_change')->default(0);
@@ -40,6 +41,6 @@ class CreateAmmendmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ammendment');
+        Schema::dropIfExists('amendment');
     }
 }

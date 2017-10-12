@@ -21,7 +21,7 @@ $(document).ready(function()
    $(".accordion").accordion({header: 'h3'});
    $("body").on("click", ".btnShowContractDetails", setModal);
    $("body").on("click", ".btnAlterContract", showEditModal);
-   $("#btnAmmendmentSubmit").click(function(e){
+   $("#btnAmendmentSubmit").click(function(e){
     e.preventDefault();
     submitRequest();
    })
@@ -58,10 +58,10 @@ function submitRequest(){
     var data = $("#testform").serializeArray();
     data.push({name:"contract_id",value:contract_id});
     $("#sortable2").find(".s_panel").each(function(index,value){
-        data.push({name:"discard-code", value: $(this).data("code")});
+        data.push({name:"discard_code", value: $(this).data("code")});
     });  
     if($("#durationToggle").is(':checked')){
-        data.push({name:"duration-change",value: duration.spinner("value")})   
+        data.push({name:"duration_change",value: duration.spinner("value")})   
     }
    // console.log(data);
     $.ajax({

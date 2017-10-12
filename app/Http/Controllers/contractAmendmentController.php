@@ -11,12 +11,13 @@ use App\User;
 use PDF;
 use App\CurrentContract;
 use App\RegistrationDetail;
+use App\Amendment;
 use Exception;
-class contractAmmendmentController extends Controller
+class contractAmendmentController extends Controller
 {
 
 	public function index(){
-		return view('tenant.contractAmmendment');
+		return view('tenant.contractAmendment');
 	}
 	public function edit($id){
 		$result = DB::table('tenants')
@@ -33,7 +34,7 @@ class contractAmmendmentController extends Controller
         ->groupBy('units.id')
         ->select('units.code as unit_code','units.type as unit_type','floors.number as unit_floorNum','contract_headers.code as contract_code','registration_headers.date_issued as date_issued','current_contracts.start_of_contract as start_date','current_contracts.end_of_contract as end_date',DB::raw('CONCAT(users.first_name," ",users.middle_name," ",users.last_name) as name'),'billing_headers.cost as total_cost,registration_headers.id as id')
         ->get();
-		return view('tenant.contractAmmendmentRequest')->with('units',$result);
+		return view('tenant.contractAmendmentRequest')->with('units',$result);
 	}
 
 	public function data(){
@@ -104,27 +105,32 @@ class contractAmmendmentController extends Controller
 				$num = 1;
 				//check if user made a unit request
 				if(count($request->builtype)>0){
-					$header_query=DB::table("registration_headers")
-					->select("registration_headers.code")
+					$header_query=DB::table("amendment")
+					->select("amendment.code")
 					->orderBy("id","desc")
 					->first();
-					$regi_header_pk="Registration";
-					if(!is_null($header_query))
-					$regi_header_pk=$header_query->code;
+					//generation of code
+					$amendment_header_pk="Amendment";
+					if(!is_null($header_query)){
+						$amendment_header_pk=$header_query->code;
+					}
 					$sc= new smartCounter();
-					$regi_header_pk=$sc->increment($regi_header_pk);
-					$regi_header=new RegistrationHeader;
-					$regi_header->code=$regi_header_pk;
+					$amendment_header_pk=$sc->increment($regi_header_pk);
+					//end code
+
+
+					$amendment_header=new Amendment();
+					$amendment_header->code=$amendment_header_pk;
 					$tenant_id = DB::table("tenants")
 					->select("id as id")
 					->where("user_id",Auth::id())
 					->first();
-					$regi_header->tenant_id=$tenant_id->id;
-					$regi_header->date_issued=Carbon::now(Config::get('app.timezone'));
-					$regi_header->tenant_remarks=$request->header_remarks;
-					$regi_header->duration_preferred=$request->duration;
-					$regi_header->is_existing_tenant = '1';
-					$regi_header->save();
+					$amendment_header->contract_header_id=$request->contract_id;
+					//$amendment_header->date_issued=Carbon::now(Config::get('app.timezone'));
+					$amendment_header->tenant_remarks=$request->header_remarks;
+					$amendment_header->duration_change=$request->duration_change;
+					//$regi_header->is_existing_tenant = '1';
+					$amendment_header->save();
 					for($x=0;$x<count($request->builtype); $x++){ 
 						$num++;
 						$result=explode('|',$request->size[$x]);

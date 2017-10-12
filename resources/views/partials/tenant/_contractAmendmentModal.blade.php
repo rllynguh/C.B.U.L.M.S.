@@ -1,4 +1,4 @@
-<!-- Contract Ammendment Modal -->
+<!-- Contract Amendment Modal -->
 <div class="modal fade" id="modal-alter-contract">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -145,7 +145,7 @@
                 <span>This will send a request</span>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"  id = "btnAmmendmentSubmit" data-dismiss="modal" >Yes</button>
+                <button type="button" class="btn btn-primary"  id = "btnAmendmentSubmit" data-dismiss="modal" >Yes</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
             </div>
         </div>
