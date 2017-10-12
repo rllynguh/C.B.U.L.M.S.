@@ -82,5 +82,15 @@ class contractAmmendmentController extends Controller
     }
     public function storeRequest(Request $request){
     	//return $requests->contract_id;
+    	$result = DB::table("tenants")
+    	->where('tenants.user_id',Auth::id())
+    	->join('registration_headers','registration_headers.tenant_id','tenants.id')
+        ->join ('contract_headers','registration_headers.id','contract_headers.registration_header_id')
+        ->join('current_contracts','contract_headers.id','current_contracts.contract_header_id')
+        ->where('current_contracts.id',$request->contract_id)
+        ->select('current_contracts.id as id')
+        ->get();
+    	return response()->json($result);
+    	//$request->session()->flash('green', 'Offer Sheet Successfully Generated!');
     }
 }

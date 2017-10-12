@@ -68,7 +68,10 @@ function submitRequest(){
         url: urlStore,
         type: 'POST',
         data: $.param(data),
-        success: function(data) {       
+        success: function(data) {
+            $.each(data,function(index, el) {
+                console.log(el.id);
+            });       
         },
         error: function(xhr,textStatus,err)
         {
@@ -112,18 +115,19 @@ function showEditModal(){
         items: '.s_panel',
         placeholder: "ui-state-highlight"
     });
-    var id = $(this).attr('data-id');
+    contract_id = $(this).attr('data-id');
     var content = "<h4> Units to be kept </h4>";
     $.ajax({
-        url: urlUnits + "/" + id,
+        url: urlUnits + "/" + contract_id,
         type: 'GET',
         dataType: 'json',
-        data: id,
+        data: contract_id,
         success: function(data) {  
          $.each(data, function(key,value) {
+            var type = (value.unit_type == 0)?'Raw':'Shell';
             content+="<div class = 's_panel' data-code = "+value.unit_id+">"
             +"<h3>"+ value.unit_code +"</h3>"
-            +"<div><b>Unit Type:</b>: "+ value.unit_type 
+            +"<div><b>Unit Type:</b> "+ type
             +"<br><b>Floor #</b>"
             +value.unit_floorNum+"</div></div>";
             });
@@ -152,10 +156,10 @@ function setModal(){
         url: urlUnits + "/" + contract_id,
         type: 'GET',
         dataType: 'json',
-        data: id,
         success: function(data) {  
          $.each(data, function(key,value) {
-            content+="<h3>"+ value.unit_code +"</h3><div><b>Unit Type:</b>"+ value.unit_type 
+            var type = (value.unit_type == 0)?'Raw':'Shell';
+            content+="<h3>"+ value.unit_code +"</h3><div><b>Unit Type:</b>"+ type 
             +"<br><b>Floor #</b>"+value.unit_floorNum+"<br></div>";
             if(key==0){
                 header += value.contract_code;

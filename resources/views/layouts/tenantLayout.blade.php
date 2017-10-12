@@ -65,6 +65,14 @@
     </div>
   </header>
   <br><br><br><br>
+  <section class="content">
+  <div class="flash-message">
+    @foreach (['red', 'green'] as $color)
+    @if(Session::has($color))
+    <p class="alert bg-{{ $color }}">{{ Session::get($color) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+    @endif
+    @endforeach
+  </div> <!-- end .flash-message -->
   <div id = "appa">
     @yield('content')
   </div>
