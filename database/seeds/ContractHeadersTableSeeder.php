@@ -25,6 +25,14 @@ class ContractHeadersTableSeeder extends Seeder
                 'escalation_rate' => 1.0,
                 'status' => 0,
             ),
+            1 => 
+            array (
+                'id' => 3,
+                'registration_header_id' => 12,
+                'code' => 'CONTRACT002',
+                'escalation_rate' => 1.0,
+                'status' => 0,
+            ),
         ));
         
         

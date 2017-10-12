@@ -267,6 +267,256 @@ class BillingHeadersTableSeeder extends Seeder
                 'cost' => 60608.0,
                 'status' => 0,
             ),
+            25 => 
+            array (
+                'id' => 51,
+                'user_id' => 1,
+                'code' => 'BILL00A00A007',
+                'date_issued' => '2017-10-13',
+                'current_contract_id' => 3,
+                'cost' => 149000.0,
+                'status' => 0,
+            ),
+            26 => 
+            array (
+                'id' => 52,
+                'user_id' => 1,
+                'code' => 'BILL00A00A008',
+                'date_issued' => '2017-10-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            27 => 
+            array (
+                'id' => 53,
+                'user_id' => 1,
+                'code' => 'BILL00A00A009',
+                'date_issued' => '2017-11-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            28 => 
+            array (
+                'id' => 54,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A',
+                'date_issued' => '2018-01-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            29 => 
+            array (
+                'id' => 55,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A001',
+                'date_issued' => '2018-04-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            30 => 
+            array (
+                'id' => 56,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A002',
+                'date_issued' => '2018-08-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            31 => 
+            array (
+                'id' => 57,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A003',
+                'date_issued' => '2019-01-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            32 => 
+            array (
+                'id' => 58,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A004',
+                'date_issued' => '2019-07-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            33 => 
+            array (
+                'id' => 59,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A005',
+                'date_issued' => '2020-02-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            34 => 
+            array (
+                'id' => 60,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A006',
+                'date_issued' => '2020-10-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            35 => 
+            array (
+                'id' => 61,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A007',
+                'date_issued' => '2021-07-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            36 => 
+            array (
+                'id' => 62,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A008',
+                'date_issued' => '2022-05-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            37 => 
+            array (
+                'id' => 63,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A009',
+                'date_issued' => '2023-04-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            38 => 
+            array (
+                'id' => 64,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A',
+                'date_issued' => '2017-10-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            39 => 
+            array (
+                'id' => 65,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A001',
+                'date_issued' => '2018-11-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            40 => 
+            array (
+                'id' => 66,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A002',
+                'date_issued' => '2020-01-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            41 => 
+            array (
+                'id' => 67,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A003',
+                'date_issued' => '2021-04-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            42 => 
+            array (
+                'id' => 68,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A004',
+                'date_issued' => '2022-08-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            43 => 
+            array (
+                'id' => 69,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A005',
+                'date_issued' => '2024-01-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            44 => 
+            array (
+                'id' => 70,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A006',
+                'date_issued' => '2025-07-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            45 => 
+            array (
+                'id' => 71,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A007',
+                'date_issued' => '2027-02-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            46 => 
+            array (
+                'id' => 72,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A008',
+                'date_issued' => '2028-10-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            47 => 
+            array (
+                'id' => 73,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A009',
+                'date_issued' => '2030-07-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            48 => 
+            array (
+                'id' => 74,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A00A',
+                'date_issued' => '2032-05-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
+            49 => 
+            array (
+                'id' => 75,
+                'user_id' => 1,
+                'code' => 'BILL00A00A00A00A00A001',
+                'date_issued' => '2034-04-13',
+                'current_contract_id' => 3,
+                'cost' => 37880.0,
+                'status' => 0,
+            ),
         ));
         
         

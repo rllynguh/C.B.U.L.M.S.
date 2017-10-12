@@ -47,6 +47,21 @@ class RegistrationHeadersTableSeeder extends Seeder
                 'is_existing_tenant' => 0,
             'pdf' => 'Registration002(ReservationFeeCollection).pdf',
             ),
+            2 => 
+            array (
+                'id' => 12,
+                'code' => 'Registration003',
+                'tenant_id' => 13,
+                'user_id' => 1,
+                'duration_preferred' => 3,
+                'date_issued' => '2017-10-13',
+                'tenant_remarks' => '1',
+                'admin_remarks' => NULL,
+                'status' => 1,
+                'is_forfeited' => 0,
+                'is_existing_tenant' => 1,
+            'pdf' => 'Registration003(ReservationFeeCollection).pdf',
+            ),
         ));
         
         

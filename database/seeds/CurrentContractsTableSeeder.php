@@ -29,6 +29,18 @@ class CurrentContractsTableSeeder extends Seeder
             'pdf' => 'CONTRACT001(2017-10-13).pdf',
                 'status' => 0,
             ),
+            1 => 
+            array (
+                'id' => 3,
+                'contract_header_id' => 3,
+                'user_id' => 1,
+                'date_issued' => '2017-10-13',
+                'date_of_billing' => '2017-10-27',
+                'end_of_contract' => '2019-10-21',
+                'start_of_contract' => '2017-10-21',
+            'pdf' => 'CONTRACT002(2017-10-13).pdf',
+                'status' => 0,
+            ),
         ));
         
         

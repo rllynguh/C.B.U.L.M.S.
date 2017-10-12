@@ -44,6 +44,24 @@ class OfferSheetDetailsTableSeeder extends Seeder
                 'status' => 1,
                 'tenant_remarks' => NULL,
             ),
+            3 => 
+            array (
+                'id' => 4,
+                'registration_detail_id' => 7,
+                'offer_sheet_header_id' => 2,
+                'unit_id' => 47,
+                'status' => 1,
+                'tenant_remarks' => NULL,
+            ),
+            4 => 
+            array (
+                'id' => 5,
+                'registration_detail_id' => 8,
+                'offer_sheet_header_id' => 2,
+                'unit_id' => 52,
+                'status' => 1,
+                'tenant_remarks' => NULL,
+            ),
         ));
         
         

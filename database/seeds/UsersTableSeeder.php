@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'cell_num' => '12121212121',
                 'picture' => '1.png',
                 'is_active' => 1,
-                'last_log_at' => '2017-10-13 02:29:28',
+                'last_log_at' => '2017-10-13 02:55:36',
                 'remember_token' => '81wNAkbdwiVfigaoFYrwBnHufd044sO7a43HeRz1ZiyURJD7nAim9hBBDg3D',
                 'deleted_at' => NULL,
             ),

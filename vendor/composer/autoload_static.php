@@ -442,7 +442,9 @@ class ComposerStaticInit3b4600a45985eb159a807608e1b881ee
 
     public static $classMap = array (
         'AddressesTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AddressesTableSeeder.php',
+        'AmendmentTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AmendmentTableSeeder.php',
         'App\\Address' => __DIR__ . '/../..' . '/app/address.php',
+        'App\\Amendment' => __DIR__ . '/../..' . '/app/Amendment.php',
         'App\\Bank' => __DIR__ . '/../..' . '/app/Bank.php',
         'App\\BillingDetail' => __DIR__ . '/../..' . '/app/BillingDetail.php',
         'App\\BillingHeader' => __DIR__ . '/../..' . '/app/BillingHeader.php',
@@ -473,7 +475,7 @@ class ComposerStaticInit3b4600a45985eb159a807608e1b881ee
         'App\\Http\\Controllers\\businessTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/businessTypeController.php',
         'App\\Http\\Controllers\\collectionController' => __DIR__ . '/../..' . '/app/Http/Controllers/collectionController.php',
         'App\\Http\\Controllers\\contentController' => __DIR__ . '/../..' . '/app/Http/Controllers/contentController.php',
-        'App\\Http\\Controllers\\contractAmmendmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/contractAmmendmentController.php',
+        'App\\Http\\Controllers\\contractAmendmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/contractAmendmentController.php',
         'App\\Http\\Controllers\\contractCreationController' => __DIR__ . '/../..' . '/app/Http/Controllers/contractCreationController.php',
         'App\\Http\\Controllers\\contractViewController' => __DIR__ . '/../..' . '/app/Http/Controllers/contractViewController.php',
         'App\\Http\\Controllers\\customController' => __DIR__ . '/../..' . '/app/Http/Controllers/customController.php',

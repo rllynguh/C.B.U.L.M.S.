@@ -115,33 +115,34 @@ class contractAmendmentController extends Controller
 						$amendment_header_pk=$header_query->code;
 					}
 					$sc= new smartCounter();
-					$amendment_header_pk=$sc->increment($regi_header_pk);
+					$amendment_header_pk=$sc->increment($amendment_header_pk);
 					//end code
-
-
 					$amendment_header=new Amendment();
 					$amendment_header->code=$amendment_header_pk;
-					$tenant_id = DB::table("tenants")
-					->select("id as id")
-					->where("user_id",Auth::id())
+					$true_id = DB::table("current_contracts")
+					->select("current_contracts.contract_header_id as id")
+					->where("id",$request->contract_id)
 					->first();
-					$amendment_header->contract_header_id=$request->contract_id;
+					$amendment_header->contract_header_id=$true_id->id;
 					//$amendment_header->date_issued=Carbon::now(Config::get('app.timezone'));
 					$amendment_header->tenant_remarks=$request->header_remarks;
-					$amendment_header->duration_change=$request->duration_change;
+					if(!is_null($request->duration_change)){
+						$amendment_header->duration_change=$request->duration_change;
+					}
 					//$regi_header->is_existing_tenant = '1';
 					$amendment_header->save();
 					for($x=0;$x<count($request->builtype); $x++){ 
 						$num++;
 						$result=explode('|',$request->size[$x]);
 						$regi_detail=new RegistrationDetail;
-						$regi_detail->registration_header_id=    $regi_id;
+						$regi_detail->amendment_id=$amendment_header->id;
 						$regi_detail->building_type_id=$request->builtype[$x];
 						$regi_detail->unit_type=$request->utype[$x];
 						$regi_detail->size_from=$result[0];
 						$regi_detail->size_to=$result[1];
 						$regi_detail->floor=$request->floor[$x];
 						$regi_detail->tenant_remarks=$request->remarks[$x];
+						$regi_detail->is_amendment = 1;
 						$regi_detail->save();
 					}
 				}

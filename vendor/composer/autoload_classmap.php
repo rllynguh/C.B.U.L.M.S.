@@ -7,7 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddressesTableSeeder' => $baseDir . '/database/seeds/AddressesTableSeeder.php',
+    'AmendmentTableSeeder' => $baseDir . '/database/seeds/AmendmentTableSeeder.php',
     'App\\Address' => $baseDir . '/app/address.php',
+    'App\\Amendment' => $baseDir . '/app/Amendment.php',
     'App\\Bank' => $baseDir . '/app/Bank.php',
     'App\\BillingDetail' => $baseDir . '/app/BillingDetail.php',
     'App\\BillingHeader' => $baseDir . '/app/BillingHeader.php',
@@ -38,7 +40,7 @@ return array(
     'App\\Http\\Controllers\\businessTypeController' => $baseDir . '/app/Http/Controllers/businessTypeController.php',
     'App\\Http\\Controllers\\collectionController' => $baseDir . '/app/Http/Controllers/collectionController.php',
     'App\\Http\\Controllers\\contentController' => $baseDir . '/app/Http/Controllers/contentController.php',
-    'App\\Http\\Controllers\\contractAmmendmentController' => $baseDir . '/app/Http/Controllers/contractAmmendmentController.php',
+    'App\\Http\\Controllers\\contractAmendmentController' => $baseDir . '/app/Http/Controllers/contractAmendmentController.php',
     'App\\Http\\Controllers\\contractCreationController' => $baseDir . '/app/Http/Controllers/contractCreationController.php',
     'App\\Http\\Controllers\\contractViewController' => $baseDir . '/app/Http/Controllers/contractViewController.php',
     'App\\Http\\Controllers\\customController' => $baseDir . '/app/Http/Controllers/customController.php',

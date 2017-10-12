@@ -31,6 +31,13 @@ class RegistrationRequirementsTableSeeder extends Seeder
                 'requirement_id' => 1,
                 'is_fulfilled' => 1,
             ),
+            2 => 
+            array (
+                'id' => 3,
+                'registration_header_id' => 12,
+                'requirement_id' => 1,
+                'is_fulfilled' => 1,
+            ),
         ));
         
         
