@@ -23,12 +23,6 @@ class ContractContentsTableSeeder extends Seeder
                 'contract_header_id' => 1,
                 'content_id' => 1,
             ),
-            1 => 
-            array (
-                'id' => 2,
-                'contract_header_id' => 2,
-                'content_id' => 1,
-            ),
         ));
         
         

@@ -41,30 +41,6 @@ class ContractDetailsTableSeeder extends Seeder
                 'price' => 12000.0,
                 'status' => 0,
             ),
-            3 => 
-            array (
-                'id' => 4,
-                'current_contract_id' => 2,
-                'unit_id' => 46,
-                'price' => 10000.0,
-                'status' => 0,
-            ),
-            4 => 
-            array (
-                'id' => 5,
-                'current_contract_id' => 2,
-                'unit_id' => 49,
-                'price' => 10000.0,
-                'status' => 0,
-            ),
-            5 => 
-            array (
-                'id' => 6,
-                'current_contract_id' => 2,
-                'unit_id' => 1,
-                'price' => 12000.0,
-                'status' => 0,
-            ),
         ));
         
         
