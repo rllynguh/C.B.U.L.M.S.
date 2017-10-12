@@ -1,9 +1,9 @@
 $(document).ready(function () {
     $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        }
-    });
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
     $.get(urlbtype, function(data) {
             $('#testa').children('option').remove();
             $.each(data, function(index, value) {
@@ -55,7 +55,6 @@ $(document).ready(function () {
                     console.log('Error:', data.responseText);
                 },
                 success:function(data) {
-                console.log(data);
                 //toastr.success('Item Created Successfully.', 'Success Alert', { timeOut: 5000 });
                 }
             });
@@ -79,7 +78,6 @@ function fields() {
   objTo.appendChild(divtest);
 }
 function remove_fields(rid) {
-  console.log(rid);
   $('.removeclass'+rid).remove();
 
 }

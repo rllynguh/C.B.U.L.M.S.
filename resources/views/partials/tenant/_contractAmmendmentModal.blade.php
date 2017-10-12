@@ -40,8 +40,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id = "btnAmmendmentSubmit">Submit</button>
-                
+                <button type = "button" class="btn btn-primary" data-toggle="modal" data-target="#confirm-dialog">Submit</button>
             </div>
             </form>
         </div>
@@ -128,9 +127,27 @@
 </div>
 <div class="modal-footer" id = "requestFooter">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-primary" id = "btnSubmitUnitRequest" onclick="addUnitRequest()">Save changes</button>
+    <button type="button" class="btn btn-primary"  id = "btnSubmitUnitRequest"  onclick="addUnitRequest()" >Save changes</button>
 
 </div>
 </div>
 </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirm-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <b> Are you sure? </b>
+            </div>
+            <div class="modal-body">
+                <span>This will send a request</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"  id = "btnAmmendmentSubmit" data-dismiss="modal" >Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
 </div>

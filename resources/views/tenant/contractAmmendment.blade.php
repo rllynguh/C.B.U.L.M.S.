@@ -29,6 +29,7 @@
   var dataurl="{!!route('tenant.contractData')!!}" ;
   var url="{!!route('contract.index')!!}" ;
   var urlUnits = "{!!route('tenant.getUnits')!!}";
+  var urlStore = "{!!route('tenant.storeRequest')!!}";
   urlbtype="{{route("custom.getBuildingType")}}";
   buil_type_url="{{route("custom.getBuildingType")}}";
   floor_url="{{route("custom.getFloor")}}";

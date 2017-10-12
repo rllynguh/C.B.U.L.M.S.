@@ -1,6 +1,7 @@
  var contractDetailsTable;
  var duration = $("#duration");
  const MAX_CHANGE = 12;
+ var contract_id = 0;
 $(document).ready(function()
 { 
    var table = $('#myTable').DataTable({
@@ -55,9 +56,29 @@ $(document).ready(function()
 });
 function submitRequest(){
     var data = $("#testform").serializeArray();
+    data.push({name:"contract_id",value:contract_id});
     $("#sortable2").find(".s_panel").each(function(index,value){
-        console.log($(this).data("code"));
+        data.push({name:"discard-code", value: $(this).data("code")});
     });  
+    if($("#durationToggle").is(':checked')){
+        data.push({name:"duration-change",value: duration.spinner("value")})   
+    }
+   // console.log(data);
+    $.ajax({
+        url: urlStore,
+        type: 'POST',
+        data: $.param(data),
+        success: function(data) {       
+        },
+        error: function(xhr,textStatus,err)
+        {
+            console.log("readyState: " + xhr.readyState);
+            console.log("responseText: "+ xhr.responseText);
+            console.log("status: " + xhr.status);
+            console.log("text status: " + textStatus);
+            console.log("error: " + err);
+        }
+    })
 }
 function addUnitRequest(){
     var data = $("#testform").serializeArray();
@@ -69,13 +90,6 @@ function addUnitRequest(){
         //console.log(temparray);
         var num = ((i+chunk)/5);
         var type = (temparray[2].value == 0)?'Raw':'Shell';
-        /*
-        var dataId = "data-request-num = '"+num+"'"
-        +"data-request-type = '"+type+"'"
-        +"data-request-floor-num = '"+temparray[1].value+"'"
-        +"data-request-size = '"+temparray[3].value+"'"
-        +"data-request-remarks = '"+temparray[4].value+"'";
-        */
         requests += "<div class = 'requestStub'> <h3>Unit Request" + num
         + "</h3><div><b>Unit Type: </b> " + type
         +"<br><b>Building Type:</b>" +building_types[temparray[0].value]
@@ -107,7 +121,7 @@ function showEditModal(){
         data: id,
         success: function(data) {  
          $.each(data, function(key,value) {
-            content+="<div class = 's_panel' data-code = "+value.id+">"
+            content+="<div class = 's_panel' data-code = "+value.unit_id+">"
             +"<h3>"+ value.unit_code +"</h3>"
             +"<div><b>Unit Type:</b>: "+ value.unit_type 
             +"<br><b>Floor #</b>"
@@ -132,10 +146,10 @@ function setModal(){
     var details = "";
     var content = "";
     var total_cost = "$";
-    var id = $(this).attr('data-id');
+    contract_id = $(this).attr('data-id');
     var num = 1;
     $.ajax({
-        url: urlUnits + "/" + id,
+        url: urlUnits + "/" + contract_id,
         type: 'GET',
         dataType: 'json',
         data: id,
