@@ -209,6 +209,9 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/collection","collectionController");
 	Route::get('/transaction/move-collection/get/data', ['uses' => 'collectionController@data', 'as' => 'collection.getData']);
 
+	Route::get("/transaction/amendmentApproval","AmendmentApprovalController@index")->name('transaction.amendmentApproval.index');
+
+
 	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
 	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
 

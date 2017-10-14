@@ -274,6 +274,15 @@
 </li>
 
 <li class="
+{{strpos(Request::path(),'transaction/amendmentApproval') ? 'active' : ''}}
+">
+<a href="{{route('transaction.amendmentApproval.index')}}" class="waves-yellow">
+  <i class="mdi-action-assignment-ind"></i>
+  <span>Amendment Approval</span>
+</a>
+</li>
+
+<li class="
 {{strpos(Request::path(),'transaction/offersheets') ? 'active' : ''}}
 ">
 <a href="{{route('offersheets.index')}}" class="waves-yellow">

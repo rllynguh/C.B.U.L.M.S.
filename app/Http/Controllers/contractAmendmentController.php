@@ -12,6 +12,7 @@ use PDF;
 use App\CurrentContract;
 use App\RegistrationDetail;
 use App\Amendment;
+use App\AmendmentForfeit;
 use Exception;
 class contractAmendmentController extends Controller
 {
@@ -144,6 +145,14 @@ class contractAmendmentController extends Controller
 						$regi_detail->tenant_remarks=$request->remarks[$x];
 						$regi_detail->is_amendment = 1;
 						$regi_detail->save();
+					}
+					$num=1;
+					for($x=0;$x<count($request->discard_code);$x++){
+						$num++;
+						$toDiscard = new AmendmentForfeit;
+						$toDiscard->amendment_id = $amendment_header->id;
+						$toDiscard->unit_id = $request->discard_code[$x];
+						$toDiscard->save();
 					}
 				}
 				

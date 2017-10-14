@@ -58,12 +58,13 @@ function submitRequest(){
     var data = $("#testform").serializeArray();
     data.push({name:"contract_id",value:contract_id});
     $("#sortable2").find(".s_panel").each(function(index,value){
-        data.push({name:"discard_code", value: $(this).data("code")});
+        data.push({name:"discard_code[]", value: $(this).data("code")});
     });  
     if($("#durationToggle").is(':checked')){
         data.push({name:"duration_change",value: duration.spinner("value")})   
     }
-   // console.log(data);
+   //console.log(data);
+   //console.log($.param(data));
     $.ajax({
         url: urlStore,
         type: 'POST',
