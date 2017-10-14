@@ -1,9 +1,14 @@
 @extends('layout.coreLayout')
 @section('breadcrumbs')
-<ol class="breadcrumb breadcrumb-col-brown">
+
+<ol class="breadcrumb breadcrumb-col-brown pull-left p-t-20 ">
   <li><a> Maintenance</a></li>
   <li><a href="{{route('buildingtypes.index')}}"> Building Types</a></li>
 </ol>
+<h2 class="align-center"><button class="btn btn-success btn-lg waves-effect waves-lime m-l-15" id="btnAddModal"  type="button" >
+  <i class="mdi-content-add pulls"></i> NEW
+</button></h2>
+
 @endsection
 @section('content')
 <!--MODAL-->
@@ -12,38 +17,38 @@
     <div class="modal-content modal-col-green">
       {{ Form::open([
         'id' => 'myForm', 'class' => 'form-horizontal'
-        ])
-      }}
-      <div class="modal-header">
-        <h1 id="label" class="modal-title align-center p-b-15">NEW BUILDING TYPE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
-      </div>
-      <div class="modal-body">
-        <div class="form-group p-l-30">
-          <div class="form-line">
-            {{ Form::text('txtBuilTypeDesc',null,[
-              'id'=> 'txtBuilTypeDesc',
-              'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
-              'class' => 'form-control text-center',
-              'autocomplete' => 'off',
-              'minlength' => '3',
-              'maxlength' => '20',
-              'required' => 'required',
-              'placeholder' => 'Ex. Mall'
-              ])
-            }}
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton">SAVE</span></button>
-        {{ Form::hidden(null,null,[
-          'id'=> 'myId',
+      ])
+    }}
+    <div class="modal-header">
+      <h1 id="label" class="modal-title align-center p-b-15">NEW BUILDING TYPE<a href="" class="pull-right" data-dismiss="modal"><i class="mdi-navigation-close"></i></a></h1>
+    </div>
+    <div class="modal-body">
+      <div class="form-group p-l-30">
+        <div class="form-line">
+          {{ Form::text('txtBuilTypeDesc',null,[
+            'id'=> 'txtBuilTypeDesc',
+            'data-parsley-pattern' => '^[a-zA-Z0-9. ]+$',
+            'class' => 'form-control text-center',
+            'autocomplete' => 'off',
+            'minlength' => '3',
+            'maxlength' => '20',
+            'required' => 'required',
+            'placeholder' => 'Ex. Mall'
           ])
         }}
       </div>
-      {{Form::close()}}
     </div>
   </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave" value="add"><i class="mdi-content-save"></i><span id="lblButton">SAVE</span></button>
+    {{ Form::hidden(null,null,[
+      'id'=> 'myId',
+    ])
+  }}
+</div>
+{{Form::close()}}
+</div>
+</div>
 </div>
 <!--MODAL-->
 
@@ -65,9 +70,7 @@
 </div>
 <!--Delete MODAL-->
 <div class="body">
-  <h2 class="align-center"><button class="btn btn-success btn-lg waves-effect waves-lime m-l-15 m-b-5 " id="btnAddModal"  type="button" >
-    <i class="mdi-content-add pulls"></i> NEW
-  </button></h2>
+
   <table class="table table-hover dataTable" id="myTable">
     <thead>
       <tr>

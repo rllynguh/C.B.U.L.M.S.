@@ -225,6 +225,10 @@ Route::group(['prefix' => 'admin/'], function () {
 			Route::get('/', ['uses' => 'collectionReportController@index', 'as' => 'collectionReport.index']);
 			Route::post('/', ['uses' => 'collectionReportController@document', 'as' => 'collectionReport.document']);
 		});
+		Route::group(['prefix' => 'billing/'], function () {
+			Route::get('/', ['uses' => 'billingReportController@index', 'as' => 'billingReport.index']);
+			Route::post('/', ['uses' => 'billingReportController@document', 'as' => 'billingReport.document']);
+		});
 	});
 });
 

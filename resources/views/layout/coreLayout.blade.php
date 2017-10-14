@@ -428,6 +428,22 @@
       <span>Move In</span>
     </a>
   </li>
+  <li class="
+  {{Request::path() == 'admin/report/collection' ? 'active' : ''}}
+
+  ">
+  <a href="{{route('collectionReport.index')}}" class="waves-yellow">
+    <span>Collection</span>
+  </a>
+</li>
+<li class="
+{{Request::path() == 'admin/report/billing' ? 'active' : ''}}
+
+">
+<a href="{{route('billingReport.index')}}" class="waves-yellow">
+  <span>Billing</span>
+</a>
+</li>
 </ul>
 </li>
 <!--END OF REPORTS-->
