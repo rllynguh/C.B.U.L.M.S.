@@ -17,6 +17,7 @@ $(document).ready(function()
     serverSide: true,
     ajax: dataurl,
     columns: [
+    {data: 'description'},
     {data: 'code'},
     {data: 'cost'},
     {data: 'amount_paid'},
@@ -38,6 +39,7 @@ $(document).ready(function()
       { 
         $('#pdc_id').val(data[1].pdc_id);
         select+='<option value="1">PDC</option>';
+        select+='<option value="2">Fund Transfer</option>';
       }
       select+="</SELECT>";
       $('#idSelect').html(select);
@@ -70,6 +72,7 @@ $(document).ready(function()
     $('#pdc_id').val('')
     $('#idOption').html('');
     $('#txtAmount').removeAttr('readonly')
+    $('#divBank').html('');
   });
 
 
@@ -165,14 +168,35 @@ $(document).ready(function()
       $('#txtAmount').val(beforeInput);
       $('#txtAmount').removeAttr('readonly')
       $('#pdc_id').val('');
+      $('#divBank').html('');
     }
-    else
+    else if($('#mode').val()==1)
     { 
       beforeInput=$('#txtAmount').val();
       $('#txtAmount').val(pdcValue);
       $('#txtAmount').attr('readonly','')
+      $('#divBank').html('');
     }
-  });
+    else if($('#mode').val()==2)
+    {
+     $('#txtAmount').val(beforeInput);
+     $('#txtAmount').removeAttr('readonly');
+     $('#pdc_id').val('');
+     $('#divBank').html('<select id="bank" name="bank"></select>');
+     $.get(bankUrl, function (data) 
+     {
+       $.each(data, function(e, t) {
+        $("#bank").append($("<option>", {
+          value: t.id,
+          text: t.description
+        }));
+      });
+     });
+   }
+   else
+    console.log('trap');
+
+});
 
 
   function successPrompt(){

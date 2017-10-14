@@ -1,4 +1,4 @@
-@extends('layouts.tenantLayout')
+@extends('layout.coreLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
   <li><a href="{{url('/tenant')}}"> Home</a></li>
@@ -25,7 +25,7 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/registrationForfeitAjax.js")!!}
+{!!Html::script("custom/registrationForfeitAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('registrationForfeit.getData')!!}" ;
   var url="{!!route('registrationForfeit.index')!!}" ;

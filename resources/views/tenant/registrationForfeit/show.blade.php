@@ -1,4 +1,4 @@
-@extends('layout.tenantLayout')
+@extends('layout.coreLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
 	<li><a> Transaction</a></li>
@@ -104,7 +104,7 @@
 			@endsection
 			@section('scripts')
 			{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
-			{!!Html::script("custom/registrationForfeitShowAjax.js")!!}
+			{!!Html::script("custom/registrationForfeitShowAjax.min.js")!!}
 			<script type="text/javascript">
 				mainUrl='{{route('registrationForfeit.index')}}';
 				showUrl='{{route('registrationForfeit.showData',$registration->id)}}';

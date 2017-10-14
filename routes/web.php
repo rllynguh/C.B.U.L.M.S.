@@ -27,6 +27,8 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	// end test
 
+	Route::resource("myAccount","myAccountController");
+
 
 
 
@@ -210,8 +212,22 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
 	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
 
-	Route::get('/query/offerSheet', ['uses' => 'offerSheetQueryController@index', 'as' => 'offerSheetQuery.index']);
-	Route::get('/query/offerSheet/get/data', ['uses' => 'offerSheetQueryController@data', 'as' => 'offerSheetQuery.getData']);
+	Route::group(['prefix' => '/query'], function () {
+		Route::group(['prefix' => '/offerSheet'], function () {
+			Route::get('/', ['uses' => 'offerSheetQueryController@index', 'as' => 'offerSheetQuery.index']);
+			Route::get('/get/data', ['uses' => 'offerSheetQueryController@data', 'as' => 'offerSheetQuery.getData']);
+		});
+	});
+	Route::group(['prefix' => '/report'], function () {
+		Route::group(['prefix' => 'moveIn/'], function () {
+			Route::get('/', ['uses' => 'moveInReportController@index', 'as' => 'moveInReport.index']);
+			Route::post('/', ['uses' => 'moveInReportController@document', 'as' => 'moveInReport.document']);
+		});
+		Route::group(['prefix' => 'collection/'], function () {
+			Route::get('/', ['uses' => 'collectionReportController@index', 'as' => 'collectionReport.index']);
+			Route::post('/', ['uses' => 'collectionReportController@document', 'as' => 'collectionReport.document']);
+		});
+	});
 });
 
 
@@ -226,6 +242,8 @@ Route::get('custom/getPosition', ['uses' => 'customController@getPosition', 'as'
 Route::get('custom/getFloor', ['uses' => 'customController@getFloor', 'as' => 'custom.getFloor']);
 Route::get('custom/getRange', ['uses' => 'customController@getRange', 'as' => 'custom.getRange']);
 Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRate', 'as' => 'custom.getMarketRate']);
+Route::get('custom/banks', ['uses' => 'customController@getBanks', 'as' => 'custom.getBanks']);
+
 
 
 

@@ -78,7 +78,17 @@ $(document).ready(function()
   $(this).on('click', '#btnShow',function(e)
   {   
     $('#myId').val($(this).val());
-    $('#modalPDCValidation').modal('show');
+    content="";
+    $.get(url + '/' + $('#myId').val(), function (data) 
+    {
+      content+="Check :" + data.code + "<br>" +
+      "Bank :" + data.description + "<br>" +
+      "Amount :" + data.amount + "<br>" +
+      "Applicable Month :" + data.for_date;
+      $('#content').html(content);
+      $('#modalPDCValidation').modal('show');
+    }
+    );
   }
   );
 
@@ -89,6 +99,8 @@ $(document).ready(function()
       timer:1000
     });
   }
+
+
 
 
   $(document).on('hidden.bs.modal','#modalPDCCollection', function () 

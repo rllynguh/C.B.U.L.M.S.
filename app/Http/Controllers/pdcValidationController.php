@@ -91,6 +91,17 @@ class pdcValidationController extends Controller
     public function show($id)
     {
         //
+        $pdc=DB::TABLE('post_dated_checks')
+        ->JOIN('banks','post_dated_checks.bank_id','banks.id')
+        ->WHERE('post_dated_checks.id',$id)
+        ->SELECT('code','for_date','amount','banks.description')
+        ->FIRST();
+        $time = strtotime($pdc->for_date);
+        $myDate = date( 'F (Y)', $time );
+        $pdc->for_date=$myDate;
+        $pdc->amount="₱ ".number_format($pdc->amount,2);
+
+        return response::json($pdc);
     }
 
     /**

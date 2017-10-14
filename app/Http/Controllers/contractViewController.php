@@ -12,6 +12,11 @@ use App\CurrentContract;
 
 class contractViewController extends Controller
 {
+ public function __construct()
+ {
+    $this->middleware('tenant');
+    $this->middleware('auth');
+}
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +46,7 @@ class contractViewController extends Controller
     return Datatables::of($contracts)
     ->addColumn('action', function ($data) {
         return "<a href=".route('contract.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>
-            
+
         ";
     })
     ->setRowId(function ($data) {

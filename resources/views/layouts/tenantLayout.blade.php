@@ -76,15 +76,16 @@
   <div id = "appa">
     @yield('content')
   </div>
+  <!--{!!Html::script('js/admin.js')!!}  -->
+  {!!Html::script("plugins/jquery/jquery.min.js")!!}
+  {!!Html::script("js/pages/forms/form-wizard.min.js")!!}
   <script src="{{ asset('js/app.js') }}"></script>
   {!!Html::script("plugins/DataTables/datatables.min.js")!!}
   {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
   {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
-  {!!Html::script("js/pages/forms/form-wizard.min.js")!!}
   {!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
   {!!Html::script('js/pages/cards/basic.js')!!}
   {!!Html::script('js/notify/notify.min.js')!!}
-  <!--{!!Html::script('js/admin.js')!!}  -->
   {!!Html::script('js/demo.js')!!} 
   {!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
   {!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
