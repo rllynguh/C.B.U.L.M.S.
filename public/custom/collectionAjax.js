@@ -33,37 +33,40 @@ $(document).ready(function()
     {
       pdcValue=data[1].pdc_amount;
       $('#user').val(data[1].user_id);
-      select='<SELECT id="mode" class="form-control" name="mode"><option value="0">Cash</option>';
+      select='<SELECT name="mode" id="mode" class="form-control" name="mode"><option value="0">Cash</option>';
       console.log(balance);
       if(data[1].pdc_id!==undefined && data[1].forPDC==true && parseFloat(data[1].balance)==parseFloat(data[1].pdc_amount) )
       { 
         $('#pdc_id').val(data[1].pdc_id);
         select+='<option value="1">PDC</option>';
-        select+='<option value="2">Fund Transfer</option>';
       }
-      select+="</SELECT>";
-      $('#idSelect').html(select);
-      setTimeout(function(){
-        $("#btnCollection").removeAttr('disabled');
-      }, 1000);
-      if(Object.keys(data).length>0)
-      {
-        balance=data[1].balance;
-        content=" <table class='table table-hover dataTable'id=''><thead><tr><th class='align-center'>DESCRIPTION</th><th class='align-center'>AMOUNT DUE</th></tr></thead><tbody id='myList'>";
-        $("#modalCollection").modal("show");
-        $.each( data[0], function( index, value ){
-          content+="<tr>" +
-          "<td>" + value.description + "</td>" +
-          "<td> ₱ " + value.price + "</td>" +
-          "</tr>";
-        });
-        content+="</tbody></table>";
-        content+="Total: ₱ " + data[1].cost + "     Balance: ₱ " + data[2];  
-        $('#divCollect').html(content);
-      }
-      else
-       $.notify("No Items can be collected", "error");
-   });
+      else if(data[1].for_fund_transfer==true && data[1].forPDC==true)
+       select+='<option value="2">Fund Transfer</option>';
+     else
+      select+='<option value="3">Dated Check</option>';
+    select+="</SELECT>";
+    $('#idSelect').html(select);
+    setTimeout(function(){
+      $("#btnCollection").removeAttr('disabled');
+    }, 1000);
+    if(Object.keys(data).length>0)
+    {
+      balance=data[1].balance;
+      content=" <table class='table table-hover dataTable'id=''><thead><tr><th class='align-center'>DESCRIPTION</th><th class='align-center'>AMOUNT DUE</th></tr></thead><tbody id='myList'>";
+      $("#modalCollection").modal("show");
+      $.each( data[0], function( index, value ){
+        content+="<tr>" +
+        "<td>" + value.description + "</td>" +
+        "<td> ₱ " + value.price + "</td>" +
+        "</tr>";
+      });
+      content+="</tbody></table>";
+      content+="Total: ₱ " + data[1].cost + "     Balance: ₱ " + data[2];  
+      $('#divCollect').html(content);
+    }
+    else
+     $.notify("No Items can be collected", "error");
+ });
   });
 
 
@@ -72,7 +75,10 @@ $(document).ready(function()
     $('#pdc_id').val('')
     $('#idOption').html('');
     $('#txtAmount').removeAttr('readonly')
+    $('#pdc_id').val('');
     $('#divBank').html('');
+    $('#divBank').removeClass('form-line');
+    $('#txtAmount').removeAttr('max')
   });
 
 
@@ -163,28 +169,29 @@ $(document).ready(function()
 
 
   $(this).on('change', '#mode',function(e){
+    $('#pdc_id').val('');
+    $('#divBank').html('');
+    $('#divBank').removeClass('form-line');
+    $('#txtAmount').removeAttr('readonly');
+    $('#txtAmount').removeAttr('max')
     if($('#mode').val()==0)
     {
       $('#txtAmount').val(beforeInput);
       $('#txtAmount').removeAttr('readonly')
-      $('#pdc_id').val('');
-      $('#divBank').html('');
     }
     else if($('#mode').val()==1)
     { 
       beforeInput=$('#txtAmount').val();
       $('#txtAmount').val(pdcValue);
       $('#txtAmount').attr('readonly','')
-      $('#divBank').html('');
     }
-    else if($('#mode').val()==2)
+    else if($('#mode').val()==2 || $('#mode').val()==3)
     {
-     $('#txtAmount').val(beforeInput);
-     $('#txtAmount').removeAttr('readonly');
-     $('#pdc_id').val('');
-     $('#divBank').html('<select id="bank" name="bank"></select>');
-     $.get(bankUrl, function (data) 
-     {
+      $('#divBank').addClass('form-line');
+      $('#txtAmount').val(beforeInput);
+      $('#divBank').html('Bank <select id="bank" class="form-control" name="bank"></select>');
+      $.get(bankUrl, function (data) 
+      {
        $.each(data, function(e, t) {
         $("#bank").append($("<option>", {
           value: t.id,
@@ -192,11 +199,11 @@ $(document).ready(function()
         }));
       });
      });
-   }
-   else
-    console.log('trap');
+    }
+    else
+      $('#txtAmount').attr('max','10000')
 
-});
+  });
 
 
   function successPrompt(){

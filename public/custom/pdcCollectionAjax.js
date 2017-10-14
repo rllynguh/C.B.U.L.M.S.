@@ -50,9 +50,9 @@ $(document).ready(function()
 
   $('#btnSave').on('click',function(e)
   {
-    e.preventDefault(); 
     if($('#frmPDC').parsley().isValid())
     {
+      e.preventDefault(); 
 
       var my_url = url;
       var type="POST";
@@ -91,8 +91,6 @@ error: function (data) {
 }
 });
     }
-    else
-      console.log('hello');
   }
   );
 

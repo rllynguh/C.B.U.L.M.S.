@@ -207,13 +207,20 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/collection","collectionController");
 	Route::get('/transaction/move-collection/get/data', ['uses' => 'collectionController@data', 'as' => 'collection.getData']);
 
-	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
-	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
+
 
 	Route::group(['prefix' => '/query'], function () {
 		Route::group(['prefix' => '/offerSheet'], function () {
 			Route::get('/', ['uses' => 'offerSheetQueryController@index', 'as' => 'offerSheetQuery.index']);
 			Route::get('/get/data', ['uses' => 'offerSheetQueryController@data', 'as' => 'offerSheetQuery.getData']);
+		});
+		Route::group(['prefix' => '/registration'], function () {
+			Route::get('/', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
+			Route::get('/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
+		});
+		Route::group(['prefix' => '/delinquent'], function () {
+			Route::get('/', ['uses' => 'delinquentQueryController@index', 'as' => 'delinquentQuery.index']);
+			Route::get('/get/data', ['uses' => 'delinquentQueryController@data', 'as' => 'delinquentQuery.getData']);
 		});
 	});
 	Route::group(['prefix' => '/report'], function () {

@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Bank;
+use App\UserBalance;
+use Carbon\Carbon;
+use Config;
 
 class UpdateBillingInterest extends Command
 {
@@ -39,8 +41,11 @@ class UpdateBillingInterest extends Command
     public function handle()
     {
         //
-        $bank=new Bank();
-        $bank->description='kurusha';
-        $bank->save();
+        $userbalance=new UserBalance();
+        $userbalance->date_as_of=Carbon::now();
+        $userbalance->user_id='1';
+        $userbalance->balance='1';
+        $userbalance->save();
+        dd(Carbon::now());
     }
 }

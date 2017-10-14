@@ -68,9 +68,9 @@
 	</div>
 	<div class="col-sm-6">
 		<div class="form-group">
-			<div id='divBank' class="col-sm-6">
-				Bank
+			<div id='divBank' class="col-sm-6 form-line">
 			</div>
+			Mode of payment
 			<div class="form-line col-sm-6" id='idSelect'>
 
 			</div>
