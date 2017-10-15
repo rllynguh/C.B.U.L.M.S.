@@ -54,8 +54,7 @@ class contractAmendmentController extends Controller
 		return Datatables::of($contracts)
 		->addColumn('action', function ($data) {
 		return "<button type='button' class='btn btn-primary btnShowContractDetails' data-toggle='modal' data-id ='".$data->id."'data-target='#contractDetailsModal'>View Details</button>
-		<button type='button' class='btn btn-primary btnAlterContract' data-toggle='modal' data-id ='".$data->id."'data-target='#modal-alter-contract'>Alter Contract</button>
-		   
+		<button type='button' class='btn btn-primary btnAlterContract' data-toggle='modal' data-id ='".$data->id."'data-target='#modal-alter-contract'>Alter Contract</button>   
 		";
 		// <a href=".route('tenant.contractEdit',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>
 		})
