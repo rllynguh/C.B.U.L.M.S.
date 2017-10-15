@@ -15,9 +15,10 @@ class AmendmentApprovalController extends Controller
     	->where('amendment.status',0)
     	->join('contract_headers','contract_headers.id','amendment.contract_header_id')
     	->join('registration_headers','registration_headers.id','contract_headers.registration_header_id')
+    	->join('current_contracts','current_contracts.contract_header_id','contract_headers.id')
     	->join('tenants','tenants.id','registration_headers.tenant_id')
     	->join('users','users.id','tenants.user_id')
-    	->select('amendment.id as id','amendment.code as code',DB::raw('CONCAT(users.first_name," ",users.middle_name," ",users.last_name) as name'))
+    	->select('amendment.id as id','amendment.code as code',DB::raw('CONCAT(users.first_name," ",users.middle_name," ",users.last_name) as name'),'current_contracts.id as contract_header_id')
     	->get();
     	//dd($result);
     	return Datatables::of($result)
@@ -43,8 +44,7 @@ class AmendmentApprovalController extends Controller
     		return $count;
     	})
     	->addColumn('action', function ($data) {
-		return "<button type='button' class='btn btn-primary btnShowContractDetails' data-toggle='modal' data-id ='".$data->id."'data-target='#contractDetailsModal'>View Details</button>
-		<button type='button' class='btn btn-primary btnAlterContract' data-toggle='modal' data-id ='".$data->id."'data-target='#modal-alter-contract'>Alter Contract</button>   
+		return "<button type='button' class='btn btn-primary btnShowAmendmentModal' data-toggle='modal' data-id ='".$data->id."'data-contractId = '".$data->contract_header_id."'data-target='#amendmentApprovalModal'>View Details</button>
 		";
 		})
 		->setRowId(function ($data) {
@@ -52,6 +52,34 @@ class AmendmentApprovalController extends Controller
 		})
 		->rawColumns(['action'])
 		->make(true);
-    	
+    }
+    public function getAmendmentForfeits($id){
+    	$result = DB::table('amendment')
+    	->where('amendment.id',$id)
+    	->leftjoin('amendment_forfeit','amendment_forfeit.amendment_id','amendment.id')
+    	->groupBy('amendment_forfeit.id')
+    	->join('units','units.id','amendment_forfeit.unit_id')
+    	->join('floors','floors.id','units.floor_id')
+    	->select('units.type as unit_type','units.code as unit_code','floors.number as unit_floorNum','units.id as unit_id')
+    	->get();
+    	return response()->json($result);
+    	dd($result);
+    }
+    public function getUnits($id){
+    	$result = DB::table('tenants')
+        ->join('registration_headers','registration_headers.tenant_id','tenants.id')
+        ->join('users','users.id','registration_headers.user_id')
+        ->join ('contract_headers','registration_headers.id','contract_headers.registration_header_id')
+        ->join('current_contracts','contract_headers.id','current_contracts.contract_header_id')
+        ->where('current_contracts.id',$id)
+        ->join('contract_details','contract_headers.id','contract_details.current_contract_id')
+        ->join('units','units.id','contract_details.unit_id')
+        ->join('floors','units.floor_id','floors.id')
+        ->join('billing_headers','billing_headers.current_contract_id','current_contracts.id')
+        ->groupBy('units.id')
+        ->select('units.code as unit_code','units.type as unit_type','floors.number as unit_floorNum','contract_headers.code as contract_code','registration_headers.date_issued as date_issued','current_contracts.start_of_contract as start_date','current_contracts.end_of_contract as end_date',DB::raw('CONCAT(users.first_name," ",users.middle_name," ",users.last_name) as name'),'billing_headers.cost as total_cost','registration_headers.id as id',"units.id as unit_id")
+        ->get();
+        return response()->json($result);
+    	dd($result);
     }
 }
