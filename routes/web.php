@@ -216,6 +216,8 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::get("transaction/amendmentApproval/get/forfeit/{id}",'amendmentApprovalController@getAmendmentForfeits');
 
+	Route::get("transaction/amendmentApproval/get/request/{id}",'amendmentApprovalController@getRequests');
+
 
 	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
 	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);

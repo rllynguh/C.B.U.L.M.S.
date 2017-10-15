@@ -18,7 +18,7 @@ class AmendmentApprovalController extends Controller
     	->join('current_contracts','current_contracts.contract_header_id','contract_headers.id')
     	->join('tenants','tenants.id','registration_headers.tenant_id')
     	->join('users','users.id','tenants.user_id')
-    	->select('amendment.id as id','amendment.code as code',DB::raw('CONCAT(users.first_name," ",users.middle_name," ",users.last_name) as name'),'current_contracts.id as contract_header_id')
+    	->select('amendment.id as id','amendment.code as code',DB::raw('CONCAT(users.first_name," ",users.middle_name," ",users.last_name) as name'),'current_contracts.id as contract_header_id','amendment.duration_change as duration')
     	->get();
     	//dd($result);
     	return Datatables::of($result)
@@ -44,7 +44,7 @@ class AmendmentApprovalController extends Controller
     		return $count;
     	})
     	->addColumn('action', function ($data) {
-		return "<button type='button' class='btn btn-primary btnShowAmendmentModal' data-toggle='modal' data-id ='".$data->id."'data-contractId = '".$data->contract_header_id."'data-target='#amendmentApprovalModal'>View Details</button>
+		return "<button type='button' class='btn btn-primary btnShowAmendmentModal' data-toggle='modal' data-id ='".$data->id."'data-contractId = '".$data->contract_header_id."' data-duration = '".$data->duration. "'data-target='#amendmentApprovalModal'>View Details</button>
 		";
 		})
 		->setRowId(function ($data) {
@@ -60,7 +60,7 @@ class AmendmentApprovalController extends Controller
     	->groupBy('amendment_forfeit.id')
     	->join('units','units.id','amendment_forfeit.unit_id')
     	->join('floors','floors.id','units.floor_id')
-    	->select('units.type as unit_type','units.code as unit_code','floors.number as unit_floorNum','units.id as unit_id')
+    	->select('units.type as unit_type','units.code as unit_code','floors.number as unit_floorNum','units.id as unit_id','amendment.duration_change as duration')
     	->get();
     	return response()->json($result);
     	dd($result);
@@ -81,5 +81,14 @@ class AmendmentApprovalController extends Controller
         ->get();
         return response()->json($result);
     	dd($result);
+    }
+    public function getRequests($id){
+    	$result = DB::table('registration_details')
+    	->where('registration_details.amendment_id',$id)
+    	->join('building_types','building_types.id','registration_details.building_type_id')
+    	->select('building_types.description as building_description',
+    		'registration_details.unit_type as unit_type','registration_details.floor as floor_num',DB::raw('CONCAT(registration_details.size_from,"-",registration_details.size_to) as size'),'registration_details.tenant_remarks as remarks')
+    	->get();
+    	return response()->json($result);
     }
 }

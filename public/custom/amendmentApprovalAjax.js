@@ -20,11 +20,17 @@ $(document).ready(function(){
 function setModal(){
 	var unitsToKeep = "<h4> Units to keep </h4>";
 	var unitsToForfeit = "<h4> Units to forfeited </h4>";
-	var unitRequests = "";
-	var durationChange = "";
+	var unitRequests = "<h4> Units Requested </h4>";
+	var durationChange = $(this).attr('data-duration');;
 	var unitsForfeited = [];
 	var contract_id = $(this).attr('data-contractId');
 	var amendment_id = $(this).attr('data-id');
+	if(durationChange!=0){
+		var sign = durationChange>0?"Add ":"Less ";
+		$("#duration").html("Duration change: " + sign + Math.abs(durationChange) + " months ");
+	}else{
+		$("#duration").html("No change in duration");
+	}
 	$.ajax({
         url: dataurl + "/forfeit/" + amendment_id,
         type: 'GET',
@@ -41,7 +47,7 @@ function setModal(){
          }else{
          	$("#sortable2").html("<h4> No units to be forfeited ")
          }
-         $(".accordion").accordion("refresh");
+         //$(".accordion").accordion("refresh");
         },
         error: function(xhr,textStatus,err)
         {
@@ -66,6 +72,34 @@ function setModal(){
          	});
             
          $("#sortable1").html(unitsToKeep);
+        // $(".accordion").accordion("refresh");
+        },
+        error: function(xhr,textStatus,err)
+        {
+            console.log("readyState: " + xhr.readyState);
+            console.log("responseText: "+ xhr.responseText);
+            console.log("status: " + xhr.status);
+            console.log("text status: " + textStatus);
+            console.log("error: " + err);
+        }
+    })
+    $.ajax({
+        url: dataurl + "/request/" + amendment_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) { 
+         $.each(data, function(key,value) {
+     		var type = (value.unit_type == 0)?'Raw':'Shell';
+            unitRequests += "<div class = 'requestStub'> <h3>Unit Request" + (key+1)
+	        + "</h3><div><b>Unit Type: </b> " + type
+	        +"<br><b>Building Type:</b>" +value.building_description
+	        +"<br><b>Floor #</b>" + value.floor_num
+	        +"<br><b>Size: </b>" + value.size
+	        +"<br><b>Remarks:</b>" + value.remarks
+	        +"</div></div>";
+     	});
+        
+         $("#requests").html(unitRequests);
          $(".accordion").accordion("refresh");
         },
         error: function(xhr,textStatus,err)
