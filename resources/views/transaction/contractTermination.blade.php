@@ -24,6 +24,7 @@
 {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
 <script src="/custom/contractTerminationAjax.js"></script>
 <script type="text/javascript">
+var url = "{{route("transaction.contractTermination.index")}}";
 var dataurl="{{route("transaction.contractTermination.data")}}";
 </script>
 @endsection

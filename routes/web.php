@@ -220,6 +220,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	//Contract Termination
 	Route::get("transaction/contractTermination",'contractTerminationController@index')->name('transaction.contractTermination.index');
 	Route::get("transaction/contractTermination/data",'contractTerminationController@data')->name('transaction.contractTermination.data');
+	Route::post("transaction/contractTermination/post","contractTerminationController@terminateContract");
 
 	Route::group(['prefix' => '/query'], function () {
 		Route::group(['prefix' => '/offerSheet'], function () {

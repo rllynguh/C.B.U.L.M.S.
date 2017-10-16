@@ -62,7 +62,13 @@ class BillingItemsTableSeeder extends Seeder
             7 => 
             array (
                 'id' => 8,
-                'description' => 'Penalty',
+                'description' => 'Penalty Deduction',
+                'is_active' => 1,
+            ),
+            8 => 
+            array (
+                'id' => 9,
+                'description' => 'Reservation Fee Return',
                 'is_active' => 1,
             ),
         ));

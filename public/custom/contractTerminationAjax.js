@@ -1,6 +1,7 @@
 var penalties = [];
 var total=0;
 var security_deposit = 0;
+var id = 0;
 $(document).ready(function(){ 
 	$.ajaxSetup({
 		headers: {
@@ -23,6 +24,12 @@ $(document).ready(function(){
     $("body").on("click",".btnShowTerminateModal",function(){
     	$("#security_deposit").html($(this).attr('data-security'));
     	security_deposit = $(this).attr('data-security');
+    	id = $(this).attr('data-id');
+    	penalties= [];
+    	total = 0;
+    	$("#total").html(total);
+		$("#remaining").html(security_deposit-total);
+    	$("#bodeh").html("");
     })
     $("body").on("click","#btnTerminateContract",terminateContract);
     $("body").on("click", "#add-row", function(){
@@ -46,8 +53,33 @@ $(document).ready(function(){
 function terminateContract(){
 	var r = confirm("Are you sure you want to terminate this contract? This is irreversible. Overdue penalties will be deducted from the tenant's balance");
 	if (r == true) {
-		penalties.push({name:"Total",value:total});
-		console.log(penalties);
+		total = 0;
+		penalties = [];
+		$("tr.item").each(function(index,value) {
+			penalties.push({name:"penalty_name[]",value:$(this).find("td.name").html()});
+			penalties.push({name:"penalty_value[]",value:$(this).find("td.value").html()});
+			total+= +($(this).find("td.value").html());
+		});
+		penalties.push({name:"total",value:total});
+		penalties.push({name:"id",value:id});
+		$.ajax({
+			url: url+"/post",
+			type: 'POST',
+			data: $.param(penalties),
+			success: function(data) {
+	            alert(data.price);
+	            penalties = [];
+	        },
+	        error: function(xhr,textStatus,err)
+	        {
+	            console.log("readyState: " + xhr.readyState);
+	            console.log("responseText: "+ xhr.responseText);
+	            console.log("status: " + xhr.status);
+	            console.log("text status: " + textStatus);
+	            console.log("error: " + err);
+	        }
+		});
+		
 	} else {
 	}
 }
@@ -55,7 +87,8 @@ function recalculate(){
 	penalties = [];
 	total = 0;
 	$("tr.item").each(function(index,value) {
-		penalties.push({name:$(this).find("td.name").html()+"["+(index+1)+"]",value:$(this).find("td.value").html()});
+		penalties.push({name:"penalty_name[]",value:$(this).find("td.name").html()});
+		penalties.push({name:"penalty_value[]",value:$(this).find("td.value").html()});
 		total+= +($(this).find("td.value").html());
 	});
 	$("#total").html(total);

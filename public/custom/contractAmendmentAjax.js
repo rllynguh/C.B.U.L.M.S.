@@ -64,8 +64,6 @@ function submitRequest(){
         data.push({name:"duration_change",value: duration.spinner("value")})   
     }
     data.push({name:"tenant_remarks",value:$('#tenantRemark').val() });
-   console.log(data);
-   console.log($.param(data));
     $.ajax({
         url: urlStore,
         type: 'POST',
