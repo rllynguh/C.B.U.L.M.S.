@@ -220,13 +220,18 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get("transaction/contractTermination",'contractTerminationController@index')->name('transaction.contractTermination.index');
 	Route::get("transaction/contractTermination/data",'contractTerminationController@data')->name('transaction.contractTermination.data');
 
-	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
-	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
-
 	Route::group(['prefix' => '/query'], function () {
 		Route::group(['prefix' => '/offerSheet'], function () {
 			Route::get('/', ['uses' => 'offerSheetQueryController@index', 'as' => 'offerSheetQuery.index']);
 			Route::get('/get/data', ['uses' => 'offerSheetQueryController@data', 'as' => 'offerSheetQuery.getData']);
+		});
+		Route::group(['prefix' => '/registration'], function () {
+			Route::get('/', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
+			Route::get('/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);
+		});
+		Route::group(['prefix' => '/delinquent'], function () {
+			Route::get('/', ['uses' => 'delinquentQueryController@index', 'as' => 'delinquentQuery.index']);
+			Route::get('/get/data', ['uses' => 'delinquentQueryController@data', 'as' => 'delinquentQuery.getData']);
 		});
 	});
 	Route::group(['prefix' => '/report'], function () {
@@ -237,6 +242,10 @@ Route::group(['prefix' => 'admin/'], function () {
 		Route::group(['prefix' => 'collection/'], function () {
 			Route::get('/', ['uses' => 'collectionReportController@index', 'as' => 'collectionReport.index']);
 			Route::post('/', ['uses' => 'collectionReportController@document', 'as' => 'collectionReport.document']);
+		});
+		Route::group(['prefix' => 'billing/'], function () {
+			Route::get('/', ['uses' => 'billingReportController@index', 'as' => 'billingReport.index']);
+			Route::post('/', ['uses' => 'billingReportController@document', 'as' => 'billingReport.document']);
 		});
 	});
 });
@@ -254,6 +263,8 @@ Route::get('custom/getFloor', ['uses' => 'customController@getFloor', 'as' => 'c
 Route::get('custom/getRange', ['uses' => 'customController@getRange', 'as' => 'custom.getRange']);
 Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRate', 'as' => 'custom.getMarketRate']);
 Route::get('custom/banks', ['uses' => 'customController@getBanks', 'as' => 'custom.getBanks']);
+Route::put('custom/readNotification', ['uses' => 'customController@readNotification', 'as' => 'custom.readNotification']);
+
 
 
 

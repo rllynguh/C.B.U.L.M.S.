@@ -56,7 +56,7 @@ $(document).ready(function()
     e.preventDefault(); 
     var my_url = url +"/" +$('#myId').val();
     var type="PUT";
-    $('#status').val('1');
+    $('#status').val('2');
     var formData = $('#frmPDCValidation').serialize();
     $.ajax({
       beforeSend: function (jqXHR, settings) {

@@ -149,7 +149,7 @@ MAJENT, a corporation duly organized and established under the Philippine laws <
 				{{$unit->code}}
 			</td>
 			<td>
-				{{number_format($unit->price,2)}}
+				PHP	{{number_format($unit->price,2)}}
 			</td>
 		</tr>
 		@endforeach

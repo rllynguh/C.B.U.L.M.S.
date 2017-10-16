@@ -35,17 +35,29 @@
           <li class="dropdown">
             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">
               <i class="mdi-social-notifications"></i>
-              <span class="label-count">0</span>
+              <span id='notif_count' class="label-count">{{$notification->count}}</span>
             </a>
             <ul class="dropdown-menu">
               <li class="header">NOTIFICATIONS</li>
               <li class="body">
-                <ul class="menu">
+                <div id='notifBody' class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;"><ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
+                  @foreach($notification->list as $notif)
                   <li>
-                    Notifs here
+                    <a href="javascript:void(0);" id='{{$notif->id}}' class="notification waves-effect waves-block">
+                     {{--  <div class="icon-circle bg-light-green">
+                        <i class="mdi-action-report-problem"></i>
+                      </div> --}}
+                      <div class="menu-info">
+                        <h4>{{$notif->title}}</h4>
+                        <p>
+                          <i class="mdi-action-schedule"></i> {{$notif->date_issued}}
+                        </p>
+                      </div>
+                    </a>
                   </li>
+                  @endforeach
                 </ul>
-              </li>
+              </div>
               <li class="footer">
                 <a href="javascript:void(0);">View All Notifications</a>
               </li>
@@ -74,7 +86,7 @@
               <li><a href="javascript:void(0);" class="waves-lime"><i class="mdi-social-group pull-left"></i>Followers</a></li>
               <li><a href="javascript:void(0);" class="waves-lime"><i class="mdi-action-shopping-cart pull-left"></i>Sales</a></li>
               <li><a href="javascript:void(0);" class="waves-lime"><i class="mdi-action-grade pull-left"></i>Likes</a></li>
-              
+
               <li role="seperator" class="divider"></li>
               <li>
                 <a href="{{ route('logout') }}"
@@ -440,6 +452,22 @@
       <span>Move In</span>
     </a>
   </li>
+  <li class="
+  {{Request::path() == 'admin/report/collection' ? 'active' : ''}}
+
+  ">
+  <a href="{{route('collectionReport.index')}}" class="waves-yellow">
+    <span>Collection</span>
+  </a>
+</li>
+<li class="
+{{Request::path() == 'admin/report/billing' ? 'active' : ''}}
+
+">
+<a href="{{route('billingReport.index')}}" class="waves-yellow">
+  <span>Billing</span>
+</a>
+</li>
 </ul>
 </li>
 <!--END OF REPORTS-->
@@ -464,6 +492,13 @@
   <a href="{{route('offerSheetQuery.index')}}" class="waves-yellow">
     <span>Offer Sheet</span>
   </a>
+</li>
+<li class="
+{{Request::path() == 'admin/query/delinquentQuery' ? 'active' : ''}}
+">
+<a href="{{route('delinquentQuery.index')}}" class="waves-yellow">
+  <span>Delinquent Tenants</span>
+</a>
 </li>
 </ul>
 </li>
@@ -525,6 +560,10 @@
 {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
 {!!Html::script("plugins/pace-js/pace.min.js")!!}
 {!!Html::script('js/admin.min.js')!!}
+{!!Html::script('custom/coreLayoutAjax.js')!!}
+<script type="text/javascript">
+  url="{{route('custom.readNotification')}}"
+</script>>
 
 </body>
 

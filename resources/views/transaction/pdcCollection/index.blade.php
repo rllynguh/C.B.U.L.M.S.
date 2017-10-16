@@ -27,14 +27,16 @@
     </div>
     <div class="modal-body">
       <div class="col-sm-6">
-        <center><h4>Post Dated Checks will cover these items:</h4></center>
-        <div id='divBill'>
+        <div class="col-sm-12">
+          <center><h4>Post Dated Checks will cover these items:</h4></center>
+          <div id='divBill'>
+          </div>
         </div>
         <div class="col-sm-12">
           <div class="col-sm-4">
             <div class="form-group">
               <div class="form-line">
-                <label class="card-inside-title">Number of PDC'S</label>
+                <label class="card-inside-title"># of PDC'S</label>
                 {{ Form::number('txtPDC',null,[
                   'id' => 'txtPDC',
                   'class' => 'form-control text-center max-digits-2',
@@ -49,16 +51,18 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="form-line">
-            {{ Form::label('bank', 'Bank', [
-              'class' => 'control-label'
-            ]) 
-          }}
-          <div class="form-group ">
-            {{ Form::select('bank', $banks,null, [
-              'id' => 'bank',
-              'class' => 'form-control form-line'])
+          <div class="form-group">
+            <div class="form-line">
+              {{ Form::label('bank', 'Bank', [
+                'class' => 'control-label'
+              ]) 
             }}
+            <div class="form-group ">
+              {{ Form::select('bank', $banks,null, [
+                'id' => 'bank',
+                'class' => 'form-control form-line'])
+              }}
+            </div>
           </div>
         </div>
       </div>
@@ -111,8 +115,8 @@
 </div>
 @endsection
 @section('scripts')
-{!!Html::script("custom/pdcCollectionAjax.js")!!}
 {!!Html::script("plugins/editable-table/mindmup-editabletable.min.js")!!}
+{!!Html::script("custom/pdcCollectionAjax.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('pdcCollection.getData')!!}" ;
   var url="{!!route('pdcCollection.index')!!}" ;

@@ -14,7 +14,8 @@ use PDF;
 use App\UserBalance;
 use App\PostDatedCheck;
 use App\FundTransfer;
-use App\BillingHeader;
+use App\DatedCheck;
+
 
 class collectionController extends Controller
 {
@@ -90,15 +91,6 @@ class collectionController extends Controller
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
         ->select('billing_items.description','price')
         ->get();
-        /* experimental shit do not touch
-        $result = BillingHeader::where('id',$request->myId)->first();
-        $result->status = 1;
-        $result->save();
-
-        DB::table('billing_details')
-        ->where('billing_details.billing_header_id',$request->myId)
-        ->update(['status' => 1]);
-        */
 
         $full_name=Auth::user()->first_name." ".Auth::user()->last_name;
         $summary=db::table('billing_headers')
@@ -126,19 +118,26 @@ class collectionController extends Controller
         $payment->payment=$request->txtAmount;
         $payment->save();
 
-        if(!is_null($request->pdc_id)) //if paid via pdc
+        if($request->moode==1) //if paid via pdc
         {
             $pdc=PostDatedCheck::FINDORFAIL($request->pdc_id);
             $pdc->is_accepted=1;
             $pdc->payment_id=$payment->id;
             $pdc->save();
         }
-          if(!is_null($request->bank)) //if paid via fund transfer
+          if($request->mode==2) //if paid via fund transfer
           {
             $fund_transfer=new FundTransfer();
             $fund_transfer->bank_id=$request->bank;
             $fund_transfer->payment_id=$payment->id;
             $fund_transfer->save();
+        }
+          if($request->mode==3) //if paid via dated check
+          {
+            $dated_check=new DatedCheck();
+            $dated_check->bank_id=$request->bank;
+            $dated_check->payment_id=$payment->id;
+            $dated_check->save();
         }
 
         $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment','full_name'));
@@ -190,8 +189,25 @@ class collectionController extends Controller
         ->WHERE('billing_headers.id',$id)
         ->WHERE('is_accepted',0)
         ->WHERE('post_dated_checks.status',1)
+        ->WHERERAW('MONTH(for_date)=MONTH(CURRENT_DATE()) AND YEAR(for_date)=YEAR(CURRENT_DATE())')
         ->SELECT('post_dated_checks.code','post_dated_checks.id','amount')
         ->FIRST();
+
+
+        $for_fund_transfer=DB::TABLE('post_dated_checks')
+        ->JOIN('current_contracts','post_dated_checks.current_contract_id','current_contracts.id')
+        ->JOIN('billing_headers','current_contracts.id','billing_headers.current_contract_id')
+        ->WHERE('billing_headers.id',$id)
+        ->WHERE('is_accepted',0)
+        ->WHERERAW('MONTH(for_date)=MONTH(CURRENT_DATE()) AND YEAR(for_date)=YEAR(CURRENT_DATE())')
+        ->WHERE('post_dated_checks.status',2)
+        ->SELECT('post_dated_checks.code','post_dated_checks.id','amount')
+        ->FIRST();
+        if(is_null($for_fund_transfer))
+            $for_fund_transfer=false;
+        else
+            $for_fund_transfer=true;
+
 
         $summary=db::table('billing_headers')
         ->join('current_contracts','billing_headers.current_contract_id','current_contracts.id')
@@ -204,6 +220,7 @@ class collectionController extends Controller
         ->first();
         $summary->cost=number_format($summary->cost,2); //for formating to peso sign
         $summary->forPDC=$forPDC;
+        $summary->for_fund_transfer=$for_fund_transfer;
         if(!is_null($pdc)) //check if the user still has pdc
         {
             $summary->pdc_amount=$pdc->amount;

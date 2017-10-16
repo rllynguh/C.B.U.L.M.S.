@@ -11,6 +11,10 @@ use App\BusinessType;
 use App\RepresentativePosition;
 use App\Floor;
 use App\SizeRange;
+use App\Notification;
+use Carbon\Carbon;
+use Config;
+use Auth;
 
 class customController extends Controller
 {
@@ -73,6 +77,31 @@ class customController extends Controller
 		return Response::json($range);
 
 	}
+
+	public function readNotification(Request $request)
+	{
+		$notification=Notification::FINDORFAIL($request->id);
+		$notification->is_read=1;
+		$notification->date_read=Carbon::now();
+		$notification->save();
+		$list=DB::TABLE('notifications')
+		->WHERE('user_id',Auth::user()->id)
+		->SELECT('id','title','description','link','date_issued')
+		->WHERE('is_read',0)
+		->GET();
+		$count=DB::TABLE('notifications')
+		->WHERE('user_id',Auth::user()->id)
+		->WHERE('is_read',0)
+		->COUNT('id')
+		;
+		foreach ($list as $element) {
+                # code...
+			$myDate=new Carbon($element->date_issued);
+			$element->date_issued=$element->date_issued;
+		}
+		$notification = (object)['count' =>$count, 'list' => $list];
+		return Response::JSON($notification);
+	}	
 }
 
 

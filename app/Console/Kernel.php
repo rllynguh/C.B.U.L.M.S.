@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-    	$schedule->command('billing_interest:update')->everyMinute();
+    	$schedule->command('billing_interest:update')->everyMinute()->sendOutputTo(storage_path('logs/output.log'));
     }
 
     /**
