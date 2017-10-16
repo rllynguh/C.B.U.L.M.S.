@@ -17,7 +17,10 @@ Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits'
 Route::get('test/parkAreas/{id}',['uses' => 'maintenanceBuildingController@getParkAreas', 'as' =>'test.getParkAreas']);
 Route::resource('test','maintenanceBuildingController');
 
+Route::group(['prefix' => 'account/'],function(){
+	Route::get('/notification','NotificationController@index')->name('account.notification.index');
 
+});
 
 Route::group(['prefix' => 'tenant/'],function(){
 	// Data output testing
@@ -266,7 +269,7 @@ Route::get('custom/getRange', ['uses' => 'customController@getRange', 'as' => 'c
 Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRate', 'as' => 'custom.getMarketRate']);
 Route::get('custom/banks', ['uses' => 'customController@getBanks', 'as' => 'custom.getBanks']);
 Route::put('custom/readNotification', ['uses' => 'customController@readNotification', 'as' => 'custom.readNotification']);
-
+Route::get('/notification/get/count','customController@getNotificationCount')->name('custom.getNotificationCount');
 
 
 

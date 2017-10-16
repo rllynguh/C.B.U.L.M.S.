@@ -18,7 +18,6 @@ use Auth;
 
 class customController extends Controller
 {
-    //
 	public function getCity($id)
 	{
 		$result=DB::table("cities")
@@ -92,8 +91,7 @@ class customController extends Controller
 		$count=DB::TABLE('notifications')
 		->WHERE('user_id',Auth::user()->id)
 		->WHERE('is_read',0)
-		->COUNT('id')
-		;
+		->COUNT('id');
 		foreach ($list as $element) {
                 # code...
 			$myDate=new Carbon($element->date_issued);
@@ -101,6 +99,13 @@ class customController extends Controller
 		}
 		$notification = (object)['count' =>$count, 'list' => $list];
 		return Response::JSON($notification);
+	}
+	public function getNotificationCount(){
+		$count=DB::TABLE('notifications')
+		->WHERE('user_id',Auth::user()->id)
+		->WHERE('is_read',0)
+		->COUNT('id');
+		return response()->json(['count'=>$count]);
 	}	
 }
 

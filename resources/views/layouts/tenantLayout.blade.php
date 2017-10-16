@@ -37,7 +37,6 @@
         <div class="collapse navbar-collapse"> 
           <ul class="nav navbar-nav navbar-right"> 
             <li class="scroll active"><a href="{{route('tenant.home')}}">Home</a></li> 
-            <li class="scroll"><a href="#about-us">Profiles</a></li> 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transactions <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -47,14 +46,20 @@
                 <li role="separator" class="divider"></li>
                 <li><a href="{{route('tenant.contractView')}}">Manage Ongoing Contracts</a></li>
                 <li><a href="{{route('tenant.requestUnit')}}">Request New Units</a></li>
-                <li><a href="{{route('tenant.test')}}">Merge units</a></li>
                 <li><a href="{{route('tenant.terminateContract')}}">Terminate Contract</a></li>
               </ul>
             </li>
             <li class="scroll"><a href="#services">Documents</a></li> 
             <li class="scroll"><a href="#our-team">Statement of Account</a></li> 
             @auth
-            <li class="scroll"><a href="#clients">Notifications</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->first_name }} {{Auth::user()->last_name}}<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a  id = "notification" href="{{route('account.notification.index')}}">Notifications</a></li>
+                <li><a href="{{route('account.notification.index')}}">Account</a></li>
+                <li><a href="{{route('account.notification.index')}}">Logout</a></li>
+              </ul>
+            </li>
             @else
             <li class="scroll"><a href="#clients">Login</a></li>
             @endauth
@@ -96,6 +101,9 @@
   {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
   {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
   {!!Html::script("plugins/bootstrap3-editable/bootstrap3-editable/js/bootstrap-editable.min.js")!!}
+  <script type="text/javascript">
+    var urlNotificationCount = "{{route("custom.getNotificationCount")}}";
+  </script>
   {!!Html::script("js/tenant/custom.js")!!}
   @yield('scripts')
 </body>
