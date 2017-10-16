@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PenaltiesTableSeeder extends Seeder
+class PenaltyTableSeeder extends Seeder
 {
 
     /**
