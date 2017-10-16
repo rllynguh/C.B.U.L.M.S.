@@ -8,6 +8,7 @@ use Datatables;
 use App\UserBalance;
 use App\BillingDetail;
 use App\BillingHeader;
+use App\CurrentContract;
 use Carbon\Carbon;
 use Config;
 use Auth;
@@ -18,6 +19,7 @@ class ContractTerminationController extends Controller
     }
     public function data(){
     	$contracts=DB::table('current_contracts')
+    	->where('current_contracts.status',0)
 		->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
 		->join('registration_headers','contract_headers.registration_header_id','registration_headers.id')
 		->join('tenants','registration_headers.tenant_id','tenants.id')
@@ -108,7 +110,11 @@ class ContractTerminationController extends Controller
 		$billing_detail->billing_item_id = 9;
 		$billing_detail->status=1;
 		$billing_detail->save();
-		//TODO alter billing headers
+
+
+		$current_contract = CurrentContract::where('id',$request->id)
+		->update(['status'=>2]);
+
 
 		return response()->json(['price'=>$output]);
     }
