@@ -25,7 +25,7 @@ class ContractTerminationController extends Controller
 		return Datatables::of($contracts)
 		->addColumn('action', function ($data) {
 		return "<button type='button' class='btn btn-primary btnShowContractDetails' data-toggle='modal' data-id ='".$data->id."'data-target='#contractDetailsModal'>View Details</button>
-		<button type='button' class='btn btn-primary btnAlterContract' data-toggle='modal' data-id ='".$data->id."'data-target='#modal-alter-contract'>Alter Contract</button>   
+		<button type='button' class='btn btn-primary btnTerminateContract' data-toggle='modal' data-id ='".$data->id."'data-target='#contractTerminationModal'>Terminate Contract</button>   
 		";
 		})
 		->setRowId(function ($data) {

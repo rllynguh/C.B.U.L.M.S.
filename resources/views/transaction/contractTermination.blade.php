@@ -18,6 +18,7 @@
     </table>
   </div>
 </div>
+@include('partials.transactions._contractTerminationModal')
 @endsection
 @section('scripts')
 {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 

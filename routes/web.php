@@ -217,6 +217,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get("transaction/amendmentApproval/get/request/{id}",'amendmentApprovalController@getRequests');
 	Route::post("transaction/amendmentApproval/post","amendmentApprovalController@postAction");
 
+	//Contract Termination
 	Route::get("transaction/contractTermination",'contractTerminationController@index')->name('transaction.contractTermination.index');
 	Route::get("transaction/contractTermination/data",'contractTerminationController@data')->name('transaction.contractTermination.data');
 
