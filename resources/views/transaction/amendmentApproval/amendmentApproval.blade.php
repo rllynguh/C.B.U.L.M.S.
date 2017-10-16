@@ -24,6 +24,7 @@
 {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
 <script src="/custom/amendmentApprovalAjax.js"></script>
 <script type="text/javascript">
+var url = "{{route("transaction.amendmentApproval.index")}}";
 var dataurl="{{route("transaction.amendmentApproval.data")}}";
 var urlUnits = "{!!route('tenant.getUnits')!!}";
 </script>

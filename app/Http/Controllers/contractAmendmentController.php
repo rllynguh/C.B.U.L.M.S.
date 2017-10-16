@@ -125,7 +125,7 @@ class contractAmendmentController extends Controller
 					->first();
 					$amendment_header->contract_header_id=$true_id->id;
 					//$amendment_header->date_issued=Carbon::now(Config::get('app.timezone'));
-					$amendment_header->tenant_remarks=$request->header_remarks;
+					$amendment_header->tenant_remarks=$request->tenant_remarks;
 					if(!is_null($request->duration_change)){
 						$amendment_header->duration_change=$request->duration_change;
 					}
@@ -154,13 +154,6 @@ class contractAmendmentController extends Controller
 						$toDiscard->save();
 					}
 				}
-				
-		          if($num==1){
-			          $returnData = array(
-					   'status' => 'Error',
-					    'message' => 'Shit doesnt save'
-					  );
-		          }
 		          DB::commit();
 	        }else{
 	        	$returnData = array(

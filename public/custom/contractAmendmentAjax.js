@@ -63,6 +63,7 @@ function submitRequest(){
     if($("#durationToggle").is(':checked')){
         data.push({name:"duration_change",value: duration.spinner("value")})   
     }
+    data.push({name:"tenant_remarks",value:$('#tenantRemark').val() });
    //console.log(data);
    //console.log($.param(data));
     $.ajax({

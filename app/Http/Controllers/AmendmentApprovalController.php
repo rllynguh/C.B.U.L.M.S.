@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Datatables;
+use App\Amendment;
 class AmendmentApprovalController extends Controller
 {
     public function index(){
@@ -90,5 +91,14 @@ class AmendmentApprovalController extends Controller
     		'registration_details.unit_type as unit_type','registration_details.floor as floor_num',DB::raw('CONCAT(registration_details.size_from,"-",registration_details.size_to) as size'),'registration_details.tenant_remarks as remarks')
     	->get();
     	return response()->json($result);
+    }
+
+    public function postAction(Request $request){
+    	$result = Amendment::where('id',$request->id)->first();
+    	if(!is_null($result)){
+    		$result->status = $request->status;
+    		$result->admin_remarks = $request->admin_remarks;
+    		$result->save();
+    	}
     }
 }

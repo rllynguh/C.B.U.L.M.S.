@@ -1,4 +1,12 @@
+var action = 0;
+var contract_id=0;
+var amendment_id=0;
 $(document).ready(function(){
+	$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+    }
+});
 	table = $('#myTable').DataTable({
         responsive: true,
         processing: true,
@@ -15,7 +23,44 @@ $(document).ready(function(){
     });
     $(".accordion").accordion({header: 'h3'});
      $("body").on("click", ".btnShowAmendmentModal", setModal);
+     $("body").on("click","#btnSubmit", setApproval);
+     $('#confirm-dialog').on('show.bs.modal', function (event) {
+     	if(event.relatedTarget.id==='btnAccept'){
+     		action = 1;
+     	}else{
+     		action = 2;
+     	}
+	});
 });
+
+function setApproval(){
+	var data = [];
+	if(action==1||action==2){
+		data.push({name:"id",value:amendment_id});
+		data.push({name:"status",value:action});
+		data.push({name:"admin_remarks",value:$('#tenantRemark').val() });
+		console.log(data);
+		$.ajax({
+	        url: url + "/post/",
+	        type: 'POST',
+	        data: $.param(data),
+	        success: function(data) {
+	         //$(".accordion").accordion("refresh");
+	        },
+	        error: function(xhr,textStatus,err)
+	        {
+	            console.log("readyState: " + xhr.readyState);
+	            console.log("responseText: "+ xhr.responseText);
+	            console.log("status: " + xhr.status);
+	            console.log("text status: " + textStatus);
+	            console.log("error: " + err);
+	        }
+	    })
+	}
+	action=0;
+	location.reload();
+	//console.log(action);	
+}
 
 function setModal(){
 	var unitsToKeep = "<h4> Units to keep </h4>";
@@ -23,8 +68,8 @@ function setModal(){
 	var unitRequests = "<h4> Units Requested </h4>";
 	var durationChange = $(this).attr('data-duration');;
 	var unitsForfeited = [];
-	var contract_id = $(this).attr('data-contractId');
-	var amendment_id = $(this).attr('data-id');
+	contract_id = $(this).attr('data-contractId');
+	amendment_id = $(this).attr('data-id');
 	if(durationChange!=0){
 		var sign = durationChange>0?"Add ":"Less ";
 		$("#duration").html("Duration change: " + sign + Math.abs(durationChange) + " months ");

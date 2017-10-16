@@ -4,13 +4,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Unit Requests</h4>
+                <h4 class="modal-title">Contract Amendment Form</h4>
             </div>
             <div class="modal-body">
                 <form action="" role="form">
                     <div class="row">
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                             <div class="form-group">
+                                <button type="button" class="btn btn-primary" data-toggle='modal' data-target= '#createRequestModal' >Edit Unit Requests</button>
                                 <div id = "requests" class = "accordion">
                                     <h4> Units to requested </h4>
                                 </div>
@@ -35,7 +36,14 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary" data-toggle='modal' data-target= '#createRequestModal' >Edit Unit Requests</button>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label class = "unselectable" for="tenantRemark">
+                                         Remarks
+                                    </label>
+                            <textarea name="tenantRemark" id="tenantRemark" class="form-control" rows="3" required="required"></textarea>
+                        </div>
+                    </div>
                 
             </div>
             <div class="modal-footer">
@@ -64,61 +72,7 @@
                         <form action="" method="POST" role="form" id = 'testform'>
                         <fieldset>
                             <div class="panel-body" id = "fields">
-                                <div class = removeclass1>
-                                <div class="col-sm-2 nopadding">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label class="control-label">Building Type*</label>
-                                            <div class="form-line">
-                                            <select class="form-control form-line" id="builtype" name="builtype[]"></select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 nopadding">
-                                <div class="form-group">
-                                    <label class="control-label">Floor #*</label>
-                                    <div class="form-line">
-                                    <select class="form-control form-line" id="floor" name="floor[]"></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-2 nopadding">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <label class="control-label">Unit Type*</label>
-                                    <div class="form-line">
-                                        <select class="form-control form-line" id="utype" name="utype[]">
-                                            <option value="0">Raw</option>
-                                            <option value="1">Shell</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 nopadding">
-                            <div class="form-group">
-                                <label class="control-label">Size*</label>
-                                <div class="form-line">
-                                <select class="form-control form-line" id="size" name="size[]"></select>
-                            </div>
-                        </div>
-                       
-                    </div>
-                     <div class="col-sm-2 nopadding">
-                        <br>
-                            <a href="#" onclick = "remove_fields(1);" class="btn btn-primary btn-danger"><span class="glyphicon glyphicon-minus"></span> Remove Unit</a>
-                        </div>
-                    <div class="col-sm-12 nopadding">
-                        <div class="form-group">
-                            <label class="control-label">Remarks*</label>
-                            <div class="form-line">
-                                <textarea class="form-control form-line" id="remarks" name="remarks[]" value=""></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    </div>
+                                
                 </div>
             </fieldset>
         </form>
