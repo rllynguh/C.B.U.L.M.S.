@@ -21,11 +21,19 @@ class ContractTerminationController extends Controller
 		->select(DB::raw('current_contracts.id,current_contracts.date_issued, contract_headers.code,CONCAT(tenant.first_name," ",tenant.last_name) as full_name,count(distinctrow contract_details.id) as unit_count'))
 		->whereRaw('current_contracts.date_issued=(Select Max(date_issued) from current_contracts where contract_header_id=contract_headers.id)')
 		->groupBy('current_contracts.id')
+		->join('billing_headers','billing_headers.current_contract_id','current_contracts.id')
+    	->join('billing_details','billing_details.billing_header_id','billing_headers.id')
+    	->where('billing_details.billing_item_id',3)
+    	->addSelect('billing_details.price as price')
 		->get();
+
 		return Datatables::of($contracts)
+		->addColumn('security_deposit', function ($data) {
+			return $data->price;
+		})
 		->addColumn('action', function ($data) {
-		return "<button type='button' class='btn btn-primary btnShowContractDetails' data-toggle='modal' data-id ='".$data->id."'data-target='#contractDetailsModal'>View Details</button>
-		<button type='button' class='btn btn-primary btnTerminateContract' data-toggle='modal' data-id ='".$data->id."'data-target='#contractTerminationModal'>Terminate Contract</button>   
+		return "<button type='button' class='btn btn-primary btnShowContractDetails' data-toggle='modal' data-id ='".$data->id."'data-target='#contractDetailsModal''>View Details</button>
+		<button type='button' class='btn btn-primary btnShowTerminateModal' data-toggle='modal' data-id ='".$data->id."'data-target='#contractTerminationModal' data-security='".$data->price."'>Terminate Contract</button>   
 		";
 		})
 		->setRowId(function ($data) {

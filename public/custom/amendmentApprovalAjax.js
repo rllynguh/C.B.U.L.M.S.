@@ -39,7 +39,7 @@ function setApproval(){
 		data.push({name:"id",value:amendment_id});
 		data.push({name:"status",value:action});
 		data.push({name:"admin_remarks",value:$('#tenantRemark').val() });
-		console.log(data);
+		console.log($.param(data));
 		$.ajax({
 	        url: url + "/post/",
 	        type: 'POST',

@@ -101,37 +101,40 @@ class contractAmendmentController extends Controller
 				    'status' => 'okay',
 				    'message' => 'all fine'
 				);
-				$num = 1;
 				//check if user made a unit request
+				$header_query=DB::table("amendment")
+				->select("amendment.code")
+				->orderBy("id","desc")
+				->first();
+				//generation of code
+				$amendment_header_pk="Amendment";
+				if(!is_null($header_query)){
+					$amendment_header_pk=$header_query->code;
+				}
+				$sc= new smartCounter();
+				$amendment_header_pk=$sc->increment($amendment_header_pk);
+				//end code
+				$amendment_header=new Amendment();
+				$amendment_header->code=$amendment_header_pk;
+				$true_id = DB::table("current_contracts")
+				->select("current_contracts.contract_header_id as id")
+				->where("id",$request->contract_id)
+				->first();
+				$amendment_header->contract_header_id=$true_id->id;
+				$amendment_header->tenant_remarks=$request->tenant_remarks;
+				if(!is_null($request->duration_change)){
+					$amendment_header->duration_change=$request->duration_change;
+				}
+				//$regi_header->is_existing_tenant = '1';
+				$amendment_header->save();
+				for($x=0;$x<count($request->discard_code);$x++){
+					$toDiscard = new AmendmentForfeit;
+					$toDiscard->amendment_id = $amendment_header->id;
+					$toDiscard->unit_id = $request->discard_code[$x];
+					$toDiscard->save();
+				}
 				if(count($request->builtype)>0){
-					$header_query=DB::table("amendment")
-					->select("amendment.code")
-					->orderBy("id","desc")
-					->first();
-					//generation of code
-					$amendment_header_pk="Amendment";
-					if(!is_null($header_query)){
-						$amendment_header_pk=$header_query->code;
-					}
-					$sc= new smartCounter();
-					$amendment_header_pk=$sc->increment($amendment_header_pk);
-					//end code
-					$amendment_header=new Amendment();
-					$amendment_header->code=$amendment_header_pk;
-					$true_id = DB::table("current_contracts")
-					->select("current_contracts.contract_header_id as id")
-					->where("id",$request->contract_id)
-					->first();
-					$amendment_header->contract_header_id=$true_id->id;
-					//$amendment_header->date_issued=Carbon::now(Config::get('app.timezone'));
-					$amendment_header->tenant_remarks=$request->tenant_remarks;
-					if(!is_null($request->duration_change)){
-						$amendment_header->duration_change=$request->duration_change;
-					}
-					//$regi_header->is_existing_tenant = '1';
-					$amendment_header->save();
 					for($x=0;$x<count($request->builtype); $x++){ 
-						$num++;
 						$result=explode('|',$request->size[$x]);
 						$regi_detail=new RegistrationDetail;
 						$regi_detail->amendment_id=$amendment_header->id;
@@ -143,14 +146,6 @@ class contractAmendmentController extends Controller
 						$regi_detail->tenant_remarks=$request->remarks[$x];
 						$regi_detail->is_amendment = 1;
 						$regi_detail->save();
-					}
-					$num=1;
-					for($x=0;$x<count($request->discard_code);$x++){
-						$num++;
-						$toDiscard = new AmendmentForfeit;
-						$toDiscard->amendment_id = $amendment_header->id;
-						$toDiscard->unit_id = $request->discard_code[$x];
-						$toDiscard->save();
 					}
 				}
 		          DB::commit();
