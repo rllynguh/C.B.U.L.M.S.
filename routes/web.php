@@ -209,17 +209,16 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/collection","collectionController");
 	Route::get('/transaction/move-collection/get/data', ['uses' => 'collectionController@data', 'as' => 'collection.getData']);
 
+	//Amendment Approval
 	Route::get("/transaction/amendmentApproval","AmendmentApprovalController@index")->name('transaction.amendmentApproval.index');
-
 	Route::get("transaction/amendmentApproval/get",'AmendmentApprovalController@data')->name('transaction.amendmentApproval.data');
 	Route::get("transaction/amendmentApproval/get/units/{id}",'amendmentApprovalController@getUnits');
-
 	Route::get("transaction/amendmentApproval/get/forfeit/{id}",'amendmentApprovalController@getAmendmentForfeits');
-
 	Route::get("transaction/amendmentApproval/get/request/{id}",'amendmentApprovalController@getRequests');
-
 	Route::post("transaction/amendmentApproval/post","amendmentApprovalController@postAction");
 
+	Route::get("transaction/contractTermination",'contractTerminationController@index')->name('transaction.contractTermination.index');
+	Route::get("transaction/contractTermination/data",'contractTerminationController@data')->name('transaction.contractTermination.data');
 
 	Route::get('/query/registration', ['uses' => 'registrationQueryController@index', 'as' => 'registrationQuery.index']);
 	Route::get('/query/registration/get/data', ['uses' => 'registrationQueryController@data', 'as' => 'registrationQuery.getData']);

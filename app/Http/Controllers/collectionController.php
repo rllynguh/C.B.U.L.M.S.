@@ -14,7 +14,7 @@ use PDF;
 use App\UserBalance;
 use App\PostDatedCheck;
 use App\FundTransfer;
-
+use App\BillingHeader;
 
 class collectionController extends Controller
 {
@@ -90,6 +90,15 @@ class collectionController extends Controller
         ->join('billing_items','billing_details.billing_item_id','billing_items.id')
         ->select('billing_items.description','price')
         ->get();
+        /* experimental shit do not touch
+        $result = BillingHeader::where('id',$request->myId)->first();
+        $result->status = 1;
+        $result->save();
+
+        DB::table('billing_details')
+        ->where('billing_details.billing_header_id',$request->myId)
+        ->update(['status' => 1]);
+        */
 
         $full_name=Auth::user()->first_name." ".Auth::user()->last_name;
         $summary=db::table('billing_headers')

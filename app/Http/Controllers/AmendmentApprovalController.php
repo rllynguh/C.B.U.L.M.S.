@@ -100,5 +100,7 @@ class AmendmentApprovalController extends Controller
     		$result->admin_remarks = $request->admin_remarks;
     		$result->save();
     	}
+    	//offersheets
+    	//billing
     }
 }

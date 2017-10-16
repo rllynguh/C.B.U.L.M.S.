@@ -358,12 +358,15 @@
   </a>
 </li>
 
-<li>
-  <a href="/terminateTable" class="waves-yellow">
-    <span>Contract Termination</span>
-  </a>
+<li class="
+{{strpos(Request::path(),'transaction/contractTermination') ? 'active' : ''}}
+">
+<a href="{{route('transaction.contractTermination.index')}}" class="waves-yellow">
+  <i class="mdi-action-assignment-ind"></i>
+  <span>Contract Termination</span>
+</a>
 </li>
-<li>
+
   <a href="/addammend" class="waves-yellow">
     <span>Addendum and Ammendment</span>
   </a>
