@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use DB;
 use Datatables;
 use App\Amendment;
+use App\RegistrationHeader;
+use App\OfferSheetDetail;
+use App\OfferSheetHeader;
 class AmendmentApprovalController extends Controller
 {
     public function index(){
@@ -100,7 +103,58 @@ class AmendmentApprovalController extends Controller
     		$result->admin_remarks = $request->admin_remarks;
     		$result->save();
     	}
-    	//offersheets
+        
+    	/*offersheets
+        db::beginTransaction();
+      try
+     {   //
+       $query=DB::table("offer_sheet_headers")
+       ->select("code")
+       ->orderBy("id","desc")
+       ->first();
+       $pk="Offer Sheet ";
+       if(!is_null($query))
+         $pk=$query->code;
+       $sc= new smartCounter();
+       $pk=$sc->increment($pk);  
+       $offerheader=new OfferSheetHeader;
+       $offerheader->code=$pk;
+       $offerheader->user_id=Auth::user()->id;
+       $offerheader->date_issued=Carbon::now(Config::get('app.timezone'));
+       $offerheader->isAmendment = 1;
+       $offerheader->contract_header_id = $result->contract_header_id;
+       $offerheader->save();
+
+       $unitRequests = DB::table('registration_details')
+       ->where('amendment_id',$request->id)
+       ->get();
+       foreach($unitRequests as $r){
+        $offerdetail=new OfferSheetDetail;
+        $offerdetail->offer_sheet_header_id=$offerheader->id;
+        $offerdetail->registration_detail_id = $r->id;
+        $offerdetail->
+       }
+
+
+       
+       for($x=0;$x<count($request->detail_id);$x++)
+       { 
+         $offerdetail=new OfferSheetDetail;
+         $offerdetail->offer_sheet_header_id=$offerheader->id;
+         $offerdetail->registration_detail_id=$request->detail_id[$x];
+         $offerdetail->unit_id=$request->offer_id[$x];
+         $offerdetail->save();
+       }
+       db::commit();
+       $request->session()->flash('green', 'Offer Sheet Successfully Generated!');
+       return redirect(route('offersheets.index'));
+     }
+     catch(\Exception $e)
+     {
+      db::rollback();
+      return dd($e);
+    }
+    */
     	//billing
     }
 }
