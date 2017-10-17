@@ -199,14 +199,5 @@
 var dataurl="{{route("buildings.getData")}}";
 url="{{route("buildings.index")}}";
 urlSubmit="{{route("tenant.requestUnitStore")}}";
-urlfloor="{{route("buildings.storefloor")}}";
-urlbtype="{{route("custom.getBuildingType")}}";
-urlprov="{{route("custom.getProvince")}}";
-urlprice="{{route("buildings.storePrice")}}";
-buil_type_url="{{route("custom.getBuildingType")}}";
-prov_url="{{route("custom.getProvince")}}";
-posi_url="{{route("custom.getPosition")}}";
-floor_url="{{route("custom.getFloor")}}";
-range_url="{{route("custom.getRange")}}";
 </script>
 @endsection

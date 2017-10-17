@@ -1,45 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-  <meta charset="utf-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <meta name="description" content="Creative One Page Parallax Template">
-  <meta name="keywords" content="Creative, Onepage, Parallax, HTML5, Bootstrap, Popular, custom, personal, portfolio" /> 
-  <meta name="author" content=""> 
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Majent | Tenant Portal</title> 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  {!!Html::style("plugins/DataTables/datatables.min.css")!!}
-  {!!Html::style("plugins/node-waves/waves.min.css")!!}
-  {!!Html::style("plugins/animate-css/animate.min.css")!!}
-  {!!Html::style("plugins/waitMe/waitMe.min.css")!!}
-  {!!Html::style("plugins/jquery-ui-1.12.1/jquery-ui.min.css")!!}
-  {!!Html::style("plugins/bootstrap3-editable/bootstrap3-editable/css/bootstrap-editable.css")!!}
-  {!!Html::style("css/parsleyStyle.min.css")!!}
-  {!!Html::style("css/themes/all-themes.min.css")!!}
-  {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css")!!}!}
-  {!!Html::style("css/tenant/custom.css")!!}
-  <!--!Html::style("plugins/materialize-css/css/style.min.css")!!}
-  -->
-  @yield('styles')
-</head>
-<body>
-  <header id="navigation"> 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="banner"> 
-      <div class="container-fluid"> 
-        <div class="navbar-header"> 
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
-            <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> 
-          </button> 
-          <a class="navbar-brand" href="index.html"><h1><img src="" alt=""></h1></a> 
-        </div> 
-        <div class="collapse navbar-collapse"> 
-          <ul class="nav navbar-nav navbar-right"> 
-            <li class="scroll active"><a href="{{route('tenant.home')}}">Home</a></li> 
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creative One Page Parallax Template">
+    <meta name="keywords" content="Creative, Onepage, Parallax, HTML5, Bootstrap, Popular, custom, personal, portfolio" />
+    <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Majent | Tenant Portal</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {!!Html::style("plugins/DataTables/datatables.min.css")!!}
+    {!!Html::style("plugins/node-waves/waves.min.css")!!}
+    {!!Html::style("plugins/animate-css/animate.min.css")!!}
+    {!!Html::style("plugins/waitMe/waitMe.min.css")!!}
+    {!!Html::style("plugins/jquery-ui-1.12.1/jquery-ui.min.css")!!}
+    {!!Html::style("plugins/bootstrap3-editable/bootstrap3-editable/css/bootstrap-editable.css")!!}
+    {!!Html::style("css/parsleyStyle.min.css")!!}
+    {!!Html::style("css/themes/all-themes.min.css")!!}
+    {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css")!!}
+    {!!Html::style("css/tenant/tenant.css")!!}
+    <!--!Html::style("plugins/materialize-css/css/style.min.css")!!}
+    -->
+    @yield('styles')
+  </head>
+  <body>
+    <div id = "wrapper">
+      <div class = "overlay">
+        <!-- Sidebar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+          <ul class="nav sidebar-nav">
+            <li class="sidebar-brand">
+              <a href="{{route('tenant.home')}}">
+                Majent Tenant Portal
+              </a>
+            </li>
+            <li></li>
+            <li>
+              <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-fw fa-folder"></i>  Statement of Account</a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-fw fa-file-o"></i> Documents</a>
+            </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transactions <span class="caret"></span></a>
-              <ul class="dropdown-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> Transactions <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li class="dropdown-header">Transactions</li>
                 <li><a href="{{route('offerSheetApproval.index')}}">Offer Sheet Approval</a></li>
                 <li><a href="{{route('registrationForfeit.index')}}">Registration Forfeit</a></li>
                 <li><a href="{{route('contract.index')}}">View Unaccepted Contracts</a></li>
@@ -49,62 +58,72 @@
                 <li><a href="{{route('tenant.terminateContract')}}">Terminate Contract</a></li>
               </ul>
             </li>
-            <li class="scroll"><a href="#services">Documents</a></li> 
-            <li class="scroll"><a href="#our-team">Statement of Account</a></li> 
             @auth
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->first_name }} {{Auth::user()->last_name}}<span class="caret"></span></a>
-              <ul class="dropdown-menu">
+            <li class = "dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i>{{Auth::user()->first_name }} {{Auth::user()->last_name}}<span class="caret"></span></a>
+               <ul class="dropdown-menu" role="menu">
                 <li><a  id = "notification" href="{{route('account.notification.index')}}">Notifications</a></li>
-                <li><a href="{{route('account.notification.index')}}">Account</a></li>
+                <li><a href="{{route('myAccount.index')}}">Account</a></li>
                 <li><a href="{{route('account.notification.index')}}">Logout</a></li>
-              </ul>
+               </ul>  
             </li>
             @else
-            <li class="scroll"><a href="#clients">Login</a></li>
+            <a href="#"><i class="fa fa-fw fa-bank"></i> Login</a>
             @endauth
-            
-          </ul> 
-        </div> 
-      </div> 
+          </ul>
+        </nav>
+      </div>
+      <div id="page-content-wrapper">
+          <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+          <span class="hamb-top"></span>
+          <span class="hamb-middle"></span>
+          <span class="hamb-bottom"></span>
+          </button>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 ">
+                <div id = "appa">
+                  @yield('content')
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
-  </header>
-  <br><br><br><br>
-  <section class="content">
-  <div class="flash-message">
-    @foreach (['red', 'green'] as $color)
-    @if(Session::has($color))
-    <p class="alert bg-{{ $color }}">{{ Session::get($color) }} <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-    @endif
-    @endforeach
-  </div> <!-- end .flash-message -->
-  <div id = "appa">
-    @yield('content')
-  </div>
-  <!--{!!Html::script('js/admin.js')!!}  -->
-  {!!Html::script("plugins/jquery/jquery.min.js")!!}
-  {!!Html::script("js/pages/forms/form-wizard.min.js")!!}
-  <script src="{{ asset('js/app.js') }}"></script>
-  {!!Html::script("plugins/DataTables/datatables.min.js")!!}
-  {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
-  {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
-  {!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
-  {!!Html::script('js/pages/cards/basic.js')!!}
-  {!!Html::script('js/notify/notify.min.js')!!}
-  {!!Html::script('js/demo.js')!!} 
-  {!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
-  {!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
-  {!!Html::script('plugins/jquery/parsley.min.js')!!}
-  {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
-  {!!Html::script('plugins/node-waves/waves.min.js')!!}
-  {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
-  {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
-  {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-  {!!Html::script("plugins/bootstrap3-editable/bootstrap3-editable/js/bootstrap-editable.min.js")!!}
-  <script type="text/javascript">
+    
+    <!--{!!Html::script('js/admin.js')!!}  -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    {!!Html::script("js/pages/forms/form-wizard.min.js")!!}
+    
+    {!!Html::script("plugins/DataTables/datatables.min.js")!!}
+    {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
+    {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!}
+    {!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
+    {!!Html::script('js/pages/cards/basic.js')!!}
+    {!!Html::script('js/notify/notify.min.js')!!}
+    {!!Html::script('js/demo.js')!!}
+    {!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
+    {!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
+    {!!Html::script('plugins/jquery/parsley.min.js')!!}
+    {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
+    {!!Html::script('plugins/node-waves/waves.min.js')!!}
+    {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
+    {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
+    {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+    {!!Html::script("plugins/bootstrap3-editable/bootstrap3-editable/js/bootstrap-editable.min.js")!!}
+    <script type="text/javascript">
     var urlNotificationCount = "{{route("custom.getNotificationCount")}}";
-  </script>
-  {!!Html::script("js/tenant/custom.js")!!}
-  @yield('scripts')
-</body>
+    urlfloor="{{route("buildings.storefloor")}}";
+    urlbtype="{{route("custom.getBuildingType")}}";
+    urlprov="{{route("custom.getProvince")}}";
+    urlprice="{{route("buildings.storePrice")}}";
+    buil_type_url="{{route("custom.getBuildingType")}}";
+    prov_url="{{route("custom.getProvince")}}";
+    posi_url="{{route("custom.getPosition")}}";
+    floor_url="{{route("custom.getFloor")}}";
+    range_url="{{route("custom.getRange")}}";
+    </script>
+    {!!Html::script("js/tenant/tenant.js")!!}
+    @yield('scripts')
+  </body>
 </html>
