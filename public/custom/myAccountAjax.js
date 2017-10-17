@@ -36,6 +36,7 @@ $(document).ready(function()
         success: function (data) {
           successPrompt(); 
           $('#withdrawModal').modal('hide');
+          $('#balance').html(data.value);
         },
         error: function (data) {
           console.log('Error:', data.responseText);

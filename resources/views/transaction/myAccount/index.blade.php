@@ -1,4 +1,4 @@
- @extends('layout.coreLayout')
+ @extends('layouts.tenantLayout')
  @section('breadcrumbs')
  <ol class="breadcrumb breadcrumb-col-brown">
   <li><a href="{{route('myAccount.index')}}"> My Account</a></li>
@@ -47,7 +47,9 @@
 <!--withdrawModal-->
 <div class="body">
   <img  class="img-circle" src="{{ asset('images/users/'.Auth::user()->picture) }}" class="user-image" height="100" width="100" alt="User Image">
+  <p id = 'balance'>
   {{$balance->formatted_balance}}
+</p>
   <button id="btnShow" 
   @if($balance->balance==0)
   disabled 
@@ -58,6 +60,6 @@
 @section('scripts')
 {{Html::script('custom/myAccountAjax.js')}}
 <script type="text/javascript">
-  url='{{route('myAccount.store')}}'
+  var url='{{route('myAccount.store')}}';
 </script>
 @endsection

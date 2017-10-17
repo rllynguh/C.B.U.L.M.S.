@@ -63,7 +63,13 @@ class myAccountController extends Controller
         $user_balance->date_as_of=Carbon::now(Config::get('app.timezone'));
         $user_balance->balance=$currentValue;
         $user_balance->save();
-        return response::json('yeassss');
+        if($currentValue<=0){
+            $currentValue = (object)['balance' => 0, 'formatted_balance' => 'You currently have 0 remaining balance'];
+        }
+        else{
+            $currentValue="PHP ".number_format($currentValue,2);
+        }
+        return response::json(['value'=>$currentValue]);
     }
 
     /**
