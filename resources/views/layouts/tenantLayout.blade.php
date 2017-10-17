@@ -20,8 +20,7 @@
     {!!Html::style("css/themes/all-themes.min.css")!!}
     {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css")!!}
     {!!Html::style("css/tenant/tenant.css")!!}
-    <!--!Html::style("plugins/materialize-css/css/style.min.css")!!}
-    -->
+    
     @yield('styles')
   </head>
   <body>

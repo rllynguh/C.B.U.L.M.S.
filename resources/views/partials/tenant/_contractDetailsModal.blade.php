@@ -28,12 +28,12 @@
                         Total Cost: <br/> 
                         <span class="h3 text-muted"><strong id = "total_cost"> $50,00 </strong></span>
                     </div> 
-                      
+                      <!--
                     <div class="text-right pull-right col-md-3">
                         Amount Paid: <br/> 
                         <span class="h3 text-muted"><strong>$3500</strong></span>
                     </div>
-                     
+                     -->
                 </div>
               </div>
             </div>
