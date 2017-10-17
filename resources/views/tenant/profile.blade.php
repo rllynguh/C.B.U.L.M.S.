@@ -1,40 +1,79 @@
 @extends('layouts.tenantLayout')
 @section('content')
-<div class="about-us">
-			<div class="row">
-				<div class="col-sm-6 col-md-8">
-					<h3>Why with us?</h3>
-					<ul class="nav nav-tabs">
-						<li class="active"><a href="#about" data-toggle="tab"><i class="fa fa-chain-broken"></i> About</a></li>
-						<li><a href="#mission" data-toggle="tab"><i class="fa fa-th-large"></i> Mission</a></li>
-						<li><a href="#community" data-toggle="tab"><i class="fa fa-eye"></i> Vision</a></li>
-					</ul>
-					<div class="tab-content">
-						<div class="tab-pane fade in active" id="about">
-							<div class="media">
-								<img class="pull-left media-object" src="images/about-us/about.jpg" alt="about us"> 
-								<div class="media-body">
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-								</div>
-							</div>
-						</div>
-						<div class="tab-pane fade" id="mission">
-							<div class="media">
-								<img class="pull-left media-object" src="images/about-us/mission.jpg" alt="Mission"> 
-								<div class="media-body">
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci </p>
-								</div>
-							</div>
-						</div>
-						<div class="tab-pane fade" id="community">
-							<div class="media">
-								<img class="pull-left media-object" src="images/about-us/community.jpg" alt="Vision"> 
-								<div class="media-body">
-									<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+<form class="form-horizontal" id = "profileForm">
+<fieldset>
 
+<!-- Form Name -->
+<legend>Account</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="firstnameinput">First Name</label>  
+  <div class="col-md-5">
+  <input id="firstnameinput" name="firstnameinput" type="text" placeholder="First Name" class="form-control input-md" required="" value = {{$detail->first_name}}>
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="middlenameinput">Middle Name</label>  
+  <div class="col-md-5">
+  <input id="middlenameinput" name="middlenameinput" type="text" placeholder="Middle Name" class="form-control input-md" required="" value = {{$detail->middle_name}}>
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="lastnameinput">Last Name</label>  
+  <div class="col-md-5">
+  <input id="lastnameinput" name="lastnameinput" type="text" placeholder="Last name" class="form-control input-md" required="" value = {{$detail->last_name}}>
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="emailinput">Email</label>  
+  <div class="col-md-5">
+  <input id="emailinput" name="emailinput" type="text" placeholder="email" class="form-control input-md" required="" value = {{$detail->email}}>
+    
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="passwordinput">Password</label>
+  <div class="col-md-5">
+    <input id="passwordinput" name="passwordinput" type="password" placeholder="Enter new password" class="form-control input-md">
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="password2input">Confirm Password</label>
+  <div class="col-md-5">
+    <input id="password2input" name="password2input" type="password" placeholder="Confirm password" class="form-control input-md">
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="btnsubmit"></label>
+  <div class="col-md-4">
+    <button  type = 'button' id="btnSubmitChanges" name="btnsubmit" class="btn btn-success">Save changes</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+
+@endsection
+@section('scripts')
+{!!Html::script("custom/profileAjax.js")!!}
+<script type="text/javascript" >
+	var url='{{route('tenant.account.post')}}';
+</script>
 @endsection

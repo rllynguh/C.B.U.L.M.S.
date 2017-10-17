@@ -6,7 +6,7 @@
 /.vagrant
 Homestead.json
 Homestead.yaml
-npm-debug.log
+npm-debug.log*
 yarn-error.log
 .DS_Store
 /public/docs

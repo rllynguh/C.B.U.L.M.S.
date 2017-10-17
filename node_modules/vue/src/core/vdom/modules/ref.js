@@ -32,11 +32,10 @@ export function registerRef (vnode: VNodeWithData, isRemoval: ?boolean) {
     }
   } else {
     if (vnode.data.refInFor) {
-      if (!Array.isArray(refs[key])) {
-        refs[key] = [ref]
-      } else if (refs[key].indexOf(ref) < 0) {
-        // $flow-disable-line
+      if (Array.isArray(refs[key]) && refs[key].indexOf(ref) < 0) {
         refs[key].push(ref)
+      } else {
+        refs[key] = [ref]
       }
     } else {
       refs[key] = ref

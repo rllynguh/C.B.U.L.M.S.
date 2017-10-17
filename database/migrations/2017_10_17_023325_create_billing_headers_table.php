@@ -19,8 +19,10 @@ class CreateBillingHeadersTable extends Migration {
 			$table->string('code', 45);
 			$table->date('date_issued');
 			$table->integer('current_contract_id')->index('currenbill_idx');
-			$table->float('cost', 10, 0);
-			$table->integer('status')->default(0);
+			$table->float('cost', 10, 0)->comment('negative for increase in balance');
+			$table->integer('status')->default(0)->comment('0 - unpaid
+1-  paid
+2 - terminated');;
 		});
 	}
 

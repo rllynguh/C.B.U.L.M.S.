@@ -17,31 +17,29 @@ Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits'
 Route::get('test/parkAreas/{id}',['uses' => 'maintenanceBuildingController@getParkAreas', 'as' =>'test.getParkAreas']);
 Route::resource('test','maintenanceBuildingController');
 
+Route::group(['prefix' => 'account/'],function(){
+	Route::get('/notification','NotificationController@index')->name('account.notification.index');
 
+});
 
 Route::group(['prefix' => 'tenant/'],function(){
 	// Data output testing
-	Route::get('/test1','contractAmmendmentController@getUnits')->name('tenant.getUnits');
-	Route::get('/test2','contractAmmendmentController@test');
+	Route::get('/test1/{id?}','contractAmendmentController@getUnits')->name('tenant.getUnits');
+	Route::get('/test2','contractAmendmentController@test');
 
 
 	// end test
-
-	Route::resource("myAccount","myAccountController");
-
-
-
 
 	Route::get('/test','mergeUnitsController@index')->name('tenant.test');
 	Route::get('/requestUnit','requestUnitsController@index')->name('tenant.requestUnit');
 	Route::post('/requestUnit2','requestUnitsController@store')->name('tenant.requestUnitStore');
 	Route::get('/TerminateContract','terminateContractController@index')->name('tenant.terminateContract');
 	
-
+	Route::get("/profile",'AccountController@index')->name('tenant.account.index');
+	Route::post("/profile",'AccountController@setAccountDetails')->name('tenant.account.post');
 
 	Route::view('/','tenant.index')->name('tenant.home');
 	Route::get('/login', function () {return view('tenant.login');});
-	Route::get('/profile', function () {return view('tenant.profile');});
 	Route::get('/soa', function () {return view('tenant.soa');});
 	Route::get("/dashboard",function(){return view('tenant.dashboard');});
 	Route::resource("registration","registrationController");
@@ -58,8 +56,10 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::resource("/transaction/contract","contractViewController");
 	Route::get('/transaction/contract/get/data','contractViewController@data')->name('contract.getData');
 
-	Route::get("contract/view",'contractAmmendmentController@index')->name('tenant.contractView');
-	Route::get("contract/data",'contractAmmendmentController@data')->name('tenant.contractData');
+	Route::get("contract/view",'contractAmendmentController@index')->name('tenant.contractView');
+	Route::get("contract/view/{id}",'contractAmendmentController@edit')->name('tenant.contractEdit');
+	Route::get("contract/data",'contractAmendmentController@data')->name('tenant.contractData');
+	Route::post("contract/amendment",'contractAmendmentController@storeRequest')->name('tenant.storeRequest');
 
 	Route::group(['prefix' => '/docs'],function(){
 
@@ -222,7 +222,18 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::resource("/transaction/collection","collectionController");
 	Route::get('/transaction/move-collection/get/data', ['uses' => 'collectionController@data', 'as' => 'collection.getData']);
 
+	//Amendment Approval
+	Route::get("/transaction/amendmentApproval","AmendmentApprovalController@index")->name('transaction.amendmentApproval.index');
+	Route::get("transaction/amendmentApproval/get",'AmendmentApprovalController@data')->name('transaction.amendmentApproval.data');
+	Route::get("transaction/amendmentApproval/get/units/{id}",'amendmentApprovalController@getUnits');
+	Route::get("transaction/amendmentApproval/get/forfeit/{id}",'amendmentApprovalController@getAmendmentForfeits');
+	Route::get("transaction/amendmentApproval/get/request/{id}",'amendmentApprovalController@getRequests');
+	Route::post("transaction/amendmentApproval/post","amendmentApprovalController@postAction");
 
+	//Contract Termination
+	Route::get("transaction/contractTermination",'contractTerminationController@index')->name('transaction.contractTermination.index');
+	Route::get("transaction/contractTermination/data",'contractTerminationController@data')->name('transaction.contractTermination.data');
+	Route::post("transaction/contractTermination/post","contractTerminationController@terminateContract");
 
 	Route::group(['prefix' => '/query'], function () {
 		Route::group(['prefix' => '/offerSheet'], function () {
@@ -280,7 +291,9 @@ Route::get('custom/getRange', ['uses' => 'customController@getRange', 'as' => 'c
 Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRate', 'as' => 'custom.getMarketRate']);
 Route::get('custom/banks', ['uses' => 'customController@getBanks', 'as' => 'custom.getBanks']);
 Route::put('custom/readNotification', ['uses' => 'customController@readNotification', 'as' => 'custom.readNotification']);
-
+Route::get('/notification/get/count','customController@getNotificationCount')->name('custom.getNotificationCount');
+Route::get('/custom/get/balance','customController@getBalance')->name('custom.getBalance');
+Route::post('/custom/post/balance','customController@postBalance')->name('custom.postBalance');
 
 
 

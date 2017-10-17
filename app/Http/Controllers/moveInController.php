@@ -41,7 +41,8 @@ class moveInController extends Controller
         ->join('contract_details','current_contracts.id','contract_details.current_contract_id')
         ->select(DB::raw('current_contracts.id, contract_headers.code,CONCAT(tenant.first_name," ",tenant.last_name) as full_name,count(distinctrow contract_details.id) as unit_count, tenants.description as tenant_description,business_types.description as business_type_description'))
         ->whereRaw('current_contracts.date_issued=(Select Max(date_issued) from current_contracts where contract_header_id=contract_headers.id)')
-        ->where('current_contracts.status',1)
+        //commented that out bc idk when that's supposed to be set
+        //->where('current_contracts.status',1)
         ->whereRaw('contract_details.id not in (Select contract_detail_id from move_in_details)')
         ->groupBy('current_contracts.id')
         ->get();

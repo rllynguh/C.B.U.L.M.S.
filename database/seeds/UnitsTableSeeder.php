@@ -31,7 +31,7 @@ class UnitsTableSeeder extends Seeder
             1 => 
             array (
                 'id' => 46,
-                'code' => 'MY 1UNIT2',
+                'code' => 'MY1UNIT2',
                 'type' => 0,
                 'size' => 100,
                 'floor_id' => 1,
@@ -42,7 +42,7 @@ class UnitsTableSeeder extends Seeder
             2 => 
             array (
                 'id' => 47,
-                'code' => 'MY 1UNIT3',
+                'code' => 'MY1UNIT3',
                 'type' => 0,
                 'size' => 100,
                 'floor_id' => 1,
@@ -53,7 +53,7 @@ class UnitsTableSeeder extends Seeder
             3 => 
             array (
                 'id' => 48,
-                'code' => 'MY 1UNIT4',
+                'code' => 'MY1UNIT4',
                 'type' => 0,
                 'size' => 105,
                 'floor_id' => 1,
@@ -64,7 +64,7 @@ class UnitsTableSeeder extends Seeder
             4 => 
             array (
                 'id' => 49,
-                'code' => 'MY 1UNIT5',
+                'code' => 'MY1UNIT5',
                 'type' => 0,
                 'size' => 100,
                 'floor_id' => 1,
@@ -75,7 +75,7 @@ class UnitsTableSeeder extends Seeder
             5 => 
             array (
                 'id' => 50,
-                'code' => 'MY 1UNIT6',
+                'code' => 'MY1UNIT6',
                 'type' => 0,
                 'size' => 1000,
                 'floor_id' => 1,
@@ -86,7 +86,7 @@ class UnitsTableSeeder extends Seeder
             6 => 
             array (
                 'id' => 51,
-                'code' => 'MY 1UNIT7',
+                'code' => 'MY1UNIT7',
                 'type' => 0,
                 'size' => 100,
                 'floor_id' => 1,
@@ -97,7 +97,7 @@ class UnitsTableSeeder extends Seeder
             7 => 
             array (
                 'id' => 52,
-                'code' => 'MY 1UNIT8',
+                'code' => 'MY1UNIT8',
                 'type' => 0,
                 'size' => 100,
                 'floor_id' => 1,
@@ -108,7 +108,7 @@ class UnitsTableSeeder extends Seeder
             8 => 
             array (
                 'id' => 53,
-                'code' => 'MY 1UNIT9',
+                'code' => 'MY1UNIT9',
                 'type' => 0,
                 'size' => 101,
                 'floor_id' => 1,
@@ -119,7 +119,7 @@ class UnitsTableSeeder extends Seeder
             9 => 
             array (
                 'id' => 54,
-                'code' => 'MY 1UNIT10',
+                'code' => 'MY1UNIT10',
                 'type' => 0,
                 'size' => 100,
                 'floor_id' => 1,

@@ -42,6 +42,7 @@ class ViewComposerServiceProvider extends ServiceProvider
             ->WHERE('is_read',0)
             ->COUNT('id')
             ;
+
             foreach ($list as $element) {
                 # code...
                 $myDate=new Carbon($element->date_issued);
@@ -50,8 +51,7 @@ class ViewComposerServiceProvider extends ServiceProvider
             $notification = (object)['count' =>$count, 'list' => $list];
             $user = Auth::user();
             $view->withUser($user)
-            ->withNotification($notification)
-            ;
+            ->withNotification($notification);
         });
     }
 }

@@ -1,6 +1,6 @@
 /* @flow */
 
-import { escape } from '../util'
+import { escape } from 'he'
 import { genClassForVnode } from 'web/util/index'
 
 export default function renderClass (node: VNodeWithData): ?string {

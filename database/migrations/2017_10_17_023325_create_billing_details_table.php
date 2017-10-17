@@ -18,7 +18,7 @@ class CreateBillingDetailsTable extends Migration {
 			$table->integer('billing_header_id')->index('fk_bill_bill_idx');
 			$table->integer('billing_item_id')->index('fk_bill_item_idx');
 			$table->text('description', 65535);
-			$table->float('price', 10, 0);
+			$table->float('price', 10, 0)->comment('negative for increase in balance');
 			$table->integer('status')->default(0);
 		});
 	}
