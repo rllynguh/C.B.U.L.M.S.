@@ -4,9 +4,11 @@
  {!!Html::style("css/style.min.css")!!}
  {!!Html::style("css/parsleyStyle.min.css")!!}
  {!!Html::style("css/themes/all-themes.min.css")!!}
+
  <div class="row clearfix">
- 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
- 		<div class="card">
+ 	<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+ 	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+ 		<div class="card m-t-20">
  			<div class="header">
  				<h2 class="align-center">TENANT REGISTRATION</h2>
  				<ul class="header-dropdown m-r--5">
@@ -84,13 +86,12 @@
  									]) 
  								}}
  								<div class="form-group ">
- 									{{ Form::number('tena_number', null, [
+ 									{{ Form::text('tena_number', null, [
  										'id' => 'tena_number',
  										'class' => 'form-control form-line',
- 										'maxlength' => '4',
+ 										'maxlength' => '5',
  										'required' => 'required',
  										'autocomplete' => 'off',
- 										'data-parsley-type' => 'number'
  									]) 
  								}}
  							</div>
@@ -538,7 +539,7 @@
 		<div class="col-sm-12 nopadding">
 			<div class="form-group">
 				<div class="form-line">
-					{{ Form::label('duration', 'Desired Duration of Contract(Year)*', [
+					{{ Form::label('duration', 'Desired Duration of Contract*', [
 						'class' => 'control-label'
 					]) 
 				}}
@@ -569,53 +570,80 @@
 <fieldset>
 	<div class="col-sm-6">
 		<div class="thumbnail">
-			<img height ='100' width ='100' id='preview' class="img-circle">
-			<label id="dispName"></label> <br>
-			<label id="dispPosition"></label> <br>
+			<img id='preview' class="img-circle" height="100" width="100">
 			<div class="caption">
-				<label id="dispCompany"></label>  <label>Business: </label><label id="dispBusiness"></label>  <br>
-				<label id="dispCompAddress"></label> <br>
-				<label id="dispCell"></label> <br>
-				<label id="dispTel"></label> <br>
-				<label id="dispEmail"></label> <br>
-				<label id="dispRepAddress"></label> <br>
+				<h3 id="dispName"></h3>
+				<h6 id="dispPosition"></h6>
+				<div>
+					<p id="dispCompany"></p> 
+					<p id="dispBusiness"></p>  
+					<p id="dispCompAddress"></p> 
+					<p id="dispCell"></p> 
+					<p id="dispTel"></p> 
+					<p id="dispEmail"></p> 
+					<p id="dispRepAddress"></p> 
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-6">
-		<label>Request: </label>
-		<label id="dispRequest"></label> <br>
-	</div>
-	<label>Duration: </label>
-	<label id="dispDuration"></label> <br>
-	<label>Remarks: </label>
-	<label id="dispRemarks"></label> <br>
-</fieldset>
-{{-- {{Form::submit('GO')}} --}}
-{{Form::close()}}
+ 								{{-- <div class="col-sm-6">
+ 									<img id='preview' height="150" width="150">
+ 								</div> --}}
+ 								{{-- <div class="col-sm-6">
+ 									<label>Company: </label>
+ 									<label id="dispCompany"></label>  <label>Business: </label><label id="dispBusiness"></label>  <br>
+ 									<label>Address: </label>
+ 									<label id="dispCompAddress"></label> <br>
+ 									<label>Name: </label>
+ 									<label id="dispName"></label> <br>
+ 									<label>Position: </label>
+ 									<label id="dispPosition"></label> <br>
+ 									<label>Cellphone: </label>
+ 									<label id="dispCell"></label> <br>
+ 									<label>Telephone Number: </label>
+ 									<label id="dispTel"></label> <br>
+ 									<label>Email: </label>
+ 									<label id="dispEmail"></label> <br>
+ 									<label>Address: </label>
+ 									<label id="dispRepAddress"></label> <br>
+ 								</div> --}}
+ 								<div class="col-sm-6">
+ 									<label>Duration: </label>
+ 									<label id="dispDuration"></label> <br>
+ 									<label>Remarks: </label>
+ 									<label id="dispRemarks"></label> <br>
+ 									<div id="dispRequest"></div> <br>
+ 								</div>
+ 							</fieldset>
+ 							{{-- {{Form::submit('GO')}} --}}
+ 							{{Form::close()}}
 
-</div>
-</div>
-</div>
-</div>
-{!!Html::script("plugins/jquery/jquery.min.js")!!}
-{!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
-{!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
-{!!Html::script("plugins/bootstrap/js/bootstrap.min.js")!!}
-{!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
-{!!Html::script('plugins/jquery/parsley.min.js')!!}
-{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
-{!!Html::script('plugins/node-waves/waves.min.js')!!}
-{!!Html::script('js/notify/notify.min.js')!!}
-{!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
-{!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-{!!Html::script('js/admin.min.js')!!}
-{!!Html::script("custom/tenantRegistrationAjax.min.js")!!}
+ 						</div>
+ 					</div>
+ 				</div>
+ 			</div>
+ 			{!!Html::script("plugins/jquery/jquery.min.js")!!}
+ 			{!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
+ 			{!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
+ 			{!!Html::script("plugins/bootstrap/js/bootstrap.min.js")!!}
+ 			{!!Html::script('plugins/jquery/parsley.min.js')!!}
+ 			{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
+ 			{!!Html::script('plugins/node-waves/waves.min.js')!!}
+ 			{!!Html::script("custom/tenantRegistrationAjax.min.js")!!}
+ 			{!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
+ 			{!!Html::script('js/notify/notify.min.js')!!}
+ 			{!!Html::script("plugins/jquery-datatable/jquery.dataTables.min.js")!!}
+ 			{!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
+ 			{!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
+ 			{!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+ 			{!!Html::script('js/admin.min.js')!!}
+ 			<script type="text/javascript">
+ 				buil_type_url="{{route("custom.getBuildingType")}}";
+ 				prov_url="{{route("custom.getProvince")}}";
+ 				posi_url="{{route("custom.getPosition")}}";
+ 				floor_url="{{route("custom.getFloor")}}";
+ 				range_url="{{route("custom.getRange")}}";
+ 			</script>
+ 			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 
-<script type="text/javascript">
-	buil_type_url="{{route("custom.getBuildingType")}}";
-	prov_url="{{route("custom.getProvince")}}";
-	posi_url="{{route("custom.getPosition")}}";
-	floor_url="{{route("custom.getFloor")}}";
-	range_url="{{route("custom.getRange")}}";
-</script>
+ 			</div>

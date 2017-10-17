@@ -24,7 +24,7 @@ $(document).ready(function()
     {data: 'action'}
     ]
   });
-  $(this).on('click', '#btnCollection',function()
+  $(this).on('click', '.btnCollection',function()
   {
     showUrl=url + "/" + $(this).val();
     $('#myId').val($(this).val());
@@ -47,7 +47,7 @@ $(document).ready(function()
     select+="</SELECT>";
     $('#idSelect').html(select);
     setTimeout(function(){
-      $("#btnCollection").removeAttr('disabled');
+      $("#btnCollection" + $('#myId').val()).removeAttr('disabled');
     }, 1000);
     if(Object.keys(data).length>0)
     {
@@ -75,7 +75,6 @@ $(document).ready(function()
     $('#pdc_id').val('')
     $('#idOption').html('');
     $('#txtAmount').removeAttr('readonly')
-    $('#pdc_id').val('');
     $('#divBank').html('');
     $('#divBank').removeClass('form-line');
     $('#txtAmount').removeAttr('max')
@@ -169,7 +168,6 @@ $(document).ready(function()
 
 
   $(this).on('change', '#mode',function(e){
-    $('#pdc_id').val('');
     $('#divBank').html('');
     $('#divBank').removeClass('form-line');
     $('#txtAmount').removeAttr('readonly');

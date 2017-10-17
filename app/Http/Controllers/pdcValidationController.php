@@ -9,6 +9,9 @@ use Response;
 use Datatables;
 use App\PostDatedCheck;
 use App\CurrentContractPenalty;
+use Carbon\Carbon;
+use Config;
+use App\Notification;
 
 
 class pdcValidationController extends Controller
@@ -128,6 +131,33 @@ class pdcValidationController extends Controller
         $pdc=PostDatedCheck::FINDORFAIL($request->myId);
         $pdc->status=$request->status;
         $pdc->save();
+        $user_id=DB::TABLE('users')
+        ->JOIN('tenants','users.id','tenants.user_id')
+        ->JOIN('registration_headers','tenants.id','registration_headers.tenant_id')
+        ->JOIN('contract_headers','registration_headers.id','contract_headers.registration_header_id')
+        ->JOIN('current_contracts','contract_headers.id','current_contracts.contract_header_id')
+        ->JOIN('post_dated_checks','current_contracts.id','post_dated_checks.current_contract_id')
+        ->WHERE('post_dated_checks.id',$request->myId)
+        ->SELECT('users.id')
+        ->FIRST()->id;
+        if($request->status==1)
+        {
+            $title="PDC($pdc->code) has been Validated";
+            $description='Successfully acknowledged your pdc.';
+        }
+        else
+        {  
+            $title="PDC($pdc->code) has been rejected!";
+            $description='You may use other modes of payment.';
+        }
+
+        $notification=new Notification;
+        $notification->user_id=$user_id;
+        $notification->title=$title;
+        $notification->description=$description;
+        $notification->link="javascript:void(0);";
+        $notification->date_issued=Carbon::now();
+        $notification->save();
     }
 
 

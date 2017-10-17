@@ -10,11 +10,14 @@ use App\RegistrationDetail;
 use PDF;
 use Auth;
 use App\RegistrationHeader;
+use App\Notification;
+use Carbon\Carbon;
+use Config;
 
 class reservationFeeCollectionController extends Controller
 {
-   public function __construct()
-   {
+ public function __construct()
+ {
     $this->middleware('admin');
     $this->middleware('auth');
 }
@@ -92,65 +95,65 @@ class reservationFeeCollectionController extends Controller
             {
                 $regi_detail_update=RegistrationDetail::find($regi_detail->id);
                 if(($regi_detail_update->is_rejected==0) && ($regi_detail_update->is_forfeited==0))
-                   { $regi_detail_update->is_reserved=1;
-                       $regi_detail_update->save();
-                   }
-               }
+                 { $regi_detail_update->is_reserved=1;
+                     $regi_detail_update->save();
+                 }
+             }
 
 
              //get values of utilities
-               $utilities=DB::table('utilities')
-               ->whereRaw('date_as_of=(Select Max(date_as_of) from utilities)')
-               ->select('utilities.*')
-               ->first(); 
+             $utilities=DB::table('utilities')
+             ->whereRaw('date_as_of=(Select Max(date_as_of) from utilities)')
+             ->select('utilities.*')
+             ->first(); 
 
              //get value or reservation
-               $reservation=DB::table('utilities')
-               ->select('reservation_fee as fee')
-               ->whereRaw("date_as_of=(SELECT MAX(date_as_of) from utilities) or isnull(date_as_of)")
-               ->first(); 
+             $reservation=DB::table('utilities')
+             ->select('reservation_fee as fee')
+             ->whereRaw("date_as_of=(SELECT MAX(date_as_of) from utilities) or isnull(date_as_of)")
+             ->first(); 
 
              //get value of total rate of units
-               $summary=DB::table('registration_details')
-               ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
-               ->join('tenants','registration_headers.tenant_id','tenants.id')
-               ->join('users','tenants.user_id','users.id')
-               ->join('addresses','tenants.address_id','addresses.id')
-               ->join('cities','addresses.city_id','cities.id')
-               ->join('provinces','cities.province_id','provinces.id')
-               ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-               ->join('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
-               ->join('units','offer_sheet_details.unit_id','units.id')
-               ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
-               ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
-               ->select(DB::raw("SUM(price * size) as fee,$reservation->fee as month,last_name, first_name,Concat(addresses.number,' ',addresses.street,' ',addresses.district) as address,CONCAT(cities.description, ', ', provinces.description) as city_province"))
-               ->where('registration_headers.id',$request->myId)
-               ->where('offer_sheet_headers.status',1)
-               ->where('offer_sheet_details.status',1)
-               ->where('registration_details.is_rejected',0)
-               ->where('registration_details.is_forfeited',0)
-               ->where('registration_headers.status',1)
-               ->where('registration_headers.is_forfeited',0)
-               ->first();
+             $summary=DB::table('registration_details')
+             ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+             ->join('tenants','registration_headers.tenant_id','tenants.id')
+             ->join('users','tenants.user_id','users.id')
+             ->join('addresses','tenants.address_id','addresses.id')
+             ->join('cities','addresses.city_id','cities.id')
+             ->join('provinces','cities.province_id','provinces.id')
+             ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+             ->join('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
+             ->join('units','offer_sheet_details.unit_id','units.id')
+             ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+             ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
+             ->select(DB::raw("SUM(price * size) as fee,$reservation->fee as month,last_name, first_name,Concat(addresses.number,' ',addresses.street,' ',addresses.district) as address,CONCAT(cities.description, ', ', provinces.description) as city_province,users.id as user_id"))
+             ->where('registration_headers.id',$request->myId)
+             ->where('offer_sheet_headers.status',1)
+             ->where('offer_sheet_details.status',1)
+             ->where('registration_details.is_rejected',0)
+             ->where('registration_details.is_forfeited',0)
+             ->where('registration_headers.status',1)
+             ->where('registration_headers.is_forfeited',0)
+             ->first();
 
              //get units
-               $units=DB::table('registration_details')
-               ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
-               ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-               ->join('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
-               ->join('units','offer_sheet_details.unit_id','units.id')
-               ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
-               ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
-               ->select(DB::raw('units.code,(price * size) as price,size'))
-               ->where('registration_headers.id',$request->myId)
-               ->where('offer_sheet_headers.status',1)
-               ->where('offer_sheet_details.status',1)
-               ->where('registration_details.is_rejected',0)
-               ->where('registration_details.is_forfeited',0)
-               ->where('registration_headers.status',1)
-               ->where('registration_headers.is_forfeited',0)
-               ->get();
-               foreach ($units as &$unit) {
+             $units=DB::table('registration_details')
+             ->join('registration_headers','registration_details.registration_header_id','registration_headers.id')
+             ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
+             ->join('offer_sheet_headers','offer_sheet_details.offer_sheet_header_id','offer_sheet_headers.id')
+             ->join('units','offer_sheet_details.unit_id','units.id')
+             ->leftJoin("unit_prices","units.id","unit_prices.unit_id")
+             ->whereRaw("unit_prices.date_as_of=(SELECT MAX(date_as_of) from unit_prices where unit_id=units.id)")
+             ->select(DB::raw('units.code,(price * size) as price,size'))
+             ->where('registration_headers.id',$request->myId)
+             ->where('offer_sheet_headers.status',1)
+             ->where('offer_sheet_details.status',1)
+             ->where('registration_details.is_rejected',0)
+             ->where('registration_details.is_forfeited',0)
+             ->where('registration_headers.status',1)
+             ->where('registration_headers.is_forfeited',0)
+             ->get();
+             foreach ($units as &$unit) {
                 $unit->price="P ".number_format($unit->price,2);
                 $unit->size=number_format($unit->size,2)." sqm";
             }
@@ -192,6 +195,14 @@ class reservationFeeCollectionController extends Controller
             $pdf->save($location);
             $regi_header->pdf=$pdfName;
             $regi_header->save();
+
+            $notification=new Notification;
+            $notification->user_id=$summary->user_id;
+            $notification->title="You have received the Reservation Fee Receipt for $regi_header->code ";
+            $notification->description="This receipt serves as a proof of payment for the reservation fee";
+            $notification->link=route("docs.reservation-fee-receipt",$regi_header->id);
+            $notification->date_issued=Carbon::now();
+            $notification->save();
             db::commit();
         }
         catch(\Exception $e)

@@ -2,8 +2,8 @@
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
 	<li><a> Document</a></li>
-	<li><a> Reservation Fee Receipt</a></li>
-	<li><a href="{{route("docs.reservation-fee-receipt",$document->id)}}"> {{$document->code}}</a></li>
+	<li><a> {{$document->title}}</a></li>
+	<li><a href="{{$document->url}}"> {{$document->code}}</a></li>
 </ol>
 @endsection
 @section('content')
