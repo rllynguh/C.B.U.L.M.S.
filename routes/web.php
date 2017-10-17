@@ -61,7 +61,13 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::get("contract/view",'contractAmmendmentController@index')->name('tenant.contractView');
 	Route::get("contract/data",'contractAmmendmentController@data')->name('tenant.contractData');
 
-	Route::get('/docs/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);
+	Route::group(['prefix' => '/docs'],function(){
+
+		Route::get('/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);
+		Route::get('/billing-notice/{id}', ['uses' => 'documentController@billingNotice', 'as' => 'docs.billing-notice']);
+		Route::get('/collection-receipt/{id}', ['uses' => 'documentController@collectionReceipt', 'as' => 'docs.collection-receipt']);
+
+	});
 
 });
 
@@ -173,7 +179,7 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('/transaction/offersheets/showOptions/{id}', ['uses' => 'offerSheetController@showOptions', 'as' => 'offerSheets.showOptions']);
 	Route::post('/transaction/offersheets/get/showData/{id}', ['uses' => 'offerSheetController@showData', 'as' => 'offerSheets.showData']);
 
-	
+
 
 
 	Route::resource("/transaction/requirementAssigning","requirementAssigningController");
@@ -190,6 +196,15 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/contract-create","contractCreationController");
 	Route::get('/transaction/contract-create/get/data', ['uses' => 'contractCreationController@data', 'as' => 'contract-create.getData']);
+
+	Route::group(['prefix' => 'transaction/contract'], function () {
+		Route::get('/', ['uses' => 'contractListController@index', 'as' => 'contractList.index']);
+		Route::get('/get/data', ['uses' => 'contractListController@data', 'as' => 'contractList.getData']);
+		Route::get('/{id}/post-dated-checks', ['uses' => 'contractListController@showPDC', 'as' => 'contractList.showPDC']);
+		Route::get('/{id}/pdc', ['uses' => 'contractListController@getPDCData', 'as' => 'contractList.getPDCData']);
+		Route::get('/{id}/editPDC', ['uses' => 'contractListController@editPDC', 'as' => 'contractList.editPDC']);
+		Route::put('/{id}/updatePDC', ['uses' => 'contractListController@updatePDC', 'as' => 'contractList.updatePDC']);
+	});
 
 	Route::resource("/transaction/pdcCollection","pdcCollectionController");
 	Route::get('/transaction/pdcCollection/get/data', ['uses' => 'pdcCollectionController@data', 'as' => 'pdcCollection.getData']);
@@ -222,6 +237,14 @@ Route::group(['prefix' => 'admin/'], function () {
 			Route::get('/', ['uses' => 'delinquentQueryController@index', 'as' => 'delinquentQuery.index']);
 			Route::get('/get/data', ['uses' => 'delinquentQueryController@data', 'as' => 'delinquentQuery.getData']);
 		});
+		Route::group(['prefix' => '/tenant'], function () {
+			Route::get('/', ['uses' => 'tenantQueryController@index', 'as' => 'tenantQuery.index']);
+			Route::get('/get/data', ['uses' => 'tenantQueryController@data', 'as' => 'tenantQuery.getData']);
+		});
+		Route::group(['prefix' => '/unit'], function () {
+			Route::get('/', ['uses' => 'unitQueryController@index', 'as' => 'unitQuery.index']);
+			Route::get('/get/data', ['uses' => 'unitQueryController@data', 'as' => 'unitQuery.getData']);
+		});
 	});
 	Route::group(['prefix' => '/report'], function () {
 		Route::group(['prefix' => 'moveIn/'], function () {
@@ -235,6 +258,10 @@ Route::group(['prefix' => 'admin/'], function () {
 		Route::group(['prefix' => 'billing/'], function () {
 			Route::get('/', ['uses' => 'billingReportController@index', 'as' => 'billingReport.index']);
 			Route::post('/', ['uses' => 'billingReportController@document', 'as' => 'billingReport.document']);
+		});
+		Route::group(['prefix' => 'contract/'], function () {
+			Route::get('/', ['uses' => 'contractReportController@index', 'as' => 'contractReport.index']);
+			Route::post('/', ['uses' => 'contractReportController@document', 'as' => 'contractReport.document']);
 		});
 	});
 });

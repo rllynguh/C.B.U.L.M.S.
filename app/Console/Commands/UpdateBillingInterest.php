@@ -108,11 +108,14 @@ class UpdateBillingInterest extends Command
                         $detail->price=$detail->price + $additional;
                         $detail->description="An additional $percent per day for the delay of payment for ($gap) days";
                         $detail->save();
+                        $header=BillingHeader::FINDORFAIL($detail->billing_header_id);
+                        $header->cost=$detail->price;
+                        $header->save();
                         $notification=new Notification();
                         $notification->user_id=$contract->user_id;
                         $notification->title="You have received a penalty.";
                         $notification->description="Your account must be settled in order to remove the interest.";
-                        $notification->link='Sampolink';
+                        $notification->link='javascript:void(0);';
                         $notification->date_issued=Carbon::now();
                         $notification->save();
                       }
@@ -131,7 +134,7 @@ class UpdateBillingInterest extends Command
 
                         $code=$sc->increment($code);
                         $final_gap=$contract->gap-$gap;
-                        $amount_due=$contract->amount_due;
+                        $amount_due=0;
                         for($x=0;$x<$final_gap;$x++)
                         {
                           $amount_due+=($contract->amount_due*($percent/100));
@@ -142,7 +145,7 @@ class UpdateBillingInterest extends Command
                         $billing_header->code=$code;
                         $billing_header->current_contract_id=$contract->current_contract_id;
                         $billing_header->date_issued=Carbon::now();
-                        $billing_header->cost=$contract->cost;
+                        $billing_header->cost=$amount_due;
                         $billing_header->user_id=Auth::user()->id;
                         $billing_header->save();
                         $billing_detail=new BillingDetail();

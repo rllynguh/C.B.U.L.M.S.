@@ -40,10 +40,10 @@
             <ul class="dropdown-menu">
               <li class="header">NOTIFICATIONS</li>
               <li class="body">
-                <div id='notifBody' class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;"><ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;"><ul id='notifBody' class="menu" style="overflow: hidden; width: auto; height: 254px;">
                   @foreach($notification->list as $notif)
                   <li>
-                    <a href="javascript:void(0);" id='{{$notif->id}}' class="notification waves-effect waves-block">
+                    <a href="{{$notif->link}}" id='{{$notif->id}}' class="notification waves-effect waves-block">
                      {{--  <div class="icon-circle bg-light-green">
                         <i class="mdi-action-report-problem"></i>
                       </div> --}}
@@ -338,12 +338,21 @@
 </a>
 <ul class="ml-menu">
   <li class="
-  {{strpos(Request::path(),'transaction/contract') ? '' : ''}}
   {{Request::path() == 'admin/transaction/contract-create' ? 'active' : ''}}
   ">
   <a href="{{route("contract-create.index")}}" class="waves-yellow">
     <span>New Contract</span>
   </a>
+</li>
+
+<li class="
+{{Request::path() == 'admin/transaction/contract' ? 'active' : ''}}
+{{strpos(Request::path(),'post-dated-checks') ? 'active' : ''}}
+
+">
+<a href="{{route("contractList.index")}}" class="waves-yellow">
+  <span>Contract List</span>
+</a>
 </li>
 
 <li class="
@@ -486,6 +495,13 @@
 ">
 <a href="{{route('delinquentQuery.index')}}" class="waves-yellow">
   <span>Delinquent Tenants</span>
+</a>
+</li>
+<li class="
+{{Request::path() == 'admin/query/tenant' ? 'active' : ''}}
+">
+<a href="{{route('tenantQuery.index')}}" class="waves-yellow">
+  <span>Tenants</span>
 </a>
 </li>
 </ul>

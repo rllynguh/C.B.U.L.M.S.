@@ -59,7 +59,6 @@ $(document).ready(function()
           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
         }
       })
-
       e.preventDefault(); 
       var my_url = url;
       var type="POST";

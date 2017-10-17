@@ -33,5 +33,9 @@ class LogSuccessfulLogin
         Auth::user()->last_log_at=Carbon::now(Config::get('app.timezone'));
         Auth::user()->save();
         $command = Artisan::call('billing_interest:update');
+        $command = Artisan::call('contract:terminate');
+        $command = Artisan::call('billing_notice:generate');
+        $command = Artisan::call('contract_status:notify');
+        
     }
 }

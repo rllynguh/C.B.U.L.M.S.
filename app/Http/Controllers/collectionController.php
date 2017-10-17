@@ -15,7 +15,7 @@ use App\UserBalance;
 use App\PostDatedCheck;
 use App\FundTransfer;
 use App\DatedCheck;
-
+use App\Notification;
 
 class collectionController extends Controller
 {
@@ -44,13 +44,13 @@ class collectionController extends Controller
         ->LEFTJOIN('payments','billing_headers.id','payments.billing_header_id')
         ->GROUPBY('billing_headers.id')
         ->HAVINGRAW('cost>coalesce(sum(payments.payment),0)')
-        ->WHERERAW('MONTH(billing_headers.date_issued) = MONTH(CURRENT_DATE()) AND YEAR(billing_headers.date_issued) = YEAR(CURRENT_DATE())')
+        ->WHERERAW('MONTH(billing_headers.date_issued) <= MONTH(CURRENT_DATE()) AND YEAR(billing_headers.date_issued) = YEAR(CURRENT_DATE())')
         ->select(db::raw('billing_headers.code,billing_headers.id,cost,coalesce(sum(payments.payment),0) as amount_paid,tenants.description'))
         ->get();
 
         return Datatables::of($bills)
         ->addColumn('action', function ($data) {
-            return '<button id="btnCollection" type="button" class="btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
+            return '<button id="btnCollection'.$data->id.'" type="button" class="btnCollection btn bg-blue btn-circle waves-effect waves-circle waves-float" value="'.$data->id.'"><i class="mdi-editor-border-color"></i></button>';
         })
         ->editColumn('cost',function ($data) {
             return $data = '₱ '.number_format($data->cost,2);
@@ -92,17 +92,29 @@ class collectionController extends Controller
         ->select('billing_items.description','price')
         ->get();
 
+
         $full_name=Auth::user()->first_name." ".Auth::user()->last_name;
-        $summary=db::table('billing_headers')
+
+        $summary=DB::TABLE('billing_headers')
         ->leftjoin('payments','billing_headers.id','payments.billing_header_id')
-        ->select(DB::Raw('cost,(cost - COALESCE(sum(payment),0)) as balance, COALESCE(sum(payment),0) as payment'))
-        ->groupby('billing_headers.id')
-        ->where('billing_headers.id',$request->myId)
-        ->first();
+        ->JOIN('current_contracts','billing_headers.current_contract_id','current_contracts.id')
+        ->JOIN('contract_headers','current_contracts.contract_header_id','contract_headers.id')
+        ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
+        ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
+        ->JOIN('users','tenants.user_id','users.id')
+        ->JOIN('representatives','representatives.user_id','users.id')
+        ->JOIN('representative_positions','representatives.representative_position_id','representative_positions.id')
+        ->SELECT('billing_headers.date_issued','tenants.description as tenant','representative_positions.description as position','contract_headers.code as contract','users.id as user_id','billing_headers.code as billing','billing_headers.cost', DB::RAW('CONCAT(first_name," ",last_name) as representative,cost,(cost - COALESCE(sum(payment),0)) as balance, COALESCE(sum(payment),0) as payment'))
+        ->FIRST()
+        ;
+        $summary->date_issued=new Carbon($summary->date_issued);
+        $summary->date_issued=$summary->date_issued->toFormattedDateString();
+
         $latest=DB::table("payments")
         ->select('code')
         ->orderBy('code',"DESC")
         ->first();
+
         $pk="COLLECTION001";
         if(!is_null($latest))
             $pk=$latest->code;
@@ -118,12 +130,19 @@ class collectionController extends Controller
         $payment->payment=$request->txtAmount;
         $payment->save();
 
-        if($request->moode==1) //if paid via pdc
+        $summary->mode="Cash";
+        $summary->bank=null;
+        $summary->mode_code=null;
+        
+
+        if($request->mode==1) //if paid via pdc
         {
             $pdc=PostDatedCheck::FINDORFAIL($request->pdc_id);
             $pdc->is_accepted=1;
             $pdc->payment_id=$payment->id;
             $pdc->save();
+            $summary->mode="POST-DATED CHECK";
+            $summary->mode_code=$pdc->code;
         }
           if($request->mode==2) //if paid via fund transfer
           {
@@ -131,6 +150,13 @@ class collectionController extends Controller
             $fund_transfer->bank_id=$request->bank;
             $fund_transfer->payment_id=$payment->id;
             $fund_transfer->save();
+            $bank=DB::TABLE('banks')
+            ->JOIN('fund_transfers','banks.id','fund_transfers.bank_id')
+            ->WHERE('fund_transfers.id',$fund_transfer->id)
+            ->SELECT('description')
+            ->FIRST()->description;
+            $summary->mode="Fund Transfer";
+            $summary->bank=$bank;
         }
           if($request->mode==3) //if paid via dated check
           {
@@ -138,8 +164,22 @@ class collectionController extends Controller
             $dated_check->bank_id=$request->bank;
             $dated_check->payment_id=$payment->id;
             $dated_check->save();
+            $bank=DB::TABLE('banks')
+            ->JOIN('dated_checks','banks.id','dated_checks.bank_id')
+            ->WHERE('dated_checks.id',$dated_check->id)
+            ->SELECT('description')
+            ->FIRST()->description;
+            $summary->mode="Dated Check";
+            $summary->bank=$bank;
         }
 
+        $user_id=DB::TABLE('billing_headers')
+        ->JOIN('current_contracts','billing_headers.current_contract_id','current_contracts.id')
+        ->JOIN('contract_headers','current_contracts.contract_header_id','contract_headers.id')
+        ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
+        ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
+        ->SELECT('tenants.user_id')
+        ->FIRST()->user_id;
         $pdf = PDF::loadView('transaction.collection.pdf',compact('billing_details', 'summary','payment','full_name'));
         $date_issued=date_format($payment->date_issued,"Y-m-d");
         $pdfName="$payment->code($date_issued).pdf";
@@ -147,6 +187,14 @@ class collectionController extends Controller
         $pdf->save($location);
         $payment->pdf=$pdfName;
         $payment->save();
+
+        $notification=new Notification;
+        $notification->user_id=$user_id;
+        $notification->title="$payment->code has been added to your receipts.";
+        $notification->description="A receipt has been generated for your account";
+        $notification->link=route('docs.collection-receipt',$payment->id);
+        $notification->date_issued=Carbon::now();
+        $notification->save();
         DB::commit();
     // }
     // catch(\Exception $e)

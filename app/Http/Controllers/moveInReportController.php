@@ -33,7 +33,6 @@ class moveInReportController extends Controller
 		->WHEREBETWEEN('move_in_headers.date_moved_in',[$request->from,$request->to])
 		->SELECT("tenants.id as tenant_id","tenants.description")->GROUPBY('tenants.id')->GET();
 
-
 		$headers=DB::TABLE('move_in_headers')
 		->JOIN('move_in_details','move_in_headers.id','move_in_details.move_in_header_id')
 		->JOIN('contract_details','move_in_details.contract_detail_id','contract_details.id')
