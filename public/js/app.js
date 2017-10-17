@@ -78,7 +78,6 @@ module.exports = __webpack_require__(6);
 
 // loads jquery and bootstrap
 __webpack_require__(2);
-
 //window.Vue = require('vue');
 
 //Vue.component('example', require('./components/Example.vue'));

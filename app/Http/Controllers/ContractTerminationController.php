@@ -75,8 +75,8 @@ class ContractTerminationController extends Controller
 		$newBalance = new UserBalance();
 		$newBalance->date_as_of=Carbon::now(Config::get('app.timezone'));
 		$newBalance->user_id = $userBalance->id;
-		$total = $security_deposit - $request->total;
-		$output = $userBalance->balance +  $total;
+		$change = $security_deposit - $request->total;
+		$output = $userBalance->balance +  $change;
 		$newBalance->balance = $output;
 		$newBalance->save();
 		
@@ -92,29 +92,31 @@ class ContractTerminationController extends Controller
 		}
 		$sc= new smartCounter();
 		$code=$sc->increment($code);
-
-
 		$billing_header=new BillingHeader();
 		$billing_header->user_id=Auth::user()->id;
 		$billing_header->code=$code;
 		$billing_header->date_issued = Carbon::now(Config::get('app.timezone'));
 		$billing_header->current_contract_id= $request->id;
-		$billing_header->cost = $total;
+		$billing_header->cost = $request->total;
 		$billing_header->save();
 
-		$billing_detail = new BillingDetail();
-		$billing_detail->billing_header_id = $billing_header->id;
-		$billing_detail->price = $total;
-		$billing_detail->description = "Reimbursed Reservation Fee";
-		//too lazy for proper query. 9 = reservation fee return
-		$billing_detail->billing_item_id = 9;
-		$billing_detail->status=1;
-		$billing_detail->save();
+		for($i=0;$i<count($request->penalty_name);$i++){
+			$billing_detail = new BillingDetail();
+			$billing_detail->billing_header_id = $billing_header->id;
+			$billing_detail->price = $request->penalty_value[$i];
+			$billing_detail->description = $request->penalty_name[$i];
+			//too lazy for proper query. 9 = reservation fee return
+			$billing_detail->billing_item_id = 9;
+			$billing_detail->status=1;
+			$billing_detail->save();
+		}
+		
 
 
 		$current_contract = CurrentContract::where('id',$request->id)
 		->update(['status'=>2]);
 
+		//generate notification
 
 		return response()->json(['price'=>$output]);
     }

@@ -30,21 +30,16 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	// end test
 
-	Route::resource("myAccount","myAccountController");
-
-
-
-
 	Route::get('/test','mergeUnitsController@index')->name('tenant.test');
 	Route::get('/requestUnit','requestUnitsController@index')->name('tenant.requestUnit');
 	Route::post('/requestUnit2','requestUnitsController@store')->name('tenant.requestUnitStore');
 	Route::get('/TerminateContract','terminateContractController@index')->name('tenant.terminateContract');
 	
-
+	Route::get("/profile",'AccountController@index')->name('tenant.account.index');
+	Route::post("/profile",'AccountController@setAccountDetails')->name('tenant.account.post');
 
 	Route::view('/','tenant.index')->name('tenant.home');
 	Route::get('/login', function () {return view('tenant.login');});
-	Route::get('/profile', function () {return view('tenant.profile');});
 	Route::get('/soa', function () {return view('tenant.soa');});
 	Route::get("/dashboard",function(){return view('tenant.dashboard');});
 	Route::resource("registration","registrationController");
@@ -270,6 +265,8 @@ Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRa
 Route::get('custom/banks', ['uses' => 'customController@getBanks', 'as' => 'custom.getBanks']);
 Route::put('custom/readNotification', ['uses' => 'customController@readNotification', 'as' => 'custom.readNotification']);
 Route::get('/notification/get/count','customController@getNotificationCount')->name('custom.getNotificationCount');
+Route::get('/custom/get/balance','customController@getBalance')->name('custom.getBalance');
+Route::post('/custom/post/balance','customController@postBalance')->name('custom.postBalance');
 
 
 

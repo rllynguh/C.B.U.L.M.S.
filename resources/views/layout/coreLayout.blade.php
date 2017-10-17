@@ -71,8 +71,8 @@
     <section>
       <aside id="leftsidebar" class="sidebar">
         <div class="user-info">
-          <div class="image p-l-80">
-            <img src="{{ asset('images/users/'.Auth::user()->picture) }} " class="user-image" height="60" width="60" alt="User Image">
+          <div class="image align-center">
+            <img src="{{ asset('images/users/'.Auth::user()->picture) }} " class="user-image align-center height="60" width="60" alt="User Image">
           </div>
           <div class="info-container m-t--10">
             <div class="name align-center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{Auth::user()->first_name }} {{Auth::user()->last_name}}</div>

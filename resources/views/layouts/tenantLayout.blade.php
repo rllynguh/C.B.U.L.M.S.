@@ -25,72 +25,78 @@
     @yield('styles')
   </head>
   <body>
-    <div id = "wrapper">
+    <div  class="container-fluid" id = "wrapper">
       <div class = "overlay">
         <!-- Sidebar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
           <ul class="nav sidebar-nav">
             <li class="sidebar-brand">
-              <a href="{{route('tenant.home')}}">
-                Majent Tenant Portal
-              </a>
+              <div class="row">
+                <a href="{{route('tenant.home')}}">
+                  Majent Tenant Portal
+                </a>
+              </div>
             </li>
-            <li></li>
-            <li>
+              <li></li>
+              <li>
               <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home"></i> Home</a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-fw fa-folder"></i>  Statement of Account</a>
+              <a href="#"><i class="fa fa-fw fa-credit-card"></i>  Statement of Account</a>
             </li>
-            <li>
+            <!--<li>
               <a href="#"><i class="fa fa-fw fa-file-o"></i> Documents</a>
-            </li>
+            </li>-->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> Transactions <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li class="dropdown-header">Transactions</li>
                 <li><a href="{{route('offerSheetApproval.index')}}">Offer Sheet Approval</a></li>
                 <li><a href="{{route('registrationForfeit.index')}}">Registration Forfeit</a></li>
-                <li><a href="{{route('contract.index')}}">View Unaccepted Contracts</a></li>
+                <li><a href="{{route('contract.index')}}">View Current Contract Details</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="{{route('tenant.contractView')}}">Manage Ongoing Contracts</a></li>
                 <li><a href="{{route('tenant.requestUnit')}}">Request New Units</a></li>
                 <li><a href="{{route('tenant.terminateContract')}}">Terminate Contract</a></li>
               </ul>
             </li>
+            
             @auth
             <li class = "dropdown">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i>{{Auth::user()->first_name }} {{Auth::user()->last_name}}<span class="caret"></span></a>
-               <ul class="dropdown-menu" role="menu">
-                <li><a  id = "notification" href="{{route('account.notification.index')}}">Notifications</a></li>
-                <li><a href="{{route('myAccount.index')}}">Account</a></li>
-                <li><a href="{{route('account.notification.index')}}">Logout</a></li>
-               </ul>  
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i>{{Auth::user()->first_name }} {{Auth::user()->last_name}}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a  id = "notification" href="{{route('account.notification.index')}}" > <i class="fa fa-fw fa-file-o"></i> Notifications</a></li>
+                <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog"></i> Manage Account</a></li>
+                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money"></i> Balance:
+                  <span class="label label-primary" id = 'balance'></span>
+                </a></li>
+                <li><a href="{{route('account.notification.index')}}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
+              </ul>
             </li>
             @else
-            <a href="#"><i class="fa fa-fw fa-bank"></i> Login</a>
+            <a href="#"><i class="fa fa-fw fa-sign-in"></i> Login</a>
             @endauth
           </ul>
         </nav>
       </div>
       <div id="page-content-wrapper">
-          <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
-          <span class="hamb-top"></span>
-          <span class="hamb-middle"></span>
-          <span class="hamb-bottom"></span>
-          </button>
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12 ">
-                <div id = "appa">
-                  @yield('content')
-                </div>
+        <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+        <span class="hamb-top"></span>
+        <span class="hamb-middle"></span>
+        <span class="hamb-bottom"></span>
+        </button>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 ">
+              <div id = "appa">
+                @yield('content')
               </div>
             </div>
           </div>
         </div>
+      </div>
     </div>
-    
+    @include('partials.tenant._withdrawModal')
     <!--{!!Html::script('js/admin.js')!!}  -->
     <script src="{{ asset('js/app.js') }}"></script>
     {!!Html::script("js/pages/forms/form-wizard.min.js")!!}
@@ -122,8 +128,10 @@
     posi_url="{{route("custom.getPosition")}}";
     floor_url="{{route("custom.getFloor")}}";
     range_url="{{route("custom.getRange")}}";
+    url_balance= "{{route("custom.getBalance")}}";
+    var url_balance_store='{{route('custom.postBalance')}}';
     </script>
-    {!!Html::script("js/tenant/tenant.js")!!}
+    {!!Html::script("js/tenant/custom.js")!!}
     @yield('scripts')
   </body>
 </html>

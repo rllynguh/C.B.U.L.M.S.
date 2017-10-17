@@ -30,8 +30,8 @@
                     </div> 
                       
                     <div class="text-right pull-right col-md-3">
-                        Atacado: <br/> 
-                        <span class="h3 text-muted"><strong>R$35,00</strong></span>
+                        Amount Paid: <br/> 
+                        <span class="h3 text-muted"><strong>$3500</strong></span>
                     </div>
                      
                 </div>

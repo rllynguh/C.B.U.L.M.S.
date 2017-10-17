@@ -12,6 +12,7 @@ use App\RepresentativePosition;
 use App\Floor;
 use App\SizeRange;
 use App\Notification;
+use App\UserBalance;
 use Carbon\Carbon;
 use Config;
 use Auth;
@@ -106,7 +107,30 @@ class customController extends Controller
 		->WHERE('is_read',0)
 		->COUNT('id');
 		return response()->json(['count'=>$count]);
-	}	
+	}
+	public function getBalance(){
+		$balance=DB::TABLE('user_balances')
+        ->WHERE('user_id',Auth::user()->id)
+        ->ORDERBY('id','desc')
+        ->SELECT('balance','balance as formatted_balance')
+        ->FIRST();
+        $balance->formatted_balance="PHP ".number_format($balance->formatted_balance,2);
+        return response()->json(['balance' => $balance]);
+	}
+	public function postBalance(Request $request){
+		$amount = $request->txtWithdraw;
+		$user_balance=new UserBalance;
+		$user_balance->user_id=Auth::user()->id;
+        $user_balance->date_as_of=Carbon::now(Config::get('app.timezone'));
+        $balance=DB::TABLE('user_balances')
+        ->WHERE('user_id',Auth::user()->id)
+        ->ORDERBY('id','desc')
+        ->SELECT('balance','balance as formatted_balance')
+        ->FIRST();
+        $user_balance->balance=$balance->balance - $amount;
+        $user_balance->save();
+        return response()->json(['message' => 'Account updated']);
+	}
 }
 
 
