@@ -76,8 +76,8 @@ Route::group(['prefix' => 'tenant/'],function(){
 //temporary for when the template is only for admin
 
 Route::group(['prefix' => 'admin/'], function () {
-	Route::get('/', function () {
-		return view('user.admin.index');
+	Route::get('/dashboard', function () {
+		return view('user.admin.dashboard');
 	})->middleware('auth','admin');
 
 
@@ -203,6 +203,7 @@ Route::group(['prefix' => 'admin/'], function () {
 		Route::get('/get/data', ['uses' => 'contractListController@data', 'as' => 'contractList.getData']);
 		Route::get('/{id}/post-dated-checks', ['uses' => 'contractListController@showPDC', 'as' => 'contractList.showPDC']);
 		Route::get('/{id}/pdc', ['uses' => 'contractListController@getPDCData', 'as' => 'contractList.getPDCData']);
+		Route::get('/{id}/usedPDC', ['uses' => 'contractListController@getUsedPDC', 'as' => 'contractList.getUsedPDC']);
 		Route::get('/{id}/editPDC', ['uses' => 'contractListController@editPDC', 'as' => 'contractList.editPDC']);
 		Route::put('/{id}/updatePDC', ['uses' => 'contractListController@updatePDC', 'as' => 'contractList.updatePDC']);
 	});

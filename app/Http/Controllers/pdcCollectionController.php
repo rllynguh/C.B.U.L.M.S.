@@ -129,6 +129,7 @@ class pdcCollectionController extends Controller
         $pdc->user_id=Auth::user()->id;
         $pdc->for_date = date("Y-m-d", strtotime(date("Y-m-d", strtotime($bill_date)) . " + ".($x+$count)." month"));
         $pdc->amount=$request->amount;
+        $pdc->signatory=$request->txtSignatory;
         $pdc->date_accepted=Carbon::now(Config::get('app.timezone'));
         $pdc->save();
         $bill_date=DB::TABLE('current_contracts')
@@ -229,11 +230,20 @@ foreach ($bill_details as $key => &$bill_detail) {
     $bill_detail->price="₱ ".number_format($bill_detail->price,2);
 }
 $totalDisplay="₱ ".number_format($total,2);
+
+$signatory=DB::TABLE('current_contracts')
+->JOIN('contract_headers','current_contracts.contract_header_id','current_contracts.id')
+->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
+->JOIN('tenants','registration_headers.tenant_id','tenants.id')
+->JOIN('users','tenants.user_id','users.id')
+->SELECT(DB::RAW('CONCAT(first_name," ",last_name) as name'))
+->FIRST()->name;
 $result = array('total' => $total,
     'totalDisplay' => $totalDisplay,
     'id' => $id,
     'code'=> $code,
-    'max' =>$balance_pdc
+    'max' =>$balance_pdc,
+    'signatory' =>$signatory
 );
 return response::json([$bill_details,$result]);
 }

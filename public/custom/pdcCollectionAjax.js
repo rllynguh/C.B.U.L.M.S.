@@ -43,6 +43,7 @@ $(document).ready(function()
       $('#divBill').html(content);
       $("#myId").val(data[1].id);
       $("#amount").val(data[1].total);
+      $("#txtSignatory").val(data[1].signatory);
       $('#modalPDCCollection').modal('show');
     });
   });

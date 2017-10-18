@@ -33,56 +33,81 @@
           </div>
         </div>
         <div class="col-sm-12">
-          <div class="col-sm-4">
-            <div class="form-group">
-              <div class="form-line">
-                <label class="card-inside-title"># of PDC'S</label>
-                {{ Form::number('txtPDC',null,[
-                  'id' => 'txtPDC',
-                  'class' => 'form-control text-center max-digits-2',
-                  'data-rule' => 'quantity',
-                  'autocomplete' => 'off',
-                  'min' => '1',
-                  'max' => '12',
-                  'required' => 'required',
-                ])
-              }}
+          <div class="col-sm-12">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="form-line">
+                  {{ Form::label('txtPDC', "# of PDC'S", [
+                    'class' => 'control-label'
+                    ]) }}
+                  {{ Form::number('txtPDC',null,[
+                    'id' => 'txtPDC',
+                    'class' => 'form-control text-center max-digits-2',
+                    'data-rule' => 'quantity',
+                    'autocomplete' => 'off',
+                    'min' => '1',
+                    'max' => '12',
+                    'required' => 'required',
+                  ])
+                }}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <div class="form-line">
-              {{ Form::label('bank', 'Bank', [
-                'class' => 'control-label'
-              ]) 
-            }}
-            <div class="form-group ">
-              {{ Form::select('bank', $banks,null, [
-                'id' => 'bank',
-                'class' => 'form-control form-line'])
+          <div class="col-sm-6">
+            <div class="form-group">
+              <div class="form-line">
+                {{ Form::label('bank', 'Bank', [
+                  'class' => 'control-label'
+                ]) 
               }}
+              <div class="form-group ">
+                {{ Form::select('bank', $banks,null, [
+                  'id' => 'bank',
+                  'class' => 'form-control form-line'])
+                }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-12">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <h5 class="card-inside-title">Code</h5>
+              {{ Form::text('txtCode',null,[
+                'id' => 'txtCode',
+                'class' => 'form-control text-center',
+                'autocomplete' => 'off',
+                'minlength' => '10',
+                'maxlength' => '40',
+                'required' => 'required',
+              ])
+            }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
         <div class="form-group">
           <div class="form-line">
-            <h5 class="card-inside-title">Code</h5>
-            {{ Form::text('txtCode',null,[
-              'id' => 'txtCode',
+            <h5 class="card-inside-title">Signatory</h5>
+            {{ Form::text('txtSignatory',null,[
+              'id' => 'txtSignatory',
               'class' => 'form-control text-center',
               'autocomplete' => 'off',
               'minlength' => '10',
-              'maxlength' => '40',
+              'maxlength' => '60',
               'required' => 'required',
             ])
           }}
         </div>
       </div>
     </div>
+
   </div>
+</div>
 </div>
 <div class="col-sm-6">
   <div id='divTable'>
