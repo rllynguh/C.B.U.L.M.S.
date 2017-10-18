@@ -64,7 +64,7 @@ class contractListController extends Controller
 		->SELECT('contract_headers.code')
 		->WHERE('current_contracts.id',$id)
 		->FIRST()->code;
-		return view('transaction.contractList.show')
+		return view('transaction.contractList.showPDC')
 		->withCode($code)
 		->withId($id)
 		->withBanks($banks)
@@ -77,8 +77,7 @@ class contractListController extends Controller
 
 		$pdcs=DB::TABLE('post_dated_checks')
 		->JOIN('banks','post_dated_checks.bank_id','banks.id')
-		->SELECT('post_dated_checks.id','code','for_date','banks.description','amount')
-		->WHERE('post_dated_checks.status',0)
+		->SELECT('post_dated_checks.id','code','for_date','banks.description','amount','signatory','is_accepted','status')
 		->WHERE('post_dated_checks.current_contract_id',$id)
 		->GET();
 		foreach ($pdcs as $pdc) {
@@ -89,7 +88,18 @@ class contractListController extends Controller
 		}
 		return Datatables::of($pdcs)
 		->addColumn('action', function ($data) {
-			return "<button id='btnEditPDC' value='$data->id' type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></button>";
+			if($data->is_accepted==1)
+				return "<button id='btnShowDetails' value='$data->id' type='button' class='btn bg-blue btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></button>";
+			else
+				return "<button id='btnEditPDC' value='$data->id' type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></button>";
+		})
+		->editColumn('status', function ($data) {
+			if($data->status==0)
+				return "Pending";
+			else if($data->status==1)
+				return "Validated";
+			else
+				return "Rejected";
 		})
 		->rawColumns(['action'])
 		->make(true)
@@ -98,7 +108,7 @@ class contractListController extends Controller
 	public function editPDC($id)
 	{
 		$pdc=DB::TABLE('post_dated_checks')
-		->SELECT('code','for_date','bank_id','amount','post_dated_checks.id')
+		->SELECT('code','for_date','bank_id','amount','post_dated_checks.id','signatory')
 		->WHERE('post_dated_checks.status',0)
 		->WHERE('post_dated_checks.id',$id)
 		->FIRST();
@@ -113,7 +123,34 @@ class contractListController extends Controller
 		$pdc=PostDatedCheck::FINDORFAIL($id);
 		$pdc->bank_id=$request->bank;
 		$pdc->code=$request->code;
+		$pdc->signatory=$request->signatory;
 		$pdc->save();
+	}
+	public function getUsedPDC($id)
+	{
+		$pdc=DB::TABLE('post_dated_checks')
+		->SELECT('post_dated_checks.code as pdc','for_date','amount','billing_headers.code as billing','payments.code as payment','banks.description as bank')
+		->JOIN('banks','post_dated_checks.bank_id','banks.id')
+		->JOIN('payments','post_dated_checks.payment_id','payments.id')
+		->JOIN('billing_headers','payments.billing_header_id','billing_headers.id')
+		->WHERE('post_dated_checks.id',$id)
+		->FIRST();
+
+		$details=DB::TABLE('post_dated_checks')
+		->JOIN('payments','post_dated_checks.payment_id','payments.id')
+		->JOIN('billing_headers','payments.billing_header_id','billing_headers.id')
+		->JOIN('billing_details','billing_headers.id','billing_details.billing_header_id')
+		->JOIN('billing_items','billing_details.billing_item_id','billing_items.id')
+		->SELECT('billing_items.description','billing_details.price')
+		->WHERE('post_dated_checks.id',$id)
+		->GET()
+		;
+
+		$data=(object)['pdc'=>$pdc,'details'=>$details];
+		foreach ($details as $detail) {
+			$detail->price="₱".number_format($detail->price,2);
+		}
+		return response::json($data);
 	}
 
 }

@@ -387,9 +387,9 @@
   <span>Contract Termination</span>
 </a>
 </li>
-  <a href="/addammend" class="waves-yellow">
-    <span>Addendum and Ammendment</span>
-  </a>
+<a href="/addammend" class="waves-yellow">
+  <span>Addendum and Ammendment</span>
+</a>
 </li>
 </ul>
 </li>
@@ -548,6 +548,10 @@
     @endforeach
   </div> <!-- end .flash-message -->
 
+  @if(Request::path() == 'admin/dashboard') 
+
+  @yield('content')
+  @else
   <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
@@ -558,6 +562,7 @@
       </div>
     </div>
   </div>
+  @endif
 </section>
 {!!Html::script("plugins/jquery/jquery.min.js")!!}
 {!!Html::script("plugins/jquery-datatable/jquery.dataTables.min.js")!!}
@@ -578,7 +583,7 @@
 {!!Html::script('custom/coreLayoutAjax.js')!!}
 <script type="text/javascript">
   readNotifUrl="{{route('custom.readNotification')}}"
-</script>>
+</script>
 
 </body>
 

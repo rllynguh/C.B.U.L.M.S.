@@ -24,12 +24,13 @@ class CreatePostDatedChecksTable extends Migration {
 			$table->date('date_accepted');
 			$table->integer('user_id')->index('user_id_pdc_idx')->comment('accepted by');
 			$table->integer('is_accepted')->default(0)->comment('0-not consumed
-1-consumed
-2-not validated');
+				1-consumed
+				2-not validated');
 			$table->integer('status')->default(0)->comment('0-unverified
-1-verified
-2-tumalbog');
+				1-verified
+				2-tumalbog');
 			$table->string('pdf', 60)->nullable();
+			$table->string('signatory', 100);
 		});
 	}
 
