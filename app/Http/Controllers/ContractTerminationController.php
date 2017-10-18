@@ -72,6 +72,7 @@ class ContractTerminationController extends Controller
 		->orderBy('user_balances.id','desc')
 		->first();
 
+
 		$newBalance = new UserBalance();
 		$newBalance->date_as_of=Carbon::now(Config::get('app.timezone'));
 		$newBalance->user_id = $userBalance->id;

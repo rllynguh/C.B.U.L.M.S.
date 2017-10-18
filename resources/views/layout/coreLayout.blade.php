@@ -286,6 +286,15 @@
 </li>
 
 <li class="
+{{strpos(Request::path(),'transaction/amendmentApproval') ? 'active' : ''}}
+">
+<a href="{{route('transaction.amendmentApproval.index')}}" class="waves-yellow">
+  <i class="mdi-action-assignment-ind"></i>
+  <span>Amendment Approval</span>
+</a>
+</li>
+
+<li class="
 {{strpos(Request::path(),'transaction/offersheets') ? 'active' : ''}}
 ">
 <a href="{{route('offersheets.index')}}" class="waves-yellow">
@@ -370,12 +379,14 @@
   </a>
 </li>
 
-<li>
-  <a href="/terminateTable" class="waves-yellow">
-    <span>Contract Termination</span>
-  </a>
+<li class="
+{{Request::path() == 'tenant/transaction/contract' ? 'active' : ''}}
+{{strpos(Request::path(),'transaction/contractTermination') ? 'active' : ''}}
+">
+<a href="{{route('transaction.contractTermination.index')}}" class="waves-yellow">
+  <span>Contract Termination</span>
+</a>
 </li>
-<li>
   <a href="/addammend" class="waves-yellow">
     <span>Addendum and Ammendment</span>
   </a>

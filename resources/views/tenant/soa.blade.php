@@ -1,4 +1,5 @@
 @extends('layouts.tenantLayout')
+@section('content')
 <div class="about-us">
 			<div class="row">
 				<div class="col-sm-6 col-md-8">
@@ -34,3 +35,4 @@
 							</div>
 						</div>
 </div></div></div></div>
+@endsection

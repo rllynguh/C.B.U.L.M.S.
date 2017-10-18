@@ -20,6 +20,7 @@ use App\Province;
 use App\BusinessType;
 use App\RepresentativePosition;
 use App\RegistrationRequirement;
+use App\UserBalance;
 class registrationController extends Controller
 {
     /**
@@ -95,6 +96,12 @@ class registrationController extends Controller
           $user->email=$request->email;
           $user->password=$password;
           $user->save();
+
+          $temp =  new UserBalance();
+          $temp->date_as_of=Carbon::now(Config::get('app.timezone'));
+          $temp->user_id = $user->id;
+          $temp->balance = 0;
+          $temp->save();
 
           $repr_address=new Address();
           $repr_address->number=$request->repr_number;

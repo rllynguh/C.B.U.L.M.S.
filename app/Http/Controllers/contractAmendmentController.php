@@ -22,7 +22,7 @@ class contractAmendmentController extends Controller
 	}
 	public function data(){
 		$contracts=DB::table('current_contracts')
-		->where('current_contracts.status',0)
+		->where('current_contracts.status',1)
 		->join('contract_headers','current_contracts.contract_header_id','contract_headers.id')
 		->join('registration_headers','contract_headers.registration_header_id','registration_headers.id')
 		->join('tenants','registration_headers.tenant_id','tenants.id')
