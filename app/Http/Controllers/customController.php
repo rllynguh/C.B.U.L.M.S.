@@ -114,7 +114,12 @@ class customController extends Controller
         ->ORDERBY('id','desc')
         ->SELECT('balance','balance as formatted_balance')
         ->FIRST();
-        $balance->formatted_balance="PHP ".number_format($balance->formatted_balance,2);
+        if(is_null($balance)){
+        	$balance = (object)['balance' => 000, 'formatted_balance' => 'You currently have 0 remaining balance'];
+        }else{
+        	$balance->formatted_balance="PHP ".number_format($balance->formatted_balance,2);
+        }
+        
         return response()->json(['balance' => $balance]);
 	}
 	public function postBalance(Request $request){

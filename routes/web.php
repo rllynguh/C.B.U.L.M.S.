@@ -40,7 +40,8 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	Route::view('/','tenant.index')->name('tenant.home');
 	Route::get('/login', function () {return view('tenant.login');});
-	Route::get('/soa', function () {return view('tenant.soa');});
+	Route::get('/soa', 'SOAController@index')->name('soa.index');
+	Route::get('/soa/get','SOAController@data');
 	Route::get("/dashboard",function(){return view('tenant.dashboard');});
 	Route::resource("registration","registrationController");
 	

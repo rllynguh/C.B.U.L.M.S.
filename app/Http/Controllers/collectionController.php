@@ -38,7 +38,7 @@ class collectionController extends Controller
     {
         $bills=db::table('billing_headers')
         ->JOIN('current_contracts','billing_headers.current_contract_id','current_contracts.id')
-        ->where('current_contracts.status',0)
+        ->where('current_contracts.status',1)
         ->JOIN('contract_headers','current_contracts.contract_header_id','contract_headers.id')
         ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
         ->JOIN('tenants','registration_headers.tenant_id','tenants.id')

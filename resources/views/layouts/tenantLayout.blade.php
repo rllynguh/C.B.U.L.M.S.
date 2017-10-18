@@ -41,7 +41,7 @@
               <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home"></i> Home</a>
             </li>
             <li>
-              <a href="#"><i class="fa fa-fw fa-credit-card"></i>  Statement of Account</a>
+              <a href="{{route('soa.index')}}"><i class="fa fa-fw fa-credit-card"></i>  Statement of Account</a>
             </li>
             <!--<li>
               <a href="#"><i class="fa fa-fw fa-file-o"></i> Documents</a>
@@ -98,14 +98,20 @@
     @include('partials.tenant._withdrawModal')
     <!--{!!Html::script('js/admin.js')!!}  -->
     <script src="{{ asset('js/app.js') }}"></script>
-    {!!Html::script("js/pages/forms/form-wizard.min.js")!!}
-    
+    {!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
+{!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
+{!!Html::script('plugins/jquery/parsley.min.js')!!}
+{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
+{!!Html::script('plugins/node-waves/waves.min.js')!!}
+{!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
+{!!Html::script('js/notify/notify.min.js')!!}
+{!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
+{!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+{!!Html::script("plugins/pace-js/pace.min.js")!!}
     {!!Html::script("plugins/DataTables/datatables.min.js")!!}
     {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
     {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!}
-    {!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
     {!!Html::script('js/pages/cards/basic.js')!!}
-    {!!Html::script('js/notify/notify.min.js')!!}
     {!!Html::script('js/demo.js')!!}
     {!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
     {!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}

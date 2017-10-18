@@ -20,7 +20,7 @@ class CreateOfferSheetHeadersTable extends Migration {
 			$table->text('tenant_remarks', 65535)->nullable();
 			$table->date('date_issued');
 			$table->integer('status')->default(0);
-			$table->integer('isAmendment')->default(0)->comment('1 = part of amendment')
+			$table->integer('isAmendment')->default(0)->comment('1 = part of amendment');
 			$table->string('contract_header_id')->nullable();
 		});
 	}
