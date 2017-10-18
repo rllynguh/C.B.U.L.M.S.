@@ -9,7 +9,9 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 @import "node_modules/font-awesome/scss/font-awesome";
-//@import "node_modules/bulma/bulma";
-//@import "node_modules/buefy/src/scss/buefy";
+
+@import "node_modules/adminbsb-materialdesign/scss/style";
+@import "node_modules/adminbsb-materialdesign/scss/themes/_all-themes";
+//@import "node_modules/material-icons/css/material-icons.min";
 @import "helpers";
 

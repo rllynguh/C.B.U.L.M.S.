@@ -17,74 +17,46 @@
     {!!Html::style("plugins/jquery-ui-1.12.1/jquery-ui.min.css")!!}
     {!!Html::style("plugins/bootstrap3-editable/bootstrap3-editable/css/bootstrap-editable.css")!!}
     {!!Html::style("css/parsleyStyle.min.css")!!}
-    {!!Html::style("css/themes/all-themes.min.css")!!}
     {!!Html::style("plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.min.css")!!}
     {!!Html::style("css/tenant/tenant.css")!!}
     
     @yield('styles')
-  </head>
-  <body>
-    <div  class="container-fluid" id = "wrapper">
-      <div class = "overlay">
-        <!-- Sidebar -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-          <ul class="nav sidebar-nav">
-            <li class="sidebar-brand">
-              <div class="row">
-                <a href="{{route('tenant.home')}}">
-                  Majent Tenant Portal
-                </a>
-              </div>
-            </li>
-              <li></li>
-              <li>
-              <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home"></i> Home</a>
-            </li>
-            <li>
-              <a href="{{route('soa.index')}}"><i class="fa fa-fw fa-credit-card"></i>  Statement of Account</a>
-            </li>
-            <!--<li>
-              <a href="#"><i class="fa fa-fw fa-file-o"></i> Documents</a>
-            </li>-->
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-plus"></i> Transactions <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li class="dropdown-header">Transactions</li>
-                <li><a href="{{route('offerSheetApproval.index')}}">Offer Sheet Approval</a></li>
-                <li><a href="{{route('registrationForfeit.index')}}">Registration Forfeit</a></li>
-                <li><a href="{{route('contract.index')}}">View Current Contract Details</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="{{route('tenant.contractView')}}">Manage Ongoing Contracts</a></li>
-                <li><a href="{{route('tenant.requestUnit')}}">Request New Units</a></li>
-                <li><a href="{{route('tenant.terminateContract')}}">Terminate Contract</a></li>
-              </ul>
-            </li>
-            
-            @auth
-            <li class = "dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-user"></i>{{Auth::user()->first_name }} {{Auth::user()->last_name}}<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a  id = "notification" href="{{route('account.notification.index')}}" > <i class="fa fa-fw fa-file-o"></i> Notifications</a></li>
-                <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog"></i> Manage Account</a></li>
-                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money"></i> Balance:
-                  <span class="label label-primary" id = 'balance'></span>
-                </a></li>
-                <li><a href="{{route('account.notification.index')}}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
-              </ul>
-            </li>
-            @else
-            <a href="#"><i class="fa fa-fw fa-sign-in"></i> Login</a>
-            @endauth
-          </ul>
-        </nav>
-      </div>
-      <div id="page-content-wrapper">
-        <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
-        <span class="hamb-top"></span>
-        <span class="hamb-middle"></span>
-        <span class="hamb-bottom"></span>
-        </button>
-        <div class="container">
+ <body class="theme-blue">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-black">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+   @include('partials.tenant._navbar')
+
+    <section class="content">
+        <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12 ">
               <div id = "appa">
@@ -95,32 +67,23 @@
         </div>
       </div>
     </div>
+  </section>
     @include('partials.tenant._withdrawModal')
-    <!--{!!Html::script('js/admin.js')!!}  -->
     <script src="{{ asset('js/app.js') }}"></script>
-    {!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
-{!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
-{!!Html::script('plugins/jquery/parsley.min.js')!!}
-{!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
-{!!Html::script('plugins/node-waves/waves.min.js')!!}
-{!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
-{!!Html::script('js/notify/notify.min.js')!!}
-{!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
-{!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
-{!!Html::script("plugins/pace-js/pace.min.js")!!}
     {!!Html::script("plugins/DataTables/datatables.min.js")!!}
-    {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
     {!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!}
-    {!!Html::script('js/pages/cards/basic.js')!!}
-    {!!Html::script('js/demo.js')!!}
     {!!Html::script("plugins/jquery-steps/jquery.steps.min.js")!!}
     {!!Html::script("plugins/jquery-validation/jquery.validate.min.js")!!}
     {!!Html::script('plugins/jquery/parsley.min.js')!!}
     {!!Html::script('plugins/jquery-slimscroll/jquery.slimscroll.min.js')!!}
-    {!!Html::script('plugins/node-waves/waves.min.js')!!}
-    {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
-    {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
     {!!Html::script("plugins/jquery-mask/jquery.mask.min.js")!!}
+    {!!Html::script('plugins/node-waves/waves.min.js')!!}
+    {!!Html::script('js/pages/forms/advanced-form-elements.min.js')!!}
+    {!!Html::script('js/notify/notify.min.js')!!}
+    {!!Html::script("plugins/jquery-inputmask/jquery.inputmask.bundle.min.js")!!}
+    {!!Html::script("plugins/pace-js/pace.min.js")!!}
+    {!!Html::script("plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.min.js")!!}
+    {!!Html::script("plugins/waitMe/waitMe.min.js")!!}
     {!!Html::script("plugins/bootstrap3-editable/bootstrap3-editable/js/bootstrap-editable.min.js")!!}
     <script type="text/javascript">
     var urlNotificationCount = "{{route("custom.getNotificationCount")}}";

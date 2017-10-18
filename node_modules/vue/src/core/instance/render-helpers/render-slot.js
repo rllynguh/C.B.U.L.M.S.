@@ -1,6 +1,6 @@
 /* @flow */
 
-import { extend, warn } from 'core/util/index'
+import { extend, warn, isObject } from 'core/util/index'
 
 /**
  * Runtime helper for rendering <slot>
@@ -15,7 +15,13 @@ export function renderSlot (
   if (scopedSlotFn) { // scoped slot
     props = props || {}
     if (bindObject) {
-      extend(props, bindObject)
+      if (process.env.NODE_ENV !== 'production' && !isObject(bindObject)) {
+        warn(
+          'slot v-bind without argument expects an Object',
+          this
+        )
+      }
+      props = extend(extend({}, bindObject), props)
     }
     return scopedSlotFn(props) || fallback
   } else {
