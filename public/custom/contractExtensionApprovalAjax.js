@@ -12,4 +12,8 @@ $(document).ready(function(){
         {data: 'action', name: 'action', orderable: false, searchable: false, class :'align-center'},
         ]
     });
+    $("body").on("click", ".btnApproval", setApproval);
 });
+function setApproval(){
+	
+}

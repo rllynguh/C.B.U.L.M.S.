@@ -18,6 +18,9 @@
   </table>
 </div>
 @endsection
+@component('partials._acceptRejectModal')
+<strong>Whoops!</strong> Something went wrong!
+@endcomponent
 @section('scripts')
 {!!Html::script("custom/contractExtensionApprovalAjax.js")!!}
 <script type = "text/javascript">
