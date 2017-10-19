@@ -42,10 +42,15 @@
             @include('partials.tenant._navbar')
             <section class="content">
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row cleafix">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class = "card" id = "appa">
-                                @yield('content')
+                                <div class="header bg-red">
+                                    @yield('breadcrumbs')
+                                </div>
+                                <div class ="body">
+                                    @yield('content')
+                                </div>
                             </div>
                         </div>
                     </div>

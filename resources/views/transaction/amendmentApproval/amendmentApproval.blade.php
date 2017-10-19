@@ -6,8 +6,7 @@
 </ol>
 @endsection
 @section('content')
-<div class="card">
-  <div class="body">
+<div class="body">
     <table class="table table-hover dataTable" id="myTable">
       <thead>
         <tr>
@@ -17,11 +16,9 @@
       </tbody>
     </table>
   </div>
-</div>
 @include('partials.transactions._amendmentApprovalModal')
 @endsection
 @section('scripts')
-{!!Html::script("plugins/jquery-ui-1.12.1/jquery-ui.min.js")!!} 
 <script src="/custom/amendmentApprovalAjax.js"></script>
 <script type="text/javascript">
 var url = "{{route("transaction.amendmentApproval.index")}}";
@@ -30,5 +27,4 @@ var urlUnits = "{!!route('tenant.getUnits')!!}";
 </script>
 @endsection
 @section('styles')
-{!!Html::style("plugins/jquery-ui-1.12.1/jquery-ui.min.css")!!}
 @endsection

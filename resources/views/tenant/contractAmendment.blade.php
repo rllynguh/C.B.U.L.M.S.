@@ -1,8 +1,5 @@
 @extends('layouts.tenantLayout')
 @section('content')
-<div class="container">
-      <div class="card">
-        <div class="card-content">
           <table class="table row-border display compact table-hover dataTable table-striped ui celled is-narrow" id="myTable">
             <thead>
               <tr>
@@ -16,9 +13,6 @@
             <tbody id = "body">
             </tbody>
           </table>
-        </div>
-      </div> <!-- end of .card -->
-    </div>
    @include('partials.tenant._contractDetailsModal')
    @include('partials.tenant._contractAmendmentModal')
 @endsection

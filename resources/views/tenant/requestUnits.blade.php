@@ -1,4 +1,6 @@
 @extends('layouts.tenantLayout')
+@section('breadcrumbs')
+@endsection
 @section('content')
 <section>
     <div class="wizard">
@@ -20,13 +22,6 @@
                     </a>
                 </li>
                 <li role="presentation" class="disabled">
-                    <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
-                        <span class="round-tab">
-                            <i class="glyphicon glyphicon-picture"></i>
-                        </span>
-                    </a>
-                </li>
-                <li role="presentation" class="disabled">
                     <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                         <span class="round-tab">
                             <i class="glyphicon glyphicon-ok"></i>
@@ -40,25 +35,7 @@
             {{csrf_field()}}
             <div class="tab-content">
                 <div class="tab-pane active" role="tabpanel" id="step1">
-                    <div class="funkyradio">
-                        <div class="funkyradio-success">
-                            <input type="radio" name="radio" id="newContract" checked/>
-                            <label for="newContract">New Contract</label>
-                        </div>
-                        
-                        <div id = "test" style="display: none;">
-                            <select class = "selectMenu" id = "testa">
-                            </select>
-                        </div>
-                    </div>
-                    <ul class="list-inline pull-right">
-                       <button type="button" class="btn btn-primary next-step">Next Step</button>   
-                    </ul>
-                </div>
-                
-                <div class="tab-pane" role="tabpanel" id="step2">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="card">
                             <div class="header">
                                 <h2>
                                 Unit Specifications
@@ -75,15 +52,13 @@
                                     </div>
                                 </fieldset>
                             </div>
-                        </div>
                     </div>
-                    
                     <ul class="list-inline pull-right">
-                        <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                        <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
+                       <button type="button" class="btn btn-primary next-step">Next Step</button>   
                     </ul>
                 </div>
-                <div class="tab-pane" role="tabpanel" id="step3">
+                
+                <div class="tab-pane" role="tabpanel" id="step2">
                     <h3>Remarks</h3>
                     <fieldset>
                         <div class="panel-body">
@@ -119,8 +94,7 @@
                     </fieldset>
                     <ul class="list-inline pull-right">
                         <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
-                        <li><button type="button" class="btn btn-default next-step">Skip</button></li>
-                        <li><button type="button" class="btn btn-primary btn-info-full next-step">Save and continue</button></li>
+                        <li><button type="button" class="btn btn-primary next-step">Save and continue</button></li>
                     </ul>
                 </div>
                 <div class="tab-pane" role="tabpanel" id="complete">
@@ -135,7 +109,6 @@
 </section>
 @endsection
 @section('styles')
-{!!Html::style("css/tenant/custom.css")!!}
 @endsection
 @section('scripts')
 <script type="text/javascript">

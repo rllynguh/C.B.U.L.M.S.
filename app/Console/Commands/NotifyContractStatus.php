@@ -43,16 +43,18 @@ class NotifyContractStatus extends Command
         //
         $renewal_days=360;
         $extension_days=90;
-
-
+        $extension_grace = 30;
+        $renewal_grace = $renewal_days - $extension_days;
+        $extension_diff = $extension_days-$extension_grace;
         $contracts_extension=DB::TABLE('current_contracts')
         ->JOIN('contract_headers','current_contracts.contract_header_id','contract_headers.id')
         ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
         ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
-        ->SELECT(DB::RAW('DATEDIFF(end_of_contract,CURRENT_DATE) as gap, end_of_contract,tenants.user_id,contract_headers.code'))
+        ->SELECT(DB::RAW('DATEDIFF(end_of_contract,CURRENT_DATE) as gap, end_of_contract,tenants.user_id,contract_headers.code, current_contracts.id as id'))
         ->HAVINGRAW("gap <= $renewal_days and gap >$extension_days")
-        ->WHERERAW('CONCAT(contract_headers.code," Extension") not in (SELECT description from notifications)')
+        ->WHERERAW('CONCAT(contract_headers.code," Extension") not in (SELECT title from notifications)')
         ->GET();
+
         foreach ($contracts_extension as $contract) {
             # code...
             $date=new Carbon($contract->end_of_contract);
@@ -65,16 +67,17 @@ class NotifyContractStatus extends Command
             $notification->link="javascript:void(0);";
             $notification->date_issued=Carbon::now();
             $notification->is_urgent = 1;
+            $notification->type = "renewal";
+            $notification->current_contract_id = $contract->id;
+            $notification->expires_on = $renewal_grace;
             $notification->save();
         }
-
-
         $contracts_renewal=DB::TABLE('current_contracts')
         ->JOIN('contract_headers','current_contracts.contract_header_id','contract_headers.id')
         ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
         ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
-        ->SELECT(DB::RAW('DATEDIFF(end_of_contract,CURRENT_DATE) as gap, end_of_contract,tenants.user_id,contract_headers.code'))
-        ->HAVING('gap','<=',$extension_days)
+        ->SELECT(DB::RAW('DATEDIFF(end_of_contract,CURRENT_DATE) as gap, end_of_contract,tenants.user_id,contract_headers.code,current_contracts.id as id'))
+        ->HAVINGRAW("gap <= $extension_days and gap >$extension_grace")
         ->WHERERAW('CONCAT(contract_headers.code," Renewal") not in (SELECT description from notifications)')
         ->GET();
         foreach ($contracts_renewal as $contract) {
@@ -89,8 +92,10 @@ class NotifyContractStatus extends Command
             $notification->link="javascript:void(0);";
             $notification->date_issued=Carbon::now();
             $notification->is_urgent = 1;
+            $notification->type = "extension";
+            $notification->current_contract_id = $contract->id;
+            $notification->expires_on = $extension_grace;
             $notification->save();
         }
-
     }
 }

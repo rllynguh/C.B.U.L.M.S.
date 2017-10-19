@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
     	'App\Console\Commands\UpdateBillingInterest',
-        'App\Console\Commands\NotifyContractStatus'
+        'App\Console\Commands\NotifyContractStatus',
+        'App\Console\Commands\DailyNotificationHandler'
     ];
 
     /**
@@ -30,6 +31,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
     	$schedule->command('billing_interest:update')->everyMinute()->sendOutputTo(storage_path('logs/output.log'));
+        $schedule->command('notfication:handle')->daily();
         $schedule->command('contract_status:notify')->daily();
     }
 
