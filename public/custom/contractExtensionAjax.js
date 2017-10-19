@@ -20,14 +20,28 @@ function sendRequest(){
 	var txt;
 	var type = $(this).attr('data-type');
 	if(type==='Renewal'){
-		txt = "Input amount in years: ";
+		txt = "Input amount in years(Max 5 years): ";
 	}else if(type==='Extension'){
 		txt = "Input amount in months(Max 6 months): ";
 	}
-    var input = prompt("Input amount you wish the contract to be increased by:\n"+txt);
+    var input = parseInt(prompt("Input amount you wish the contract to be increased by:\n"+txt)) ;
     if (input == null || input == "") {
     } else {
-        
+    	if(!isNaN(input)){
+    		if(type==='Renewal'){
+    			if(input<=5){
+    				alert('ayyy it okie');
+    			}else{
+    				alert('no it not fayn D:<');
+    			}
+	        }else if(type === 'Extension'){
+	        	if(input<=6){
+	        		alert('ayyy it okie');
+    			}else{
+    				alert('no it not fayn D:<');
+    			}
+	        }
+    	}   
     }
 }
 
