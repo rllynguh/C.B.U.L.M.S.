@@ -220,6 +220,8 @@ Route::group(['prefix' => 'admin/'], function () {
 	});
 	Route::get('/contract/ExtensionApproval','ContractExtensionApprovalController@index')->name('admin.contract.extension.index');
 	Route::get('/contract/ExtensionApproval/data','ContractExtensionApprovalController@data')->name('admin.contract.extension.data');
+	Route::post('/contract/ExtensionApproval/post','ContractExtensionApprovalController@setApproval')->name('admin.contract.extension.post');
+
 	Route::resource("/transaction/pdcCollection","pdcCollectionController");
 	Route::get('/transaction/pdcCollection/get/data', ['uses' => 'pdcCollectionController@data', 'as' => 'pdcCollection.getData']);
 	Route::get('/transaction/pdcCollection/updatePDC', ['uses' => 'pdcCollectionController@updatePDC', 'as' => 'pdcCollection.updatePDC']);

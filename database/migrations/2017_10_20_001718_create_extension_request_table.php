@@ -15,9 +15,10 @@ class CreateExtensionRequestTable extends Migration
     {
         Schema::create('extension_request', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('tenant_user_id');
             $table->integer('current_contract_id');
             $table->integer('duration');
-            $table->text('status')->comment('0 = Unaccepted 1 = Accepted 2 = Rejected');
+            $table->integer('status')->default(0)->comment('0 = Unaccepted 1 = Accepted 2 = Rejected');
             $table->text('type');
             $table->timestamps();
         });

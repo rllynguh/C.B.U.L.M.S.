@@ -20,7 +20,7 @@ class ViewComposerServiceProvider extends ServiceProvider
         $this->composeCoreLayout();
         $this->composeDashboard();
         $this->composeTenantLayout();
-        $this->composeTenantLayout();
+        $this->composeTenantDashboard();
     }
 
     /**

@@ -9,8 +9,8 @@
 				{{$slot}}
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success">Accept</button>
-				<button type="button" class="btn btn-danger">Reject</button>
+				<button type="button" class="btn btn-success btnAction" id = 'btnAccept'>Accept</button>
+				<button type="button" class="btn btn-danger btnAction" id = 'btnReject'>Reject</button>
 			</div>
 		</div>
 	</div>

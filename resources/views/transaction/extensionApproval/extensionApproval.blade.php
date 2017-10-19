@@ -25,5 +25,6 @@
 {!!Html::script("custom/contractExtensionApprovalAjax.js")!!}
 <script type = "text/javascript">
 	var urldata="{!!route("admin.contract.extension.data")!!}";
+  var urlpost="{!!route("admin.contract.extension.post")!!}"
 </script>
 @endsection

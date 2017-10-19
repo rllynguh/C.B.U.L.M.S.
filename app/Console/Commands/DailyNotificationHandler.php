@@ -46,14 +46,15 @@ class DailyNotificationHandler extends Command
             $notif->description = $notif->title + " expired";
             $notif->expires_on = 0;
             $notif->link="#";
-            if($notif->type == 'renewal'){
+            if($notif->type == 'Renewal'){
                 $notif->description = "Renewal Period Expired";
-            }else if($notif->type = 'extension'){
+            }else if($notif->type = 'Extension'){
                 $notif->description = "Extension Period Expired";
             }
             $notif->save();
         }
         DB::table('notifications')
+        ->whereIn('type',['Renewal','Extension'])
         ->decrement('expires_on',1);
     }
 }

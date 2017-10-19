@@ -52,7 +52,7 @@ class NotifyContractStatus extends Command
         ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
         ->SELECT(DB::RAW('DATEDIFF(end_of_contract,CURRENT_DATE) as gap, end_of_contract,tenants.user_id,contract_headers.code, current_contracts.id as id'))
         ->HAVINGRAW("gap <= $renewal_days and gap >$extension_days")
-        ->WHERERAW('CONCAT(contract_headers.code," Extension") not in (SELECT title from notifications)')
+        ->WHERERAW('CONCAT(contract_headers.code," Renewal") not in (SELECT title from notifications)')
         ->GET();
 
         foreach ($contracts_extension as $contract) {
@@ -78,7 +78,7 @@ class NotifyContractStatus extends Command
         ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
         ->SELECT(DB::RAW('DATEDIFF(end_of_contract,CURRENT_DATE) as gap, end_of_contract,tenants.user_id,contract_headers.code,current_contracts.id as id'))
         ->HAVINGRAW("gap <= $extension_days and gap >$extension_grace")
-        ->WHERERAW('CONCAT(contract_headers.code," Renewal") not in (SELECT description from notifications)')
+        ->WHERERAW('CONCAT(contract_headers.code," Extension") not in (SELECT title from notifications)')
         ->GET();
         foreach ($contracts_renewal as $contract) {
             # code...

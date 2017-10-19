@@ -14,6 +14,7 @@ class ContractExtensionController extends Controller
     }
     public function data(){
     	$result = DB::table('notifications')
+        ->where('notifications.expires_on','>','0')
     	->join('current_contracts','current_contracts.id','notifications.current_contract_id')
     	->join('contract_headers','contract_headers.id','current_contracts.contract_header_id')
     	->whereIn('notifications.type',array('Extension','Renewal'))
@@ -43,6 +44,8 @@ class ContractExtensionController extends Controller
     	$extension->current_contract_id = $result->id;
     	$extension->type = $result->type;
     	$extension->duration=$request->duration;
+        $extension->status = 0;
+        $extension->tenant_user_id = Auth::user()->id;
     	$extension->save();
     	
     }
