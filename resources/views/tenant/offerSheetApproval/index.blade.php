@@ -35,7 +35,3 @@
   range_url="{{route("custom.getRange")}}";
 </script>
 @endsection
-@section('styles')
-{!!Html::style("css/themes/all-themes.min.css")!!}
-{!!Html::style("css/style.min.css")!!}
-@endsection

@@ -67,7 +67,7 @@ class NotifyContractStatus extends Command
             $notification->link="javascript:void(0);";
             $notification->date_issued=Carbon::now();
             $notification->is_urgent = 1;
-            $notification->type = "renewal";
+            $notification->type = "Renewal";
             $notification->current_contract_id = $contract->id;
             $notification->expires_on = $renewal_grace;
             $notification->save();
@@ -92,7 +92,7 @@ class NotifyContractStatus extends Command
             $notification->link="javascript:void(0);";
             $notification->date_issued=Carbon::now();
             $notification->is_urgent = 1;
-            $notification->type = "extension";
+            $notification->type = "Extension";
             $notification->current_contract_id = $contract->id;
             $notification->expires_on = $extension_grace;
             $notification->save();

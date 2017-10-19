@@ -69,6 +69,9 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::get("contract/data",'contractAmendmentController@data')->name('tenant.contractData');
 	Route::post("contract/amendment",'contractAmendmentController@storeRequest')->name('tenant.storeRequest');
 
+	Route::get("contract/extend","ContractExtendController@index")->name('tenant.contract.extend.index');
+	Route::get('contract/extend/data','ContractExtendController@data')->name('tenant.contract.extend.data');
+
 	Route::group(['prefix' => '/docs'],function(){
 
 		Route::get('/reservation-fee-receipt/{id}', ['uses' => 'documentController@reservationFee', 'as' => 'docs.reservation-fee-receipt']);

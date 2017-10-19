@@ -219,8 +219,6 @@
 		</div>
 		@endsection
 		@section('scripts')
-		{!!Html::script('js/admin.min.js')!!}
-		{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
 		
 		{!!Html::script("custom/offerSheetApprovalShowAjax.min.js")!!}
 		<script type="text/javascript">
@@ -235,5 +233,5 @@
 		</script>
 		@endsection
 		@section('styles')
-		{!!Html::style("css/style.min.css")!!}
+
 		@endsection

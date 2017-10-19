@@ -56,38 +56,8 @@ class ViewComposerServiceProvider extends ServiceProvider
             $view->withUser($user)
             ->withNotification($notification);
         });
-        view()->composer('tenant.index', function($view) {
-            $list=DB::TABLE('notifications')
-            ->WHERE('user_id',Auth::user()->id)
-            ->SELECT('id','title','description','link','date_issued')
-            ->WHERE('is_urgent',1)
-            ->GET();
-            foreach ($list as $element) {
-                # code...
-                $myDate=new Carbon($element->date_issued);
-                $element->date_issued=$myDate;
-            }
-            $user = Auth::user();
-            $view->with('urgent',$list);
-        });
-        view()->composer('layouts.tenantLayout', function($view) {
-            $list=DB::TABLE('notifications')
-            ->WHERE('user_id',Auth::user()->id)
-            ->SELECT('id','title','description','link','date_issued')
-            ->orderBy('is_read','asc')
-            ->GET();
-            $count=DB::TABLE('notifications')
-            ->WHERE('user_id',Auth::user()->id)
-            ->WHERE('is_read',0)
-            ->COUNT('id')
-            ;
-            foreach ($list as $element) {
-                $myDate=new Carbon($element->date_issued);
-                $element->date_issued=$element->date_issued;
-            }
-            $notification = (object)['count' =>$count, 'list' => $list];
-            $view->with("notification",$notification);
-        });
+        
+        
     }
     private function composeDashboard()
     {
@@ -164,9 +134,40 @@ class ViewComposerServiceProvider extends ServiceProvider
         });
     }
     private function composeTenantLayout(){
-        
+        view()->composer('layouts.tenantLayout', function($view) {
+            $list=DB::TABLE('notifications')
+            ->WHERE('user_id',Auth::user()->id)
+            ->SELECT('id','title','description','link','date_issued')
+            ->orderBy('is_read','desc')
+            ->orderBy('notifications.id','desc')
+            ->GET();
+            $count=DB::TABLE('notifications')
+            ->WHERE('user_id',Auth::user()->id)
+            ->WHERE('is_read',0)
+            ->COUNT('id')
+            ;
+            foreach ($list as $element) {
+                $myDate=new Carbon($element->date_issued);
+                $element->date_issued=$element->date_issued;
+            }
+            $notification = (object)['count' =>$count, 'list' => $list];
+            $view->with("notification",$notification);
+        });
     }
     private function composeTenantDashboard(){
-        
+        view()->composer('tenant.index', function($view) {
+            $list=DB::TABLE('notifications')
+            ->WHERE('user_id',Auth::user()->id)
+            ->SELECT('id','title','description','link','date_issued')
+            ->WHERE('is_urgent',1)
+            ->GET();
+            foreach ($list as $element) {
+                # code...
+                $myDate=new Carbon($element->date_issued);
+                $element->date_issued=$myDate;
+            }
+            $user = Auth::user();
+            $view->with('urgent',$list);
+        });
     }
 }

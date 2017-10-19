@@ -65,10 +65,6 @@
                     <ul class="dropdown-menu pull-right">
                         <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">group</i>Followers</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
-                        <li role="seperator" class="divider"></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
                     </ul>
                 </div>
@@ -90,11 +86,19 @@
             <ul class="ml-menu">
                 <li><a href="{{route('offerSheetApproval.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Offer Sheet Approval</a></li>
                 <li><a href="{{route('registrationForfeit.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Registration Forfeit</a></li>
-                <li><a href="{{route('contract.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Accept Contracts</a></li>
-                <li><a href="{{route('tenant.terminateContract')}}"><i class="fa fa-fw fa-home fa-2x"></i>Terminate Contracts</a></li>
-                <li><a href="{{route('tenant.contractView')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
                 <li><a href="{{route('tenant.requestUnit')}}"><i class="fa fa-fw fa-home fa-2x"></i>Request New Units</a></li>
-                
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle">
+                <i class="fa fa-fw fa-home fa-2x"></i>
+                <span>Contracts</span>
+            </a>
+            <ul class = "ml-menu">
+                <li><a href="{{route('contract.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Accept Contracts</a></li>
+                <li><a href="{{route('tenant.contractView')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
+                <li><a href="{{route('tenant.terminateContract')}}"><i class="fa fa-fw fa-home fa-2x"></i>Terminate Contracts</a></li>
+                <li><a href="{{route('tenant.contract.extend.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
             </ul>
         </li>
         <li>
