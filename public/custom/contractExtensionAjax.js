@@ -18,7 +18,10 @@ $(document).ready(function(){
 });
 function sendRequest(){
 	var txt;
+	var data=[];
+	var check = false;
 	var type = $(this).attr('data-type');
+	var id = $(this).attr('data-id');
 	if(type==='Renewal'){
 		txt = "Input amount in years(Max 5 years): ";
 	}else if(type==='Extension'){
@@ -30,19 +33,41 @@ function sendRequest(){
     	if(!isNaN(input)){
     		if(type==='Renewal'){
     			if(input<=5){
-    				alert('ayyy it okie');
+    				check = true;
     			}else{
     				alert('no it not fayn D:<');
     			}
 	        }else if(type === 'Extension'){
 	        	if(input<=6){
-	        		alert('ayyy it okie');
+	        		check=true;
     			}else{
     				alert('no it not fayn D:<');
     			}
 	        }
     	}   
     }
+    data.push({name:'id',value:id});
+    data.push({name:'duration',value:input});
+    if(check){
+    	$.ajax({
+	    	url: urlPost,
+	    	type: 'POST',
+	    	data: $.param(data),
+	    	success: function(data){
+	    		console.log(data);
+	    	},
+	        error: function(xhr,textStatus,err)
+	        {
+	            console.log("readyState: " + xhr.readyState);
+	            console.log("responseText: "+ xhr.responseText);
+	            console.log("status: " + xhr.status);
+	            console.log("text status: " + textStatus);
+	            console.log("error: " + err);
+	        }
+	    });
+    }
+    
+    
 }
 
 function setModal(){

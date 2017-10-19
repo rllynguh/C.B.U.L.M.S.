@@ -71,6 +71,7 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	Route::get("contract/extend","ContractExtendController@index")->name('tenant.contract.extend.index');
 	Route::get('contract/extend/data','ContractExtendController@data')->name('tenant.contract.extend.data');
+	Route::post('contract/extend/post','ContractExtendController@extendContract')->name('tenant.contract.extend.post');
 
 	Route::group(['prefix' => '/docs'],function(){
 

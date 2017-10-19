@@ -23,5 +23,6 @@
 <script type="text/javascript">
   var urldata="{!!route("tenant.contract.extend.data")!!}";
   var urlUnits = "{!!route('tenant.getUnits')!!}";
+  var urlPost = "{!!route("tenant.contract.extend.post")!!}";
 </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Datatables;
+use App\ExtensionRequest;
 class ContractExtendController extends Controller
 {
     public function index(){
@@ -30,5 +31,18 @@ class ContractExtendController extends Controller
 		->rawColumns(['action'])
 		->make(true);
     	dd($result);
+    }
+    public function extendContract(Request $request){
+    	$result = DB::table('current_contracts')
+    	->where('current_contracts.id',$request->id)
+    	->join('notifications','notifications.current_contract_id','current_contracts.id')
+    	->select('notifications.type as type','current_contracts.id as id','current_contracts.pdf as pdf')
+    	->first();
+    	$extension = new ExtensionRequest;
+    	$extension->current_contract_id = $result->id;
+    	$extension->type = $result->type;
+    	$extension->duration=$request->duration;
+    	$extension->save();
+    	
     }
 }
