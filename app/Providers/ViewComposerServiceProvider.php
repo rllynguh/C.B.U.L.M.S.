@@ -19,6 +19,8 @@ class ViewComposerServiceProvider extends ServiceProvider
     {
         $this->composeCoreLayout();
         $this->composeDashboard();
+        $this->composeTenantLayout();
+        $this->composeTenantLayout();
     }
 
     /**
@@ -54,30 +56,39 @@ class ViewComposerServiceProvider extends ServiceProvider
             $view->withUser($user)
             ->withNotification($notification);
         });
+        view()->composer('tenant.index', function($view) {
+            $list=DB::TABLE('notifications')
+            ->WHERE('user_id',Auth::user()->id)
+            ->SELECT('id','title','description','link','date_issued')
+            ->WHERE('is_urgent',1)
+            ->GET();
+            foreach ($list as $element) {
+                # code...
+                $myDate=new Carbon($element->date_issued);
+                $element->date_issued=$myDate;
+            }
+            $user = Auth::user();
+            $view->with('urgent',$list);
+        });
         view()->composer('layouts.tenantLayout', function($view) {
             $list=DB::TABLE('notifications')
             ->WHERE('user_id',Auth::user()->id)
             ->SELECT('id','title','description','link','date_issued')
-            ->WHERE('is_read',0)
+            ->orderBy('is_read','asc')
             ->GET();
             $count=DB::TABLE('notifications')
             ->WHERE('user_id',Auth::user()->id)
             ->WHERE('is_read',0)
             ->COUNT('id')
             ;
-
             foreach ($list as $element) {
-                # code...
                 $myDate=new Carbon($element->date_issued);
                 $element->date_issued=$element->date_issued;
             }
             $notification = (object)['count' =>$count, 'list' => $list];
-            $user = Auth::user();
-            $view->withUser($user)
-            ->withNotification($notification);
+            $view->with("notification",$notification);
         });
     }
-
     private function composeDashboard()
     {
         view()->composer('user.admin.dashboard', function($view) {
@@ -151,5 +162,11 @@ class ViewComposerServiceProvider extends ServiceProvider
             ;
 
         });
+    }
+    private function composeTenantLayout(){
+        
+    }
+    private function composeTenantDashboard(){
+        
     }
 }

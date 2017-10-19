@@ -60,10 +60,11 @@ class NotifyContractStatus extends Command
 
             $notification=new Notification;
             $notification->user_id=$contract->user_id;
-            $notification->title="Your contract will end on $date";
-            $notification->description="$contract->code Renewal";
+            $notification->description="Your contract will end on $date";
+            $notification->title="$contract->code Renewal";
             $notification->link="javascript:void(0);";
             $notification->date_issued=Carbon::now();
+            $notification->is_urgent = 1;
             $notification->save();
         }
 
@@ -83,10 +84,11 @@ class NotifyContractStatus extends Command
 
             $notification=new Notification;
             $notification->user_id=$contract->user_id;
-            $notification->title="Your contract will end on $date";
-            $notification->description="$contract->code Extension";
+            $notification->description="Your contract will end on $date";
+            $notification->title="$contract->code Extension";
             $notification->link="javascript:void(0);";
             $notification->date_issued=Carbon::now();
+            $notification->is_urgent = 1;
             $notification->save();
         }
 
