@@ -16,10 +16,12 @@
     </tbody>
   </table>
 </div>
+@include('partials.tenant._contractDetailsModal')
 @endsection
 @section('scripts')
 {!!Html::script("custom/contractExtensionAjax.js")!!}
 <script type="text/javascript">
   var urldata="{!!route("tenant.contract.extend.data")!!}";
+  var urlUnits = "{!!route('tenant.getUnits')!!}";
 </script>
 @endsection

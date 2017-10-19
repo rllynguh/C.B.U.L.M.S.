@@ -20,7 +20,8 @@ class ContractExtendController extends Controller
     	return Datatables::of($result)
 		->addColumn('action', function ($data) {
 		$type = $data->type=='Renewal'?'Renew':'Extend';
-		return "<button type='button' class='btn btn-primary btnShowContractDetails' data-toggle='modal' data-id ='".$data->id."'data-target='#contractDetailsModal'>".$type."</button>
+		return "<button type='button' class='btn btn-primary btnShowContractDetails' data-toggle='modal' data-id ='".$data->id."'data-target='#contractDetailsModal'>View Details</button>
+		<button type='button' class='btn btn-primary btnExtend'data-id ='".$data->id."'data-type ='".$data->type."'>".$type."</button>
 		";
 		})
 		->setRowId(function ($data) {
