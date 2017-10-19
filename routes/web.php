@@ -106,6 +106,10 @@ Route::group(['prefix' => 'admin/'], function () {
 	Route::get('maintenance/repr-positions/get/data', ['uses' => 'representativePositionController@data', 'as' => 'repr-positions.getData']);
 	Route::put('maintenance/repr-positions/softdelete/{id}', ['uses' => 'representativePositionController@softdelete', 'as' => 'repr-positions.softDelete']);
 
+	Route::resource('maintenance/size_range','sizeRangeController');
+	Route::get('maintenance/size_range/get/data', ['uses' => 'sizeRangeController@data', 'as' => 'size_range.getData']);
+	Route::put('maintenance/size_range/softdelete/{id}', ['uses' => 'sizeRangeController@softdelete', 'as' => 'size_range.softDelete']);
+
 
 	Route::resource('maintenance/businesstypes','businessTypeController');
 	Route::put('maintenance/businesstypes/softdelete/{businessType}',['uses' => 'businessTypeController@softDelete', 'as' => 'businesstypes.softdelete']);
