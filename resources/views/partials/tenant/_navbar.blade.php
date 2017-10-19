@@ -231,10 +231,11 @@
             <ul class="ml-menu">
                 <li><a href="{{route('offerSheetApproval.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Offer Sheet Approval</a></li>
                 <li><a href="{{route('registrationForfeit.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Registration Forfeit</a></li>
-                <li><a href="{{route('contract.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>View Current Contract Details</a></li>  
+                <li><a href="{{route('contract.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Accept Contracts</a></li>
+                <li><a href="{{route('tenant.terminateContract')}}"><i class="fa fa-fw fa-home fa-2x"></i>Terminate Contracts</a></li>
                 <li><a href="{{route('tenant.contractView')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
                 <li><a href="{{route('tenant.requestUnit')}}"><i class="fa fa-fw fa-home fa-2x"></i>Request New Units</a></li>
-                <li><a href="{{route('tenant.terminateContract')}}"><i class="fa fa-fw fa-home fa-2x"></i>Terminate Contract</a></li>
+                
             </ul>
         </li>
         <li>

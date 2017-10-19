@@ -41,8 +41,8 @@ class NotifyContractStatus extends Command
     public function handle()
     {
         //
-        $extension_days=360;
-        $renewal_days=90;
+        $renewal_days=360;
+        $extension_days=90;
 
 
         $contracts_extension=DB::TABLE('current_contracts')
@@ -50,7 +50,7 @@ class NotifyContractStatus extends Command
         ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
         ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
         ->SELECT(DB::RAW('DATEDIFF(end_of_contract,CURRENT_DATE) as gap, end_of_contract,tenants.user_id,contract_headers.code'))
-        ->HAVINGRAW("gap <= $extension_days and gap >$renewal_days")
+        ->HAVINGRAW("gap <= $renewal_days and gap >$extension_days")
         ->WHERERAW('CONCAT(contract_headers.code," Extension") not in (SELECT description from notifications)')
         ->GET();
         foreach ($contracts_extension as $contract) {
@@ -61,7 +61,7 @@ class NotifyContractStatus extends Command
             $notification=new Notification;
             $notification->user_id=$contract->user_id;
             $notification->title="Your contract will end on $date";
-            $notification->description="$contract->code Extension";
+            $notification->description="$contract->code Renewal";
             $notification->link="javascript:void(0);";
             $notification->date_issued=Carbon::now();
             $notification->save();
@@ -73,7 +73,7 @@ class NotifyContractStatus extends Command
         ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
         ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
         ->SELECT(DB::RAW('DATEDIFF(end_of_contract,CURRENT_DATE) as gap, end_of_contract,tenants.user_id,contract_headers.code'))
-        ->HAVING('gap','<=',$renewal_days)
+        ->HAVING('gap','<=',$extension_days)
         ->WHERERAW('CONCAT(contract_headers.code," Renewal") not in (SELECT description from notifications)')
         ->GET();
         foreach ($contracts_renewal as $contract) {
@@ -84,7 +84,7 @@ class NotifyContractStatus extends Command
             $notification=new Notification;
             $notification->user_id=$contract->user_id;
             $notification->title="Your contract will end on $date";
-            $notification->description="$contract->code Renewal";
+            $notification->description="$contract->code Extension";
             $notification->link="javascript:void(0);";
             $notification->date_issued=Carbon::now();
             $notification->save();
