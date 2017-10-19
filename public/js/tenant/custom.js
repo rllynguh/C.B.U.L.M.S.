@@ -13,6 +13,10 @@ $(document).ready(function() {
         });
 
     });
+    $('#notifs').slimScroll({
+        height: '250px',
+        wheelStep:  '20' 
+    });
     updateNotificationCount();
     getBuildingType();
     getFloor();

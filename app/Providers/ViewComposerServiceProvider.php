@@ -54,6 +54,28 @@ class ViewComposerServiceProvider extends ServiceProvider
             $view->withUser($user)
             ->withNotification($notification);
         });
+        view()->composer('layouts.tenantLayout', function($view) {
+            $list=DB::TABLE('notifications')
+            ->WHERE('user_id',Auth::user()->id)
+            ->SELECT('id','title','description','link','date_issued')
+            ->WHERE('is_read',0)
+            ->GET();
+            $count=DB::TABLE('notifications')
+            ->WHERE('user_id',Auth::user()->id)
+            ->WHERE('is_read',0)
+            ->COUNT('id')
+            ;
+
+            foreach ($list as $element) {
+                # code...
+                $myDate=new Carbon($element->date_issued);
+                $element->date_issued=$element->date_issued;
+            }
+            $notification = (object)['count' =>$count, 'list' => $list];
+            $user = Auth::user();
+            $view->withUser($user)
+            ->withNotification($notification);
+        });
     }
 
     private function composeDashboard()

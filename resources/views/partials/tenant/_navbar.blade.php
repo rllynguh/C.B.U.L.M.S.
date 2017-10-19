@@ -4,13 +4,10 @@
         <div class="navbar-header">
             <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
             <a href="javascript:void(0);" class="bars"></a>
-            <a class="navbar-brand" href="widgets/../../index.html">ADMINBSB - MATERIAL DESIGN</a>
+            <a class="navbar-brand" href="widgets/../../index.html">Majent Tenant Portal</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <!-- Call Search -->
-                <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                <!-- #END# Call Search -->
                 <!-- Notifications -->
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
@@ -20,99 +17,88 @@
                     <ul class="dropdown-menu">
                         <li class="header">NOTIFICATIONS</li>
                         <li class="body">
-                            <ul class="menu">
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="icon-circle bg-light-green">
-                                            <i class="material-icons">person_add</i>
-                                        </div>
-                                        <div class="menu-info">
-                                            <h4>12 new members joined</h4>
-                                            <p>
-                                                <i class="material-icons">access_time</i> 14 mins ago
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="icon-circle bg-cyan">
-                                            <i class="material-icons">add_shopping_cart</i>
-                                        </div>
-                                        <div class="menu-info">
-                                            <h4>4 sales made</h4>
-                                            <p>
-                                                <i class="material-icons">access_time</i> 22 mins ago
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="icon-circle bg-red">
-                                            <i class="material-icons">delete_forever</i>
-                                        </div>
-                                        <div class="menu-info">
-                                            <h4><b>Nancy Doe</b> deleted account</h4>
-                                            <p>
-                                                <i class="material-icons">access_time</i> 3 hours ago
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="icon-circle bg-orange">
-                                            <i class="material-icons">mode_edit</i>
-                                        </div>
-                                        <div class="menu-info">
-                                            <h4><b>Nancy</b> changed name</h4>
-                                            <p>
-                                                <i class="material-icons">access_time</i> 2 hours ago
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="icon-circle bg-blue-grey">
-                                            <i class="material-icons">comment</i>
-                                        </div>
-                                        <div class="menu-info">
-                                            <h4><b>John</b> commented your post</h4>
-                                            <p>
-                                                <i class="material-icons">access_time</i> 4 hours ago
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="icon-circle bg-light-green">
-                                            <i class="material-icons">cached</i>
-                                        </div>
-                                        <div class="menu-info">
-                                            <h4><b>John</b> updated status</h4>
-                                            <p>
-                                                <i class="material-icons">access_time</i> 3 hours ago
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <div class="icon-circle bg-purple">
-                                            <i class="material-icons">settings</i>
-                                        </div>
-                                        <div class="menu-info">
-                                            <h4>Settings updated</h4>
-                                            <p>
-                                                <i class="material-icons">access_time</i> Yesterday
-                                            </p>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
+                            <div id="notifs">
+                                <ul id='notifBody' class="menu" style="overflow: hidden; ">
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-light-green">
+                                                <i class="material-icons">person_add</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>12 new members joined</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 14 mins ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-cyan">
+                                                <i class="material-icons">add_shopping_cart</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>4 sales made</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 22 mins ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-red">
+                                                <i class="material-icons">delete_forever</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>Nancy Doe</b> deleted account</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 3 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-orange">
+                                                <i class="material-icons">mode_edit</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>Nancy</b> changed name</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 2 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-blue-grey">
+                                                <i class="material-icons">comment</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4><b>John</b> commented your post</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> 4 hours ago
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0);">
+                                            <div class="icon-circle bg-purple">
+                                                <i class="material-icons">settings</i>
+                                            </div>
+                                            <div class="menu-info">
+                                                <h4>Settings updated</h4>
+                                                <p>
+                                                    <i class="material-icons">access_time</i> Yesterday
+                                                </p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li class="footer">
                             <a href="javascript:void(0);">View All Notifications</a>
@@ -198,7 +184,7 @@
                     </ul>
                 </li>
                 <!-- #END# Tasks -->
-                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+                <li class="pull-right"><a href="javascript:void(0);"><i class="material-icons">input</i></a></li>
             </ul>
         </div>
     </div>
@@ -210,11 +196,11 @@
         <!-- User Info -->
         <div class="user-info">
             <div class="image">
-                <img src="../images/user.png" width="48" height="48" alt="User" />
+                <img src="{{ asset('images/users/'.Auth::user()->picture) }}" class = "user-image" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-                <div class="email">john.doe@example.com</div>
+                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{Auth::user()->first_name }} {{Auth::user()->last_name}}</div>
+                <div class="email">{{Auth::user()->email}}</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
@@ -235,171 +221,39 @@
             <ul class="list">
                 <li class="header active">MAIN NAVIGATION</li>
                 <li>
-
-                    </a>
-                     <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home fa-2x"></i> <span>Home</span></a>
-                </li>
-                <li>
-                    <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="material-icons">widgets</i>
-                        <span>Widgets</span>
-                    </a>
-                    <ul class="ml-menu">
-                        <li>
-                            <a href="../pages/widgets/cards/basic.html">Basic</a>
-                        </li>
-                        <li>
-                            <a href="../pages/widgets/cards/colored.html">Colored</a>
-                        </li>
-                        <li>
-                            <a href="../pages/widgets/cards/no-header.html">No Header</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- #Footer -->
-            </aside>
-            <!-- #END# Left Sidebar -->
-            <!-- Right Sidebar -->
-            <aside id="rightsidebar" class="right-sidebar">
-                <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                    <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
-                    <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
-                        <ul class="demo-choose-skin">
-                            <li data-theme="red" class="active">
-                                <div class="red"></div>
-                                <span>Red</span>
-                            </li>
-                            <li data-theme="pink">
-                                <div class="pink"></div>
-                                <span>Pink</span>
-                            </li>
-                            <li data-theme="purple">
-                                <div class="purple"></div>
-                                <span>Purple</span>
-                            </li>
-                            <li data-theme="deep-purple">
-                                <div class="deep-purple"></div>
-                                <span>Deep Purple</span>
-                            </li>
-                            <li data-theme="indigo">
-                                <div class="indigo"></div>
-                                <span>Indigo</span>
-                            </li>
-                            <li data-theme="blue">
-                                <div class="blue"></div>
-                                <span>Blue</span>
-                            </li>
-                            <li data-theme="light-blue">
-                                <div class="light-blue"></div>
-                                <span>Light Blue</span>
-                            </li>
-                            <li data-theme="cyan">
-                                <div class="cyan"></div>
-                                <span>Cyan</span>
-                            </li>
-                            <li data-theme="teal">
-                                <div class="teal"></div>
-                                <span>Teal</span>
-                            </li>
-                            <li data-theme="green">
-                                <div class="green"></div>
-                                <span>Green</span>
-                            </li>
-                            <li data-theme="light-green">
-                                <div class="light-green"></div>
-                                <span>Light Green</span>
-                            </li>
-                            <li data-theme="lime">
-                                <div class="lime"></div>
-                                <span>Lime</span>
-                            </li>
-                            <li data-theme="yellow">
-                                <div class="yellow"></div>
-                                <span>Yellow</span>
-                            </li>
-                            <li data-theme="amber">
-                                <div class="amber"></div>
-                                <span>Amber</span>
-                            </li>
-                            <li data-theme="orange">
-                                <div class="orange"></div>
-                                <span>Orange</span>
-                            </li>
-                            <li data-theme="deep-orange">
-                                <div class="deep-orange"></div>
-                                <span>Deep Orange</span>
-                            </li>
-                            <li data-theme="brown">
-                                <div class="brown"></div>
-                                <span>Brown</span>
-                            </li>
-                            <li data-theme="grey">
-                                <div class="grey"></div>
-                                <span>Grey</span>
-                            </li>
-                            <li data-theme="blue-grey">
-                                <div class="blue-grey"></div>
-                                <span>Blue Grey</span>
-                            </li>
-                            <li data-theme="black">
-                                <div class="black"></div>
-                                <span>Black</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="settings">
-                        <div class="demo-settings">
-                            <p>GENERAL SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Report Panel Usage</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Email Redirect</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>SYSTEM SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Notifications</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Auto Updates</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>ACCOUNT SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Offline</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Location Permission</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            <!-- #END# Right Sidebar -->
-        </section>
+                <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home fa-2x"></i> <span>Home</span></a>
+            </li>
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle">
+                <i class="fa fa-fw fa-home fa-2x"></i>
+                <span>Transactions</span>
+            </a>
+            <ul class="ml-menu">
+                <li><a href="{{route('offerSheetApproval.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Offer Sheet Approval</a></li>
+                <li><a href="{{route('registrationForfeit.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Registration Forfeit</a></li>
+                <li><a href="{{route('contract.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>View Current Contract Details</a></li>  
+                <li><a href="{{route('tenant.contractView')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
+                <li><a href="{{route('tenant.requestUnit')}}"><i class="fa fa-fw fa-home fa-2x"></i>Request New Units</a></li>
+                <li><a href="{{route('tenant.terminateContract')}}"><i class="fa fa-fw fa-home fa-2x"></i>Terminate Contract</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="menu-toggle">
+                <i class="fa fa-fw fa-home fa-2x"></i>
+                <span>
+                {{Auth::user()->first_name }} {{Auth::user()->last_name}}</span>
+            </a>
+            <ul class ="ml-menu">
+                <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog fa-2x"></i> Manage Account</a></li>
+                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> Balance:
+                    <span class="label label-primary" id = 'balance'></span>
+                </a></li>
+                <li><a href="{{route('account.notification.index')}}"><i class="fa fa-fw fa-sign-out fa-2x"></i>Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+        <!-- #Footer -->
+    </aside>
+    <!-- #END# Left Sidebar -->
+</section>
