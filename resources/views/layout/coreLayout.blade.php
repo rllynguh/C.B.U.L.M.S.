@@ -325,13 +325,21 @@
 {{Request::path() == 'tenant/transaction/contract' ? 'active' : ''}}
 {{strpos(Request::path(),'transaction/contractTermination') ? 'active' : ''}}
 ">
+<a href="{{route('admin.contract.extension.index')}}" class="waves-yellow">
+  <span>Extension/Renewal Approval</span>
+</a>
+</li>
+
+<li class="
+{{Request::path() == 'tenant/transaction/contract' ? 'active' : ''}}
+{{strpos(Request::path(),'transaction/contractTermination') ? 'active' : ''}}
+">
 <a href="{{route('transaction.contractTermination.index')}}" class="waves-yellow">
   <span>Contract Termination</span>
 </a>
 </li>
-<a href="/addammend" class="waves-yellow">
-  <span>Addendum and Ammendment</span>
-</a>
+
+
 </li>
 </ul>
 </li>

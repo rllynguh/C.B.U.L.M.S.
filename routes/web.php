@@ -69,9 +69,9 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::get("contract/data",'contractAmendmentController@data')->name('tenant.contractData');
 	Route::post("contract/amendment",'contractAmendmentController@storeRequest')->name('tenant.storeRequest');
 
-	Route::get("contract/extend","ContractExtendController@index")->name('tenant.contract.extend.index');
-	Route::get('contract/extend/data','ContractExtendController@data')->name('tenant.contract.extend.data');
-	Route::post('contract/extend/post','ContractExtendController@extendContract')->name('tenant.contract.extend.post');
+	Route::get("contract/extend","ContractExtensionController@index")->name('tenant.contract.extend.index');
+	Route::get('contract/extend/data','ContractExtensionController@data')->name('tenant.contract.extend.data');
+	Route::post('contract/extend/post','ContractExtensionController@extendContract')->name('tenant.contract.extend.post');
 
 	Route::group(['prefix' => '/docs'],function(){
 
@@ -218,7 +218,8 @@ Route::group(['prefix' => 'admin/'], function () {
 		Route::get('/{id}/editPDC', ['uses' => 'contractListController@editPDC', 'as' => 'contractList.editPDC']);
 		Route::put('/{id}/updatePDC', ['uses' => 'contractListController@updatePDC', 'as' => 'contractList.updatePDC']);
 	});
-
+	Route::get('/contract/ExtensionApproval','ContractExtensionApprovalController@index')->name('admin.contract.extension.index');
+	Route::get('/contract/ExtensionApproval/data','ContractExtensionApprovalController@data')->name('admin.contract.extension.data');
 	Route::resource("/transaction/pdcCollection","pdcCollectionController");
 	Route::get('/transaction/pdcCollection/get/data', ['uses' => 'pdcCollectionController@data', 'as' => 'pdcCollection.getData']);
 	Route::get('/transaction/pdcCollection/updatePDC', ['uses' => 'pdcCollectionController@updatePDC', 'as' => 'pdcCollection.updatePDC']);
