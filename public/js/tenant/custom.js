@@ -1,28 +1,21 @@
 
-var trigger = $('.hamburger'),
-      overlay = $('.overlay'),
-     isClosed = false;
 $(document).ready(function() {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    
 
-    trigger.click(function () {
-      hamburger_cross();      
-    });
-
-  $('[data-toggle="offcanvas"]').click(function () {
-        $('#wrapper').toggleClass('toggled');
-  });  
     $.get(urlbtype, function(data) {
         $('#testa').children('option').remove();
         $.each(data, function(index, value) {
             $('#testa').append($('<option>', { value: value.id, text: value.description }));
         });
 
+    });
+    $('#notifs').slimScroll({
+        height: '250px',
+        wheelStep:  '20' 
     });
     updateNotificationCount();
     getBuildingType();
@@ -190,20 +183,6 @@ function prevTab(elem) {
     $(elem).prev().find('a[data-toggle="tab"]').click();
 }
 
- function hamburger_cross() {
-
-      if (isClosed == true) {          
-        overlay.hide();
-        trigger.removeClass('is-open');
-        trigger.addClass('is-closed');
-        isClosed = false;
-      } else {   
-        overlay.show();
-        trigger.removeClass('is-closed');
-        trigger.addClass('is-open');
-        isClosed = true;
-      }
-  }
 function successPrompt(){
   title="Record Successfully Updated!";
   if($("#btnSave").val()=="Save")

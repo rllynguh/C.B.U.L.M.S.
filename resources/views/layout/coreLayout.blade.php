@@ -156,56 +156,13 @@
           </li>
         </ul>
       </li>
-      <li class="
-      {{Request::path() == 'admin/maintenance/parkareas' ? 'active' : ''}}
-      {{Request::path() == 'admin/maintenance/parkspaces' ? 'active' : ''}}
-      ">
-      <a href="javascript:void(0);" class="menu-toggle waves-yellow">
-        <i class="mdi-maps-directions-car"></i>
-        <span>Parking</span>
-      </a>
-      <ul class="ml-menu">
-        <li class="
-        {{Request::path() == 'admin/maintenance/parkareas' ? 'active' : ''}}
-        ">
-        <a href="{{route('parkareas.index')}}" class="waves-yellow">
-          <span>Parking Area</span>
-        </a>
-      </li>
 
-      <li class="
-      {{Request::path() == 'admin/maintenance/parkspaces' ? 'active' : ''}}
-      ">
-      <a href="{{route('parkspaces.index')}}" class="waves-yellow">
-        <span>Parking Space</span>
-      </a>
-    </li>
-  </ul>
-</li>
 <li class="
-{{strpos(Request::path(),'rate') ? 'active' : '' ? 'active' : ''}}
-">
-<a href="javascript:void(0);" class="menu-toggle waves-yellow">
-  <i class="mdi-editor-attach-money"></i>
-  <span>Rates</span>
-</a>
-<ul class="ml-menu">
-  <li class="
   {{Request::path() == 'admin/maintenance/marketrates' ? 'active' : ''}}
   ">
   <a href="{{route('marketrates.index')}}" class="waves-yellow">
-    <span>Market Rates</span>
+    <i class="mdi-editor-attach-money"></i><span>Market Rates</span>
   </a>
-</li>
-
-<li class="
-{{Request::path() == 'admin/maintenance/parkrates' ? 'active' : ''}}
-">
-<a href="{{route('parkrates.index')}}" class="waves-yellow">
-  <span>Parking Rates</span>
-</a>
-</li>
-</ul>
 </li>
 <li class="
 {{Request::path() == 'admin/maintenance/banks' ? 'active' : ''}}
@@ -366,17 +323,11 @@
 
 <li class="
 {{Request::path() == 'tenant/transaction/contract' ? 'active' : ''}}
-{{strpos(Request::path(),'tenant/transaction/contract') ? 'active' : ''}}
+{{strpos(Request::path(),'transaction/contractTermination') ? 'active' : ''}}
 ">
-<a href="{{route('contract.index')}}" class="waves-yellow">
-  <span>View Contract</span>
+<a href="{{route('admin.contract.extension.index')}}" class="waves-yellow">
+  <span>Extension/Renewal Approval</span>
 </a>
-</li>
-
-<li>
-  <a href="/extendTable" class="waves-yellow">
-    <span>Extension and Renewal</span>
-  </a>
 </li>
 
 <li class="
@@ -387,9 +338,8 @@
   <span>Contract Termination</span>
 </a>
 </li>
-<a href="/addammend" class="waves-yellow">
-  <span>Addendum and Ammendment</span>
-</a>
+
+
 </li>
 </ul>
 </li>

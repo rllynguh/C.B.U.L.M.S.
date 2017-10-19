@@ -1,5 +1,4 @@
-@extends('layout.coreLayout')
-@section('content')
+@extends('layouts.tenantLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
   <li><a> Transaction</a></li>
@@ -7,6 +6,7 @@
   <li><a href="{{route("contract.index")}}"> View Contract</a></li>
 </ol>
 @endsection
+@section('content')
 <div class="body">
   <table class="table table-hover dataTable" id="myTable">
     <thead>

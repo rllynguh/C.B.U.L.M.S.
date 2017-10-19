@@ -24,7 +24,7 @@
 
 @endsection
 @section('scripts')
-{!!Html::script('js/admin.min.js')!!}
+
 {!!Html::script("custom/offerSheetApprovalAjax.min.js")!!}
 <script type="text/javascript">
   var dataurl="{!!route('offerSheetApproval.getData')!!}" ;
@@ -34,8 +34,4 @@
   floor_url="{{route("custom.getFloor")}}";
   range_url="{{route("custom.getRange")}}";
 </script>
-@endsection
-@section('styles')
-{!!Html::style("css/themes/all-themes.min.css")!!}
-{!!Html::style("css/style.min.css")!!}
 @endsection

@@ -11,6 +11,14 @@
 |
 */
 Route::view('/','welcome')->middleware('auth');
+Route::get('me',function(){
+	if(Auth::user()->type=='admin'){
+		return redirect('admin/dashboard');
+	}else if(Auth::user()->type == 'tenant'){
+		return redirect('tenant/');
+	}
+	return redirect('login');
+});
 Route::get('test-manage','maintenanceBuildingController@manageItemAjax');
 Route::get('test/floors/{id}',['uses' => 'maintenanceBuildingController@getFloors', 'as' =>'test.getFloors']);
 Route::get('test/units/{id}',['uses' => 'maintenanceBuildingController@getUnits', 'as' =>'test.getUnits']);
@@ -42,7 +50,6 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::get('/login', function () {return view('tenant.login');});
 	Route::get('/soa', 'SOAController@index')->name('soa.index');
 	Route::get('/soa/get','SOAController@data');
-	Route::get("/dashboard",function(){return view('tenant.dashboard');});
 	Route::resource("registration","registrationController");
 	
 	Route::resource("/transaction/offerSheetApproval","offerSheetApprovalController");
@@ -61,6 +68,10 @@ Route::group(['prefix' => 'tenant/'],function(){
 	Route::get("contract/view/{id}",'contractAmendmentController@edit')->name('tenant.contractEdit');
 	Route::get("contract/data",'contractAmendmentController@data')->name('tenant.contractData');
 	Route::post("contract/amendment",'contractAmendmentController@storeRequest')->name('tenant.storeRequest');
+
+	Route::get("contract/extend","ContractExtensionController@index")->name('tenant.contract.extend.index');
+	Route::get('contract/extend/data','ContractExtensionController@data')->name('tenant.contract.extend.data');
+	Route::post('contract/extend/post','ContractExtensionController@extendContract')->name('tenant.contract.extend.post');
 
 	Route::group(['prefix' => '/docs'],function(){
 
@@ -211,6 +222,9 @@ Route::group(['prefix' => 'admin/'], function () {
 		Route::get('/{id}/editPDC', ['uses' => 'contractListController@editPDC', 'as' => 'contractList.editPDC']);
 		Route::put('/{id}/updatePDC', ['uses' => 'contractListController@updatePDC', 'as' => 'contractList.updatePDC']);
 	});
+	Route::get('/contract/ExtensionApproval','ContractExtensionApprovalController@index')->name('admin.contract.extension.index');
+	Route::get('/contract/ExtensionApproval/data','ContractExtensionApprovalController@data')->name('admin.contract.extension.data');
+	Route::post('/contract/ExtensionApproval/post','ContractExtensionApprovalController@setApproval')->name('admin.contract.extension.post');
 
 	Route::resource("/transaction/pdcCollection","pdcCollectionController");
 	Route::get('/transaction/pdcCollection/get/data', ['uses' => 'pdcCollectionController@data', 'as' => 'pdcCollection.getData']);

@@ -22,7 +22,7 @@ class CreateCurrentContractsTable extends Migration {
 			$table->date('end_of_contract');
 			$table->date('start_of_contract');
 			$table->string('pdf', 60);
-			$table->boolean('status')->default(0)->comment('0 - default 1 - idk 2 - terminated');
+			$table->integer('status')->default(0)->comment('0 - unaccepted 1 - accepted 2 - terminated');
 		});
 	}
 
