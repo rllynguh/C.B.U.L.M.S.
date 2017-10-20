@@ -74,7 +74,13 @@ class BillingItemsTableSeeder extends Seeder
             9 => 
             array (
                 'id' => 10,
-                'description' => 'Withdrawal',
+                'description' => 'Tenant Withdrawal',
+                'is_active' => 1,
+            ),
+            10 => 
+            array (
+                'id' => 11,
+                'description' => 'Tenant Deposit',
                 'is_active' => 1,
             ),
         ));

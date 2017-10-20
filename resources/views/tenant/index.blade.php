@@ -1,4 +1,7 @@
 @extends('layouts.tenantLayout')
+@section('breadcrumbs')
+<h4 class = 'align-center'>Dashboard</h4>
+@endsection
 @section('content')
 @foreach($urgent as $notif)
 <div class="card">

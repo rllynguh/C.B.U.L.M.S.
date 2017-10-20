@@ -16,6 +16,7 @@ use App\UserBalance;
 use App\BillingHeader;
 use App\BillingDetail;
 use App\BillingItem;
+use App\Payment;
 use Carbon\Carbon;
 use Config;
 use Auth;
@@ -162,6 +163,26 @@ class customController extends Controller
 		$billing_detail->price=$amount;
 		$billing_detail->save();
 
+
+		$latest=DB::table("payments")
+		->select("payments.*")
+		->orderBy('code',"DESC")
+		->first();
+		$code="COLLECTION001";
+		if(!is_null($latest))
+		$code=$latest->code;
+		$sc= new smartCounter();
+		$code=$sc->increment($code);
+
+		$payment = new Payment;
+		$payment->code = $code;
+		$payment->billing_header_id = $billheader->id;
+		$payment->mode = 0;
+		$payment->date_issued = Carbon::now(Config::get('app.timezone'));
+		$payment->date_collected = Carbon::now(Config::get('app.timezone'));
+		$payment->user_id = Auth::user()->id;
+		$payment->payment = $amount;
+		$payment->save();
         return response()->json(['message' => 'Account updated']);
 	}
 }
