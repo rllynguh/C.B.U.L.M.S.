@@ -1,4 +1,5 @@
 
+var bal = 0;
 $(document).ready(function() {
     $.ajaxSetup({
         headers: {
@@ -70,23 +71,28 @@ $(document).ready(function() {
     $('#btnWithdraw').on('click',function(e)
   {
     if($('#myForm').parsley().isValid())
-    {
+    {//here
       e.preventDefault(); 
-      var formData = $('#myForm').serialize();
-      console.log(formData);
-      $.ajax({
-        type: "POST",
-        url: url_balance_store,
-        data: formData,
-        success: function (data) {
-          successPrompt(); 
-          $('#withdrawModal').modal('hide');
-          getBalance();
-        },
-        error: function (data) {
-          console.log('Error:', data.responseText);
-        }
-      });
+      if(bal - $('#txtWithdraw').val>=0){
+        var formData = $('#myForm').serialize();
+        console.log(formData);
+        $.ajax({
+            type: "POST",
+            url: url_balance_store,
+            data: formData,
+            success: function (data) {
+              successPrompt(); 
+              $('#withdrawModal').modal('hide');
+              getBalance();
+            },
+            error: function (data) {
+              console.log('Error:', data.responseText);
+            }
+        });
+      }else{
+        alert('Cannot withdraw more than balance');
+      }
+      
     }}
     );
 });
@@ -161,6 +167,7 @@ function getBalance(){
         type: 'GET',
         url: url_balance,
         success: function(data){
+            bal = data.balance.balance;
             $("#balance").html("PHP:"+data.balance.balance);
             $('#withdraw-total').val(data.balance.balance);
             $('#withdraw-title').html("Balance: "+data.balance.formatted_balance);

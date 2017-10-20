@@ -45,7 +45,7 @@
                     <div class="row cleafix">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class = "card" id = "appa">
-                                <div class="header bg-red">
+                                <div class="header bg-blue">
                                     @yield('breadcrumbs')
                                 </div>
                                 <div class ="body">
