@@ -76,48 +76,48 @@
             <ul class="list">
                 <li class="header active">MAIN NAVIGATION</li>
                 <li>
-                <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home fa-2x"></i> <span>Home</span></a>
-            </li>
-        <li>
-            <a href="javascript:void(0);" class="menu-toggle">
-                <i class="fa fa-fw fa-home fa-2x"></i>
-                <span>Transactions</span>
-            </a>
-            <ul class="ml-menu">
-                <li><a href="{{route('offerSheetApproval.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Offer Sheet Approval</a></li>
-                <li><a href="{{route('registrationForfeit.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Registration Forfeit</a></li>
-                <li><a href="{{route('tenant.requestUnit')}}"><i class="fa fa-fw fa-home fa-2x"></i>Request New Units</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0);" class="menu-toggle">
-                <i class="fa fa-fw fa-home fa-2x"></i>
-                <span>Contracts</span>
-            </a>
-            <ul class = "ml-menu">
-                <li><a href="{{route('contract.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Accept Contracts</a></li>
-                <li><a href="{{route('tenant.contractView')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
-                <li><a href="{{route('tenant.terminateContract')}}"><i class="fa fa-fw fa-home fa-2x"></i>Terminate Contracts</a></li>
-                <li><a href="{{route('tenant.contract.extend.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0);" class="menu-toggle">
-                <i class="fa fa-fw fa-home fa-2x"></i>
-                <span>
-                {{Auth::user()->first_name }} {{Auth::user()->last_name}}</span>
-            </a>
-            <ul class ="ml-menu">
-                <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog fa-2x"></i> Manage Account</a></li>
-                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> Balance:
-                    <span class="label label-primary" id = 'balance'></span>
-                </a></li>
-                <li><a href="{{route('account.notification.index')}}"><i class="fa fa-fw fa-sign-out fa-2x"></i>Logout</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
-        <!-- #Footer -->
-    </aside>
-    <!-- #END# Left Sidebar -->
-</section>
+                    <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home fa-2x"></i> <span>Home</span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="fa fa-fw fa-home fa-2x"></i>
+                        <span>Transactions</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li><a href="{{route('offerSheetApproval.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Offer Sheet Approval</a></li>
+                        <li><a href="{{route('registrationForfeit.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Registration Forfeit</a></li>
+                        <li><a href="{{route('tenant.requestUnit')}}"><i class="fa fa-fw fa-home fa-2x"></i>Request New Units</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="fa fa-fw fa-home fa-2x"></i>
+                        <span>Contracts</span>
+                    </a>
+                    <ul class = "ml-menu">
+                        <li><a href="{{route('contract.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Accept Contracts</a></li>
+                        <li><a href="{{route('tenant.contractView')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
+                        <li><a href="{{route('tenant.terminateContract')}}"><i class="fa fa-fw fa-home fa-2x"></i>Terminate Contracts</a></li>
+                        <li><a href="{{route('tenant.contract.extend.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="fa fa-fw fa-home fa-2x"></i>
+                        <span>
+                            {{Auth::user()->first_name }} {{Auth::user()->last_name}}</span>
+                        </a>
+                        <ul class ="ml-menu">
+                            <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog fa-2x"></i> Manage Account</a></li>
+                            <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> Balance:
+                                <span class="label label-primary" id = 'balance'></span>
+                            </a></li>
+                            <li><a href="{{route('account.notification.index')}}"><i class="fa fa-fw fa-sign-out fa-2x"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+    </section>

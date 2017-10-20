@@ -219,6 +219,7 @@
 		</div>
 		@endsection
 		@section('scripts')
+		{!!Html::script("js/pages/forms/form-wizard.min.js")!!}
 		
 		{!!Html::script("custom/offerSheetApprovalShowAjax.min.js")!!}
 		<script type="text/javascript">
@@ -231,7 +232,4 @@
 			floor_url="{{route("custom.getFloor")}}";
 			range_url="{{route("custom.getRange")}}";
 		</script>
-		@endsection
-		@section('styles')
-
 		@endsection

@@ -285,6 +285,8 @@ Route::group(['prefix' => 'admin/'], function () {
 		Route::group(['prefix' => 'collection/'], function () {
 			Route::get('/', ['uses' => 'collectionReportController@index', 'as' => 'collectionReport.index']);
 			Route::post('/', ['uses' => 'collectionReportController@document', 'as' => 'collectionReport.document']);
+			Route::get('/collect', ['uses' => 'collectionReportController@index2', 'as' => 'collectionReport2.index']);
+			Route::post('/collect', ['uses' => 'collectionReportController@document2', 'as' => 'collectionReport2.document']);
 		});
 		Route::group(['prefix' => 'billing/'], function () {
 			Route::get('/', ['uses' => 'billingReportController@index', 'as' => 'billingReport.index']);
@@ -294,9 +296,13 @@ Route::group(['prefix' => 'admin/'], function () {
 			Route::get('/', ['uses' => 'contractReportController@index', 'as' => 'contractReport.index']);
 			Route::post('/', ['uses' => 'contractReportController@document', 'as' => 'contractReport.document']);
 		});
-		Route::group(['prefix' => 'contract/'], function () {
+		Route::group(['prefix' => 'summaryOfAccounts/'], function () {
 			Route::get('/', ['uses' => 'summaryOfAccountsReportController@index', 'as' => 'summaryOfAccountsReport.index']);
 			Route::post('/', ['uses' => 'summaryOfAccountsReportController@document', 'as' => 'summaryOfAccountsReport.document']);
+		});
+		Route::group(['prefix' => 'summaryOfOccupancy/'], function () {
+			Route::get('/', ['uses' => 'summaryOfOccupancyReportController@index', 'as' => 'summaryOfOcupancyReport.index']);
+			Route::post('/', ['uses' => 'summaryOfOccupancyReportController@document', 'as' => 'summaryOfOccupancyReport.document']);
 		});
 	});
 });

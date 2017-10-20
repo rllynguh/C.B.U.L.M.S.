@@ -157,28 +157,28 @@
         </ul>
       </li>
 
-<li class="
-  {{Request::path() == 'admin/maintenance/marketrates' ? 'active' : ''}}
+      <li class="
+      {{Request::path() == 'admin/maintenance/marketrates' ? 'active' : ''}}
+      ">
+      <a href="{{route('marketrates.index')}}" class="waves-yellow">
+        <i class="mdi-editor-attach-money"></i><span>Market Rates</span>
+      </a>
+    </li>
+    <li class="
+    {{Request::path() == 'admin/maintenance/banks' ? 'active' : ''}}
+    ">
+    <a href="{{route("banks.index")}}" class="waves-yellow">
+      <i class="mdi-action-account-balance-wallet"></i>
+      <span>Banks</span>
+    </a>
+  </li>
+  <li class="
+  {{Request::path() == 'admin/maintenance/content' ? 'active' : ''}}
   ">
-  <a href="{{route('marketrates.index')}}" class="waves-yellow">
-    <i class="mdi-editor-attach-money"></i><span>Market Rates</span>
+  <a href="{{route("content.index")}}" class="waves-yellow">
+    <i class="mdi-content-content-paste"></i>
+    <span>Contract Content</span>
   </a>
-</li>
-<li class="
-{{Request::path() == 'admin/maintenance/banks' ? 'active' : ''}}
-">
-<a href="{{route("banks.index")}}" class="waves-yellow">
-  <i class="mdi-action-account-balance-wallet"></i>
-  <span>Banks</span>
-</a>
-</li>
-<li class="
-{{Request::path() == 'admin/maintenance/content' ? 'active' : ''}}
-">
-<a href="{{route("content.index")}}" class="waves-yellow">
-  <i class="mdi-content-content-paste"></i>
-  <span>Contract Content</span>
-</a>
 </li>
 <li class="
 {{Request::path() == 'admin/maintenance/businesstypes' ? 'active' : ''}}
@@ -532,7 +532,7 @@
 {!!Html::script('js/admin.min.js')!!}
 {!!Html::script('custom/coreLayoutAjax.js')!!}
 <script type="text/javascript">
-  readNotifUrl="{{route('custom.readNotification')}}"
+  readNotifUrl="{{route('custom.readNotification')}}";
 </script>
 
 </body>

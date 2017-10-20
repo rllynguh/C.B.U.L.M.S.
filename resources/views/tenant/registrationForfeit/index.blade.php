@@ -1,4 +1,4 @@
-@extends('layout.coreLayout')
+@extends('layouts.tenantLayout')
 @section('breadcrumbs')
 <ol class="breadcrumb breadcrumb-col-brown">
   <li><a href="{{url('/tenant')}}"> Home</a></li>
