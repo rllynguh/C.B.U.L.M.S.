@@ -112,6 +112,12 @@ class customController extends Controller
 		->COUNT('id');
 		return response()->json(['count'=>$count]);
 	}
+	public function setNotificationRead(Request $request){
+		$result = DB::table('notifications')
+		->where('notifications.user_id',Auth::user()->id)
+		->update(['is_read'=>1]);
+		return response()->json(['response'=>'okay']);
+	}
 	public function getBalance(){
 		$balance=DB::TABLE('user_balances')
         ->WHERE('user_id',Auth::user()->id)

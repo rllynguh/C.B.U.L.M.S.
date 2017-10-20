@@ -25,6 +25,25 @@ $(document).ready(function() {
     getBalance();
     $(".selectMenu").selectmenu();
     $("#newContract").on("click", toggleShowCurrentContracts);
+    $("#btnNotif").on("click", function(){
+        $.ajax({
+            url: urlNotifRead,
+            type: 'POST',
+            data: {param1: 'value1'},
+            success:function(data){
+                console.log('shit read');
+            },
+            error: function(xhr,textStatus,err)
+            {
+                console.log("readyState: " + xhr.readyState);
+                console.log("responseText: "+ xhr.responseText);
+                console.log("status: " + xhr.status);
+                console.log("text status: " + textStatus);
+                console.log("error: " + err);
+            }
+        });
+        
+    });
     $("#existingContract").on("click", toggleShowCurrentContracts);
     $('.nav-tabs > li a[title]').tooltip();
 
@@ -90,7 +109,7 @@ $(document).ready(function() {
             }
         });
       }else{
-        alert('Cannot withdraw more than balance');
+        alert('Cannot withdraw more than balance'); 
       }
       
     }}

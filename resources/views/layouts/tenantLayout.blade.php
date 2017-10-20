@@ -87,6 +87,7 @@
     range_url="{{route("custom.getRange")}}";
     url_balance= "{{route("custom.getBalance")}}";
     var url_balance_store='{{route('custom.postBalance')}}';
+    urlNotifRead = "{{route("custom.readNotification")}}";
     </script>
     {!!Html::script("js/tenant/custom.js")!!}
     @yield('scripts')

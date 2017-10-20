@@ -10,7 +10,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Notifications -->
                 <li class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" id = 'btnNotif'>
                         <i class="material-icons">notifications</i>
                         <span class="label-count">{{$notification->count}}</span>
                     </a>
@@ -20,11 +20,12 @@
                             <div id="notifs">
                                 <ul id='notifBody' class="menu" style="overflow: hidden; ">
                                     @foreach($notification->list as $notif)
+                                    @if($notif->is_read==0)
+                                    <li class = 'bg-grey'>
+                                    @else
                                     <li>
+                                    @endif
                                         <a href="{{$notif->link}}" id = '{{$notif->id}}' class = "notification waves-effect waves-block">
-                                            <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">person_add</i>
-                                            </div>
                                             <div class="menu-info">
                                                 <h4>{{$notif->title}}</h4>
                                                 <p>

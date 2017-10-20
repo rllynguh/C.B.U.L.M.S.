@@ -322,7 +322,7 @@ Route::put('custom/readNotification', ['uses' => 'customController@readNotificat
 Route::get('/notification/get/count','customController@getNotificationCount')->name('custom.getNotificationCount');
 Route::get('/custom/get/balance','customController@getBalance')->name('custom.getBalance');
 Route::post('/custom/post/balance','customController@postBalance')->name('custom.postBalance');
-
+Route::post('/notification/read','customController@setNotificationRead')->name('custom.readNotification');
 
 
 
