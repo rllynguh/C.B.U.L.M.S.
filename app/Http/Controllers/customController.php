@@ -152,11 +152,11 @@ class customController extends Controller
         $billheader->code = $code;
         $billheader->cost = $amount;
         $billheader->user_id = Auth::user()->id;
-        $billheader->date_issued =Carbon::now(Config::get('app.timezone');
+        $billheader->date_issued =Carbon::now(Config::get('app.timezone'));
         $billheader->save();
 
         $billing_detail=new BillingDetail();
-		$billing_detail->billing_header_id=$billing_header->id;
+		$billing_detail->billing_header_id=$billheader->id;
 		$billing_detail->billing_item_id=10;
 		$billing_detail->description='Tenant Withdrawal';
 		$billing_detail->price=$amount;
