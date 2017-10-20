@@ -3,6 +3,7 @@
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
+			<th>Code</th>
 			<th>Date</th>
 			<th>Assessment</th>
 			<th>Payment</th>
@@ -12,8 +13,14 @@
 	<tbody>
 		@foreach($bill_headers as $header)
 			<tr>
-				<th>{{$header->date_collected}}</th>
+				<th>{{$header['header']->code}}</th>
+				<th>{{$header['header']->date_collected}}</th>
+				<th></th>
+				<th>{{$header['header']->payment}}</th>
+				<th></th>
 			</tr>
+			@foreach($header['detail'] as $detail)
+			@endforeach
 		@endforeach
 	</tbody>
 </table>
