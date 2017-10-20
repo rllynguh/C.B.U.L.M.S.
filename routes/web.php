@@ -11,6 +11,7 @@
 |
 */
 Route::view('/','welcome')->middleware('auth');
+
 Route::get('me',function(){
 	if(Auth::user()->type=='admin'){
 		return redirect('admin/dashboard');
@@ -48,7 +49,7 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	Route::view('/','tenant.index')->name('tenant.home');
 	Route::get('/login', function () {return view('tenant.login');});
-	Route::get('/soa', 'SOAController@index')->name('soa.index');
+	Route::get('/soa', 'SOAController@index')->name('tenant.soa.index');
 	Route::get('/soa/get','SOAController@data');
 	Route::resource("registration","registrationController");
 	
@@ -87,6 +88,9 @@ Route::group(['prefix' => 'tenant/'],function(){
 //temporary for when the template is only for admin
 
 Route::group(['prefix' => 'admin/'], function () {
+	Route::get('/',function(){
+		return redirect('admin/dashboard');
+	});
 	Route::get('/dashboard', function () {
 		return view('user.admin.dashboard');
 	})->middleware('auth','admin');
@@ -318,7 +322,7 @@ Route::put('custom/readNotification', ['uses' => 'customController@readNotificat
 Route::get('/notification/get/count','customController@getNotificationCount')->name('custom.getNotificationCount');
 Route::get('/custom/get/balance','customController@getBalance')->name('custom.getBalance');
 Route::post('/custom/post/balance','customController@postBalance')->name('custom.postBalance');
-
+Route::post('/notification/read','customController@setNotificationRead')->name('custom.readNotification');
 
 
 

@@ -1,6 +1,6 @@
 @extends('layouts.tenantLayout')
 @section('breadcrumbs')
-<h3 class = "align-center">Profile Management</h3>
+<h4 class = "align-center">Profile Management</h4>
 @endsection
 @section('content')
   <form class="form-horizontal" id = "profileForm">
