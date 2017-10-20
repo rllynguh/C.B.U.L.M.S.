@@ -49,7 +49,7 @@ Route::group(['prefix' => 'tenant/'],function(){
 
 	Route::view('/','tenant.index')->name('tenant.home');
 	Route::get('/login', function () {return view('tenant.login');});
-	Route::get('/soa', 'SOAController@index')->name('soa.index');
+	Route::get('/soa', 'SOAController@index')->name('tenant.soa.index');
 	Route::get('/soa/get','SOAController@data');
 	Route::resource("registration","registrationController");
 	

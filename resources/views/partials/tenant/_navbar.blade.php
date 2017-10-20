@@ -79,8 +79,12 @@
                     <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home fa-2x"></i> <span>Home</span></a>
                 </li>
                 <li>
+                    <a href="{{route('tenant.soa.index')}}"><i class="fa fa-fw fa-credit-card-alt fa-2x"></i> <span>Statement of Account</span></a>
+                </li>
+                <li>
+                <li>
                     <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="fa fa-fw fa-home fa-2x"></i>
+                        <i class="fa fa-fw fa-pencil-square-o fa-2x"></i>
                         <span>Transactions</span>
                     </a>
                     <ul class="ml-menu">
@@ -91,7 +95,7 @@
                 </li>
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="fa fa-fw fa-home fa-2x"></i>
+                        <i class="fa fa-fw fa-file fa-2x"></i>
                         <span>Contracts</span>
                     </a>
                     <ul class = "ml-menu">
@@ -101,10 +105,10 @@
                         <li><a href="{{route('tenant.contract.extend.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
                     </ul>
                 </li>
-                <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog fa-2x"></i> Manage Account</a></li>
-                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> Balance:<span class="badge bg-red" id = 'balance'></span>
+                <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog fa-2x"></i> <span>Manage Account</span></a></li>
+                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> <span>Balance:</span><span class="badge bg-red" id = 'balance'></span>
                 </a></li>
-                <li><a href="{{route('logout')}}"><i class="fa fa-fw fa-sign-out fa-2x"></i>Logout</a></li>
+                <li><a href="{{route('logout')}}"><i class="fa fa-fw fa-sign-out fa-2x"></i><span>Logout</span></a></li>
             </ul>
         </div>
         <!-- #Footer -->
