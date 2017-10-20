@@ -11,6 +11,7 @@
 |
 */
 Route::view('/','welcome')->middleware('auth');
+
 Route::get('me',function(){
 	if(Auth::user()->type=='admin'){
 		return redirect('admin/dashboard');
@@ -87,6 +88,9 @@ Route::group(['prefix' => 'tenant/'],function(){
 //temporary for when the template is only for admin
 
 Route::group(['prefix' => 'admin/'], function () {
+	Route::get('/',function(){
+		return redirect('admin/dashboard');
+	});
 	Route::get('/dashboard', function () {
 		return view('user.admin.dashboard');
 	})->middleware('auth','admin');

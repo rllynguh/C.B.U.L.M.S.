@@ -13,6 +13,9 @@ use App\Floor;
 use App\SizeRange;
 use App\Notification;
 use App\UserBalance;
+use App\BillingHeader;
+use App\BillingDetail;
+use App\BillingItem;
 use Carbon\Carbon;
 use Config;
 use Auth;
@@ -134,6 +137,31 @@ class customController extends Controller
         ->FIRST();
         $user_balance->balance=$balance->balance - $amount;
         $user_balance->save();
+
+        $latest=DB::table("billing_headers")
+		->select("billing_headers.*")
+		->orderBy('code',"DESC")
+		->first();
+		$code="BILL001";
+		if(!is_null($latest))
+		$code=$latest->code;
+		$sc= new smartCounter();
+		$code=$sc->increment($code);
+
+        $billheader = new BillingHeader;
+        $billheader->code = $code;
+        $billheader->cost = $amount;
+        $billheader->user_id = Auth::user()->id;
+        $billheader->date_issued =Carbon::now(Config::get('app.timezone');
+        $billheader->save();
+
+        $billing_detail=new BillingDetail();
+		$billing_detail->billing_header_id=$billing_header->id;
+		$billing_detail->billing_item_id=10;
+		$billing_detail->description='Tenant Withdrawal';
+		$billing_detail->price=$amount;
+		$billing_detail->save();
+
         return response()->json(['message' => 'Account updated']);
 	}
 }
