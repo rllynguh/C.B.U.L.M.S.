@@ -298,6 +298,10 @@ Route::group(['prefix' => 'admin/'], function () {
 			Route::get('/', ['uses' => 'contractReportController@index', 'as' => 'contractReport.index']);
 			Route::post('/', ['uses' => 'contractReportController@document', 'as' => 'contractReport.document']);
 		});
+		Route::group(['prefix' => 'contract/'], function () {
+			Route::get('/', ['uses' => 'summaryOfAccountsReportController@index', 'as' => 'summaryOfAccountsReport.index']);
+			Route::post('/', ['uses' => 'summaryOfAccountsReportController@document', 'as' => 'summaryOfAccountsReport.document']);
+		});
 	});
 });
 
