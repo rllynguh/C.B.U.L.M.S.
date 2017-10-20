@@ -6,15 +6,13 @@
 </ol>
 @endsection
 @section('content')
-{{ Form::open(['data-parsley-whitespace' => 'squish', 'target' => '_blank', 'route' => 'moveInReport.document']) }}
+{{ Form::open(['data-parsley-whitespace' => 'squish', 'target' => '_blank', 'route' => 'summaryOfAccountsReport.document']) }}
 <div class="body">
   <div class="col-sm-12">
     <div class="col-sm-6">
-      <h3>Date Moved In</h3>
-      <label for='from' class="control-label">FROM</label>
-      <input required type="date" name="from">
-      <label for='from' class="control-label">TO</label>
-      <input required type="date" name="to">
+      Until date
+      <label for='date' class="control-label">TO</label>
+      <input required type="date" name="date">
     </div>
     <div class="col-sm-6">    
       <h4>Order Units by</h4>

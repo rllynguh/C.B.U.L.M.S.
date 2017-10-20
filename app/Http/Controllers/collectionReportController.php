@@ -8,6 +8,7 @@ use PDF;
 use Carbon\Carbon;
 use Config;
 use DateTime;
+use App\Tenant;
 
 class collectionReportController extends Controller
 {
@@ -121,4 +122,48 @@ class collectionReportController extends Controller
 	{
 		return view('report.collection.index');
 	}
+	public function index2()
+	{
+		return view('report.collection.index2');	
+	}
+
+	public function document2(Request $request)
+	{
+		$contracts=Tenant::JOIN('registration_headers','tenants.id','registration_headers.tenant_id')
+		->JOIN('contract_headers','registration_headers.id','contract_headers.registration_header_id')
+		->JOIN('current_contracts','contract_headers.id','current_contracts.contract_header_id')
+		->SELECT('current_contracts.id')
+		->GROUPBY('current_contracts.id')
+		->GET();
+
+		$getId = $contracts->map(function ($contracts) {
+			return collect($contracts->toArray())
+			->only(['id'])
+			->all();
+		});
+
+			# code...
+		$monthArray=collect(['JAN','FEB','MARCH','APRIL','MAY','JUN','JULY','AUG','SEPT','OCT','NOV','DEC']);
+		$month=new Carbon($request->date);
+		$month=$month->format('m');
+		$monthSamting=DB::TABLE('current_contracts')
+		->JOIN('billing_headers','current_contracts.id','billing_headers.current_contract_id')
+		->LEFTJOIN('payments','billing_headers.id','payments.billing_header_id')
+		// ->JOIN('billing_details','billing_headers.id','billing_details.billing_header_id')
+		// ->JOIN('billing_items','billing_details.billing_item_id','billing_items.id')
+		// ->WHERE('billing_items.description','Rent')
+		->SELECT('current_contract_id','payments.date_collected',DB::RAW('SUM(COALESCE(payment,0)) as payment,MONTH("'.$request->date.'") as month'))
+		->GROUPBY('current_contracts.id')
+		->GET()
+		;
+
+
+		$today = Carbon::today(); 
+		$pdf_details = array('today' => $today, );
+		$pdf_details = array('today' => Carbon::today() );
+		$pdf = PDF::loadView('report.collection.document2', compact('pdf_details','monthSamting'));
+		return $pdf->stream();
+	}
+
+
 }

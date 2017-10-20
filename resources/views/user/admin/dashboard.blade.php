@@ -32,7 +32,7 @@
 				<i class="mdi-communication-business"></i>
 			</div>
 			<div class="content">
-				<div class="text">FREE UNITS</div>
+				<div class="text">VACANT UNITS</div>
 				<div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20">{{$count->unit}}</div>
 			</div>
 		</div>
