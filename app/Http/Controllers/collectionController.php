@@ -128,7 +128,7 @@ class collectionController extends Controller
         $payment->code=$pk;
         $payment->date_issued=Carbon::now(Config::get('app.timezone'));
         $payment->date_collected=$request->dateCollected;
-        $payment->user_id=Auth::user()->id;
+        $payment->user_id=$summary->user_id;//here
         $payment->payment=$request->txtAmount;
         $payment->save();
 

@@ -13,13 +13,9 @@ class SOAController extends Controller
         $output = array();
         $result = DB::table('payments')
         ->join('billing_headers','billing_headers.id','payments.billing_header_id')
-        ->join('current_contracts','current_contracts.id','billing_headers.current_contract_id')
-        ->join('contract_headers','contract_headers.id','current_contracts.contract_header_id')
-        ->join('registration_headers','registration_headers.id','contract_headers.registration_header_id')
-        ->join('tenants','tenants.id','registration_headers.tenant_id')
-        ->join('users','users.id','tenants.user_id')
+
         ->leftjoin('user_balances','user_balances.payment_id','payments.id')
-        ->where('users.id',Auth::user()->id)
+        ->where('payments.user_id',Auth::user()->id)
         ->orderBy('payments.date_collected','asc')
         ->select('payments.date_collected as date_collected',
             'payments.id as id','payments.payment as payment','billing_headers.code as code','billing_headers.cost as cost','user_balances.balance as balance')

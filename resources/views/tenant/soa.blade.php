@@ -8,6 +8,7 @@
 			<th>Description</th>
 			<th>Assessment</th>
 			<th>Payment</th>
+			<th>Balance</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -18,6 +19,7 @@
 				<th></th>
 				<th>{{$header['header']->cost}}</th>
 				<th>{{$header['header']->payment}}</th>
+				<th></th>
 			</tr>
 			@foreach($header['detail'] as $detail)
 			<tr>
@@ -26,9 +28,16 @@
 				<th>{{$detail->description}}</th>
 				<th>{{$detail->price}}</th>
 				<th></th>
+				<th></th>
 			</tr>
 			@endforeach
 			<tr>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>{{$header['header']->balance}}</th>
 			</tr>
 		@endforeach
 	</tbody>
