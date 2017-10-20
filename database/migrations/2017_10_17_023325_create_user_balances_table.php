@@ -17,6 +17,7 @@ class CreateUserBalancesTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('user_id')->index('user_balance');
 			$table->date('date_as_of');
+			$table->integer('payment_id');
 			$table->float('balance', 10, 0);
 		});
 	}

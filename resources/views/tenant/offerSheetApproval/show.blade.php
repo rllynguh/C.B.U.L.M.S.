@@ -109,12 +109,11 @@
 
 	</div>
 </div>
-<div class="body">
+
 	{{Form::open([
 		'id' => 'wizard_with_validation',
 		'route' => 'offerSheetApproval.store'
 		])}}
-		<h3>Registration Info</h3>
 		<fieldset>
 			<div class="col-sm-3"></div>
 			<div class="col-sm-6">
@@ -155,7 +154,7 @@
 			<div class="col-sm-3"></div>
 
 		</fieldset>
-		<h3>Units Offered</h3>
+		<h3 class ='align-center'>Units Offered</h3>
 		<fieldset>
 			<div class="col-sm-12">
 				@foreach($units as $key=> $unit)
@@ -215,8 +214,9 @@
 
 				</div>
 			</fieldset>
+			<button type="submit" class="btn btn-lg bg-brown waves-effect waves-white col-md-12" id="btnSave"><i class="mdi-content-save"></i><span> Generate Offer Sheet Approval</span></button>
 			{{Form::close()}}
-		</div>
+	
 		@endsection
 		@section('scripts')
 		

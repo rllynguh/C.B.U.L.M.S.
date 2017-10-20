@@ -302,23 +302,6 @@ class collectionController extends Controller
     public function update(Request $request, $id)
     {
         //
-        //for handling balances
-        $current_balance=DB::TABLE('user_balances')
-        ->SELECT('balance')
-        ->WHERE('user_id',$request->user)
-        ->ORDERBY('id','desc')
-        ->FIRST();
-        if(!IS_NULL($current_balance))
-            $prev_balance=$current_balance->balance;
-        else
-            $prev_balance=0;
-        $final_balance=$prev_balance+$request->balance;
-        $balance=new UserBalance;
-        $balance->user_id=$request->user;
-        $balance->date_as_of=Carbon::now(Config::get('app.timezone'));
-        $balance->balance=$final_balance;
-        $balance->save();
-
         //my shit
         $latest=DB::table("billing_headers")
         ->select("billing_headers.*")
@@ -364,6 +347,24 @@ class collectionController extends Controller
         $payment->user_id = $request->user;
         $payment->payment = -$request->balance;
         $payment->save();
+
+        //for handling balances
+        $current_balance=DB::TABLE('user_balances')
+        ->SELECT('balance')
+        ->WHERE('user_id',$request->user)
+        ->ORDERBY('id','desc')
+        ->FIRST();
+        if(!IS_NULL($current_balance))
+            $prev_balance=$current_balance->balance;
+        else
+            $prev_balance=0;
+        $final_balance=$prev_balance+$request->balance;
+        $balance=new UserBalance;
+        $balance->user_id=$request->user;
+        $balance->date_as_of=Carbon::now(Config::get('app.timezone'));
+        $balance->balance=$final_balance;
+        $balance->payment_id= $payment->id;
+        $balance->save();
     }
 
     /**

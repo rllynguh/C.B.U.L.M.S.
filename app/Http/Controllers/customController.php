@@ -137,7 +137,7 @@ class customController extends Controller
         ->SELECT('balance','balance as formatted_balance')
         ->FIRST();
         $user_balance->balance=$balance->balance - $amount;
-        $user_balance->save();
+        
 
         $latest=DB::table("billing_headers")
 		->select("billing_headers.*")
@@ -183,6 +183,8 @@ class customController extends Controller
 		$payment->user_id = Auth::user()->id;
 		$payment->payment = $amount;
 		$payment->save();
+		$user_balance->payment_id = $payment->id;
+		$user_balance->save();
         return response()->json(['message' => 'Account updated']);
 	}
 }

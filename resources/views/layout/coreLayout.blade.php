@@ -369,27 +369,11 @@
 </a>
 </li>
 <li class="
-{{Request::path() == 'admin/transaction/collection' ? 'active' : ''}}
-">
-<a href="javascript:void(0);" class="menu-toggle waves-yellow">
-  <i class="mdi-action-payment"></i>
-  <span>Billing and Collection</span>
-</a>
-<ul class="ml-menu">
-  <li>
-    <a href="/billingTable" class="waves-yellow">
-      <span>Billing</span>
-    </a>
-  </li>
-
-  <li class="
   {{Request::path() == 'admin/transaction/collection' ? 'active' : ''}}
   ">
   <a href="{{route('collection.index')}}" class="waves-yellow">
     <span>Collection</span>
   </a>
-</li>
-</ul>
 </li>
 </ul>
 </li>
