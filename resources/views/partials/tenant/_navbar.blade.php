@@ -1,5 +1,5 @@
 <!-- Top Bar -->
-<nav class="navbar">
+<nav class="navbar grad">
     <div class="container-fluid">
         <div class="navbar-header">
             <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
@@ -10,7 +10,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Notifications -->
                 <li class="dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" id = 'btnNotif'>
                         <i class="material-icons">notifications</i>
                         <span class="label-count">{{$notification->count}}</span>
                     </a>
@@ -20,11 +20,12 @@
                             <div id="notifs">
                                 <ul id='notifBody' class="menu" style="overflow: hidden; ">
                                     @foreach($notification->list as $notif)
+                                    @if($notif->is_read==0)
+                                    <li class = 'bg-grey'>
+                                    @else
                                     <li>
+                                    @endif
                                         <a href="{{$notif->link}}" id = '{{$notif->id}}' class = "notification waves-effect waves-block">
-                                            <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">person_add</i>
-                                            </div>
                                             <div class="menu-info">
                                                 <h4>{{$notif->title}}</h4>
                                                 <p>
@@ -79,8 +80,12 @@
                     <a href="{{route('tenant.home')}}"><i class="fa fa-fw fa-home fa-2x"></i> <span>Home</span></a>
                 </li>
                 <li>
+                    <a href="{{route('tenant.soa.index')}}"><i class="fa fa-fw fa-credit-card-alt fa-2x"></i> <span>Statement of Account</span></a>
+                </li>
+                <li>
+                <li>
                     <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="fa fa-fw fa-home fa-2x"></i>
+                        <i class="fa fa-fw fa-pencil-square-o fa-2x"></i>
                         <span>Transactions</span>
                     </a>
                     <ul class="ml-menu">
@@ -91,7 +96,7 @@
                 </li>
                 <li>
                     <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="fa fa-fw fa-home fa-2x"></i>
+                        <i class="fa fa-fw fa-file fa-2x"></i>
                         <span>Contracts</span>
                     </a>
                     <ul class = "ml-menu">
@@ -101,23 +106,13 @@
                         <li><a href="{{route('tenant.contract.extend.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" class="menu-toggle">
-                        <i class="fa fa-fw fa-home fa-2x"></i>
-                        <span>
-                            {{Auth::user()->first_name }} {{Auth::user()->last_name}}</span>
-                        </a>
-                        <ul class ="ml-menu">
-                            <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog fa-2x"></i> Manage Account</a></li>
-                            <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> Balance:
-                                <span class="label label-primary" id = 'balance'></span>
-                            </a></li>
-                            <li><a href="{{route('account.notification.index')}}"><i class="fa fa-fw fa-sign-out fa-2x"></i>Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <!-- #Footer -->
-        </aside>
-        <!-- #END# Left Sidebar -->
-    </section>
+                <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog fa-2x"></i> <span>Manage Account</span></a></li>
+                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> <span>Balance:</span><span class="badge bg-red" id = 'balance'></span>
+                </a></li>
+                <li><a href="{{route('logout')}}"><i class="fa fa-fw fa-sign-out fa-2x"></i><span>Logout</span></a></li>
+            </ul>
+        </div>
+        <!-- #Footer -->
+    </aside>
+    <!-- #END# Left Sidebar -->
+</section>

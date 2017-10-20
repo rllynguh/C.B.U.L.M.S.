@@ -43,7 +43,7 @@ class offerSheetApprovalController extends Controller
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
-        return "<a href=".route('offerSheetApproval.show',$data->id)." type='button' class='btn bg-green btn-circle waves-effect waves-circle waves-float'><i class='mdi-action-visibility'></i></a>
+        return "<a href=".route('offerSheetApproval.show',$data->id)." type='button' class='btn btn-primary'>Show Offersheet</a>
         ";
       })
       ->rawColumns(['action'])

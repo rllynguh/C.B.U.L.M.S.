@@ -137,9 +137,9 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer('layouts.tenantLayout', function($view) {
             $list=DB::TABLE('notifications')
             ->WHERE('user_id',Auth::user()->id)
-            ->SELECT('id','title','description','link','date_issued')
-            ->orderBy('is_read','desc')
+            ->SELECT('id','title','description','link','date_issued','is_read')
             ->orderBy('notifications.id','desc')
+            ->orderBy('is_read','asc')
             ->GET();
             $count=DB::TABLE('notifications')
             ->WHERE('user_id',Auth::user()->id)

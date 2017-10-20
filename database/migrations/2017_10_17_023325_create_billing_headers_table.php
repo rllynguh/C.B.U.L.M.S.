@@ -18,7 +18,7 @@ class CreateBillingHeadersTable extends Migration {
 			$table->integer('user_id')->index('fk_user_bill_idx')->comment('who bills the tenant');
 			$table->string('code', 45);
 			$table->date('date_issued');
-			$table->integer('current_contract_id')->index('currenbill_idx');
+			$table->integer('current_contract_id')->index('currenbill_idx')->nullable();
 			$table->float('cost', 10, 0)->comment('negative for increase in balance');
 			$table->integer('status')->default(0)->comment('0 - unpaid
 1-  paid
