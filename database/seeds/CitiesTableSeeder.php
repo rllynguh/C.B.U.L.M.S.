@@ -24,6 +24,27 @@ class CitiesTableSeeder extends Seeder
                 'province_id' => 1,
                 'is_active' => 1,
             ),
+            1 => 
+            array (
+                'id' => 2,
+                'description' => 'Cebu',
+                'province_id' => 1,
+                'is_active' => 1,
+            ),
+            2 => 
+            array (
+                'id' => 3,
+                'description' => 'Delmonte',
+                'province_id' => 3,
+                'is_active' => 1,
+            ),
+            3 => 
+            array (
+                'id' => 4,
+                'description' => 'Tagaytay',
+                'province_id' => 2,
+                'is_active' => 1,
+            ),
         ));
         
         

@@ -23,6 +23,18 @@ class RepresentativePositionsTableSeeder extends Seeder
                 'description' => 'Manager',
                 'is_active' => 1,
             ),
+            1 => 
+            array (
+                'id' => 2,
+                'description' => 'Supervisor',
+                'is_active' => 1,
+            ),
+            2 => 
+            array (
+                'id' => 3,
+                'description' => 'Company CEO',
+                'is_active' => 1,
+            ),
         ));
         
         

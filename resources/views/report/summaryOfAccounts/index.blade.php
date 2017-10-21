@@ -2,7 +2,7 @@
  @section('breadcrumbs')
  <ol class="breadcrumb breadcrumb-col-brown">
   <li><a> Report</a></li>
-  <li><a href="{{route('moveInReport.index')}}"> Move In</a></li>
+  <li><a href="{{route('summaryOfAccountsReport.index')}}">Summary of Accounts</a></li>
 </ol>
 @endsection
 @section('content')
@@ -13,13 +13,6 @@
       Until date
       <label for='date' class="control-label">TO</label>
       <input required type="date" name="date">
-    </div>
-    <div class="col-sm-6">    
-      <h4>Order Units by</h4>
-      <select required name='orderUnitsBy'>
-        <option value='units.size'>Size</option>
-        <option value='floors.number'>Floor</option>
-      </select>   
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Generate</button>

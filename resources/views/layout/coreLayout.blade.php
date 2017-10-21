@@ -410,6 +410,14 @@
   <span>Billing</span>
 </a>
 </li>
+<li class="
+{{Request::path() == 'admin/report/summaryOfAccounts' ? 'active' : ''}}
+
+">
+<a href="{{route('summaryOfAccountsReport.index')}}" class="waves-yellow">
+  <span>Summary of Accounts</span>
+</a>
+</li>
 </ul>
 </li>
 <!--END OF REPORTS-->

@@ -47,6 +47,36 @@ class TenantsTableSeeder extends Seeder
                 'address_id' => 38,
                 'is_active' => 1,
             ),
+            3 => 
+            array (
+                'id' => 14,
+                'code' => 'Tenant004',
+                'description' => 'MySQL Philippine Branch',
+                'business_type_id' => 5,
+                'user_id' => 5,
+                'address_id' => 43,
+                'is_active' => 1,
+            ),
+            4 => 
+            array (
+                'id' => 15,
+                'code' => 'Tenant005',
+                'description' => 'Montesorya Parlor For Men',
+                'business_type_id' => 2,
+                'user_id' => 6,
+                'address_id' => 45,
+                'is_active' => 1,
+            ),
+            5 => 
+            array (
+                'id' => 16,
+                'code' => 'Tenant006',
+                'description' => 'KFC',
+                'business_type_id' => 3,
+                'user_id' => 7,
+                'address_id' => 47,
+                'is_active' => 1,
+            ),
         ));
         
         

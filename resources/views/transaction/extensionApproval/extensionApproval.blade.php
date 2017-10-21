@@ -19,7 +19,7 @@
 </div>
 @endsection
 @component('partials._acceptRejectModal')
-<strong>Whoops!</strong> Something went wrong!
+What do you want to do?
 @endcomponent
 @section('scripts')
 {!!Html::script("custom/contractExtensionApprovalAjax.js")!!}

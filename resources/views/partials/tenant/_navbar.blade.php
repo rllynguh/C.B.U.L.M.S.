@@ -11,7 +11,7 @@
                 <!-- Notifications -->
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" id = 'btnNotif'>
-                        <i class="material-icons">notifications</i>
+                        <i class="fa fa-fw fa-bell fa-2x"></i>
                         <span class="label-count">{{$notification->count}}</span>
                     </a>
                     <ul class="dropdown-menu">
@@ -43,8 +43,6 @@
                         </li>
                     </ul>
                 </li>
-                <!-- #END# Notifications -->
-                <li class="pull-right"><a href="javascript:void(0);"><i class="material-icons">input</i></a></li>
             </ul>
         </div>
     </div>
@@ -61,14 +59,6 @@
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{Auth::user()->first_name }} {{Auth::user()->last_name}}</div>
                 <div class="email">{{Auth::user()->email}}</div>
-                <div class="btn-group user-helper-dropdown">
-                    <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                        <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
         <!-- #User Info -->
@@ -100,14 +90,14 @@
                         <span>Contracts</span>
                     </a>
                     <ul class = "ml-menu">
-                        <li><a href="{{route('contract.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Accept Contracts</a></li>
-                        <li><a href="{{route('tenant.contractView')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
-                        <li><a href="{{route('tenant.terminateContract')}}"><i class="fa fa-fw fa-home fa-2x"></i>Terminate Contracts</a></li>
-                        <li><a href="{{route('tenant.contract.extend.index')}}"><i class="fa fa-fw fa-home fa-2x"></i>Manage Ongoing Contracts</a></li>
+                        <li><a href="{{route('contract.index')}}">Accept Contracts</a></li>
+                        <li><a href="{{route('tenant.contractView')}}">Manage Ongoing Contracts</a></li>
+                        <li><a href="{{route('tenant.terminateContract')}}">Terminate Contracts</a></li>
+                        <li><a href="{{route('tenant.contract.extend.index')}}">Manage Ongoing Contracts</a></li>
                     </ul>
                 </li>
                 <li><a href="{{route('tenant.account.index')}}"><i class="fa fa-fw fa-cog fa-2x"></i> <span>Manage Account</span></a></li>
-                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> <span>Balance:</span><span class="badge bg-red" id = 'balance'></span>
+                <li><a onclick="showWithdrawModal()" id = 'btnShowWithdrawModal' data-toggle="modal" href='#withdrawModal'><i class="fa fa-fw fa-money fa-2x"></i> <span>Balance:</span><span class="badge bg-green" id = 'balance'></span>
                 </a></li>
                 <li><a href="{{route('logout')}}"><i class="fa fa-fw fa-sign-out fa-2x"></i><span>Logout</span></a></li>
             </ul>

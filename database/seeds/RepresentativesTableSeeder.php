@@ -31,6 +31,27 @@ class RepresentativesTableSeeder extends Seeder
                 'tel_num' => '6969',
                 'address_id' => 37,
             ),
+            2 => 
+            array (
+                'user_id' => 5,
+                'representative_position_id' => 3,
+                'tel_num' => '7401462',
+                'address_id' => 42,
+            ),
+            3 => 
+            array (
+                'user_id' => 6,
+                'representative_position_id' => 3,
+                'tel_num' => '1246314',
+                'address_id' => 44,
+            ),
+            4 => 
+            array (
+                'user_id' => 7,
+                'representative_position_id' => 3,
+                'tel_num' => '1267611',
+                'address_id' => 46,
+            ),
         ));
         
         
