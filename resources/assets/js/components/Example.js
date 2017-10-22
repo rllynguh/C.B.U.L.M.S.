@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class Example extends Component {
+    constructor(props) {
+    super(props);
+  }
     render() {
         return (
             <div className="container">
@@ -11,7 +14,7 @@ export default class Example extends Component {
                             <div className="panel-heading">Example Component</div>
 
                             <div className="panel-body">
-                                I'm an example component!
+                                {props.name}
                             </div>
                         </div>
                     </div>
@@ -20,7 +23,9 @@ export default class Example extends Component {
         );
     }
 }
-
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
 if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
+    ReactDOM.render(<Welcome name = {urlfloor} />, document.getElementById('example'));
 }

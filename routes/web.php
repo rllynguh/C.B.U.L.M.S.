@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::view('/','welcome')->middleware('auth');
+Route::get('/','LandingPageController@index');
 Route::view('testing-grounds','test');
 Route::get('me',function(){
 	if(Auth::user()->type=='admin'){
