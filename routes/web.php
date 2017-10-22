@@ -11,7 +11,7 @@
 |
 */
 Route::view('/','welcome')->middleware('auth');
-
+Route::view('testing-grounds','test');
 Route::get('me',function(){
 	if(Auth::user()->type=='admin'){
 		return redirect('admin/dashboard');
