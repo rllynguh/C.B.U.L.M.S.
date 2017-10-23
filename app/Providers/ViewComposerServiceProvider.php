@@ -85,7 +85,7 @@ class ViewComposerServiceProvider extends ServiceProvider
             else
                 $billing=$billing->count;
             $average_market_rate=DB::table("cities")
-            ->leftJoin("market_rates","cities.id","market_rates.city_id")
+            ->join("market_rates","cities.id","market_rates.city_id")
             ->groupBy("cities.id")
             ->whereRaw("market_rates.date_as_of=(SELECT MAX(date_as_of) from market_rates where city_id=cities.id) or isnull(market_rates.date_as_of)")
             ->AVG(DB::RAW('COALESCE(market_rates.rate,0)'));
@@ -137,9 +137,9 @@ class ViewComposerServiceProvider extends ServiceProvider
         view()->composer('layouts.tenantLayout', function($view) {
             $list=DB::TABLE('notifications')
             ->WHERE('user_id',Auth::user()->id)
-            ->SELECT('id','title','description','link','date_issued')
-            ->orderBy('is_read','desc')
+            ->SELECT('id','title','description','link','date_issued','is_read')
             ->orderBy('notifications.id','desc')
+            ->orderBy('is_read','asc')
             ->GET();
             $count=DB::TABLE('notifications')
             ->WHERE('user_id',Auth::user()->id)

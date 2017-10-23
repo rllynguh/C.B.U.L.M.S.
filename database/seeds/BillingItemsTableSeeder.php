@@ -71,6 +71,18 @@ class BillingItemsTableSeeder extends Seeder
                 'description' => 'Reservation Fee Return',
                 'is_active' => 1,
             ),
+            9 => 
+            array (
+                'id' => 10,
+                'description' => 'Tenant Withdrawal',
+                'is_active' => 1,
+            ),
+            10 => 
+            array (
+                'id' => 11,
+                'description' => 'Tenant Deposit',
+                'is_active' => 1,
+            ),
         ));
         
         

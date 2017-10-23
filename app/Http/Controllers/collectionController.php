@@ -16,7 +16,8 @@ use App\PostDatedCheck;
 use App\FundTransfer;
 use App\DatedCheck;
 use App\Notification;
-
+use App\BillingHeader;
+use App\BillingDetail;
 class collectionController extends Controller
 {
   public function __construct()
@@ -127,7 +128,7 @@ class collectionController extends Controller
         $payment->code=$pk;
         $payment->date_issued=Carbon::now(Config::get('app.timezone'));
         $payment->date_collected=$request->dateCollected;
-        $payment->user_id=Auth::user()->id;
+        $payment->user_id=$summary->user_id;//here
         $payment->payment=$request->txtAmount;
         $payment->save();
 
@@ -301,6 +302,52 @@ class collectionController extends Controller
     public function update(Request $request, $id)
     {
         //
+        //my shit
+        $latest=DB::table("billing_headers")
+        ->select("billing_headers.*")
+        ->orderBy('code',"DESC")
+        ->first();
+        $code="BILL001";
+        if(!is_null($latest))
+        $code=$latest->code;
+        $sc= new smartCounter();
+        $code=$sc->increment($code);
+
+        $billheader = new BillingHeader;
+        $billheader->code = $code;
+        $billheader->cost = -$request->balance;
+        $billheader->user_id = $request->user;
+        $billheader->date_issued =Carbon::now(Config::get('app.timezone'));
+        $billheader->save();
+
+        $billing_detail=new BillingDetail();
+        $billing_detail->billing_header_id=$billheader->id;
+        $billing_detail->billing_item_id=11;
+        $billing_detail->description='Tenant Deposit';
+        $billing_detail->price=-$request->balance;
+        $billing_detail->save();
+
+
+        $latest=DB::table("payments")
+        ->select("payments.*")
+        ->orderBy('code',"DESC")
+        ->first();
+        $code="COLLECTION001";
+        if(!is_null($latest))
+        $code=$latest->code;
+        $sc= new smartCounter();
+        $code=$sc->increment($code);
+
+        $payment = new Payment;
+        $payment->code = $code;
+        $payment->billing_header_id = $billheader->id;
+        $payment->mode = 0;
+        $payment->date_issued = Carbon::now(Config::get('app.timezone'));
+        $payment->date_collected = Carbon::now(Config::get('app.timezone'));
+        $payment->user_id = $request->user;
+        $payment->payment = -$request->balance;
+        $payment->save();
+
         //for handling balances
         $current_balance=DB::TABLE('user_balances')
         ->SELECT('balance')
@@ -316,8 +363,8 @@ class collectionController extends Controller
         $balance->user_id=$request->user;
         $balance->date_as_of=Carbon::now(Config::get('app.timezone'));
         $balance->balance=$final_balance;
+        $balance->payment_id= $payment->id;
         $balance->save();
-
     }
 
     /**

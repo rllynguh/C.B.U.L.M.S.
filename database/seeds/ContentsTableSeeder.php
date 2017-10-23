@@ -20,13 +20,13 @@ class ContentsTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'description' => 'Tenants should',
+                'description' => 'Tenants should not run in hallways',
                 'is_active' => '1',
             ),
             1 => 
             array (
                 'id' => 2,
-                'description' => 'Tenants shouldn\'t',
+                'description' => 'Tenants shouldnt sleep outside their rooms',
                 'is_active' => '1',
             ),
         ));

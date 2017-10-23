@@ -20,16 +20,8 @@ class ContractHeadersTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'registration_header_id' => 11,
+                'registration_header_id' => 16,
                 'code' => 'CONTRACT001',
-                'escalation_rate' => 1.0,
-                'status' => 0,
-            ),
-            1 => 
-            array (
-                'id' => 3,
-                'registration_header_id' => 12,
-                'code' => 'CONTRACT002',
                 'escalation_rate' => 1.0,
                 'status' => 0,
             ),

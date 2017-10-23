@@ -41,5 +41,21 @@ class DatabaseSeeder extends Seeder
         $this->call(ContentsTableSeeder::class);
         $this->call(BillingItemsTableSeeder::class);
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        $this->call(BillingDetailsTableSeeder::class);
+        $this->call(BillingHeadersTableSeeder::class);
+        $this->call(ContractContentsTableSeeder::class);
+        $this->call(ContractDetailsTableSeeder::class);
+        $this->call(ContractExtendsTableSeeder::class);
+        $this->call(ContractHeadersTableSeeder::class);
+        $this->call(CurrentContractsTableSeeder::class);
+        $this->call(MigrationsTableSeeder::class);
+        $this->call(MoveInDetailsTableSeeder::class);
+        $this->call(MoveInHeadersTableSeeder::class);
+        $this->call(NotificationsTableSeeder::class);
+        $this->call(OfferSheetDetailsTableSeeder::class);
+        $this->call(OfferSheetHeadersTableSeeder::class);
+        $this->call(PenaltiesTableSeeder::class);
+        $this->call(PostDatedChecksTableSeeder::class);
+        $this->call(UserBalancesTableSeeder::class);
     }
 }

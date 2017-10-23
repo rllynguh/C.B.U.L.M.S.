@@ -14,7 +14,7 @@
     <div class="login-box">
         <div class="logo">
             <a href="javascript:void(0);">Majent<b>CBULMS</b></a>
-            <small>Admin BootStrap Based - Material Design</small>
+            <small>Commercial Building Unit Lease Management System</small>
         </div>
         <div class="card">
             <div class="body">

@@ -1,16 +1,12 @@
 //Material Icons
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
-
-// Bootstrap
+//materialize css
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-@import "node_modules/font-awesome/scss/font-awesome";
-//materialize css
+@import "helpers";
 @import "materialize";
 //select imports from admin bsb
 @import "adminbsbstyle";
 //themes for admin bsb
 @import "node_modules/adminbsb-materialdesign/scss/themes/_all-themes";
-
-@import "helpers";
-
+@import "node_modules/font-awesome/scss/font-awesome";

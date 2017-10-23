@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -8,20 +10,76 @@ use Carbon\Carbon;
 class SOAController extends Controller
 {
     public function index(){
-        return view('tenant.soa');
+        $output = array();
+        $result = DB::table('payments')
+        ->join('billing_headers','billing_headers.id','payments.billing_header_id')
+
+        ->leftjoin('user_balances','user_balances.payment_id','payments.id')
+        ->where('payments.user_id',Auth::user()->id)
+        ->orderBy('payments.date_collected','asc')
+        ->select('payments.date_collected as date_collected',
+            'payments.id as id','payments.payment as payment','billing_headers.code as code','billing_headers.cost as cost','user_balances.balance as balance')
+        ->get();
+        foreach($result as $r){
+            $details = DB::table('payments')
+            ->where('payments.id',$r->id)
+            ->join('billing_headers','billing_headers.id','payments.billing_header_id')
+            ->join('billing_details','billing_details.billing_header_id','billing_headers.id')
+            ->get();
+            array_push($output, array('header' => $r,'detail'=> $details));
+        }
+    	return view('tenant.soa')->with('bill_headers',$output);
     }
     public function data(){
-        $result = DB::table('registration_headers')
+        $output = array();
+        $result = DB::table('payments')
+        ->join('billing_headers','billing_headers.id','payments.billing_header_id')
+        ->join('current_contracts','current_contracts.id','billing_headers.current_contract_id')
+        ->join('contract_headers','contract_headers.id','current_contracts.contract_header_id')
+        ->join('registration_headers','registration_headers.id','contract_headers.registration_header_id')
+        ->join('tenants','tenants.id','registration_headers.tenant_id')
+        ->join('users','users.id','tenants.user_id')
+        ->leftjoin('user_balances','user_balances.payment_id','payments.id')
+        ->where('users.id',Auth::user()->id)
+        ->orderBy('payments.date_collected','asc')
+        ->select('payments.date_collected as date_collected',
+            'payments.id as id','payments.payment as payment','billing_headers.code as code','billing_headers.cost as cost','user_balances.balance as balance')
+        ->get();
+        foreach($result as $r){
+            $details = DB::table('payments')
+            ->where('payments.id',$r->id)
+            ->join('billing_headers','billing_headers.id','payments.billing_header_id')
+            ->join('billing_details','billing_details.billing_header_id','billing_headers.id')
+            ->get();
+            array_push($output, array('header' => $r,'detail'=> $details));
+        }
+        dd($output);
+        
+
+
+        /*
+        $output = array();
+        $result = DB::table('payments')
+        ->join('billing_headers','billing_headers.id','payments.billing_header_id')
+        ->join('current_contracts','current_contracts.id','billing_headers.current_contract_id')
+        ->join('contract_headers','contract_headers.id','current_contracts.contract_header_id')
+        ->join('registration_headers','registration_headers.id','contract_headers.registration_header_id')
         ->join('tenants','tenants.id','registration_headers.tenant_id')
         ->join('users','users.id','tenants.user_id')
         ->where('users.id',Auth::user()->id)
-        ->groupBy('registration_headers.id')
-        ->join('contract_headers','contract_headers.registration_header_id','registration_headers.id')
-        ->join('current_contracts','current_contracts.contract_header_id','contract_headers.id')
-        ->join('billing_headers','billing_headers.current_contract_id','current_contracts.id')
-        ->join('billing_details','billing_details.billing_header_id','billing_headers.id')
-        ->groupBy('billing_details.id')
+        ->select('payments.date_collected as date_collected',
+            'payments.id as id')
         ->get();
-        dd($result);
+        foreach($result as $r){
+            $details = DB::table('payments')
+            ->where('payments.id',$r->id)
+            ->join('billing_headers','billing_headers.id','payments.billing_header_id')
+            ->join('billing_details','billing_details.billing_header_id','billing_headers.id')
+            ->get();
+            array_push($output, array('header' => $r,'detail'=> $details));
+        }
+        dd($output);
+
+        */
     }
 }

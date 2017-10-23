@@ -20,7 +20,7 @@ class OfferSheetDetailsTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'registration_detail_id' => 4,
+                'registration_detail_id' => 18,
                 'offer_sheet_header_id' => 1,
                 'unit_id' => 46,
                 'status' => 1,
@@ -29,36 +29,9 @@ class OfferSheetDetailsTableSeeder extends Seeder
             1 => 
             array (
                 'id' => 2,
-                'registration_detail_id' => 5,
+                'registration_detail_id' => 20,
                 'offer_sheet_header_id' => 1,
                 'unit_id' => 49,
-                'status' => 1,
-                'tenant_remarks' => NULL,
-            ),
-            2 => 
-            array (
-                'id' => 3,
-                'registration_detail_id' => 6,
-                'offer_sheet_header_id' => 1,
-                'unit_id' => 1,
-                'status' => 1,
-                'tenant_remarks' => NULL,
-            ),
-            3 => 
-            array (
-                'id' => 4,
-                'registration_detail_id' => 7,
-                'offer_sheet_header_id' => 2,
-                'unit_id' => 47,
-                'status' => 1,
-                'tenant_remarks' => NULL,
-            ),
-            4 => 
-            array (
-                'id' => 5,
-                'registration_detail_id' => 8,
-                'offer_sheet_header_id' => 2,
-                'unit_id' => 52,
                 'status' => 1,
                 'tenant_remarks' => NULL,
             ),

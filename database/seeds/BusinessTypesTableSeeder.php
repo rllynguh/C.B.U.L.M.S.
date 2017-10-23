@@ -23,6 +23,36 @@ class BusinessTypesTableSeeder extends Seeder
                 'description' => 'Food Service',
                 'is_active' => 1,
             ),
+            1 => 
+            array (
+                'id' => 2,
+                'description' => 'Massage',
+                'is_active' => 1,
+            ),
+            2 => 
+            array (
+                'id' => 3,
+                'description' => 'Food and Beverages',
+                'is_active' => 1,
+            ),
+            3 => 
+            array (
+                'id' => 4,
+                'description' => 'Parlor',
+                'is_active' => 1,
+            ),
+            4 => 
+            array (
+                'id' => 5,
+                'description' => 'Electronics',
+                'is_active' => 1,
+            ),
+            5 => 
+            array (
+                'id' => 6,
+                'description' => 'Gym',
+                'is_active' => 1,
+            ),
         ));
         
         
