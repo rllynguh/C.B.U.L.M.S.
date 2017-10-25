@@ -19,7 +19,7 @@ class CreateTenantsTable extends Migration {
 			$table->char('description', 50)->unique('strTenaDesc_UNIQUE');
 			$table->integer('business_type_id')->index('busitype_idx');
 			$table->integer('user_id')->index('user_idx');
-			$table->integer('address_id')->index('qwede_idx');
+			$table->text('address', 65535);
 			$table->boolean('is_active')->default(1);
 		});
 	}

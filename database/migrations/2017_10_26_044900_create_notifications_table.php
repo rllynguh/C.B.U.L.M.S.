@@ -23,7 +23,7 @@ class CreateNotificationsTable extends Migration {
 			$table->date('date_read')->nullable();
 			$table->integer('is_read')->default(0);
 			$table->boolean('is_urgent')->default(0);
-			$table->string('type',60)->nullable()->comment('billing/termination/amendment status');
+			$table->string('type', 60)->nullable()->comment('billing/termination/amendment status');
 			$table->integer('current_contract_id')->nullable();
 			$table->integer('expires_on')->default(0);
 			$table->timestamps();

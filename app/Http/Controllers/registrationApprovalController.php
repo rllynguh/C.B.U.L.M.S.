@@ -34,24 +34,24 @@ class registrationApprovalController extends Controller
     public function data()
     {
       $result=DB::table('registration_headers')
-      ->select(DB::raw(
+      ->SELECT(DB::raw(
         'registration_headers.id,'.
         'registration_headers.code as regi_code,'.
         'tenants.description as tenant_description,'.
         'business_types.description as business_type_description,'.  
         'count(registration_details.id) as regi_count'
-        ))
-      ->join('tenants','registration_headers.tenant_id','tenants.id')
-      ->join('business_types','tenants.business_type_id','business_types.id')
-      ->join('users','tenants.user_id','users.id')
-      ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
-      ->where('registration_headers.status','0')
-      ->where('registration_headers.is_forfeited','0')
-      ->where('registration_details.is_forfeited','0')
-      ->where('registration_details.is_rejected','0')
-      ->where('registration_headers.is_existing_tenant','0')
-      ->groupBy('registration_headers.id')
-      ->orderBy('registration_headers.id')
+      ))
+      ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
+      ->JOIN('business_types','tenants.business_type_id','business_types.id')
+      ->JOIN('users','tenants.user_id','users.id')
+      ->JOIN('registration_details','registration_headers.id','registration_details.registration_header_id')
+      ->WHERE('registration_headers.status','0')
+      ->WHERE('registration_headers.is_forfeited','0')
+      ->WHERE('registration_details.is_forfeited','0')
+      ->WHERE('registration_details.is_rejected','0')
+      ->WHERE('registration_headers.is_existing_tenant','0')
+      ->GROUPBY('registration_headers.id')
+      ->ORDERBY('registration_headers.id')
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
@@ -68,24 +68,24 @@ class registrationApprovalController extends Controller
     public function data_existing_tenant()
     {
       $result=DB::table('registration_headers')
-      ->select(DB::raw(
+      ->SELECT(DB::raw(
         'registration_headers.id,'.
         'registration_headers.code as regi_code,'.
         'tenants.description as tenant_description,'.
         'business_types.description as business_type_description,'.  
         'count(registration_details.id) as regi_count'
-        ))
-      ->join('tenants','registration_headers.tenant_id','tenants.id')
-      ->join('business_types','tenants.business_type_id','business_types.id')
-      ->join('users','tenants.user_id','users.id')
-      ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
-      ->where('registration_headers.status','0')
-      ->where('registration_headers.is_forfeited','0')
-      ->where('registration_details.is_forfeited','0')
-      ->where('registration_details.is_rejected','0')
-      ->where('registration_headers.is_existing_tenant','1')
-      ->groupBy('registration_headers.id')
-      ->orderBy('registration_headers.id')
+      ))
+      ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
+      ->JOIN('business_types','tenants.business_type_id','business_types.id')
+      ->JOIN('users','tenants.user_id','users.id')
+      ->JOIN('registration_details','registration_headers.id','registration_details.registration_header_id')
+      ->WHERE('registration_headers.status','0')
+      ->WHERE('registration_headers.is_forfeited','0')
+      ->WHERE('registration_details.is_forfeited','0')
+      ->WHERE('registration_details.is_rejected','0')
+      ->WHERE('registration_headers.is_existing_tenant','1')
+      ->GROUPBY('registration_headers.id')
+      ->ORDERBY('registration_headers.id')
       ->get();
       return Datatables::of($result)
       ->addColumn('action', function ($data) {
@@ -136,7 +136,7 @@ class registrationApprovalController extends Controller
             }
             DB::commit();
             $request->session()->flash('green', 'Registration Approved.');
-            return redirect(route('offersheets.show',$request->myId));
+            return redirect(route('registrationApproval.index',$request->myId));
           }
           else //if the transaction was rejected
           {
@@ -167,47 +167,52 @@ class registrationApprovalController extends Controller
 
       public function show($id)
       {
-        //
         $tenant=DB::table('registration_headers')
-        ->join('tenants','registration_headers.tenant_id','tenants.id')
-        ->join('users','users.id','tenants.user_id')
-        ->join('representatives','users.id','representatives.user_id')
-        ->join('representative_positions','representatives.representative_position_id','representative_positions.id')
-        ->join('addresses','tenants.address_id','addresses.id')
-        ->join('cities','addresses.city_id','cities.id')
-        ->join('provinces','cities.province_id','provinces.id')
-        ->join('business_types','tenants.business_type_id','business_types.id')
-        ->select(DB::Raw('registration_headers.tenant_remarks,registration_headers.id,tenants.description as tenant,registration_headers.code, concat(first_name," ", last_name) as name,representative_positions.description as position,business_types.description as business,Concat(addresses.number," ",addresses.street," ",addresses.district," ",cities.description, ", ", provinces.description) as address,cell_num,picture,registration_headers.date_issued,tenant_remarks,duration_preferred,users.picture'))
-        ->where('registration_headers.status','0')
-        ->where('registration_headers.is_forfeited','0')
-        ->where('registration_headers.id','=',$id)
+        ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
+        ->JOIN('users','users.id','tenants.user_id')
+        ->JOIN('representatives','users.id','representatives.user_id')
+        ->JOIN('representative_positions','representatives.representative_position_id','representative_positions.id')
+        ->JOIN('business_types','tenants.business_type_id','business_types.id')
+        ->SELECT(DB::Raw('registration_headers.tenant_remarks,registration_headers.id,tenants.description as tenant,registration_headers.code, concat(first_name," ", last_name) as name,representative_positions.description as position,business_types.description as business,tenants.address,cell_num,picture,registration_headers.date_issued,tenant_remarks,duration_preferred,users.picture'))
+        ->WHERE('registration_headers.status','0')
+        ->WHERE('registration_headers.is_forfeited','0')
+        ->WHERE('registration_headers.id','=',$id)
         ->first();
         $time = strtotime($tenant->date_issued);
         $myDate = date( 'M d,Y', $time );
         $tenant->date_issued=$myDate;
 
         $results=DB::table('registration_details')
-        ->join('registration_headers','registration_headers.id','registration_details.registration_header_id')
-        ->join('building_types','building_types.id','registration_details.building_type_id')
-        ->select(DB::Raw('CONCAT(registration_details.size_from,"-",registration_details.size_to," sqm") as size_range,registration_details.*,building_types.description, registration_details.id as detail_id'))
-        ->where('registration_headers.id','=',$id)
-        ->where('registration_headers.status','0')
-        ->where('registration_headers.is_forfeited','0')
-        ->where('registration_details.is_forfeited','=',0)
+        ->JOIN('registration_headers','registration_headers.id','registration_details.registration_header_id')
+        ->JOIN('units','registration_details.unit_id','units.id')
+        ->LEFTJOIN('unit_prices','units.id','unit_prices.unit_id')
+        ->WHERERAW("unit_prices.date_as_of=(SELECT MAX(unit_prices.date_as_of) from unit_prices WHERE unit_id=units.id)")
+        ->JOIN('floors','units.floor_id','floors.id')
+        ->JOIN('buildings','floors.building_id','buildings.id')
+        ->JOIN('addresses','buildings.address_id','addresses.id')
+        ->JOIN('cities','addresses.city_id',"cities.id")
+        ->JOIN('provinces','cities.province_id',"provinces.id")
+        ->JOIN('building_types','building_types.id','buildings.building_type_id')
+        ->SELECT(DB::Raw('registration_details.id,building_types.description as building_type, floors.number as floor,buildings.description as building,units.type as unit_type,units.size,price,Concat(addresses.number," ",addresses.street," ",addresses.district," ",cities.description, ", ", provinces.description) as address,units.picture,registration_details.tenant_remarks,units.code'))
+        ->WHERE('registration_headers.id','=',$id)
+        ->WHERE('registration_headers.status','0')
+        ->WHERE('registration_headers.is_forfeited','0')
+        ->WHERE('registration_details.is_forfeited','=',0)
         ->get();
         foreach ($results as &$result) {
          $value='Raw';
          if($result->unit_type==1)
           $value='Shell';
         $result->unit_type=$value;
+        $result->size=number_format($result->size,2)." sqm";
+        $result->price="₱ ".number_format($result->price,2);
       }
 
-      return view('transaction.registrationApproval.show')
+      return view('transaction.registrationApproval.customShow')
       ->withResults($results)
       ->withTenant($tenant);
       dd($myDate);
     }
-
 
     /**
      * Show the form for editing the specified resource.

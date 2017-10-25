@@ -17,11 +17,11 @@ class CreateUsersTable extends Migration {
 			$table->integer('id', true);
 			$table->enum('type', array('admin','tenant'));
 			$table->char('first_name', 45);
-			$table->char('middle_name', 45);
+			$table->char('middle_name', 45)->nullable();
 			$table->char('last_name', 45);
 			$table->char('email', 45);
 			$table->char('password', 61);
-			$table->char('cell_num', 15);
+			$table->char('cell_num', 15)->nullable();
 			$table->char('picture', 40)->nullable();
 			$table->boolean('is_active')->default(0);
 			$table->dateTime('last_log_at')->nullable();

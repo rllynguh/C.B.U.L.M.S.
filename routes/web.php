@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::resource('/inquiry','inquiryController');
+Route::post('/inquiry/units','inquiryController@units')->name('inquiry.units');
 Route::get('/','LandingPageController@index');
 Route::view('testing-grounds','test');
 Route::get('me',function(){
@@ -190,6 +192,7 @@ Route::group(['prefix' => 'admin/'], function () {
 
 	Route::resource("/transaction/registrationApproval","registrationApprovalController");
 	Route::get('/transaction/registrationApproval/get/data', ['uses' => 'registrationApprovalController@data', 'as' => 'registrationApproval.getData']);
+	Route::get('/transaction/registrationApproval/show/{id}', ['uses' => 'registrationApprovalController@customShow', 'as' => 'registrationApproval.customShow']);
 
 	Route::get("/transaction/unitRequests","registrationApprovalController@unitRequests")->name('unitRequests.index');
 	Route::get('/transaction/unitRequests/get/data','registrationApprovalController@data_existing_tenant')->name('unitRequests.getData');

@@ -38,16 +38,12 @@ class contractCreationController extends Controller
       ->join('business_types','tenants.business_type_id','business_types.id')
       ->join('registration_requirements','registration_headers.id','registration_requirements.registration_header_id')
       ->leftjoin('registration_details','registration_headers.id','registration_details.registration_header_id')
-      ->leftjoin('offer_sheet_details',
-        'registration_details.id',
-        'offer_sheet_details.registration_detail_id')
       ->where('registration_details.is_forfeited','0')
       ->where('registration_details.is_rejected','0')
-      ->where('offer_sheet_details.status','1')
+      ->WHERE('registration_headers.status',1)
       ->where('registration_requirements.is_fulfilled','1')
       ->whereRaw('registration_headers.id not in (Select registration_header_id from contract_headers)')
       ->groupby('registration_headers.id')
-      ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id)')
       ->havingRaw('count(distinctrow registration_requirements.id)=count(distinctrow registration_requirements.id)')
       ->get()
       ;   
@@ -123,16 +119,15 @@ class contractCreationController extends Controller
           $current_contract->save();
 
           $units=DB::table('units')
-          ->join('offer_sheet_details','units.id','offer_sheet_details.unit_id')
-          ->join('registration_details','offer_sheet_details.registration_detail_id','registration_details.id')
-          ->where('registration_header_id',$request->regi_id)
-          ->join('unit_prices','units.id','unit_prices.unit_id')
-          ->whereRaw('date_as_of=(SELECT Max(date_as_of) from unit_prices where unit_id=units.id)')
-          ->select('units.id','size',DB::RAW(' unit_prices.price * units.size as price'))
-          ->where('offer_sheet_details.status',1)
-          ->where('registration_details.is_forfeited',0)
-          ->where('registration_details.is_rejected',0)
-          ->get();
+          ->JOIN('registration_details','units.id','registration_details.unit_id')
+          ->JOIN('registration_headers','registration_details.registration_header_id','registration_headers.id')
+          ->WHERE('registration_header_id',$request->regi_id)
+          ->JOIN('unit_prices','units.id','unit_prices.unit_id')
+          ->WHERERaw('date_as_of=(SELECT Max(date_as_of) from unit_prices WHERE unit_id=units.id)')
+          ->SELECT('units.id','size',DB::RAW(' unit_prices.price * units.size as price'))
+          ->WHERE('registration_details.is_forfeited',0)
+          ->WHERE('registration_details.is_rejected',0)
+          ->GET();
           foreach ($units as $unit) {
             $contract_detail=new ContractDetail();
             $contract_detail->current_contract_id=$current_contract->id;
@@ -285,15 +280,12 @@ class contractCreationController extends Controller
             ->JOIN('registration_headers','contract_headers.registration_header_id','registration_headers.id')
             ->JOIN('tenants','registration_headers.tenant_id','tenants.id')
             ->JOIN('business_types','tenants.business_type_id','business_types.id')
-            ->JOIN('addresses','tenants.address_id','addresses.id')
-            ->JOIN('cities','addresses.city_id','cities.id')
-            ->JOIN('provinces','cities.province_id','provinces.id')
             ->JOIN('users as lessee','tenants.user_id','lessee.id')
             ->JOIN('representatives','lessee.id','representatives.user_id')
             ->JOIN('representative_positions','representatives.representative_position_id','representative_positions.id')
             ->WHERE('current_contracts.id',$current_contract->id)
             ->SELECT('business_types.description as business','tenants.description as tenant','current_contracts.date_issued','current_contracts.start_of_contract','current_contracts.end_of_contract','contract_headers.code','representative_positions.description as position',
-              DB::RAW('CONCAT(lessor.first_name," ",lessor.last_name) as lessor,CONCAT(lessee.first_name," ",lessee.last_name) as lessee, Concat(cities.description, ", ", provinces.description) as address,DAY(current_contracts.date_issued) as day,Month(current_contracts.date_issued) as month'))
+              DB::RAW('CONCAT(lessor.first_name," ",lessor.last_name) as lessor,CONCAT(lessee.first_name," ",lessee.last_name) as lessee,tenants.address,DAY(current_contracts.date_issued) as day,Month(current_contracts.date_issued) as month'))
             ->FIRST();
             $dateObj   = DateTime::createFromFormat('!m', $contract->month);
             $monthName = $dateObj->format('F'); 
@@ -407,20 +399,16 @@ class contractCreationController extends Controller
        ->join('business_types','tenants.business_type_id','business_types.id')
        ->join('users','tenants.user_id','users.id')
        ->join('representatives','users.id','representatives.user_id')
-       ->join('addresses','representatives.address_id','addresses.id')
-       ->join('cities','addresses.city_id','cities.id')
-       ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,business_types.description as business_type, CONCAT(first_name," ",last_name) as full_name,CONCAT(number," ",street," ",district,", ", cities.description) as address'))
+       ->select(DB::Raw('registration_headers.id,registration_headers.code,tenants.description as tenant,business_types.description as business_type, CONCAT(first_name," ",last_name) as full_name,tenants.address'))
        ->first()
        ;
        $result=DB::table('registration_headers')
        ->where('registration_headers.id',$id)
-       ->where('registration_headers.status','1')
+       // ->where('registration_headers.status','1')
        ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
        ->where('registration_details.is_rejected','0')
        ->where('registration_details.is_forfeited','0')
-       ->join('offer_sheet_details','registration_details.id','offer_sheet_details.registration_detail_id')
-       ->where('offer_sheet_details.status','1')
-       ->join('units','offer_sheet_details.unit_id','units.id')
+       ->join('units','registration_details.unit_id','units.id')
        ->join('floors','units.floor_id','floors.id')
        ->join('buildings','floors.building_id','buildings.id')
        ->join('addresses','buildings.address_id','addresses.id')

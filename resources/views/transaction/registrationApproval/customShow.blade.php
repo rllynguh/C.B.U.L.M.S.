@@ -71,33 +71,37 @@
 		<h3>Unit(s) Requested</h3>
 		<fieldset>
 			<div class="col-sm-12">
-				@for($x=0;$x<count($results);$x++)
-				@if($x%3==0)
+				@foreach($results as $key =>$result)
+				@if($key%2==0)
 				<div>
 					@endif
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<div class="thumbnail">
 							<div class="caption">
-								<h3>Registration Detail # {{$results[$x]->id}}</h3>
-
-								<b>Desired Building type: </b> {{$results[$x]->description}}<br>
-								<b>Desired Unit type: </b>{{$results[$x]->unit_type}}<br>
-								<b>Desired Size: </b>{{$results[$x]->size_range}}<br>
-								<b>Desired Floor: </b>{{$results[$x]->floor}}<br>
-								<b>Status: </b><span id='lblStatus{{$results[$x]->id}}'>Accepted</span><br>
+								<h2 class="align-center">{{$result->code}}</h2>
+								<p class="align-center"><img src="{{ asset('images/units/'.$result->picture) }}"></p>
+								<h3>Registration Detail # {{$result->id}}</h3>
+								<b>Building type: </b> {{$result->building_type}}<br>
+								<b>Unit type: </b>{{$result->unit_type}}<br>
+								<b>Size: </b>{{$result->size}}<br>
+								<b>Floor: </b>{{$result->floor}}<br>
+								<b>Price: </b>{{$result->price}}<br>
+								<b>Location: </b>{{$result->address}}<br>
+								<b>Remarks: </b>{{$result->tenant_remarks}}<br>
+								<b>Status: </b><span id='lblStatus{{$result->id}}'>Accepted</span><br>
 								<div class="align-right">
-									<button type='button' id='status{{$results[$x]->id}}' class='btn bg-light-green btn-lg waves-effect waves-float btnChoose' value='{{$results[$x]->detail_id}}'>APPROVAL</button>
+									<button type='button' id='status{{$result->id}}' class='btn bg-light-green btn-lg waves-effect waves-float btnChoose' value='{{$result->id}}'>APPROVAL</button>
 								</div>
-								<input type='hidden' value='{{$results[$x]->detail_id}}' name='regi_id[]'>
-								<input type='hidden' name='regi_is_active[]' id='regi{{$results[$x]->detail_id}}'value='0'><input id='remarks{{$results[$x]->detail_id}}' type='hidden' name='detail_remarks[]'>
+								<input type='hidden' value='{{$result->id}}' name='regi_id[]'>
+								<input type='hidden' name='regi_is_active[]' id='regi{{$result->id}}'value='0'><input id='remarks{{$result->id}}' type='hidden' name='detail_remarks[]'>
 							</div>
 						</div>
 					</div>
-					@if($x%3!=0)
+					@if($key%2!=0)
 				</div>
 				@endif
 				<div>
-					@endfor
+					@endforeach
 				</div>
 				<div class="col-sm-12">
 					<div class="col-sm-1"></div>
@@ -121,7 +125,7 @@
 		{!!Html::script("custom/registrationApprovalShowAjax.min.js")!!}
 		<script type="text/javascript">
 			mainUrl='{{route('registrationApproval.index')}}';
-			showUrl='{{route('registrationApproval.index')}}/get/showData/{{$tenant->id}}';
+			showUrl='{{route('registrationApproval.index')}}/{{$tenant->id}}';
 			header_remarks="{{$tenant->tenant_remarks}}";
 		</script>
 		@endsection

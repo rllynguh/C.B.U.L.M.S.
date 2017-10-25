@@ -35,18 +35,11 @@ class requirementValidationController extends Controller
         ->join('tenants','registration_headers.tenant_id','tenants.id')
         ->join('business_types','tenants.business_type_id','business_types.id')
         ->join('registration_details','registration_headers.id','registration_details.registration_header_id')
-        ->join('offer_sheet_details',
-            'registration_details.id',
-            'offer_sheet_details.registration_detail_id')
-        ->join('offer_sheet_headers',
-            'offer_sheet_details.offer_sheet_header_id',
-            'offer_sheet_headers.id')
         ->where('registration_details.is_forfeited','0')
         ->where('registration_details.is_rejected','0')
-        ->where('offer_sheet_details.status','1')
-        ->where('offer_sheet_headers.status','1')
+        ->where('registration_headers.status','1')
         ->groupby('registration_headers.id')
-        ->havingRaw('count(distinctrow registration_details.id) =count(distinctrow offer_sheet_details.id) and count( registration_requirements.id)>count( Case when registration_requirements.is_fulfilled =1 then 1 else null end )')
+        ->havingRaw('count( registration_requirements.id)>count( Case when registration_requirements.is_fulfilled =1 then 1 else null end )')
         ->get()
         ;   
         return Datatables::of($result)
@@ -59,10 +52,10 @@ class requirementValidationController extends Controller
             $percentage=($fulfilled/$total)*100;
             return "  <div class='progress'>
             <div class='progress-bar progress-bar-warning progress-bar-striped active' role='progressbar' aria-valuenow='$data->fulfilled' aria-valuemin='0' aria-valuemax='100' style='width: $percentage%;'>
-                $fulfilled / $total
+            $fulfilled / $total
             </div>
-        </div>";
-    })
+            </div>";
+        })
         ->setRowId(function ($data) {
             return $data = 'id'.$data->id;
         }) 

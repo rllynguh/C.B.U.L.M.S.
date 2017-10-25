@@ -16,8 +16,7 @@ class CreateRepresentativesTable extends Migration {
 		{
 			$table->integer('user_id')->index('fk_Userrepr_idx');
 			$table->integer('representative_position_id')->index('fk_representativepos_idx');
-			$table->char('tel_num', 20);
-			$table->integer('address_id')->index('fk_addrep_idx');
+			$table->char('tel_num', 20)->nullable();
 		});
 	}
 

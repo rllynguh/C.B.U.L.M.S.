@@ -30,7 +30,6 @@
 		Mr. {{$summary->first_name }} {{$summary->last_name}}</b><br>
 		Potential Client<br>
 		{{$summary->address}}<br>
-		{{$summary->city_province}}<br>
 		Dear Mr. {{$summary->last_name}},<br><br>
 		Listed below are the units you have reserved.
 		<br><br>

@@ -73,7 +73,7 @@ class collectionReportController extends Controller
 			else if($header->mode==2)
 				$header->mode='Fund Transfer';
 			else
-				dd('how?');
+				$header->mode='Dated Check';
 			$header->cost="PHP ".number_format($header->cost);
 		}
 

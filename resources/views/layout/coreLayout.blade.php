@@ -369,11 +369,11 @@
 </a>
 </li>
 <li class="
-  {{Request::path() == 'admin/transaction/collection' ? 'active' : ''}}
-  ">
-  <a href="{{route('collection.index')}}" class="waves-yellow">
-    <span>Collection</span>
-  </a>
+{{Request::path() == 'admin/transaction/collection' ? 'active' : ''}}
+">
+<a href="{{route('collection.index')}}" class="waves-yellow">
+  <i class="mdi-editor-attach-money"></i><span>Collection</span>
+</a>
 </li>
 </ul>
 </li>
