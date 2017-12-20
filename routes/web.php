@@ -252,6 +252,8 @@ Route::get('custom/getFloor', ['uses' => 'customController@getFloor', 'as' => 'c
 Route::get('custom/getRange', ['uses' => 'customController@getRange', 'as' => 'custom.getRange']);
 Route::get('custom/getMarketRate/{id}', ['uses' => 'customController@getMarketRate', 'as' => 'custom.getMarketRate']);
 Route::get('custom/banks', ['uses' => 'customController@getBanks', 'as' => 'custom.getBanks']);
+Route::put('custom/readNotification', ['uses' => 'customController@readNotification', 'as' => 'custom.readNotification']);
+
 
 
 

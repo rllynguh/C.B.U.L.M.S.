@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Auth;
 use Carbon\Carbon;
 use Config;
+use Artisan;
 class LogSuccessfulLogin
 {
     /**
@@ -31,5 +32,6 @@ class LogSuccessfulLogin
         //
         Auth::user()->last_log_at=Carbon::now(Config::get('app.timezone'));
         Auth::user()->save();
+        $command = Artisan::call('billing_interest:update');
     }
 }

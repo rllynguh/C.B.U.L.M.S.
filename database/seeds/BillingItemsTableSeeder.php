@@ -59,6 +59,12 @@ class BillingItemsTableSeeder extends Seeder
                 'description' => 'Fit-out Deposit',
                 'is_active' => 1,
             ),
+            7 => 
+            array (
+                'id' => 8,
+                'description' => 'Penalty',
+                'is_active' => 1,
+            ),
         ));
         
         

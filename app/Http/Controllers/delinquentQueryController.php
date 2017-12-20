@@ -17,6 +17,12 @@ class delinquentQueryController extends Controller
 	}
 	public function data(Request $request)
 	{
+		if($request->days==0)
+			$query='gap between 30 and 60';
+		else if($request->days==1)
+			$query='gap between 60 and 120';
+		else
+			$query='gap >120';
 		$results=DB::TABLE('billing_headers')
 		->JOIN('payments','billing_headers.id','payments.billing_header_id')
 		->JOIN('current_contracts','billing_headers.current_contract_id','current_contracts.id')
@@ -26,6 +32,7 @@ class delinquentQueryController extends Controller
 		->JOIN('tenants','registration_headers.tenant_id','tenants.id')
 		->JOIN('business_types','tenants.business_type_id','business_types.id')
 		->SELECT('tenants.description as tenant','business_types.description as business','contract_headers.code','current_contracts.date_issued',DB::RAW('count(distinctrow contract_details.id) as unit_count, MAX(DATEDIFF(payments.date_collected,billing_headers.date_issued)) as gap, payments.date_collected,billing_headers.date_issued'))
+		->HAVINGRAW($query)
 		->GROUPBY('tenants.id')
 		->HAVING('gap','>',0)
 		->GET();
@@ -33,7 +40,7 @@ class delinquentQueryController extends Controller
 			# code...
 			$dt=new Carbon($result->date_issued);
 			$dt2=new Carbon($result->date_collected);
-			$result->gap=$dt->diffForHumans($dt2);   
+			$result->gap=$dt2->diffForHumans($dt);   
 
 		}
 		return Datatables::of($results)

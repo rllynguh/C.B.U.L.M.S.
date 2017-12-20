@@ -15,9 +15,7 @@ $(document).ready(function()
     ajax: {
       url: dataurl,
       data: function(d) {
-        d.status = $('#status').val(),
-        d.business=$('#business').val(),
-        d.city=$('#city').val()
+        d.days = $('#days').val()
       }
     },
     columns: [
@@ -32,8 +30,11 @@ $(document).ready(function()
     'copy', 'csv', 'excel', 'pdf', 'print'
     ]
   });
-  $("#status").change(function(data){
+  table.buttons().container()
+  .appendTo( $('#bebiko') );
+  $("#days").change(function(data){
     table.draw();
+    console.log($(this).val());
   });
   $("#business").change(function(data){
     table.draw();

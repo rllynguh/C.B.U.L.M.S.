@@ -1,58 +1,52 @@
 @extends('layout.coreLayout')
 @section('content')
 <meta name="_token" content="{!! csrf_token() !!}" />
-<div class="container-fluid">
-  <div class="body">
-    <div class="block-header">
-    </div>
-    
-  </div>
-  <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="card">
-        <div class="header align-center">
-          <h2 id="header">
-            LIST OF DELINQUENT TENANT 
-          </h2>
-          <div class="form-group">
-            <div class="col-sm-4">
-              <label>Status</label>                              
-              <div class="form-line">
-                {{-- {{Form::select('status',array('0' => 'Pending', '1' => 'Active', '2' => 'Rejected'),null,['id'=>'status','class'=>'form-control align-center'])}} --}}
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <label>Business</label>                
-              <div class="form-line">
-                {{-- {{Form::select('business',$business,null,['id'=>'business','class'=>'form-control align-center'])}} --}}
-              </div>
-            </div>
-            <div class="col-sm-4">
-              <label>Location</label>                
-              <div class="form-line">
-                {{-- {{Form::select('city',$city,null,['id'=>'city','class'=>'form-control align-center'])}} --}}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="body">
-          <table class="table table-hover dataTable" id="myTable">
-            <thead>
-              <tr>
-                <th class="align-center">CONTRACT</th>
-                <th class="align-center">TENANT</th>
-                <th class="align-center">BUSINESS</th>
-                <th class="align-center">UNIT REQUESTED</th>
-                <th class="align-center">PAYMENT GAP</th>
-              </tr>
-            </thead>
-            <tbody id="myList">
-            </tbody>
-          </table>
-        </div>
-      </div>
+<div class="body">
+  <h2 id="header" class="align-center">
+    LIST OF DELINQUENT TENANT 
+  </h2>
+  <div class="form-group">
+    <div class="col-sm-4">
     </div>
   </div>
+  <div class="form-group">
+    <div class="col-sm-4">
+      <label>Days Delayed</label>                
+      <div class="form-line">
+        <select id='days' name='days' class="form-control align-center">
+          <option value='0'>
+           above 30 days
+         </option>
+         <option value='1'>
+           above 60 days
+         </option>
+         <option value='2'>
+          above 120 days
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="col-sm-4">
+</div>
+</div>
+<div class="body">
+  <table class="table table-hover dataTable" id="myTable">
+    <thead>
+      <tr>
+        <th class="align-center">CONTRACT</th>
+        <th class="align-center">TENANT</th>
+        <th class="align-center">BUSINESS</th>
+        <th class="align-center">UNIT REQUESTED</th>
+        <th class="align-center">PAYMENT GAP</th>
+      </tr>
+    </thead>
+    <tbody id="myList">
+    </tbody>
+  </table>
+  <div id='bebiko'>
+  </div>
+</div>
 </div>
 @endsection
 @section('scripts')

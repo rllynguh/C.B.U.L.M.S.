@@ -316,7 +316,7 @@ class contractCreationController extends Controller
             ->JOIN('addresses','buildings.address_id','addresses.id')
             ->JOIN('cities','addresses.city_id','cities.id')
             ->JOIN('provinces','cities.province_id','provinces.id')
-            ->SELECT(DB::raw('buildings.id as building_id,buildings.description as building,units.code,units.size, price * size as price,Concat(cities.description, ", ", provinces.description) as address'))
+            ->SELECT(DB::raw('buildings.id as building_id,buildings.description as building,units.code,units.size, price,Concat(cities.description, ", ", provinces.description) as address'))
             ->GET();
             $totalSize=0;
             foreach ($units as $unit) {
