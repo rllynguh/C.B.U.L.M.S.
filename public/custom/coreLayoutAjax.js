@@ -17,7 +17,7 @@ $(document).ready(function()
     e.preventDefault(); 
     $.ajax({
       type: "PUT",
-      url: url,
+      url: readNotifUrl,
       data: { id : value },
       success: function (data) {
         list="";

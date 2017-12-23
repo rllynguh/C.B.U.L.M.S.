@@ -550,7 +550,7 @@
 {!!Html::script('js/admin.min.js')!!}
 {!!Html::script('custom/coreLayoutAjax.js')!!}
 <script type="text/javascript">
-  url="{{route('custom.readNotification')}}"
+  readNotifUrl="{{route('custom.readNotification')}}"
 </script>>
 
 </body>
